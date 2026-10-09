@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "content:validate": "node tools/content-validate.ts",
+    "gen:dev-decks": "node tools/gen-dev-decks.ts",
     "assets": "node tools/assets.ts",
     "digest": "node tools/digest.ts",
     "deps:check": "depcruise apps packages --config .dependency-cruiser.cjs",

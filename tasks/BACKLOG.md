@@ -36,7 +36,7 @@ Prioridad transversal: **el combate con animación de ataques es requisito centr
 | T-033 | Equipo / inventario / equipar / ficha de carta | D | T-030 | M | TODO |
 | T-034 | Inicio, setup, guardado, ajustes | D | T-030 | S | TODO |
 | **G3** | **Gate: combate jugable con animación (contenido de desarrollo)** | | T-030..034, T-032a..d | | |
-| T-044 | `gen-dev-decks.ts` (mazos de desarrollo) | E | T-002 | S | TODO |
+| T-044 | `gen-dev-decks.ts` (mazos de desarrollo) | E | T-002 | S | REVIEW |
 | T-045 | Datos de PokeAPI (`pnpm pokeapi`) | E | T-002 | S | TODO |
 | T-040 | Herramienta `/admin/cards` (con vista previa de FX) | E | T-002, T-032c1 | M | TODO |
 | T-041 | Extracción por visión (script + prompt) | E | T-002, T-045 | M | TODO |

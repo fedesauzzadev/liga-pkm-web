@@ -1,0 +1,79 @@
+{
+  "_comment": "Mazos de desarrollo generados automáticamente desde content/pokemon/** + elementos sintéticos por mazo + ítems. Son solo para pruebas y no sustituyen un mazo real validado.",
+  "decks": {
+    "bosque": {
+      "entries": [
+        {
+          "id": "element_grass",
+          "count": 6
+        }
+      ],
+      "devOnly": true
+    },
+    "montana": {
+      "entries": [
+        {
+          "id": "charmander",
+          "count": 1
+        },
+        {
+          "id": "element_fire",
+          "count": 5
+        }
+      ],
+      "devOnly": true
+    },
+    "isla": {
+      "entries": [
+        {
+          "id": "element_water",
+          "count": 5
+        },
+        {
+          "id": "squirtle",
+          "count": 1
+        }
+      ],
+      "devOnly": true
+    },
+    "llanura": {
+      "entries": [
+        {
+          "id": "element_fighting",
+          "count": 6
+        }
+      ],
+      "devOnly": true
+    },
+    "pantano": {
+      "entries": [
+        {
+          "id": "element_psychic",
+          "count": 3
+        },
+        {
+          "id": "element_water",
+          "count": 3
+        },
+        {
+          "id": "poliwag",
+          "count": 1
+        }
+      ],
+      "devOnly": true
+    },
+    "item": {
+      "entries": [
+        {
+          "id": "pokeball",
+          "count": 3
+        },
+        {
+          "id": "potion",
+          "count": 2
+        }
+      ],
+      "devOnly": true
+    }
+  }
+}
