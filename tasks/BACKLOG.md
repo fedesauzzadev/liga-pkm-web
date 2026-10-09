@@ -24,7 +24,7 @@ Prioridad transversal: **el combate con animación de ataques es requisito centr
 | T-022 | XP, evolución, captura, equipo y pila de Oak | C | T-020 | M | DONE |
 | T-023 | Gimnasios 2v2, medallas, victoria | C | T-021,022 | M | DONE |
 | T-024 | Test golden con ejemplos del manual | C | T-021 | L | DONE |
-| T-011b | Ajuste D-19 (Q-007): solo frenar/caer exacto en **cuadrado** libera dirección; redondo exacto conserva `cameFrom` (motor T-011 + tests) | B | T-011 | M | TODO |
+| T-011b | Ajuste D-19 (Q-007): solo frenar/caer exacto en **cuadrado** libera dirección; redondo exacto conserva `cameFrom` (motor T-011 + tests) | B | T-011 | M | REVIEW |
 | **G2** | **Gate** | | T-020..024 | | |
 | T-030 | App shell, store, reproductor de eventos | D | G1 | M | TODO |
 | T-031 | Tablero SVG + ficha animada + UI de caminos | D | T-030 | M | TODO |

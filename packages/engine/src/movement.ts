@@ -64,11 +64,12 @@ export function planMovement(
 
   const finish = (outcome: MovementOutcome): MovementPlan => {
     const landed = outcome.kind === 'landed'
+    const preservesDirection = landed && board.node(position).shape !== 'square'
     return {
       steps,
       outcome,
       position,
-      cameFrom: landed ? null : cameFrom,
+      cameFrom: landed ? (preservesDirection ? cameFrom : null) : cameFrom,
       stepsLeft: landed ? 0 : stepsLeft,
     }
   }
@@ -141,7 +142,7 @@ export function applyPlan(draft: WritableDraft<GameState>, plan: MovementPlan): 
   }
   draft.stepsLeft = plan.stepsLeft
   if (plan.outcome.kind === 'landed') {
-    player.cameFrom = null // frenó/aterrizó ⇒ el próximo turno va en cualquier dirección (AC-3)
+    player.cameFrom = plan.cameFrom === null ? null : parseNodeId(plan.cameFrom)
     draft.pending = null
     draft.phase = 'tileResolution' // T-012 resuelve el casillero en Advance
   } else if (plan.outcome.kind === 'choosePath') {

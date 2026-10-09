@@ -61,7 +61,9 @@ test(
           const player = state.players[0]!
           if (state.phase !== 'tileResolution') throw new Error(`fase final: ${state.phase}`)
           if (!nodeIds.has(player.position)) throw new Error(`posición inexistente: ${player.position}`)
-          if (player.cameFrom !== null) throw new Error('aterrizó con cameFrom ≠ null')
+          if (player.cameFrom !== null && !nodeIds.has(player.cameFrom)) {
+            throw new Error(`cameFrom inexistente: ${player.cameFrom}`)
+          }
           if (state.stepsLeft !== 0) throw new Error('aterrizó con pasos restantes')
 
           const advanced = applyCommand(state, { type: 'Advance' }, ctx)

@@ -274,6 +274,7 @@ test('AC-5 un nodo redondo solo se resuelve con caída exacta; al pasar no gener
   if (!land.ok) throw new Error(land.error.message)
   expect(land.value.events).toContainEqual({ type: 'Landed', player: 'p1', node: 'r1' })
   expect(land.value.state.players[0]!.position).toBe('r1')
+  expect(land.value.state.players[0]!.cameFrom).toBe('r0') // exacto en redondo NO libera dirección
 })
 
 // AC: SPEC-B/T-011/AC-6 — rebote en fin de camino (D-01): 2 pasos de sorpresa, tirada 5.
