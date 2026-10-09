@@ -1,0 +1,13 @@
+{
+ "id": "classic",
+ "mode": "classic",
+ "features": { "sorpresa": false, "liga": false, "pokedexChart": false, "duelo": false },
+ "start": { "wildcards": 2, "pokeballs": 5, "starterElementCards": 1 },
+ "teamLimit": 6,
+ "medalsToWin": 8,
+ "giovanniRequiresMedals": 7,
+ "gymTeamSize": 2,
+ "potionHeal": 30,
+ "diceFaces": 6,
+ "deadEndBounce": true
+}

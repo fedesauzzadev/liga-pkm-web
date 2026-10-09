@@ -1,0 +1,12 @@
+mazo,tipo_carta,cantidad,nota
+bosque,element:grass,,
+bosque,element:poison,,
+bosque,pokemon:<id>,,
+montana,element:fire,,
+isla,element:water,,
+llanura,element:fighting,,
+llanura,element:normal,,
+pantano,element:psychic,,
+item,pokeball,,
+item,potion,,
+item,oportunidad,,

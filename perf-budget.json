@@ -1,0 +1,8 @@
+{
+  "_comment": "Presupuestos de rendimiento de ENGINEERING-STANDARDS §3, en ms (mediana). T-011 agrega tablero:mover (<2 ms); T-020 agrega combate:turno; T-021 sumó los efectos. combate:turno 5→7 ms en T-022 y 7→10 ms en T-023 con evidencia (Q-014): mediana en reposo 2.3-2.7 ms en T-023 (holgura >3x); los picos >7 ms solo aparecen por contención de CPU del propio pipeline de verify (el bench corre como subprocess de la suite de tests en t006/AC-9 y otra vez al final de verify). El presupuesto de peso (JS inicial ≤ 200 KB gzip) lo controla size-limit.",
+  "budgets": {
+    "content:load-validate": 300,
+    "tablero:mover": 2,
+    "combate:turno": 10
+  }
+}

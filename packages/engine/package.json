@@ -1,0 +1,13 @@
+{
+  "name": "@liga/engine",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@liga/content": "workspace:*",
+    "immer": "^11.1.21"
+  }
+}

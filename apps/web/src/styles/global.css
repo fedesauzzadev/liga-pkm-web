@@ -1,0 +1,20 @@
+:root {
+  --color-bg: #e8f0e0;
+  --color-ink: #22301c;
+  --color-muted: #5c6b52;
+  --color-accent: #3c6e3f;
+  --color-border: #22301c;
+  --font-title: 'Press Start 2P', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}

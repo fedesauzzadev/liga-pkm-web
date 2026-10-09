@@ -1,0 +1,16 @@
+node_modules
+dist
+.DS_Store
+docs/reference/*.pdf
+docs/reference/*.jpg
+docs/reference/*.png
+apps/web/public/sprites
+apps/web/public/fx
+content/reference
+content/pokemon/_staging
+content/photos
+.env
+.env.*
+*.local
+
+docs/reference/*.jpeg

@@ -1,0 +1,40 @@
+{
+  "name": "liga-pkm-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter @liga/web dev",
+    "build": "pnpm --filter @liga/web build",
+    "preview": "pnpm --filter @liga/web preview",
+    "typecheck": "tsc --noEmit -p packages/content && tsc --noEmit -p packages/engine && tsc --noEmit -p apps/web && tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "content:validate": "node tools/content-validate.ts",
+    "assets": "node tools/assets.ts",
+    "digest": "node tools/digest.ts",
+    "deps:check": "depcruise apps packages --config .dependency-cruiser.cjs",
+    "size": "size-limit",
+    "bench": "node tools/bench.ts",
+    "verify:selftest": "node tools/verify-selftest.mjs",
+    "verify": "pnpm typecheck && pnpm lint && pnpm test && pnpm content:validate && pnpm build && pnpm deps:check && pnpm size && pnpm bench"
+  },
+  "size-limit": [
+    {
+      "name": "JS inicial (gzip)",
+      "path": ["apps/web/dist/assets/*.js"],
+      "limit": "200 KB"
+    }
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@size-limit/preset-small-lib": "^14.2.0",
+    "@types/node": "^24.5.0",
+    "dependency-cruiser": "^18.5.0",
+    "eslint": "^9.36.0",
+    "fast-check": "^4.10.2",
+    "size-limit": "^14.2.0",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.44.0",
+    "vitest": "^3.2.4"
+  }
+}

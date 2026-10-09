@@ -1,0 +1,132 @@
+.demo {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.title {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--color-accent);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.hint {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.viewport {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 3px solid var(--color-border);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #cfe7f5 0%, #dff0d8 70%);
+}
+
+.stage {
+  width: 640px;
+  height: 360px;
+  transform-origin: 0 0;
+  transform: scale(var(--fxscale, 1));
+  position: relative;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.fx {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.spriteWrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform, opacity;
+}
+
+.sprite {
+  display: block;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.card {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8rem;
+  border: 2px dashed var(--color-muted);
+  border-radius: 8px;
+  background: #ffffffd0;
+  color: var(--color-ink);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.label {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.select,
+.check {
+  min-height: 44px;
+  font: inherit;
+}
+
+.moves {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.5rem;
+}
+
+.move {
+  min-height: 44px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-ink);
+  background: #ffffff;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.move:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.status {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.statusOk {
+  color: var(--color-accent);
+}

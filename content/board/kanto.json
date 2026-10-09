@@ -1,0 +1,738 @@
+{
+ "meta": {
+  "id": "kanto-classic",
+   "status": "VERIFIED",
+  "source": "foto del tablero fisico (1176x1600 px)",
+  "imageSize": [
+   1176,
+   1600
+  ],
+  "note": "Coordenadas y aristas inferidas a ojo de la foto. Verificar con tools/board-overlay.html (task T-003) antes de usar en el motor."
+ },
+ "gyms": {
+  "brock": {
+   "city": "plateada",
+   "medal": "Roca",
+   "verified": false
+  },
+  "misty": {
+   "city": "celeste",
+   "medal": "Cascada",
+   "verified": false
+  },
+  "surge": {
+   "city": "carmin",
+   "medal": "Trueno",
+   "verified": true
+  },
+  "erika": {
+   "city": "azulona",
+   "medal": "Arcoíris",
+   "verified": true
+  },
+  "koga": {
+   "city": "fucsia",
+   "medal": "Alma",
+   "verified": false
+  },
+  "sabrina": {
+   "city": "azafran",
+   "medal": "Pantano",
+   "verified": true
+  },
+  "blaine": {
+   "city": "canela",
+   "medal": "Volcán",
+   "verified": false
+  },
+  "giovanni": {
+   "city": "verde",
+   "medal": "Tierra",
+   "verified": true,
+   "requiresMedals": 7
+  }
+ },
+ "nodes": [
+  {
+   "id": "paleta",
+   "type": "start",
+   "shape": "square",
+   "x": 1130,
+   "y": 1513,
+   "label": "Pueblo Paleta"
+  },
+  {
+   "id": "oak_b",
+   "type": "oak",
+   "shape": "square",
+   "x": 1008,
+   "y": 1506,
+   "label": "Profesor Oak"
+  },
+  {
+   "id": "verde",
+   "type": "gym",
+   "shape": "square",
+   "x": 878,
+   "y": 1510,
+   "label": "Ciudad Verde",
+   "gym": "giovanni"
+  },
+  {
+   "id": "centro_b",
+   "type": "centro",
+   "shape": "square",
+   "x": 745,
+   "y": 1510,
+   "label": "Centro Pokémon"
+  },
+  {
+   "id": "mercado_b",
+   "type": "mercado",
+   "shape": "round",
+   "x": 626,
+   "y": 1498,
+   "label": "Mercado"
+  },
+  {
+   "id": "pb_415",
+   "type": "empty",
+   "shape": "round",
+   "x": 444,
+   "y": 1513
+  },
+  {
+   "id": "mont_2",
+   "type": "deck",
+   "shape": "round",
+   "x": 262,
+   "y": 1507,
+   "deck": "montana"
+  },
+  {
+   "id": "mont_1",
+   "type": "deck",
+   "shape": "round",
+   "x": 91,
+   "y": 1516,
+   "deck": "montana"
+  },
+  {
+   "id": "mont_3",
+   "type": "deck",
+   "shape": "round",
+   "x": 135,
+   "y": 1349,
+   "deck": "montana"
+  },
+  {
+   "id": "canela",
+   "type": "gym",
+   "shape": "square",
+   "x": 115,
+   "y": 1179,
+   "label": "Isla Canela",
+   "gym": "blaine"
+  },
+  {
+   "id": "mercado_l",
+   "type": "mercado",
+   "shape": "round",
+   "x": 122,
+   "y": 1060,
+   "label": "Mercado"
+  },
+  {
+   "id": "centro_l",
+   "type": "centro",
+   "shape": "square",
+   "x": 115,
+   "y": 920,
+   "label": "Centro Pokémon"
+  },
+  {
+   "id": "duelo_l",
+   "type": "duelo",
+   "shape": "round",
+   "x": 239,
+   "y": 960,
+   "label": "Duelo Pokémon"
+  },
+  {
+   "id": "celeste",
+   "type": "gym",
+   "shape": "square",
+   "x": 358,
+   "y": 979,
+   "label": "Ciudad Celeste",
+   "gym": "misty"
+  },
+  {
+   "id": "isla_1",
+   "type": "deck",
+   "shape": "round",
+   "x": 648,
+   "y": 1049,
+   "deck": "isla"
+  },
+  {
+   "id": "isla_2",
+   "type": "deck",
+   "shape": "round",
+   "x": 574,
+   "y": 1174,
+   "deck": "isla"
+  },
+  {
+   "id": "isla_3",
+   "type": "deck",
+   "shape": "round",
+   "x": 648,
+   "y": 1295,
+   "deck": "isla"
+  },
+  {
+   "id": "pb_535",
+   "type": "empty",
+   "shape": "round",
+   "x": 559,
+   "y": 1385
+  },
+  {
+   "id": "pb_780",
+   "type": "empty",
+   "shape": "round",
+   "x": 800,
+   "y": 1399
+  },
+  {
+   "id": "bosque_3",
+   "type": "deck",
+   "shape": "round",
+   "x": 961,
+   "y": 1398,
+   "deck": "bosque"
+  },
+  {
+   "id": "bosque_2",
+   "type": "deck",
+   "shape": "round",
+   "x": 1094,
+   "y": 1388,
+   "deck": "bosque"
+  },
+  {
+   "id": "bosque_1",
+   "type": "deck",
+   "shape": "round",
+   "x": 1095,
+   "y": 1255,
+   "deck": "bosque"
+  },
+  {
+   "id": "azulona",
+   "type": "gym",
+   "shape": "square",
+   "x": 1098,
+   "y": 1110,
+   "label": "Ciudad Azulona",
+   "gym": "erika"
+  },
+  {
+   "id": "mercado_r",
+   "type": "mercado",
+   "shape": "round",
+   "x": 1059,
+   "y": 898,
+   "label": "Mercado"
+  },
+  {
+   "id": "duelo_r",
+   "type": "duelo",
+   "shape": "round",
+   "x": 872,
+   "y": 877,
+   "label": "Duelo Pokémon"
+  },
+  {
+   "id": "pb_r",
+   "type": "empty",
+   "shape": "round",
+   "x": 754,
+   "y": 875
+  },
+  {
+   "id": "centro_r",
+   "type": "centro",
+   "shape": "square",
+   "x": 755,
+   "y": 760,
+   "label": "Centro Pokémon"
+  },
+  {
+   "id": "fucsia",
+   "type": "gym",
+   "shape": "square",
+   "x": 757,
+   "y": 619,
+   "label": "Ciudad Fucsia",
+   "gym": "koga"
+  },
+  {
+   "id": "pant_3",
+   "type": "deck",
+   "shape": "round",
+   "x": 741,
+   "y": 503,
+   "deck": "pantano"
+  },
+  {
+   "id": "pant_2",
+   "type": "deck",
+   "shape": "round",
+   "x": 615,
+   "y": 437,
+   "deck": "pantano"
+  },
+  {
+   "id": "pant_1",
+   "type": "deck",
+   "shape": "round",
+   "x": 531,
+   "y": 336,
+   "deck": "pantano"
+  },
+  {
+   "id": "duelo_t",
+   "type": "duelo",
+   "shape": "round",
+   "x": 505,
+   "y": 185,
+   "label": "Duelo Pokémon"
+  },
+  {
+   "id": "mercado_2",
+   "type": "mercado",
+   "shape": "round",
+   "x": 615,
+   "y": 225,
+   "label": "Mercado"
+  },
+  {
+   "id": "pb_700",
+   "type": "empty",
+   "shape": "round",
+   "x": 717,
+   "y": 342
+  },
+  {
+   "id": "ultra",
+   "type": "empty",
+   "shape": "round",
+   "x": 824,
+   "y": 362,
+   "cosmetic": "ultraball"
+  },
+  {
+   "id": "master",
+   "type": "empty",
+   "shape": "round",
+   "x": 936,
+   "y": 363,
+   "cosmetic": "masterball"
+  },
+  {
+   "id": "liga",
+   "type": "liga",
+   "shape": "square",
+   "x": 1060,
+   "y": 350,
+   "label": "Liga Pokémon"
+  },
+  {
+   "id": "pb_485",
+   "type": "empty",
+   "shape": "round",
+   "x": 508,
+   "y": 531
+  },
+  {
+   "id": "duelo_w",
+   "type": "duelo",
+   "shape": "round",
+   "x": 356,
+   "y": 625,
+   "label": "Duelo Pokémon"
+  },
+  {
+   "id": "pb_235",
+   "type": "empty",
+   "shape": "round",
+   "x": 257,
+   "y": 635
+  },
+  {
+   "id": "plateada",
+   "type": "gym",
+   "shape": "square",
+   "x": 150,
+   "y": 715,
+   "label": "Ciudad Plateada",
+   "gym": "brock"
+  },
+  {
+   "id": "pb_255",
+   "type": "empty",
+   "shape": "round",
+   "x": 288,
+   "y": 794
+  },
+  {
+   "id": "llan_1",
+   "type": "deck",
+   "shape": "round",
+   "x": 122,
+   "y": 611,
+   "deck": "llanura"
+  },
+  {
+   "id": "llan_2",
+   "type": "deck",
+   "shape": "round",
+   "x": 100,
+   "y": 450,
+   "deck": "llanura"
+  },
+  {
+   "id": "llan_3",
+   "type": "deck",
+   "shape": "round",
+   "x": 107,
+   "y": 297,
+   "deck": "llanura"
+  },
+  {
+   "id": "pb_tl",
+   "type": "empty",
+   "shape": "round",
+   "x": 130,
+   "y": 158
+  },
+  {
+   "id": "carmin",
+   "type": "gym",
+   "shape": "square",
+   "x": 230,
+   "y": 125,
+   "label": "Ciudad Carmín",
+   "gym": "surge"
+  },
+  {
+   "id": "centro_t",
+   "type": "centro",
+   "shape": "square",
+   "x": 385,
+   "y": 115,
+   "label": "Centro Pokémon"
+  },
+  {
+   "id": "oak_t",
+   "type": "oak",
+   "shape": "square",
+   "x": 505,
+   "y": 85,
+   "label": "Profesor Oak"
+  },
+  {
+   "id": "azafran",
+   "type": "gym",
+   "shape": "square",
+   "x": 615,
+   "y": 100,
+   "label": "Ciudad Azafrán",
+   "gym": "sabrina"
+  },
+  {
+   "id": "mercado_t",
+   "type": "mercado",
+   "shape": "round",
+   "x": 725,
+   "y": 95,
+   "label": "Mercado"
+  },
+  {
+   "id": "pb_sn1",
+   "type": "empty",
+   "shape": "round",
+   "x": 782,
+   "y": 200
+  },
+  {
+   "id": "pb_sn2",
+   "type": "empty",
+   "shape": "round",
+   "x": 892,
+   "y": 194
+  },
+  {
+   "id": "pb_sn3",
+   "type": "empty",
+   "shape": "round",
+   "x": 938,
+   "y": 87
+  },
+  {
+   "id": "pb_sn4",
+   "type": "empty",
+   "shape": "round",
+   "x": 1050,
+   "y": 95
+  },
+  {
+   "id": "sorpresa",
+   "type": "sorpresa",
+   "shape": "round",
+   "x": 1055,
+   "y": 185,
+   "label": "Sorpresa"
+  }
+ ],
+ "edges": [
+  [
+   "paleta",
+   "oak_b"
+  ],
+  [
+   "oak_b",
+   "verde"
+  ],
+  [
+   "verde",
+   "centro_b"
+  ],
+  [
+   "centro_b",
+   "mercado_b"
+  ],
+  [
+   "mercado_b",
+   "pb_415"
+  ],
+  [
+   "pb_415",
+   "mont_2"
+  ],
+  [
+   "mont_2",
+   "mont_1"
+  ],
+  [
+   "mont_1",
+   "mont_3"
+  ],
+  [
+   "mont_3",
+   "canela"
+  ],
+  [
+   "canela",
+   "mercado_l"
+  ],
+  [
+    "mercado_l",
+    "centro_l"
+  ],
+  [
+    "pb_780",
+    "bosque_3"
+  ],
+  [
+   "pb_780",
+   "mercado_b"
+  ],
+  [
+   "bosque_3",
+   "bosque_2"
+  ],
+  [
+   "bosque_2",
+   "bosque_1"
+  ],
+  [
+   "bosque_1",
+   "azulona"
+  ],
+  [
+   "azulona",
+   "mercado_r"
+  ],
+  [
+   "mercado_r",
+   "duelo_r"
+  ],
+  [
+   "duelo_r",
+   "pb_r"
+  ],
+  [
+   "pb_r",
+   "centro_r"
+  ],
+  [
+   "centro_r",
+   "fucsia"
+  ],
+  [
+   "fucsia",
+   "pant_3"
+  ],
+  [
+   "pant_3",
+   "pant_2"
+  ],
+  [
+   "pant_2",
+   "pant_1"
+  ],
+  [
+   "pant_1",
+   "duelo_t"
+  ],
+  [
+   "pant_3",
+   "pb_485"
+  ],
+  [
+   "pb_485",
+   "duelo_w"
+  ],
+  [
+   "duelo_w",
+   "pb_235"
+  ],
+  [
+   "pb_235",
+   "plateada"
+  ],
+  [
+   "plateada",
+   "llan_1"
+  ],
+  [
+   "llan_1",
+   "llan_2"
+  ],
+  [
+   "llan_2",
+   "llan_3"
+  ],
+  [
+   "llan_3",
+   "pb_tl"
+  ],
+  [
+   "pb_tl",
+   "carmin"
+  ],
+  [
+   "carmin",
+   "centro_t"
+  ],
+  [
+   "centro_t",
+   "oak_t"
+  ],
+  [
+   "oak_t",
+   "azafran"
+  ],
+  [
+   "azafran",
+   "mercado_t"
+  ],
+  [
+   "mercado_t",
+   "pb_sn1"
+  ],
+  [
+   "pb_sn1",
+   "pb_sn2"
+  ],
+  [
+   "pb_sn2",
+   "pb_sn3"
+  ],
+  [
+   "pb_sn3",
+   "pb_sn4"
+  ],
+  [
+   "pb_sn4",
+   "sorpresa"
+  ],
+  [
+   "centro_t",
+   "duelo_t"
+  ],
+  [
+   "duelo_t",
+   "mercado_2"
+  ],
+  [
+   "mercado_2",
+   "pb_700"
+  ],
+  [
+   "pb_700",
+   "ultra"
+  ],
+  [
+   "ultra",
+   "master"
+  ],
+  [
+   "master",
+   "liga"
+  ],
+  [
+   "plateada",
+   "pb_255"
+  ],
+  [
+   "pb_255",
+   "centro_l"
+  ],
+  [
+   "centro_l",
+   "duelo_l"
+  ],
+  [
+   "duelo_l",
+   "celeste"
+  ],
+  [
+   "celeste",
+   "isla_1"
+  ],
+  [
+   "isla_1",
+   "isla_2"
+  ],
+  [
+   "isla_2",
+   "isla_3"
+  ],
+  [
+   "isla_3",
+   "pb_535"
+  ],
+  [
+   "pb_535",
+   "mercado_b"
+  ],
+  [
+   "pb_r",
+   "isla_1"
+  ]
+ ]
+}

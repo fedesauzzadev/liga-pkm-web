@@ -1,0 +1,44 @@
+<!doctype html><meta charset="utf-8"><title>Board overlay</title>
+<style>body{margin:0;font:13px system-ui;background:#222;color:#eee}#bar{padding:8px;display:flex;gap:10px;align-items:center;position:sticky;top:0;background:#222;z-index:2;flex-wrap:wrap}canvas{display:block;max-width:100%;cursor:grab}#info b{color:#ffd23f}</style>
+<div id="bar"><label>Foto <input type="file" id="img" accept="image/*"></label><label>board.json <input type="file" id="js" accept=".json"></label><button id="exp">Exportar JSON</button><span id="info">Cargá la foto y el JSON. Arrastrá nodos para corregir posiciones; clic en dos nodos para crear/borrar la arista entre ellos.</span></div>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'),g=c.getContext('2d'),info=document.getElementById('info');
+const COL={deck:'#4aa3ff',centro:'#ff4d6d',mercado:'#ffd23f',oak:'#b05cff',duelo:'#ff8c1a',gym:'#2ecc71',empty:'#ddd',start:'#fff',sorpresa:'#f0f',liga:'#0ff',junction:'#888'};
+let im=null,B=null,drag=null,sel=null,down=null;
+function facts(){
+  const deg={};B.nodes.forEach(n=>deg[n.id]=0);B.edges.forEach(([a,b])=>{deg[a]++;deg[b]++;});
+  const adj={};B.nodes.forEach(n=>adj[n.id]=[]);B.edges.forEach(([a,b])=>{adj[a].push(b);adj[b].push(a);});
+  const seen=new Set([B.nodes[0].id]),q=[B.nodes[0].id];
+  while(q.length){const n=q.pop();for(const m of adj[n])if(!seen.has(m)){seen.add(m);q.push(m);}}
+  const counts={};B.nodes.forEach(n=>counts[n.type]=(counts[n.type]||0)+1);
+  const deg3=B.nodes.filter(n=>deg[n.id]===3).length,deg1=B.nodes.filter(n=>deg[n.id]===1).length;
+  return{connected:seen.size===B.nodes.length,counts,deg3,deg1};
+}
+function draw(){if(!im)return;c.width=im.naturalWidth;c.height=im.naturalHeight;g.drawImage(im,0,0);if(!B)return;
+  const m=Object.fromEntries(B.nodes.map(n=>[n.id,n]));g.lineWidth=4;g.strokeStyle='rgba(255,230,0,.85)';
+  for(const [a,b] of B.edges){if(!m[a]||!m[b])continue;g.beginPath();g.moveTo(m[a].x,m[a].y);g.lineTo(m[b].x,m[b].y);g.stroke();}
+  g.font='bold 15px system-ui';g.lineWidth=3;
+  for(const n of B.nodes){g.fillStyle=COL[n.type]||'#fff';g.strokeStyle='#000';g.beginPath();
+   if(n.shape==='square')g.rect(n.x-14,n.y-14,28,28);else g.arc(n.x,n.y,n.type==='junction'?6:14,0,7);g.fill();g.stroke();
+   if(n===sel){g.strokeStyle='#0ff';g.lineWidth=5;g.beginPath();g.arc(n.x,n.y,20,0,7);g.stroke();g.lineWidth=3;}
+   g.strokeStyle='#000';g.fillStyle='#fff';g.strokeText(n.id,n.x+16,n.y+5);g.fillText(n.id,n.x+16,n.y+5);}
+  const ids=new Set(B.nodes.map(n=>n.id)),bad=B.edges.filter(([a,b])=>!ids.has(a)||!ids.has(b)).length;
+  const f=facts(),cs=Object.entries(f.counts).map(([k,v])=>k+':'+v).join(' ');
+  info.innerHTML=B.nodes.length+' nodos, '+B.edges.length+' aristas, rotas: '+bad+' · conexo: <b>'+(f.connected?'SÍ':'NO')+'</b> · bifurcaciones: '+f.deg3+' · extremos: '+f.deg1+' · '+cs+' · estado: '+B.meta.status;}
+function pos(e){const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*c.width/r.width,y:(e.clientY-r.top)*c.height/r.height};}
+document.getElementById('img').onchange=e=>{const i=new Image();i.onload=draw;i.src=URL.createObjectURL(e.target.files[0]);im=i;};
+document.getElementById('js').onchange=e=>{const f=new FileReader();f.onload=()=>{B=JSON.parse(f.result);draw();};f.readAsText(e.target.files[0]);};
+c.onmousedown=e=>{if(!B)return;const p=pos(e);let best=null,d=1e9;for(const n of B.nodes){const k=Math.hypot(n.x-p.x,n.y-p.y);if(k<d){d=k;best=n;}}if(d<30){drag=best;down=p;}};
+c.onmousemove=e=>{if(!drag)return;const p=pos(e);drag.x=Math.round(p.x);drag.y=Math.round(p.y);draw();};
+window.onmouseup=e=>{
+  if(drag&&down&&B){const p=pos(e);
+   if(Math.hypot(p.x-down.x,p.y-down.y)<5){ // clic (no arrastre): togglear arista
+    if(!sel){sel=drag;draw();}
+    else if(sel===drag){sel=null;draw();}
+    else{const i=B.edges.findIndex(([a,b])=>(a===sel.id&&b===drag.id)||(a===drag.id&&b===sel.id));
+     if(i>=0)B.edges.splice(i,1);else B.edges.push([sel.id,drag.id]);sel=null;draw();}
+   }else sel=null;}
+  drag=null;down=null;};
+document.getElementById('exp').onclick=()=>{if(!B)return;B.meta.status='EDITED_PENDING_REVIEW';const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(B,null,1)],{type:'application/json'}));a.download='kanto.json';a.click();};
+</script>

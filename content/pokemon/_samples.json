@@ -1,0 +1,383 @@
+{
+ "_comment": "Cartas leidas a mano de manual.pdf (pags 39, 45, 67). Son fixtures de test. source.verified=true => transcripcion revisada contra la imagen.",
+ "pending": ["poliwhirl", "wartortle", "charmeleon"],
+ "cards": [
+  {
+   "id": "poliwag",
+   "dex": 60,
+   "name": "Poliwag",
+   "stage": "basic",
+   "deck": "pantano",
+   "hp": 50,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-10).",
+     "officialMove": "bubble",
+     "officialMoveStatus": "proposed",
+     "fx": "water"
+    },
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "officialMove": "tackle",
+     "officialMoveStatus": "proposed",
+     "fx": "contact"
+    },
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 10
+      }
+     ],
+     "rawText": "hace (+10) por cada 4-5-6.",
+     "officialMove": "double-slap",
+     "officialMoveStatus": "proposed",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "poliwhirl",
+     "xp": 1
+    }
+   ],
+   "source": {
+    "manualPage": 39,
+    "verified": true
+   }
+  },
+  {
+   "id": "squirtle",
+   "dex": 7,
+   "name": "Squirtle",
+   "stage": "basic",
+   "deck": "isla",
+   "hp": 60,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "cabezazo",
+     "name": "Cabezazo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "officialMove": "headbutt",
+     "officialMoveStatus": "proposed",
+     "fx": "contact"
+    },
+    {
+     "id": "refugio",
+     "name": "Refugio",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "flatReduction",
+       "amount": 10,
+       "max": 1,
+       "target": "self",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "los ataques le hacen (-10) a Squirtle. MAX 1",
+     "officialMove": "withdraw",
+     "officialMoveStatus": "proposed",
+     "fx": "buff"
+    },
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-10).",
+     "officialMove": "bubble",
+     "officialMoveStatus": "proposed",
+     "fx": "water"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "wartortle",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "manualPage": 67,
+    "verified": true
+   }
+  },
+  {
+   "id": "charmander",
+   "dex": 4,
+   "name": "Charmander",
+   "stage": "basic",
+   "deck": "montana",
+   "hp": 60,
+   "element": "fire",
+   "attacks": [
+    {
+     "id": "rasgunos",
+     "name": "Rasguños",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 10,
+      "ifRoll": {
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "damage": 20
+      }
+     },
+     "effects": [],
+     "rawText": "(10) 4-5-6 (20)",
+     "officialMove": "scratch",
+     "officialMoveStatus": "proposed",
+     "fx": "contact"
+    },
+    {
+     "id": "giro_fuego",
+     "name": "Giro-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 20,
+      "ifRoll": {
+       "faces": [
+        5,
+        6
+       ],
+       "damage": 50
+      }
+     },
+     "effects": [],
+     "rawText": "(20) 5-6 (50)",
+     "officialMove": "fire-spin",
+     "officialMoveStatus": "proposed",
+     "fx": "flame"
+    },
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "officialMove": "flamethrower",
+     "officialMoveStatus": "proposed",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "charmeleon",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "manualPage": 67,
+    "verified": true
+   }
+  },
+  {
+   "id": "tangela_erika",
+   "dex": 114,
+   "name": "Tangela",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 80,
+   "element": "grass",
+   "gym": {
+    "leader": "erika",
+    "slot": 1
+   },
+   "attacks": [
+    {
+     "id": "polvo_esporas",
+     "name": "Polvo de esporas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacas 1-2-3 tu PKM no ataca.",
+     "officialMove": "stun-spore",
+     "officialMoveStatus": "proposed",
+     "fx": "poison"
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu PKM se hace (20) y Tangela se cura (20).",
+     "officialMove": "absorb",
+     "officialMoveStatus": "proposed",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "manualPage": 45,
+    "verified": true
+   }
+  }
+ ]
+}
