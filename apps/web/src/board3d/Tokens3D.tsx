@@ -15,6 +15,8 @@ import type { RigFocus } from './rig'
 import { nodeWorldPos, type WorldPos } from './scene'
 import {
   moveTokenAlong,
+  pulseActiveMarkers,
+  setActiveToken,
   setTokenModel,
   setTokenSprite,
   stepMsFor,
@@ -107,6 +109,13 @@ export function Tokens3D(props: Tokens3DProps): ReactNode {
     invalidate()
   }, [group, specs, invalidate])
 
+  // N-0003/AC-2: el indicador de turno es estado (visible o no); el pulso de
+  // useFrame es solo visual.
+  useEffect(() => {
+    setActiveToken(group, activeTokenId)
+    invalidate()
+  }, [group, specs, activeTokenId, invalidate])
+
   // T-076: foco en reposo (la ficha activa en su nodo; el rig conserva el
   // último heading, así el encuadre no gira cuando no hay camino).
   useEffect(() => {
@@ -132,7 +141,10 @@ export function Tokens3D(props: Tokens3DProps): ReactNode {
   }, [tokens, invalidate])
 
   // Billboard: el sprite mira a la cámara en cada frame renderizado.
-  useFrame(() => syncTokenSprites(group, camera))
+  useFrame((state) => {
+    syncTokenSprites(group, camera)
+    pulseActiveMarkers(group, camera, reducedMotion ? 0 : state.clock.elapsedTime)
+  })
 
   // Camino del PlayerMoved (AC-2/AC-3): saltos por tramo, cámara siguiendo.
   useEffect(() => {
