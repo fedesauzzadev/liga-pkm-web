@@ -1,0 +1,8 @@
+# brainloom — config mínima (formato deducido del skill; ajustar si hay uno oficial)
+commands:
+  test: pnpm typecheck && pnpm lint && pnpm vitest run <archivos tocados>
+  run: pnpm --filter @liga/web dev --port <puerto del nodo> --strictPort
+  full: pnpm verify   # lo corre SOLO el orquestador al integrar una tanda
+limits:
+  files_changed: 8
+  lines_changed: 300
