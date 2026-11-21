@@ -131,7 +131,7 @@ export function PlayScreen({
   const [saveNote, setSaveNote] = useState(false)
   // T-075: eventos del combate (el popup los reproduce por incrementos) y Ampliar.
   const [battleScript, setBattleScript] = useState<readonly GameEvent[]>([])
-  const [battleExpanded, setBattleExpanded] = useState(false)
+  const [battleExpanded, setBattleExpanded] = useState(true)
   // sync-estado-combate/AC-1,AC-2: snapshot de presentación del combate — el
   // estado del último comando cuyo lote de eventos terminó de reproducirse.
   // Mientras el guion corre, el popup arma los actores desde acá (prefijo ya
