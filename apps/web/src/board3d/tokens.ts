@@ -15,6 +15,23 @@ export interface TokenSpec {
   readonly spriteUrl: string | null
 }
 
+/** N-0003: aspecto propio de la ficha (aro del jugador + indicador de turno).
+ *  Vive acá y no en theme/board3d.ts porque ese archivo es de otro nodo. */
+export const TOKEN_LOOK = {
+  ring: { inner: 0.27, outer: 0.4, y: 0.02 },
+  active: {
+    color: '#ffd400',
+    ring: { inner: 0.46, outer: 0.56, y: 0.03 },
+    arrow: { radius: 0.12, height: 0.24, gap: 0.1 },
+    /** Sin modelo: flecha sobre el sprite/peón. */
+    defaultTopY: 1.35,
+    pulse: { hz: 1.1, ringScale: 0.14, bob: 0.08 },
+    /** Tamaño en pantalla ~constante: escala = distancia a cámara / refDistance. */
+    refDistance: 9,
+    maxScale: 6,
+  },
+} as const
+
 const pawnColor = (playerIndex: number): string => {
   const colors: readonly string[] = BOARD3D.token.pawnColors
   return colors[playerIndex % colors.length] ?? colors[0] ?? '#e2504c'
@@ -24,7 +41,8 @@ const pawnColor = (playerIndex: number): string => {
 export function buildToken(id: string, playerIndex: number): THREE.Group {
   const token = new THREE.Group()
   token.name = `token:${id}`
-  token.userData = { kind: 'token', tokenId: id }
+  const color = pawnColor(playerIndex)
+  token.userData = { kind: 'token', tokenId: id, color }
 
   const base = new THREE.Mesh(
     new THREE.CylinderGeometry(
@@ -33,7 +51,7 @@ export function buildToken(id: string, playerIndex: number): THREE.Group {
       BOARD3D.token.baseHeight,
       24,
     ),
-    toonMaterial({ color: 0xffffff }),
+    toonMaterial({ color }),
   )
   base.name = 'base'
   base.position.y = BOARD3D.token.baseHeight / 2
@@ -41,7 +59,7 @@ export function buildToken(id: string, playerIndex: number): THREE.Group {
 
   const pawn = new THREE.Mesh(
     new THREE.ConeGeometry(BOARD3D.token.pawnRadius, BOARD3D.token.pawnHeight, 16),
-    toonMaterial({ color: pawnColor(playerIndex) }),
+    toonMaterial({ color }),
   )
   pawn.name = 'pawn'
   pawn.position.y = BOARD3D.token.baseHeight + BOARD3D.token.pawnHeight / 2
@@ -72,7 +90,79 @@ export function buildToken(id: string, playerIndex: number): THREE.Group {
   blob.name = 'blob'
   blob.rotation.x = -Math.PI / 2
   token.add(blob)
+
+  // N-0003/AC-1: aro del color del jugador, material propio de la ficha.
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(TOKEN_LOOK.ring.inner, TOKEN_LOOK.ring.outer, 32),
+    new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide }),
+  )
+  ring.name = 'ring'
+  ring.rotation.x = -Math.PI / 2
+  ring.position.y = TOKEN_LOOK.ring.y
+  token.add(ring)
+  token.add(buildActiveMarker())
   return token
+}
+
+/** N-0003/AC-2: indicador de turno (aro + flecha), oculto hasta setActiveToken. */
+function buildActiveMarker(): THREE.Group {
+  const look = TOKEN_LOOK.active
+  const marker = new THREE.Group()
+  marker.name = 'active'
+  marker.visible = false
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(look.ring.inner, look.ring.outer, 32),
+    new THREE.MeshBasicMaterial({ color: look.color, side: THREE.DoubleSide }),
+  )
+  ring.name = 'active-ring'
+  ring.rotation.x = -Math.PI / 2
+  ring.position.y = look.ring.y
+  marker.add(ring)
+  // Sin depthTest: la flecha se ve aunque un edificio tape la ficha.
+  const arrow = new THREE.Mesh(
+    new THREE.ConeGeometry(look.arrow.radius, look.arrow.height, 4),
+    new THREE.MeshBasicMaterial({ color: look.color, depthTest: false }),
+  )
+  arrow.name = 'active-arrow'
+  arrow.rotation.x = Math.PI
+  arrow.renderOrder = 10
+  arrow.userData.restY = look.defaultTopY + look.arrow.gap
+  arrow.position.y = arrow.userData.restY
+  marker.add(arrow)
+  return marker
+}
+
+/** N-0003/AC-2: muestra el indicador solo en la ficha activa (estado, no animación). */
+export function setActiveToken(group: THREE.Group, activeId: string | null): void {
+  for (const token of group.children) {
+    if (token.userData.kind !== 'token') continue
+    const marker = token.children.find((child) => child.name === 'active')
+    if (marker !== undefined) marker.visible = token.userData.tokenId === activeId
+  }
+}
+
+/** N-0003/AC-2: pulso solo visual del indicador (tSec = 0 ⇒ pose de reposo) y
+ *  escala por distancia a cámara para que se vea también en la vista general. */
+export function pulseActiveMarkers(group: THREE.Group, camera: THREE.Camera, tSec: number): void {
+  const look = TOKEN_LOOK.active
+  const wave = Math.sin(2 * Math.PI * look.pulse.hz * tSec)
+  for (const token of group.children) {
+    const marker = token.children.find((child) => child.name === 'active')
+    if (marker === undefined || !marker.visible) continue
+    const scale = Math.min(
+      look.maxScale,
+      Math.max(1, camera.position.distanceTo(token.position) / look.refDistance),
+    )
+    const ring = marker.children.find((child) => child.name === 'active-ring')
+    const arrow = marker.children.find((child) => child.name === 'active-arrow')
+    const ringScale = scale * (1 + look.pulse.ringScale * wave)
+    ring?.scale.set(ringScale, ringScale, 1)
+    if (arrow !== undefined) {
+      arrow.scale.setScalar(scale)
+      const restY = typeof arrow.userData.restY === 'number' ? arrow.userData.restY : look.defaultTopY
+      arrow.position.y = restY + (look.arrow.height / 2 + look.pulse.bob * wave) * scale
+    }
+  }
 }
 
 /** AC-1: con textura el sprite reemplaza al peón; null vuelve al peón. */
@@ -103,17 +193,42 @@ export function setTokenModel(token: THREE.Group, model: THREE.Object3D | null):
     if (child.name === 'model') token.remove(child)
   }
   const pawn = token.children.find((child) => child.name === 'pawn')
+  const arrow = token.children
+    .find((child) => child.name === 'active')
+    ?.children.find((child) => child.name === 'active-arrow')
   if (model === null) {
     if (pawn !== undefined) pawn.visible = true
+    if (arrow !== undefined) arrow.userData.restY = TOKEN_LOOK.active.defaultTopY + TOKEN_LOOK.active.arrow.gap
     return
   }
   model.name = 'model'
   model.rotation.y = BOARD3D.token.modelRotY
   model.position.y = BOARD3D.token.baseHeight
+  // Caja medida antes de colgarlo: sin padre, queda en coordenadas de la ficha.
+  if (arrow !== undefined) {
+    const top = new THREE.Box3().setFromObject(model).max.y
+    if (Number.isFinite(top)) arrow.userData.restY = top + TOKEN_LOOK.active.arrow.gap
+  }
   token.add(model)
+  tintUntexturedParts(model, token.userData.color)
   if (pawn !== undefined) pawn.visible = false
   const sprite = token.children.find((child) => child.name === 'sprite')
   if (sprite !== undefined) sprite.visible = false
+}
+
+/** N-0003/AC-1: las partes sin textura (hoy el modelo llega blanco) toman el
+ *  color del jugador en un material CLONADO: la plantilla compartida no cambia.
+ *  shortcut: tiñe solo partes sin `map`; cuando models/ entregue las texturas
+ *  del inicial esto deja de aplicarse solo. */
+function tintUntexturedParts(model: THREE.Object3D, color: unknown): void {
+  if (typeof color !== 'string') return
+  model.traverse((child) => {
+    if (!(child instanceof THREE.Mesh) || !(child.material instanceof THREE.MeshToonMaterial)) return
+    if (child.material.map !== null) return
+    const tinted = child.material.clone()
+    tinted.color.set(color)
+    child.material = tinted
+  })
 }
 
 /** Caminata-ficha/AC-5/AC-6: reposo — sola a `soloOffset` del centro (dirección
