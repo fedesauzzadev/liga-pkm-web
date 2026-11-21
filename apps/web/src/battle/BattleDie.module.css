@@ -45,9 +45,14 @@
   align-items: center;
   justify-items: center;
   border: 2px solid rgba(34, 48, 28, 0.72);
-  border-radius: 14px;
+  /* N-0007: radio chico para que las aristas del cubo se toquen (con 14 px la
+     cara lateral quedaba despegada, como un segundo dado detrás). */
+  border-radius: 6px;
   background: linear-gradient(145deg, #fffdf8, #efe8d8);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  /* N-0007: sin esto las caras de atrás se veían por las esquinas redondeadas
+     (cubo "fantasma" superpuesto a la cara del frente). */
+  backface-visibility: hidden;
 }
 
 .front { transform: translateZ(calc(var(--die-size, 72px) / 2)); }
