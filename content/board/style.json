@@ -20,7 +20,7 @@
   "treeRing": { "innerRadius": 10.4, "outerRadius": 17.2, "count": 240, "seed": 79, "_nota": "Anillo de arbolado denso e instanciado entre el borde del tablero y las colinas (T-079/AC-5)." },
  "labels": {
   "fontPx": 13, "outlinePx": 3, "fadeMs": 150, "collision": true, "throttleHz": 10,
-  "alwaysShow": ["gym"], "showWithinTokenDistance": 6.0, "showOnlyIfCameraDistanceBelow": 9.0,
+  "alwaysShow": ["gym"], "showWithinTokenDistance": 6.0, "showOnlyIfCameraDistanceBelow": 17.0,
   "priority": ["gym", "centro", "oak", "mercado", "start", "deck", "other"], "screenSpaceSize": true
  },
  "edgeProps": {
