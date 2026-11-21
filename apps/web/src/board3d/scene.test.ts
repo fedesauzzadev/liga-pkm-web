@@ -51,7 +51,8 @@ test('AC: SPEC-H/T-069/AC-1+AC-2 - mundo continuo: terreno del decor, sin caja b
     expect(ring, `falta ring en pedestal:${key}`).toBeDefined()
     const stoneParams = (stone?.geometry as THREE.CylinderGeometry).parameters
     expect(stoneParams.radiusTop).toBeCloseTo(BOARD3D.world.pedestal.radius, 5)
-    const material = ring?.material as THREE.MeshStandardMaterial
+    // N-0012/AC-4: el color del mazo va en la piedra; el aro es crema.
+    const material = stone?.material as THREE.MeshStandardMaterial
     expect(material.color.getHexString().toLowerCase()).toBe(ringColorOf(key))
     const stack = scene.stacks.get(key)
     expect(stack?.position.y, `pila ${key} sobre el pedestal`).toBeCloseTo(stackTop, 6)
@@ -74,12 +75,16 @@ test('AC: SPEC-G/AC-2 + SPEC-H/T-067/AC-1 - piedras biseladas por nodo (bbox del
     expect(box.min.y, `${id} apoyada en el terreno`).toBeGreaterThanOrEqual(-1e-6)
     expect(box.max.y).toBeLessThanOrEqual(BOARD3D.node.height + 1e-6)
 
+    // N-0012/AC-1: el color del tipo/mazo va en la piedra entera; el aro es crema.
     const topring = pivot.children.find((child) => child.name === 'topring') as THREE.Mesh | undefined
     if (topring === undefined) throw new Error(`falta topring en nodo ${id}`)
+    const colored = pivot.children.find((child) => child.name === 'stone') as THREE.Mesh | undefined
+    if (colored === undefined) throw new Error(`falta stone en nodo ${id}`)
     const expected = node.type === 'deck' && node.deck !== undefined
       ? BOARD3D.deckColors[node.deck as keyof typeof BOARD3D.deckColors].toLowerCase()
       : BOARD3D.nodeColors[node.type].toLowerCase()
-    expect(`#${(topring.material as THREE.MeshBasicMaterial).color.getHexString()}`).toBe(expected)
+    expect(`#${(colored.material as THREE.MeshStandardMaterial).color.getHexString()}`).toBe(expected)
+    expect(`#${(topring.material as THREE.MeshBasicMaterial).color.getHexString()}`).toBe(BOARD3D.node.rimColor.toLowerCase())
     expect(topring.position.y).toBeGreaterThan(BOARD3D.node.height - 1e-6)
   }
 

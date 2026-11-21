@@ -110,7 +110,9 @@ const buildStack = (key: string, world: WorldPos, baseY: number): THREE.Group =>
   )
   blob.name = 'blob'
   blob.rotation.x = -Math.PI / 2
-  blob.position.y = BOARD3D.world.pedestal.height + 0.004
+  // N-0012: sobre la piedra del mazo, bajo las cartas (a +pedestal.height
+  // quedaba ENCIMA de la carta superior y el mazo se veía gris).
+  blob.position.y = 0.004
   group.add(blob)
   return group
 }
@@ -124,7 +126,7 @@ const buildPedestal = (key: string, world: WorldPos, color: string): THREE.Group
 
   const stone = new THREE.Mesh(
     new THREE.CylinderGeometry(spec.radius, spec.radius * 1.08, spec.height, 8),
-    standard(spec.color),
+    standard(color),
   )
   stone.name = 'stone'
   stone.position.y = spec.height / 2
@@ -132,7 +134,7 @@ const buildPedestal = (key: string, world: WorldPos, color: string): THREE.Group
 
   const ring = new THREE.Mesh(
     new THREE.CylinderGeometry(spec.radius - spec.ringInset, spec.radius - spec.ringInset, spec.ringHeight, 8),
-    standard(color),
+    standard(spec.ringColor),
   )
   ring.name = 'ring'
   ring.position.y = spec.height + spec.ringHeight / 2

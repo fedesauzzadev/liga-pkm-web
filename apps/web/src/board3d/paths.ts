@@ -22,7 +22,7 @@ const ribbon = (length: number, width: number, height: number, material: THREE.M
 
 /** AC-3: cinta principal + falda suave (más ancha y translúcida) de una arista. */
 export function buildEdgeMeshes(edge: EdgeSpec): { readonly main: THREE.Mesh; readonly soft: THREE.Mesh } {
-  const { height, width, color, soft, softOpacity, seed } = BOARD3D.edge
+  const { height, width, color, soft, softColor, softOpacity, seed } = BOARD3D.edge
   const length = Math.hypot(edge.b.x - edge.a.x, edge.b.z - edge.a.z)
   const rng = rngSeq(fnv1a(`${seed}:${edge.key}`))
 
@@ -33,7 +33,7 @@ export function buildEdgeMeshes(edge: EdgeSpec): { readonly main: THREE.Mesh; re
 
   const extra = soft * (0.7 + 0.6 * rng())
   const softMesh = ribbon(length, width + 2 * extra, height, new THREE.MeshBasicMaterial({
-    color,
+    color: softColor,
     transparent: true,
     opacity: softOpacity,
     depthWrite: false,

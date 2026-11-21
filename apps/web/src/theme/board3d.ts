@@ -18,6 +18,8 @@ export const BOARD3D = {
     /** Bisel de la piedra; el color del tipo/mazo vive en el aro superior. */
     bevel: 0.03,
     stoneColor: '#b3aca1',
+    /** N-0012: la piedra entera lleva el color del tipo; el aro superior es crema. */
+    rimColor: '#FFF6E0',
     segments: 24,
   },
   glyph: {
@@ -29,20 +31,22 @@ export const BOARD3D = {
   },
   edge: {
     /** Camino de tierra (AC-3): cinta 0,16 #C9A877 + falda suave por seed. */
-    width: 0.16,
+    width: 0.22,
     height: 0.02,
-    color: '#C9A877',
+    color: '#E6C98F',
+    /** N-0012: borde más oscuro que marca el recorrido sobre cualquier bioma. */
+    softColor: '#A9824F',
     /** Falda: ancho extra con opacidad baja (borde suave determinista). */
-    soft: 0.05,
-    softOpacity: 0.35,
+    soft: 0.06,
+    softOpacity: 0.75,
     seed: 20261012,
   },
   pebbles: {
     /** Guijarros instanciados a los lados del camino (AC-3). */
-    size: 0.045,
-    spacing: 0.42,
-    sideMin: 0.11,
-    sideMax: 0.2,
+    size: 0.04,
+    spacing: 0.95,
+    sideMin: 0.17,
+    sideMax: 0.26,
     seed: 20261013,
   },
   card: {
@@ -86,6 +90,8 @@ export const BOARD3D = {
       radius: 0.72,
       height: 0.12,
       color: '#9a938a',
+      /** N-0012: aro crema; la piedra del mazo lleva el color del mazo. */
+      ringColor: '#FFF6E0',
       ringHeight: 0.025,
       ringInset: 0.06,
     },
@@ -320,24 +326,24 @@ export const BOARD3D = {
   },
   /** Color de cada mazo de terreno (paneles y nodos `deck`). */
   deckColors: {
-    llanura: '#E8DCC8',
-    pantano: '#5C6B3C',
-    isla: '#4F8FD6',
-    montana: '#D2574B',
-    bosque: '#4E9D5B',
+    llanura: '#F2D36B',
+    pantano: '#8A63C8',
+    isla: '#3F9BE0',
+    montana: '#E0553F',
+    bosque: '#3FA85A',
   } as const,
   /** Color por tipo de casillero (spec AC-2; deck usa el color del mazo). */
   nodeColors: {
-    start: '#dfe7b7',
-    mercado: '#f2d778',
-    centro: '#f5a3c8',
-    oak: '#b78bff',
-    gym: '#7ac74f',
-    duelo: '#ff9a3c',
-    sorpresa: '#e34fd0',
-    liga: '#4fd8e3',
-    empty: '#d3d8d3',
-    junction: '#f0d7bb',
+    start: '#F4F1E4',
+    mercado: '#4F8FE8',
+    centro: '#F2718F',
+    oak: '#B78BFF',
+    gym: '#F2A93B',
+    duelo: '#FF7A3C',
+    sorpresa: '#E34FD0',
+    liga: '#35C9D8',
+    empty: '#E9E4D8',
+    junction: '#F0D7BB',
     deck: '#b7d5a7',
   } as const,
 } as const

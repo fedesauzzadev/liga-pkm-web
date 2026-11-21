@@ -128,6 +128,8 @@ export function buildContactShadows(landmarks: THREE.Group, style: BoardStyle): 
 /** N-0010/AC-4: mallas que solo reciben (apoyadas en el suelo: proyectar les
  *  daría acné sin aportar volumen). */
 const RECEIVE_ONLY = /^(terrain|edge|edgesoft|pebbles|water)/
+/** N-0012: cartas apiladas a 0,02 — si reciben, se auto-sombrean (acné) y el mazo se ve gris. */
+const CAST_ONLY = /^card:/
 
 /**
  * N-0010/AC-1: marca quién proyecta y quién recibe sombra. Lo translúcido y lo
@@ -141,7 +143,7 @@ export function applyShadowFlags(root: THREE.Object3D): number {
     meshes += 1
     const materials: readonly THREE.Material[] = Array.isArray(object.material) ? object.material : [object.material]
     const lit = materials.every((material) => !material.transparent && !(material instanceof THREE.MeshBasicMaterial))
-    object.receiveShadow = lit
+    object.receiveShadow = lit && !CAST_ONLY.test(object.name)
     object.castShadow = lit && !RECEIVE_ONLY.test(object.name)
   })
   return meshes

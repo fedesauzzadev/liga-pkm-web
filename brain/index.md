@@ -14,6 +14,7 @@ Orquestador: sesión principal. Una sesión limpia por nodo, en su worktree/rama
 | N-0009 | Etiquetas fuera de la barra de cámara | 2b | N-0004 | planned |
 | N-0010 | Luz, sombras reales y tone mapping | arte | — | verified |
 | N-0011 | Terreno y biomas: 5 zonas con forma propia y agua real | arte | N-0010 | verified |
+| N-0012 | Caminos, casilleros y mazos con color pleno | arte | N-0011 | verified |
 
 Tanda 3 (sin nodo todavía): conectar las animaciones de Showdown a BattleScene (grande, dividir); pulido de HUD y setup; cierre de tareas REVIEW del backlog mirándolas; T-113 split de archivos > 400 líneas.
 Paralelo = mismo número de tanda (archivos `owns` disjuntos). Secuencial = `depends_on`.
