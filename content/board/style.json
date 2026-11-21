@@ -7,10 +7,10 @@
   "_nota": "Antes los biomas eran alfombras enormes y saturadas (rojo en Montaña). Ahora cada color solo domina cerca del centro de su zona y se funde con el pasto base. El rojo queda solo para lava."
  },
  "lighting": {
-  "hemisphere": { "sky": "#CFE8FF", "ground": "#8DBF6A", "intensity": 0.9 },
-  "directional": { "color": "#FFF3D6", "intensity": 1.0, "from": [-6, 10, 4], "shadowMapSize": 2048, "shadowRadiusAroundTarget": 10 },
+  "hemisphere": { "sky": "#BFD6FF", "ground": "#A9C27A", "intensity": 0.65 },
+  "directional": { "color": "#FFF4E0", "intensity": 2.8, "from": [-8, 6.5, 2.5], "shadowMapSize": 2048, "shadowRadiusAroundTarget": 12 },
   "toon": { "steps": 3 },
-  "toneMapping": "ACESFilmic", "exposure": 1.0,
+  "toneMapping": "Neutral", "exposure": 1.0,
   "outlines": { "enabled": false, "thickness": 0.02, "color": "#2B2B2B", "maxMeshes": 40, "onlyKinds": ["house", "pokecenter", "market", "lab", "gym"] },
   "contactShadows": { "radius": 0.5, "opacity": 0.28 }
  },

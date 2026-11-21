@@ -19,6 +19,8 @@ declare global {
       aimCamera?: (aim: DebugAim) => void
       /** SPEC-O/T-094/AC-3: resolución de los modelos nuevos por kind. */
       modelsReport?: () => ReturnType<typeof modelsReportEntries>
+      /** N-0010: escena y renderer vivos para inspeccionar desde la consola (DEV). */
+      three?: () => { scene: THREE.Scene; gl: THREE.WebGLRenderer }
     }
   }
 }
@@ -35,6 +37,7 @@ export function DebugDump({
   const camera = useThree((state) => state.camera) as THREE.PerspectiveCamera
   const size = useThree((state) => state.size)
   const gl = useThree((state) => state.gl)
+  const scene = useThree((state) => state.scene)
   useEffect(() => {
     if (!import.meta.env.DEV) return
     window.__debug = {
@@ -72,6 +75,7 @@ export function DebugDump({
       },
       aimCamera: (aim: DebugAim) => shared.aimCameraRef.current?.(aim),
       modelsReport: modelsReportEntries,
+      three: () => ({ scene, gl }),
     }
     return () => {
       if (window.__debug?.sceneDump !== undefined) delete window.__debug.sceneDump

@@ -124,3 +124,25 @@ export function buildContactShadows(landmarks: THREE.Group, style: BoardStyle): 
   mesh.userData = { kind: 'contactShadows' }
   return mesh
 }
+
+/** N-0010/AC-4: mallas que solo reciben (apoyadas en el suelo: proyectar les
+ *  daría acné sin aportar volumen). */
+const RECEIVE_ONLY = /^(terrain|edge|edgesoft|pebbles)/
+
+/**
+ * N-0010/AC-1: marca quién proyecta y quién recibe sombra. Lo translúcido y lo
+ * básico (cielo, nubes, agua, glifos, aros, blobs) queda afuera. Devuelve la
+ * cantidad de mallas vistas (firma barata para re-aplicar al llegar modelos).
+ */
+export function applyShadowFlags(root: THREE.Object3D): number {
+  let meshes = 0
+  root.traverse((object) => {
+    if (!(object instanceof THREE.Mesh)) return
+    meshes += 1
+    const materials: readonly THREE.Material[] = Array.isArray(object.material) ? object.material : [object.material]
+    const lit = materials.every((material) => !material.transparent && !(material instanceof THREE.MeshBasicMaterial))
+    object.receiveShadow = lit
+    object.castShadow = lit && !RECEIVE_ONLY.test(object.name)
+  })
+  return meshes
+}
