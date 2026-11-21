@@ -271,3 +271,52 @@ test('AC: SPEC-J/T-078/AC-5 - raycast deshabilitado: no bloquea clics del mundo'
   mesh.raycast = noRaycast
   expect(raycaster.intersectObject(mesh)).toHaveLength(0)
 })
+
+// N-0009: barra de cámara medida a 1440×810 (`[data-testid="camera-bar"]`).
+const BAR = { x: 586, y: 12, w: 268, h: 61 }
+const overview810 = (): LabelViewCtx => {
+  const aspect = 1440 / 810
+  const plan = planOverview(halfW, halfD, aspect)
+  const camera = new THREE.PerspectiveCamera(plan.fovDeg, aspect, 0.1, 200)
+  camera.position.set(...plan.position)
+  camera.lookAt(new THREE.Vector3(...plan.target))
+  applySafeOffset(camera, safeArea, 1440, 810)
+  return { ...ctxOf(camera), height: 810 }
+}
+
+// AC: N-0009/AC-1 — ninguna etiqueta visible pisa la barra de cámara.
+test('AC: N-0009/AC-1 - en overview 1440x810 ninguna etiqueta visible pisa la barra', () => {
+  const ctx = overview810()
+  const before = planLabels(boardItems, ctx, style).filter((p) => p.visible && boxesOverlap(p.screenBBox, BAR))
+  expect(before.map((p) => p.text)).toContain('Ciudad Azafrán')
+  const after = planLabels(boardItems, { ...ctx, avoid: [BAR] }, style)
+  expect(after.filter((p) => p.visible && boxesOverlap(p.screenBBox, BAR))).toEqual([])
+})
+
+// AC: N-0009/AC-2 — las ciudades siguen todas visibles y sin solaparse.
+test('AC: N-0009/AC-2 - las ciudades siguen visibles y sin solapes al esquivar la barra', () => {
+  const ctx = overview810()
+  const cities = (plans: ReturnType<typeof planLabels>): string[] =>
+    plans.filter((p) => p.type === 'gym' && p.visible).map((p) => p.nodeId)
+  const after = planLabels(boardItems, { ...ctx, avoid: [BAR] }, style)
+  expect(cities(after)).toEqual(cities(planLabels(boardItems, ctx, style)))
+  expect(cities(after).length).toBeGreaterThan(0)
+  const shown = after.filter((p) => p.visible)
+  for (const [i, a] of shown.entries()) {
+    for (const b of shown.slice(i + 1)) expect(boxesOverlap(a.screenBBox, b.screenBBox)).toBe(false)
+  }
+})
+
+// AC: N-0009/AC-3 — lejos de la barra el plan no cambia (explore y overview).
+test('AC: N-0009/AC-3 - las etiquetas que no tocan la barra quedan donde estaban', () => {
+  for (const ctx of [ctxOf(exploreCamera()), overview810()]) {
+    const base = planLabels(boardItems, ctx, style)
+    const dodged = planLabels(boardItems, { ...ctx, avoid: [BAR] }, style)
+    const away = (p: (typeof base)[number]): boolean => !boxesOverlap(p.screenBBox, BAR)
+    const moved = base.filter(away).filter((p) => {
+      const q = dodged.find((d) => d.nodeId === p.nodeId)
+      return q === undefined || q.screenPos[0] !== p.screenPos[0] || q.screenPos[1] !== p.screenPos[1]
+    })
+    expect(moved).toEqual([])
+  }
+})

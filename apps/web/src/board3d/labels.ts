@@ -52,6 +52,8 @@ export interface LabelViewCtx {
   readonly token: readonly [number, number, number] | null
   readonly hovered: string | null
   readonly focused: readonly string[]
+  /** N-0009: rectángulos del HUD (px del canvas) que ninguna etiqueta pisa. */
+  readonly avoid?: readonly PxBox[]
 }
 
 /** Resultado del plan por etiqueta; también es la entrada del sceneDump. */
@@ -196,6 +198,39 @@ const clampIntoViewport = (
 }
 
 /**
+ * N-0009: si la caja pisa un rectángulo del HUD, se corre lo mínimo (abajo,
+ * arriba o a un costado, con el mismo margen del viewport) que la deje libre
+ * y entera en pantalla. `null` si ninguna salida cabe.
+ */
+const dodgeHud = (
+  pos: readonly [number, number],
+  size: { w: number; h: number },
+  ctx: LabelViewCtx,
+): readonly [number, number] | null => {
+  const gap = BOARD3D.label.viewportMarginPx
+  let at = pos
+  for (const hud of ctx.avoid ?? []) {
+    const [x, y] = at
+    if (!boxesOverlap({ x: x - size.w / 2, y: y - size.h, w: size.w, h: size.h }, hud)) continue
+    const exits: (readonly [number, number])[] = [
+      [x, hud.y + hud.h + gap + size.h],
+      [x, hud.y - gap],
+      [hud.x - gap - size.w / 2, y],
+      [hud.x + hud.w + gap + size.w / 2, y],
+    ]
+    const best = exits
+      .filter((exit) => {
+        const { shift } = clampIntoViewport(exit, size, ctx.width, ctx.height)
+        return shift[0] === 0 && shift[1] === 0
+      })
+      .sort((a, b) => Math.hypot(a[0] - x, a[1] - y) - Math.hypot(b[0] - x, b[1] - y))[0]
+    if (best === undefined) return null
+    at = best
+  }
+  return at
+}
+
+/**
  * AC-2..AC-4: plan completo por etiqueta. Fuera del viewport ⇒ 'offscreen'
  * (no entra a la colisión); visibilidad always/near/hover; T-088/AC-1: la caja
  * de una etiqueta visible está completa dentro del viewport (margen 8 px) y
@@ -249,11 +284,11 @@ export function planLabels(
     // T-088/AC-1: caja completa dentro del viewport con margen de 8 px;
     // si ni así cabría (texto más ancho que el viewport), queda oculta.
     const clamped = clampIntoViewport(screenPos, size, ctx.width, ctx.height)
-    if (!clamped.fits) {
+    const screenPosClamped = clamped.fits ? dodgeHud(clamped.pos, size, ctx) : null
+    if (screenPosClamped === null) {
       plans.push({ ...plan, visible: false, reason: 'hidden' })
       continue
     }
-    const screenPosClamped = clamped.pos
     const screenBBoxClamped: PxBox = {
       x: screenPosClamped[0] - size.w / 2,
       y: screenPosClamped[1] - size.h,
@@ -263,7 +298,7 @@ export function planLabels(
     const cplan = {
       ...plan,
       screenPos: screenPosClamped,
-      screenShift: clamped.shift,
+      screenShift: [screenPosClamped[0] - screenPos[0], screenPosClamped[1] - screenPos[1]] as const,
       screenBBox: screenBBoxClamped,
     }
     if ((style.alwaysShow as readonly string[]).includes(item.type)) {

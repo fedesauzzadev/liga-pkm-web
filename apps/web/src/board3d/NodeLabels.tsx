@@ -7,7 +7,7 @@ import { Billboard, Text } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useMemo, useRef, type ComponentRef, type ReactNode } from 'react'
 import * as THREE from 'three'
-import type { BoardNode } from '@liga/content'
+import type { BoardNode, PxBox } from '@liga/content'
 import { BOARD3D } from '../theme/board3d'
 import { boardStyle } from './style'
 import {
@@ -27,6 +27,15 @@ type TextMesh = ComponentRef<typeof Text>
 /** Sin corrimiento del plan (antes del primer replan). */
 const ZERO_SHIFT: readonly [number, number] = [0, 0]
 
+/** N-0009: caja de la barra de cámara en px del canvas (las etiquetas la esquivan). */
+const hudBoxes = (canvas: HTMLElement): readonly PxBox[] => {
+  const bar = document.querySelector('[data-testid="camera-bar"]')
+  if (bar === null) return []
+  const origin = canvas.getBoundingClientRect()
+  const rect = bar.getBoundingClientRect()
+  return [{ x: rect.left - origin.left, y: rect.top - origin.top, w: rect.width, h: rect.height }]
+}
+
 export interface NodeLabelsProps {
   readonly nodes: readonly BoardNode[]
   readonly imageSize: readonly [number, number] | undefined
@@ -43,6 +52,7 @@ export function NodeLabels(props: NodeLabelsProps): ReactNode {
   const camera = useThree((state) => state.camera) as THREE.PerspectiveCamera
   const size = useThree((state) => state.size)
   const invalidate = useThree((state) => state.invalidate)
+  const canvas = useThree((state) => state.gl.domElement)
   const style = boardStyle.labels
 
   const items = useMemo(
@@ -62,7 +72,15 @@ export function NodeLabels(props: NodeLabelsProps): ReactNode {
       lastPlanMs.current = nowMs
       const plan = planLabels(
         items,
-        { camera, width: size.width, height: size.height, token: tokenWorld, hovered, focused: [...focused] },
+        {
+          camera,
+          width: size.width,
+          height: size.height,
+          token: tokenWorld,
+          hovered,
+          focused: [...focused],
+          avoid: hudBoxes(canvas),
+        },
         style,
       )
       dumpRef.current = plan
