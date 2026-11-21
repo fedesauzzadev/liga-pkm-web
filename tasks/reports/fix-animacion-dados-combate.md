@@ -1,0 +1,38 @@
+# Reporte fix-animacion-dados-combate — Dados de combate: tirada real + pacing
+- Estado: REVIEW | Plan: `.opencode/plan/fix-animacion-dados-combate.md` (sin fila en BACKLOG: es un plan, patrón `absorber-confusion-sin-cura`/`turno-automatico-rival`) | Rama/commit: `main` @ `f7fdf03` + WIP ajeno en el árbol compartido.
+- Resumen (≤ 5 líneas):
+  - `playDieRolled` ya no espera la pausa fija de 800 ms: espera la tirada REAL (`rollDurationMs(seed) + 120 ms`, misma fórmula y seed que el dado en pantalla, sin doble escalado) ⇒ el número se ve antes del mensaje/daño y a 2× no se pispa.
+  - `dieSide` sale de `dieSideOf(stage, purpose)`: gate/dodge del turno en curso (campo nuevo `rivalPick`), wake del lado dormido, effect/bonus del atacante ⇒ ninguna tirada cae en el slot equivocado.
+  - `DieSlot` pasa el valor del evento (antes `value={1}` fijo) y `BattleDie` sincroniza la cara cuando no rueda; una tirada superada termina sola (el último roll manda).
+  - Motor intacto (AC-6): los 10 archivos tocados están en `apps/web`.
+- Archivos clave tocados (rutas):
+  - `apps/web/src/battle/dieTiming.ts` (nuevo, puro): `DIE_ROLL_1X/2X_MS`, `DIE_FADE_MS`, `DIE_ROLL_SETTLE_MS=120`, `seedFraction`, `rollDurationMs`, `dieRollWaitMs(seed,speed,reduced)`.
+  - `apps/web/src/battle/BattleDie.tsx`: importa/re-exporta de `dieTiming`; token de roll superado; sync de `face` desde la prop cuando no rueda.
+  - `apps/web/src/battle/BattleScene.tsx` (`DieSlot`): sin el estado `rolling` muerto; `value` = valor del evento (o el último visto por slot, que persiste).
+  - `apps/web/src/battle/choreo/timing.ts`: `Timing.dieRoll(seed)` (espera real, sin escalar por el factor de velocidad).
+  - `apps/web/src/battle/choreo/stage.ts`: campo `rivalPick`; `dieSideOf()`; `asleep` en `conditionsAfterApplied`; `conditionsAfterWokeUp()`.
+  - `apps/web/src/battle/choreo/registry.ts`: `playDieRolled` con `dieSideOf` + `dieRoll`; `setActing` limpia `rivalPick`; `AttackDodged` marca al atacante; `WokeUp` limpia `asleep`; `BattleStarted` resetea `rivalPick`.
+  - `apps/web/src/events/anim.config.ts`: `dieRollMs` queda documentado como referencia (ya no se usa para coreografiar).
+  - Tests: `choreography.test.ts` (+4), `BattleScene.test.tsx` (+2), `BattleDie.test.tsx` (+2).
+- AC cubiertos → test (fix-animacion-dados-combate/AC-n → archivo:test):
+  - AC-1 → `BattleScene.test.tsx` "el dado expone data-value = valor del evento" + "el slot anima su tirada y conserva su número"; `BattleDie.test.tsx` "la cara se sincroniza con la prop cuando no rueda" + "roll superado: el último roll gana y el viejo resuelve".
+  - AC-2 → `choreography.test.ts` "dieSide: cada tirada rueda en el slot del lado que juega" (gate propio y del rival, wake de ambos lados, effect del atacante).
+  - AC-3 → `choreography.test.ts` "la pausa es la tirada real y no resuelve antes".
+  - AC-4 → `choreography.test.ts` "2x/skip/reducedMotion esperan lo que rueda el dado".
+  - AC-5 → `choreography.test.ts` "el dado se ve antes del ataque y el número persiste".
+  - AC-6 → sin test unitario (no tiene objeto): los 10 archivos tocados están en `apps/web` y `packages/` sin cambios míos; las suites del motor pasan en `pnpm test`.
+  - AC-7 → 8 tests con `// AC: fix-animacion-dados-combate/AC-n` (rojos primero, luego verdes) + verify.
+- `pnpm verify`: FALLA solo por 3 fallos PREEXISTENTES y ajenos; todo lo demás verde:
+  - `tests/t043-assets.test.ts` AC-1 ×2 y `pnpm typecheck` del root: `tools/assets.ts` lo está editando una sesión CONCURRENTE (mtime 23:41, refactor a medias que agrega `trainerFront` y deja `served`/`FxManifest` sin definir). No toca nada de dados.
+  - `tests/triage-customs.test.ts` AC-5: Q-032 (en OPEN-QUESTIONS desde T-060).
+  - Verde: `tsc -p apps/web` y de `packages/*` sin errores · lint · tests 1077/1080 · content:validate · build · deps:check (0 violaciones, 454 módulos) · size (33,7/200 kB y 432,97/450 kB) · bench (combate:turno 1,9 ms / 10 ms).
+- Decisiones tomadas / defaults aplicados:
+  - Margen `DIE_ROLL_SETTLE_MS = 120 ms`: la promesa resuelve cuando el dado ya asentó, no al milisegundo del último keyframe.
+  - `oportunidad` NO entra al popup de combate: sigue siendo propósito de tablero (`isBoardDiePurpose`; decisión dado-de-combate/AC-2; `UseOportunidad` solo es legal en fase `organize`). El AC-1 se leyó como "oportunidad de escena".
+  - `wake` con ambos lados dormidos cae en el contrario del último que actuó (`actingSide`); con uno solo, en ese. `ConditionApplied{asleep}` no trae `wakeFaces` ⇒ se guardan vacías (solo alimentan routing + ícono de placa, que ahora también muestra "dormido" en vivo).
+  - Orden de eventos del motor congelado: un `effect`/`bonus` no se puede coreografiar antes del mensaje "X usó Y" sin tocar `packages/engine`; AC-5 cubierto con gate → "X usó Y" → daño.
+- Dudas nuevas (→ OPEN-QUESTIONS.md) y ER solicitados (→ effect-requests/):
+  - Sin ER: no se usaron primitivas nuevas. Sin dudas abiertas (lo de `oportunidad` está resuelto por decisión previa).
+- Riesgos / deuda:
+  - Cada tirada a 1× dura ~1,7 s (antes "pasaba" en 0,8 s): es el tiempo real del dado (ADR-6); a `skip` no cambia nada (0 ms).
+  - Árbol compartido con sesiones concurrentes: `pnpm verify` puede fallar por debris ajeno (hoy `tools/assets.ts`).

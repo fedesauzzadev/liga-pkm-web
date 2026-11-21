@@ -1,5 +1,6 @@
 import { es } from '../i18n/es'
 import { buildBugReport, exportBugReport } from './bugReport'
+import { ModelsBadge } from './ModelsBadge'
 import { readDebugSession } from './session'
 import styles from './debug.module.css'
 
@@ -19,6 +20,7 @@ export function DebugPanel() {
         <dt>{es.debugCommands}</dt>
         <dd>{session.commandLog.length}</dd>
       </dl>
+      <ModelsBadge />
       <button type="button" className={styles.button} onClick={() => exportBugReport()}>
         {es.exportReport}
       </button>

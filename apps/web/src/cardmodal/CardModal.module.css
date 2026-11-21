@@ -1,0 +1,456 @@
+/* Ventana de carta del Pokémon (SPEC-R/T-103). Medidas: inline desde
+   content/ui/card-modal.json (geometría del model.ts); acá solo el look.
+   Ningún texto por debajo de --card-font-min (13 px, AC-16). */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 45; /* encima del HUD y del tip onboarding; debajo del aviso de viewport */
+  overflow: hidden; /* AC-3: sin scroll de página */
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+}
+
+.window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  background: rgba(18, 21, 36, 0.97);
+  border: 3px solid var(--color-border, #2a3050);
+  border-radius: 14px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+  color: #eef1ff;
+  animation: card-in var(--card-anim-ms, 180ms) ease-out;
+}
+
+.window[data-closing='true'] {
+  animation: card-out var(--card-anim-ms, 180ms) ease-in forwards;
+}
+
+@keyframes card-in {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes card-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window,
+  .window[data-closing='true'] {
+    animation: none;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted, #9aa3c7);
+}
+
+.close {
+  min-height: 32px;
+  min-width: 88px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #10121f;
+  background: var(--color-accent, #f8d030);
+  border: 2px solid var(--color-border, #2a3050);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  min-height: 0; /* deja crecer el scroll interno */
+}
+
+/* ── Lado izquierdo: la carta (AC-4..AC-10; plan/layout-carta-modal) ── */
+
+/* layout-carta-modal/AC-1/AC-6: columna consecutiva (flex-start + gap, sin
+   márgenes automáticos), tope al alto de la zona de contenido (.body) y
+   tipografía proporcional al ancho (container queries, piso 13 px). */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  box-sizing: border-box;
+  padding: 14px;
+  max-height: 100%;
+  container-type: inline-size;
+  background: linear-gradient(160deg, #f7f4e8, #e8e2cc);
+  border: 3px solid #2a3050;
+  border-radius: 12px;
+  color: #171923;
+  overflow: hidden;
+}
+
+/* layout-carta-modal/AC-2: header alto según contenido; specialties va como
+   segunda fila DENTRO del header (mismo orden visual, sin huecos extra). */
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
+.cardHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardName {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: max(var(--card-font-min, 13px), 6.8cqw);
+  line-height: 1.1;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden; /* el ajuste fino lo hace el componente (data-name-px) */
+}
+
+.cardHp {
+  font-size: max(var(--card-font-min, 13px), 4cqw);
+  font-weight: 800;
+}
+
+.hpBar {
+  width: 64px;
+  height: 10px;
+  border: 2px solid #2a3050;
+  border-radius: 5px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.hpFill {
+  display: block;
+  height: 100%;
+  background: #46c26a;
+}
+
+.specialties {
+  flex: 0 0 auto;
+  min-height: 0;
+  margin: 0;
+  padding: 4px 0;
+  border-top: 2px dashed #2a3050;
+}
+
+.specialty {
+  margin: 0;
+  font-size: max(var(--card-font-min, 13px), 3.4cqw);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* layout-carta-modal/AC-3: único elemento que crece (sin márgenes
+   automáticos); con 3-4 ataques se achica hasta el mínimo de 140 px. */
+.art {
+  flex: 1 1 auto;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #2a3050;
+  border-radius: 10px;
+  background: #dcd9c4;
+  overflow: hidden;
+}
+
+.artImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.artFallback {
+  font-size: max(var(--card-font-min, 13px), 3.7cqw);
+  font-weight: 700;
+}
+
+/* layout-carta-modal/AC-4: altura natural debajo del arte; solo si no entra
+   (carta muy chica) scrollea adentro, nunca recorta el pie. */
+.attacks {
+  flex: 0 1 auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.attack {
+  padding: 5px 4px;
+  border-top: 1px solid rgba(42, 48, 80, 0.35);
+}
+
+.attackRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.faces {
+  min-width: 34px;
+  font-size: max(var(--card-font-min, 13px), 3.7cqw);
+  font-weight: 800;
+}
+
+.attackName {
+  font-size: max(var(--card-font-min, 13px), 4cqw);
+  font-weight: 700;
+}
+
+.ability {
+  font-style: italic;
+}
+
+.damage {
+  font-size: max(var(--card-font-min, 13px), 3.7cqw);
+  font-weight: 800;
+}
+
+.rawText {
+  margin: 2px 0 0;
+  font-size: max(var(--card-font-min, 13px), 3.4cqw);
+  color: #333a55;
+}
+
+.availableLabel,
+.blockedLabel {
+  margin: 2px 0 0;
+  font-size: max(var(--card-font-min, 13px), 3.4cqw);
+  font-weight: 700;
+}
+
+.availableLabel {
+  color: #1c7a3c;
+}
+
+.blockedLabel {
+  color: #a03030;
+}
+
+/* layout-carta-modal/AC-5: pie debajo de los ataques (separación solo por el
+   gap de la carta), chips con wrap y barra de XP DEBAJO del texto. */
+.cardFooter {
+  flex: 0 0 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 2px solid #2a3050;
+}
+
+.stage,
+.deckBadge {
+  font-size: max(var(--card-font-min, 13px), 3.4cqw);
+  font-weight: 700;
+  padding: 2px 8px;
+  border: 2px solid #2a3050;
+  border-radius: 999px;
+  background: #fff;
+}
+
+/* layout-carta-modal/AC-5: evolución en columna: texto arriba, barra abajo. */
+.evolve {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  min-width: 140px;
+  flex: 1;
+}
+
+.evolveName {
+  font-size: max(var(--card-font-min, 13px), 3.4cqw);
+  font-weight: 700;
+}
+
+.xpBar {
+  width: 100%;
+  height: 8px;
+  border: 2px solid #2a3050;
+  border-radius: 4px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.xpFill {
+  display: block;
+  height: 100%;
+  background: #f8d030;
+}
+
+/* ── Panel lateral (AC-11..AC-15) ── */
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid var(--color-border, #2a3050);
+  border-radius: 12px;
+  overflow-y: auto; /* AC-15: scroll interno, solo si no entra */
+}
+
+.readOnly {
+  margin: 0;
+  padding: 6px 8px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 2px dashed var(--color-accent, #f8d030);
+  border-radius: 8px;
+  color: #ffe9a8;
+}
+
+.section {
+  flex: 0 0 auto;
+}
+
+.sectionTitle {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted, #9aa3c7);
+}
+
+.hint {
+  margin: 4px 0;
+  font-size: 13px;
+  color: var(--color-muted, #9aa3c7);
+}
+
+.statusBadges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.badge,
+.badgePlain,
+.badgeMuted {
+  padding: 2px 8px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 2px solid #2a3050;
+  border-radius: 999px;
+}
+
+.badge {
+  background: var(--color-accent, #f8d030);
+  color: #10121f;
+}
+
+.badgePlain {
+  background: rgba(255, 255, 255, 0.12);
+  color: #eef1ff;
+}
+
+.badgeMuted {
+  background: transparent;
+  color: var(--color-muted, #9aa3c7);
+}
+
+.chipGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip,
+.chipSmall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-sizing: border-box;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #2a3050;
+  border-radius: 10px;
+  color: #eef1ff;
+  cursor: pointer;
+}
+
+.chipSmall {
+  min-height: 44px;
+}
+
+.chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.chipCount {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.action {
+  display: block;
+  width: 100%;
+  min-height: 36px;
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #10121f;
+  background: var(--color-accent, #f8d030);
+  border: 2px solid var(--color-border, #2a3050);
+  border-radius: 8px;
+  cursor: pointer;
+}

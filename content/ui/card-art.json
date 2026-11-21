@@ -1,0 +1,5 @@
+{
+  "_status": "Normalización del sprite del PKM en el recuadro de arte de la carta (SPEC-U/T-105). Una sola regla: fitScale = min(caja/natural); escala = min(fitScale·fill, maxScale). fill deja margen para el chip de aviso; maxScale evita pixelados extremos. pkmCard = carta de combate (PkmCard); modal = carta grande (CardFace). Sin modal.boxHeightPx (plan/layout-carta-modal): la caja del modal absorbe el sobrante (flex 1 1 auto, mínimo 140 px en el CSS).",
+  "pkmCard": { "boxHeightPx": 132, "fill": 0.95, "maxScale": 4 },
+  "modal": { "fill": 0.95, "maxScale": 3 }
+}

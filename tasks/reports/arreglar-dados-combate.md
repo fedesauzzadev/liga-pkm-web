@@ -1,0 +1,19 @@
+# Reporte arreglar-dados-combate — dados de ataque legibles que siempre terminan
+- Estado: REVIEW (spec: `.opencode/plan/arreglar-dados-combate.md`)
+- Resumen: UI/coreografía solamente (`apps/web`). finalYaw pasa de 17–87° a ±4..14° (cara legible), el asentamiento queda sin el re-giro hacia atrás (swap equivalente a 0 ms), DieSlot replanifica/corta ante cambio de speed/reducedMotion a mitad de tirada y la espera del coreógrafo suma el retardo disparo→efecto (80 ms). Motor intacto.
+- Archivos clave: `apps/web/src/battle/{dieTiming.ts,BattleDie.tsx,BattleDie.module.css,BattleScene.tsx,ChoreographedBattle.die.test.tsx}`, `choreo/{timing.ts,registry.ts}` y tests `BattleDie.test.tsx`, `BattleScene.test.tsx`, `choreo/{choreography,timing}.test.ts`.
+- AC cubiertos (AC-n → archivo:test):
+  - AC-1 → `BattleDie.test.tsx` (yaw ≤ 15° toda seed + cara=valor) y `BattleScene.test.tsx` (ambos slots mine/enemy).
+  - AC-2 → `BattleDie.test.tsx` (terminación a duración+margen; supersede; replan 1x→2x y corte skip) y `BattleScene.test.tsx` (replan por contexto, remonte del popup).
+  - AC-3 → `ChoreographedBattle.die.test.tsx` (integración: "usó Cabezazo" recién aparece con `data-rolling='false'`).
+  - AC-4 → `choreo/timing.test.ts` (2x sin doble escalado; skip 0; reduced solo fundido de pacing) y `BattleDie.test.tsx` (skip/reduced instantáneos).
+  - AC-5 → `BattleDie.test.tsx` (sin Math.random/Date.now en la UI del dado); motor sin cambios (sesión solo tocó apps/web; el árbol ya venía sucio de sesiones previas).
+  - AC-6 → `pnpm verify` verde + `pnpm vitest run apps/web/src/battle` (138 tests, 22 archivos).
+- Síntoma → causa confirmada (reproducción por inspección + jsdom, reloj falso):
+  - "Gira mal/no se entiende": `finalYaw` 17–87° dejaba la cara hasta de canto; además al terminar, `applyFinal` volvía a la rotación sin giros completos con transición de ~240 ms ⇒ micro re-giro hacia atrás al asentar.
+  - "Se traba girando": el efecto de `DieSlot` (guard de nonce) ignoraba speed/reducedMotion nuevos a mitad de tirada; el plan viejo seguía corriendo con el contexto viejo.
+  - "Las acciones pasan antes": `Timing.dieRoll` arrancaba con el patch, pero el dado arranca ≥ 1 frame después (efecto de React) ⇒ la espera quedaba corta.
+- `pnpm verify`: OK (typecheck + lint + 138 tests battle/491 totales + content:validate + build + depcruise + size-limit + bench).
+- Decisiones: reducedMotion pasa de "fundido 200 ms con espera" a "valor final al instante" (AC-4; actualicé el test viejo de rediseno-combate-max/AC-2 que esperaba los 200 ms); margen = `DIE_EFFECT_DELAY_MS` 80 + `DIE_ROLL_SETTLE_MS` 120; bounds de 2 tests de fix-animacion-dados-combate actualizados al margen nuevo.
+- Dudas nuevas: ninguna. ER solicitados: ninguno.
+- Riesgos / deuda: flip manual 2x→1x a mitad de tirada re-planifica el dado más largo que la espera ya agendada (el evento siguiente puede pisar la cola del giro); caso raro, no bloquea. Verificación manual en navegador (1x/2x/skip) queda pendiente para el dueño (`pnpm dev`, paso 6 de la spec).

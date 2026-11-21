@@ -87,6 +87,25 @@ export function buildDevDeckList(root: string): DevDeckFile {
 
   const decks: Record<string, DevDeckSpec> = {}
 
+  // PKM de Sorpresa cargados en content/pokemon (deck 'sorpresa', T-042c).
+  const sorpresaCards = new Map<string, number>()
+  if (existsSync(pokemonDir)) {
+    for (const entry of readdirSync(pokemonDir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+      if (!entry.isFile() || !entry.name.endsWith('.json')) continue
+      if (entry.name === 'gyms.json') continue
+      const raw = readJson(join(pokemonDir, entry.name))
+      if (typeof raw !== 'object' || raw === null) continue
+      const cards = 'cards' in raw && Array.isArray(raw.cards) ? raw.cards : []
+      for (const card of cards) {
+        if (typeof card !== 'object' || card === null) continue
+        if (!('deck' in card) || card.deck !== 'sorpresa') continue
+        const cardId = 'id' in card && typeof card.id === 'string' ? card.id : null
+        if (cardId === null) continue
+        upsert(sorpresaCards, cardId, 1)
+      }
+    }
+  }
+
   for (const deck of [...DECK_IDS]) {
     const entries = new Map<string, number>()
     const actual = actualCards.get(deck) ?? new Map<string, number>()
@@ -110,10 +129,23 @@ export function buildDevDeckList(root: string): DevDeckFile {
     decks[deck] = { entries: uniqueEntries(entries), devOnly: true }
   }
 
+  // T-049: mazo Ítem con la composición confirmada (items.json/decks.json, D-14)
+  // y mazo Sorpresa con sus 12 no-PKM + los PKM Sorpresa cargados (T-042c).
   decks.item = {
     entries: [
-      { id: 'pokeball', count: 3 },
-      { id: 'potion', count: 2 },
+      { id: 'multicolor', count: 16 },
+      { id: 'potion', count: 9 },
+      { id: 'pokeball', count: 30 },
+      { id: 'oportunidad', count: 5 },
+    ],
+    devOnly: true,
+  }
+  decks.sorpresa = {
+    entries: [
+      { id: 'super_potion', count: 8 },
+      { id: 'ultraball', count: 3 },
+      { id: 'masterball', count: 1 },
+      ...[...sorpresaCards.entries()].map(([id, count]) => ({ id, count })),
     ],
     devOnly: true,
   }

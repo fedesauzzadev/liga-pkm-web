@@ -27,15 +27,26 @@ const LISTA_AGENTS = [
 ] as const
 
 // Tooling esencial para que eslint/typescript/react funcionen (ver Q-001).
+// jsdom: entorno DOM para correr los tests de @testing-library/react en vitest
+// (pantalla-carga-tablero/AC-7); solo tests, no entra al bundle.
+// Ratificado por el dueño 2026-10-28 (Q-092, resolver-open-questions).
 const TOOLING_APROBADO_PENDIENTE = [
   '@eslint/js',
   'typescript-eslint',
   '@types/react',
   '@types/react-dom',
   '@types/node',
+  'jsdom',
 ] as const
 
-const permitidas = new Set<string>([...LISTA_AGENTS, ...TOOLING_APROBADO_PENDIENTE])
+// Tablero 3D aprobado por ADR-8 (docs/adr/ADR-8-board-3d.md): solo chunk 3D.
+const ADR8_TABLERO_3D = ['three', '@react-three/fiber', '@react-three/drei', '@types/three'] as const
+
+// Lector de cartas escaneadas, aprobado por SPEC-S/T-102a: solo tools/cards-scan
+// (no entra al bundle web). tesseract.js entra en T-102b.
+const SPEC_S_LECTOR_CARTAS = ['sharp', 'tesseract.js'] as const
+
+const permitidas = new Set<string>([...LISTA_AGENTS, ...TOOLING_APROBADO_PENDIENTE, ...ADR8_TABLERO_3D, ...SPEC_S_LECTOR_CARTAS])
 
 test('.gitignore cubre node_modules y dist; README tiene sección de desarrollo', () => {
   const gitignore = readFileSync(join(process.cwd(), '.gitignore'), 'utf8')

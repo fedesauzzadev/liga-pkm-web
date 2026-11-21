@@ -1,13 +1,20 @@
 {
  "id": "classic",
  "mode": "classic",
- "features": { "sorpresa": false, "liga": false, "pokedexChart": false, "duelo": false },
- "start": { "wildcards": 2, "pokeballs": 5, "starterElementCards": 1 },
+ "features": { "sorpresa": false, "sorpresaDeck": true, "liga": false, "pokedexChart": false, "duelo": false, "houseEdits": true },
+ "start": { "multicolor": 2, "pokeballs": 5, "starterEnergyCards": 1 },
  "teamLimit": 6,
  "medalsToWin": 8,
  "giovanniRequiresMedals": 7,
  "gymTeamSize": 2,
  "potionHeal": 30,
  "diceFaces": 6,
- "deadEndBounce": true
+ "deadEndBounce": true,
+ "capture": {
+  "pokeball": { "timing": "afterDefeat" },
+  "ultraball": { "timing": "duringBattle", "maxRemainingHp": 40 },
+  "masterball": { "timing": "duringBattle", "guaranteed": true }
+ },
+ "oportunidad": { "faces": [4, 5, 6], "draws": "sorpresa", "minMedals": 4 },
+ "_notes": "features.sorpresa = casillero Sorpresa del tablero (deshabilitado). features.sorpresaDeck = el mazo Sorpresa existe y se puede robar con la carta Oportunidad. capture/oportunidad: decisiones D-12/D-19/D-21 de docs/RULES.md (a confirmar por el dueño)."
 }

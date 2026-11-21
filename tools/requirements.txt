@@ -1,0 +1,5 @@
+# Dependencias offline de tools/crop_cards.py (T-042a). Instalar con:
+#   python -m pip install -r tools/requirements.txt
+opencv-python-headless>=4.8
+numpy>=1.24
+pillow>=10

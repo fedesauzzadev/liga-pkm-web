@@ -1,0 +1,7 @@
+# Dependencias offline del puente Python de OCR (SPEC-T/T-103/AC-4, motor C).
+# Solo para medición/diagnóstico en la máquina del dueño; no forman parte de
+# la app. Instalar con:
+#   python -m pip install -r tools/requirements-ocr.txt
+# rapidocr-onnxruntime trae los modelos recortados de PaddleOCR vía ONNX
+# (instalación liviana); paddleocr completo (motor D) solo si C no alcanza.
+rapidocr-onnxruntime>=1.4

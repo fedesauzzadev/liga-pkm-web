@@ -1,0 +1,13 @@
+{
+  "_status": "Presets de cámara del tablero inmersivo (unidades de mundo: 1 px del tablero = 0,01). Valores iniciales: ajustar solo con evidencia (capturas del dueño o métricas). SPEC-M/T-085: elevationDeg = PICADA (pitch) = ángulo entre la dirección de mirada y el plano horizontal (0° = horizontal, 90° = cenital); el polar de three se convierte como polar = 90 − picada. pitchDegRange explícito por modo (sin polarDegRange) y pitchClampDeg = clamp duro que ningún modo/arrastre supera. SPEC-J/T-077: fusionado de camera.explore.json (modo explore por defecto, giro 360°, afterTurn, buttons, keys). camara-libre-3d: sensibilidades wheelZoomStep (distancia por notch de rueda) y dragRotateDegPerPx (grados por pixel de arrastre). camara-libre-sin-ficha: explore SIN seguimiento de ficha (targetFollowsToken false; el centrado es explícito con buttons/keys centerOnMe). SPEC-N/T-092: el dado ya no vive en el mundo (panel-dice en el HUD); se quitó dice.rest y overview.panLimit 0,25 amplia la safezone de paneo.",
+  "pitchClampDeg": 70,
+  "overview": { "fov": 50, "elevationDeg": 50, "pitchDegRange": [35, 65], "fit": "board", "margin": 0.05, "zoomRange": [0.5, 1.5], "panLimit": 0.25, "azimuthDegRange": [-180, 180] },
+  "explore": { "fov": 50, "elevationDeg": 38, "distance": 7.5, "distanceRange": [3.0, 16.0], "pitchDegRange": [20, 60], "azimuthDegRange": [-180, 180], "targetFollowsToken": false, "damping": 0.1, "panSpeed": 6.0, "rotateSpeed": 0.9, "wheelZoomStep": 0.6, "dragRotateDegPerPx": 0.3 },
+  "follow":   { "fov": 55, "elevationDeg": 28, "distance": 2.6, "lookAhead": 0.6, "damping": 0.12, "minHeight": 0.4 },
+  "fork":     { "elevationDeg": 38, "distance": 3.4 },
+  "afterTurn": "explore",
+  "buttons": { "centerOnMe": "explore", "overview": "overview" },
+  "keys": { "rotateLeft": "Q", "rotateRight": "E", "pan": ["W", "A", "S", "D"], "zoomIn": "+", "zoomOut": "-", "overview": "V", "centerOnMe": "C" },
+  "transitions": { "overviewToFollowMs": 700, "followToOverviewMs": 1000, "easing": "easeInOutCubic", "holdAfterTurnMs": 600 },
+  "perf": { "dpr": [1, 1.5], "lowFpsThreshold": 40, "lowFpsSeconds": 3 }
+}

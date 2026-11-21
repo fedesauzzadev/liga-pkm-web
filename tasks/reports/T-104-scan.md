@@ -1,0 +1,21 @@
+# Reporte T-104 — Lector v2: nombre y mazo desde el nombre del archivo + segmentación por perfil
+- Estado: REVIEW | Rama/commit: main (sin commitear). Nota: dependencia T-103 en REVIEW — el dueño habilitó la cadena (mismo caso que T-105/T-106, ver reporte T-103). El reporte vive en `T-104-scan.md` porque `T-104.md` lo usa la tarea vieja de quitar Multicolor (**Q-086**, patrón Q-076).
+- Resumen (≤ 5 líneas): `parseFilename` (nuevo `filename.ts`) saca nombre (PokeAPI, distancia ≤ 2, prefijo ≤ 3 palabras), mazo/grupo con alias (`montaña`, `lago`, `evo`, `s`, `l`, `gym`, `league`), variante (número o letra a/b/c) y líder/entrenador del nombre del archivo; lo no interpretable cae al OCR. El OCR del encabezado pasa a ser SOLO verificación (avisa, no pisa) y el líder del archivo manda sobre el encabezado. `segmentCard` ahora es por perfil (`terrain`/`gym`/`league`): gym/Liga buscan las líneas de arte/pie en `fracLine` (oscuro de cualquier tono, ventanas medidas al 41-44 % y 88-89 %) y los separadores por proyección de densidad de bordes (independiente del color). Nuevo `pnpm cards:segcheck` mide la meta, regenera `debug/*.png` y lista fallas con motivo.
+- Archivos clave tocados (rutas):
+  - Nuevos: `tools/cards-scan/{filename,segcheck}.ts` · `tests/t104-scan-filename-seg.test.ts` · script `cards:segcheck` en `package.json`
+  - Modificados: `tools/cards-scan/{segment,draft,run,synth,analyze}.ts` (run.ts baja a 350 líneas: helpers de ruta/grupo/especies mudados a filename.ts) · `tools/cards-scan/eval.ts` y `tests/t102c-cards-icons.test.ts` (imports) · caché de scan v8→v9
+- AC cubiertos → test (SPEC-T/T-104):
+  - AC-1 → `t104-scan-filename-seg` (18 nombres reales + alias/variantes/líder + casos que caen al OCR + sin lista de especies)
+  - AC-2 → ídem (nombre leído ≠ archivo: avisa y usa el archivo; líder "Broke"→"Brock"; Liga sin encabezado legible saca el entrenador del archivo)
+  - AC-3 → ídem (separadores claros #a8c8e8/#c8d8a8 — invisibles para croma oscura — segmentan en gym/league; regresión terrain con rojo oscuro)
+  - AC-4 → ídem (segCheck: ≥ 95 % gym+Liga y 100 % demás con verdad terreno por par, `debug/*.png` regenerados)
+  - AC-5 → ídem (falla listada con motivo concreto + pedido de re-escaneo; `segmentation.json`)
+- `pnpm verify`: FALLA solo en los 3 tests PREEXISTENTES y ajenos (Q-071 lighting AC-4/AC-5, Q-077 t098-close AC-3), idénticos a los de T-102a..e/T-103/T-106. Verde: typecheck, lint, 882/885 tests, content:validate (39 archivos), build, deps:check (0 violaciones), size (29,26 / 430,99 kB), bench (72,7/0,5/2,1 ms OK). `pnpm cards:segcheck` sobre los 251 escaneos reales: **gimnasio+Liga 36/36 (100 %) · demás 211/211 (100 %) · 4 fotos fuera de tolerancia (Muk Evo, Warturtle S, Geodude Brock Gym, Seel Misty Gym: proporción ≠ 0.660 ± 4 %, ya conocidas de Q-078) → re-escanear solo esas**.
+- Decisiones tomadas / defaults aplicados:
+  - Gym/Liga miden (6 cartas reales) arte con pico 0.9-1.0 al 41-44 % de la altura y pie 0.9-1.0 al 88-89 %: ventanas por posición con umbral 0.55 en `fracLine`; terrain queda intacto (bandas negras, protegido por la carta de oro Dratini).
+  - La zona de separadores se encola `EDGE_CLOSE` (5 filas) para no crear separadores fantasmas en la transición de las líneas gruesas (medido en la carta de oro).
+  - Las fotos que no pasan la normalización no cuentan en la meta de segmentación (no se puede medir): se listan aparte como re-escaneo de FOTO.
+  - `Eevee Gary L League`: la "L" suelta es marcador de Liga y las letras a/b/c son variantes (convención real del dueño).
+  - En Liga el tercer bloque (~79 % de la altura, p. ej. caja de entrenador) queda como bloque sin verdad terreno que lo valide; `cards:eval` lo medirá cuando haya pares verified.
+- Dudas nuevas: Q-086 (colisión del archivo de reporte). ER solicitados: ninguno.
+- Riesgos / deuda: (1) los 3 tests ajenos bloquean `pnpm verify` hasta cerrar Q-071/Q-077; (2) umbrales gym/Liga calibrados a ciegas sobre 6 perfiles reales (sin visión): si alguna carta de gimnasio tiene otra estructura, `cards:segcheck` la lista con motivo; (3) el slot del gimnasio sigue viniendo del encabezado OCR (el nombre del archivo no lo trae); (4) Q-085 (verdad terreno n=2) sigue limitando la validación de conteo de bloques.

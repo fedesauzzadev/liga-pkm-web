@@ -1,0 +1,119 @@
+/* Overlay de la evolución clásica fuera de combate (AC-3): silueta blanca que
+   pulsa (amplitud creciente por data-pulse), destello y revelación. Los timings
+   llegan como vars CSS desde anim.config (AC-6). */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  background: rgb(10 10 24 / 0.72);
+  pointer-events: none;
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+}
+
+.sprite {
+  display: grid;
+  place-items: center;
+  min-width: min(46vh, 70vw);
+  min-height: 30vh;
+}
+
+.spriteImg {
+  image-rendering: pixelated;
+  max-width: min(46vh, 70vw);
+  max-height: 46vh;
+}
+
+.fallback {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+}
+
+/* Silueta: todo blanco; la amplitud del pulso crece en cada data-pulse. */
+.silhouette .spriteImg,
+.silhouette .fallback {
+  filter: brightness(0) invert(1);
+  animation: evolve-pulse var(--evolve-pulse-ms) ease-in-out;
+}
+
+.overlay[data-pulse='1'] {
+  --evolve-scale: 1.05;
+}
+
+.overlay[data-pulse='2'] {
+  --evolve-scale: 1.14;
+}
+
+.overlay[data-pulse='3'] {
+  --evolve-scale: 1.25;
+}
+
+@keyframes evolve-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(0) invert(1);
+  }
+
+  50% {
+    transform: scale(var(--evolve-scale, 1.05));
+    filter: brightness(0) invert(1) drop-shadow(0 0 14px #fff);
+  }
+}
+
+/* Revelación: la nueva forma emerge de la silueta al tamaño final. */
+.sprite[data-reveal='true'] {
+  animation: evolve-reveal var(--evolve-reveal-ms) ease-out;
+}
+
+@keyframes evolve-reveal {
+  0% {
+    transform: scale(1.25);
+    filter: brightness(0) invert(1);
+  }
+
+  60% {
+    transform: scale(1.02);
+    filter: none;
+  }
+
+  100% {
+    transform: scale(1);
+    filter: none;
+  }
+}
+
+/* Destello: pantalla blanca que se apaga sobre la revelación. */
+.flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  animation: evolve-flash var(--evolve-flash-ms) ease-out forwards;
+}
+
+@keyframes evolve-flash {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .silhouette .spriteImg,
+  .silhouette .fallback,
+  .sprite[data-reveal='true'],
+  .flash {
+    animation: none;
+  }
+}

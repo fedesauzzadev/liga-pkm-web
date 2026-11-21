@@ -25,9 +25,9 @@ test('AC-1 kanto.json es conexo y cumple los conteos esperados', () => {
   for (const [type, expected] of Object.entries(EXPECTED_CLASSIC_COUNTS)) {
     expect(facts.countsByType[type as keyof typeof facts.countsByType], type).toBe(expected)
   }
-  // 15 nodos de mazo = 3 por cada uno de los 5 mazos.
+  // 20 nodos de mazo = 4 por cada uno de los 5 mazos (deck4).
   for (const deck of Object.keys(facts.deckCounts) as (keyof typeof facts.deckCounts)[]) {
-    expect(facts.deckCounts[deck], `mazo ${deck}`).toBe(3)
+    expect(facts.deckCounts[deck], `mazo ${deck}`).toBe(4)
   }
 })
 

@@ -1,0 +1,20 @@
+# Reporte camara-libre-3d — Cámara libre 3D (WASD + rueda + arrastre 360°)
+- Estado: REVIEW | Rama/commit: main (sin commit)
+- Resumen (≤ 5 líneas): extiende el modo `explore`: rueda = zoom continuo (±`wheelZoomStep` por notch, dampa con `explore.damping`, clamp `distanceRange`), click+arrastre = rotación con azimuth libre (wrap 360°, sin tope en ±180°) y polar clampeado; listeners SOLO sobre el canvas (AC-4), componen con WASD (AC-5) y V/C resetean al preset (AC-7). Overview y encuadre automático intactos.
+- Archivos clave tocados (rutas):
+  - `content/ui/camera.json` (explore += wheelZoomStep 0,6, dragRotateDegPerPx 0,3)
+  - `packages/content/src/ui.ts` (schema + crossCheck: step < span distanceRange)
+  - `apps/web/src/board3d/explore.ts` (`exploreWheelStep`, `exploreDragStep`)
+  - `apps/web/src/board3d/rig.ts` (eventos `EXPLORE_WHEEL`/`EXPLORE_DRAG`; `appliedDistance` con damping)
+  - `apps/web/src/board3d/explore-input.ts` (nuevo: `attachExploreInput`, superficie fake-testeable)
+  - `apps/web/src/board3d/CameraRig.tsx` (cablea rueda/pointer; OrbitControls fuera de explore)
+- AC cubiertos → test (camara-libre-3d/AC-n):
+  - AC-1..AC-5, AC-7 → `apps/web/src/board3d/camara-libre-3d.test.ts` (uno por AC)
+  - AC-6 → `apps/web/src/board3d/camera.test.ts` (schema + crossCheck + uso desde explore.ts)
+- `pnpm verify`: OK (exit 0; 108/108 archivos de test; objetivo 30/30: camara-libre-3d 7, camera 6, rig 17)
+- Decisiones tomadas / defaults aplicados:
+  - Drag: azimuth −= dx·sens, elevación += dy·sens (mismo feel que OrbitControls); wrap ya existente de `clampExploreState`.
+  - OrbitControls deshabilitado en explore (si no, el drag/rueda duplicaban input y `syncExplore` peleaba con el rig); overview/free sin cambios.
+  - Tests nuevos en archivo propio `camara-libre-3d.test.ts` (rig.test.ts ya estaba a 393/400 líneas); AC-4 se testea con superficie falsa (sin jsdom, NO-VISION).
+- Dudas nuevas → OPEN-QUESTIONS.md: Q-045 (sensibilidades iniciales + OrbitControls off en explore). Sin ER.
+- Riesgos / deuda: `rig.ts` queda en ~445 líneas (ya venía en 421, sobre el tope de 400 preexistente); `syncExplore` queda como API de resguardo (OrbitControls ya no dispara en explore); el drag no usa pointer capture (el pointerup fuera del canvas se toma en window).

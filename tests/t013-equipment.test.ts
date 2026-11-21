@@ -1,4 +1,4 @@
-// AC: SPEC-B/T-013 — Equipamiento, costos, inventario: Equip/Unequip/AssignWildcard,
+// AC: SPEC-B/T-013 — Equipamiento, costos, inventario: Equip/Unequip/AssignMulticolor,
 // canUse (costos por ataque) y legalAttacks (regla de primer ataque). Un test por AC.
 import { join } from 'node:path'
 import { expect, test } from 'vitest'
@@ -8,7 +8,7 @@ import { parseCardId, parsePkmUid } from '../packages/content/src/ids.ts'
 import { loadContent } from '../packages/content/src/node.ts'
 import {
   applyCommand,
-  canAssignWildcard,
+  canAssignMulticolor,
   canUse,
   EngineError,
   legalAttacks,
@@ -32,8 +32,8 @@ function card(id: string) {
   return found
 }
 
-/** PKM sintético con elementos equipados y comodines asignados (ids de instancia). */
-function pkm(equipped: readonly Element[], wildcards: readonly Element[] = []): PkmInstance {
+/** PKM sintético con elementos equipados y cartas Multicolor asignadas (ids de instancia). */
+function pkm(equipped: readonly Element[], multicolor: readonly Element[] = []): PkmInstance {
   return {
     uid: parsePkmUid('p1-starter'),
     cardId: parseCardId('poliwag'),
@@ -43,7 +43,7 @@ function pkm(equipped: readonly Element[], wildcards: readonly Element[] = []): 
       id: parseCardId(`element_${element}#${i + 1}`),
       element,
     })),
-    wildcards,
+    multicolor,
     fainted: false,
   }
 }
@@ -78,14 +78,14 @@ const organizing = (player?: (p: PlayerState) => PlayerState): { state: GameStat
 const run = (state: GameState, command: Command, ctx: Ctx): Result<CommandOk, EngineError> =>
   applyCommand(state, command, ctx)
 
-/** Segundo PKM del equipo para probar comodines e intercambios. */
+/** Segundo PKM del equipo para probar cartas Multicolor e intercambios. */
 const squirtle: PkmInstance = {
   uid: parsePkmUid('p1-squirtle'),
   cardId: parseCardId('squirtle'),
   damage: 0,
   xp: 0,
   equipped: [],
-  wildcards: [],
+  multicolor: [],
   fainted: false,
 }
 
@@ -116,36 +116,64 @@ test('AC-1 canUse cumple RULES §3 por ataque y sin sumar costos entre ataques',
   expect(canUse(pkm([]), atk([]))).toBe(true)
 })
 
-// AC: SPEC-B/T-013/AC-2 — un comodín cuenta como 1 elemento, el asignado.
-test('AC-2 un comodín vale como 1 elemento del tipo asignado y se asigna/reasigna en Organize', () => {
+// AC: plan costo-normal-any/AC-3 — el costo "energía normal" es `any` (D-24):
+// ["any","any"] se paga con 2 energías cualesquiera; con 1 sola, no.
+test('AC-3 (costo-normal-any) ["any","any"] se paga con 2 energías cualesquiera; con 1 sola, no', () => {
+  // AC: plan costo-normal-any/AC-3 — 2 del mismo color.
+  expect(canUse(pkm(['fire', 'fire']), atk(['any', 'any']))).toBe(true)
+  // AC: plan costo-normal-any/AC-3 — 2 de colores distintos.
+  expect(canUse(pkm(['fire', 'water']), atk(['any', 'any']))).toBe(true)
+  // AC: plan costo-normal-any/AC-3 — 1 equipada + 1 Multicolor asignado.
+  expect(canUse(pkm(['fire'], ['water']), atk(['any', 'any']))).toBe(true)
+  // AC: plan costo-normal-any/AC-3 — 1 sola no alcanza (equipped o Multicolor).
+  expect(canUse(pkm(['fire']), atk(['any', 'any']))).toBe(false)
+  expect(canUse(pkm([], ['fire']), atk(['any', 'any']))).toBe(false)
+})
+
+// AC: plan costo-normal-any/AC-4 — costo mixto ["fire","any"]: exige 1 Fuego
+// específico + 1 cualquiera; el slot any NO exige Fuego (regresión).
+test('AC-4 (costo-normal-any) ["fire","any"] exige 1 Fuego específico + 1 cualquiera', () => {
+  // AC: plan costo-normal-any/AC-4 — el Agua cubre el slot any (no exige Fuego).
+  expect(canUse(pkm(['fire', 'water']), atk(['fire', 'any']))).toBe(true)
+  expect(canUse(pkm(['fire', 'fire']), atk(['fire', 'any']))).toBe(true)
+  // Multicolor asignado a Fuego cubre el slot específico.
+  expect(canUse(pkm(['water'], ['fire']), atk(['fire', 'any']))).toBe(true)
+  // AC: plan costo-normal-any/AC-4 — sin Fuego no paga el slot específico…
+  expect(canUse(pkm(['water', 'water']), atk(['fire', 'any']))).toBe(false)
+  // …y 1 sola carta no paga 2 slots.
+  expect(canUse(pkm(['fire']), atk(['fire', 'any']))).toBe(false)
+})
+
+// AC: SPEC-B/T-013/AC-2 — un carta Multicolor cuenta como 1 elemento, el asignado.
+test('AC-2 un carta Multicolor vale como 1 elemento del tipo asignado y se asigna/reasigna en Organize', () => {
   // Costo: como elemento asignado y como slot "cualquiera".
   expect(canUse(pkm(['water'], ['water']), atk(['water', 'water']))).toBe(true)
   expect(canUse(pkm(['fire'], ['fire']), atk(['fire', 'fire']))).toBe(true)
   expect(canUse(pkm([], ['water']), atk(['any']))).toBe(true)
-  expect(canUse(pkm([], ['water']), atk(['any', 'any']))).toBe(false) // 1 comodín = 1 solo elemento
-  expect(canUse(pkm(['fire'], ['water']), atk(['water']))).toBe(true) // el comodín cubre el Agua
+  expect(canUse(pkm([], ['water']), atk(['any', 'any']))).toBe(false) // 1 carta Multicolor = 1 solo elemento
+  expect(canUse(pkm(['fire'], ['water']), atk(['water']))).toBe(true) // el carta Multicolor cubre el Agua
 
-  // Comando: asignar un comodín del inventario al inicial del equipo.
+  // Comando: asignar un carta Multicolor del inventario al inicial del equipo.
   const game = organizing((p) => ({ ...p, team: [p.team[0]!, squirtle] }))
-  const assigned = run(game.state, { type: 'AssignWildcard', pkmUid: 'p1-starter', element: 'fire' }, game.ctx)
+  const assigned = run(game.state, { type: 'AssignMulticolor', pkmUid: 'p1-starter', element: 'fire' }, game.ctx)
   expect(assigned.ok).toBe(true)
   if (!assigned.ok) throw new Error(assigned.error.message)
-  expect(assigned.value.state.players[0]!.team[0]!.wildcards).toEqual(['fire'])
-  expect(assigned.value.state.players[0]!.wildcards).toBe(2) // la carta no se gasta (RULES §4 p.91)
-  expect(assigned.value.events).toContainEqual({ type: 'WildcardAssigned', player: 'p1', pkmUid: 'p1-starter', element: 'fire' })
+  expect(assigned.value.state.players[0]!.team[0]!.multicolor).toEqual(['fire'])
+  expect(assigned.value.state.players[0]!.multicolor).toBe(2) // la carta no se gasta (RULES §4 p.91)
+  expect(assigned.value.events).toContainEqual({ type: 'MulticolorAssigned', player: 'p1', pkmUid: 'p1-starter', element: 'fire' })
 
-  // Reasignar reemplaza (uno a la vez por PKM); el segundo comodín va a otro PKM.
-  const reasignado = run(assigned.value.state, { type: 'AssignWildcard', pkmUid: 'p1-starter', element: 'water' }, game.ctx)
+  // Reasignar reemplaza (uno a la vez por PKM); la segunda carta Multicolor va a otro PKM.
+  const reasignado = run(assigned.value.state, { type: 'AssignMulticolor', pkmUid: 'p1-starter', element: 'water' }, game.ctx)
   expect(reasignado.ok).toBe(true)
   if (!reasignado.ok) throw new Error(reasignado.error.message)
-  expect(reasignado.value.state.players[0]!.team[0]!.wildcards).toEqual(['water'])
-  const alSegundo = run(reasignado.value.state, { type: 'AssignWildcard', pkmUid: 'p1-squirtle', element: 'fire' }, game.ctx)
+  expect(reasignado.value.state.players[0]!.team[0]!.multicolor).toEqual(['water'])
+  const alSegundo = run(reasignado.value.state, { type: 'AssignMulticolor', pkmUid: 'p1-squirtle', element: 'fire' }, game.ctx)
   expect(alSegundo.ok).toBe(true)
   if (!alSegundo.ok) throw new Error(alSegundo.error.message)
-  expect(alSegundo.value.state.players[0]!.team[1]!.wildcards).toEqual(['fire'])
-  expect(canAssignWildcard(alSegundo.value.state.players[0]!, 'p1-starter')).toBe(true) // reasignar el propio
+  expect(alSegundo.value.state.players[0]!.team[1]!.multicolor).toEqual(['fire'])
+  expect(canAssignMulticolor(alSegundo.value.state.players[0]!, 'p1-starter')).toBe(true) // reasignar el propio
 
-  // Sin comodines libres y sin comodín previo en el PKM ⇒ no se puede asignar.
+  // Sin cartas Multicolor libres y sin una previa en el PKM ⇒ no se puede asignar.
   const tercero: PkmInstance = { ...squirtle, uid: parsePkmUid('p1-tercero') }
   const sinLibres = {
     ...alSegundo.value.state,
@@ -153,14 +181,14 @@ test('AC-2 un comodín vale como 1 elemento del tipo asignado y se asigna/reasig
       { ...alSegundo.value.state.players[0]!, team: [...alSegundo.value.state.players[0]!.team, tercero] },
     ],
   }
-  expect(canAssignWildcard(sinLibres.players[0]!, 'p1-tercero')).toBe(false)
-  const agotado = run(sinLibres, { type: 'AssignWildcard', pkmUid: 'p1-tercero', element: 'fire' }, game.ctx)
+  expect(canAssignMulticolor(sinLibres.players[0]!, 'p1-tercero')).toBe(false)
+  const agotado = run(sinLibres, { type: 'AssignMulticolor', pkmUid: 'p1-tercero', element: 'fire' }, game.ctx)
   expect(agotado.ok).toBe(false)
   if (!agotado.ok) expect(agotado.error.code).toBe('ILLEGAL_COMMAND')
 })
 
 // AC: SPEC-B/T-013/AC-3 — solo se puede equipar/reasignar en Organize (no en combate).
-test('AC-3 Equip/Unequip/AssignWildcard solo en fase organize; Equip y Unequip mueven la carta', () => {
+test('AC-3 Equip/Unequip/AssignMulticolor solo en fase organize; Equip y Unequip mueven la carta', () => {
   const game = organizing((p) => ({
     ...p,
     elements: [{ id: parseCardId('element_fire#2'), element: 'fire' }],
@@ -191,14 +219,14 @@ test('AC-3 Equip/Unequip/AssignWildcard solo en fase organize; Equip y Unequip m
   expect(menu).toContainEqual({ type: 'RollMove' })
   expect(menu).toContainEqual({ type: 'Equip', pkmUid: 'p1-starter', elementId: 'element_fire#2' })
   expect(menu).toContainEqual({ type: 'Unequip', pkmUid: 'p1-starter', elementId: 'element_fire#1' })
-  expect(menu).toContainEqual({ type: 'AssignWildcard', pkmUid: 'p1-starter', element: 'water' })
+  expect(menu).toContainEqual({ type: 'AssignMulticolor', pkmUid: 'p1-starter', element: 'water' })
 
   // Fuera de organize (p.ej. resolviendo casillero, y a futuro en combate) ⇒ ilegal.
   const enResolucion = { ...equipado.value.state, phase: 'tileResolution' as const, stepsLeft: 0 }
   for (const comando of [
     { type: 'Equip', pkmUid: 'p1-starter', elementId: 'element_fire#2' },
     { type: 'Unequip', pkmUid: 'p1-starter', elementId: 'element_fire#1' },
-    { type: 'AssignWildcard', pkmUid: 'p1-starter', element: 'water' },
+    { type: 'AssignMulticolor', pkmUid: 'p1-starter', element: 'water' },
   ] as const) {
     const fuera = run(enResolucion, comando, game.ctx)
     expect(fuera.ok, comando.type).toBe(false)
@@ -276,12 +304,12 @@ test('guardas: Equip sin la carta en el inventario, Unequip sin equipar y PKM in
   expect(sinEquipar.ok).toBe(false)
   if (!sinEquipar.ok) expect(sinEquipar.error.code).toBe('ILLEGAL_COMMAND')
 
-  // AssignWildcard sin comodines en el inventario.
-  const sinComodines = run(
-    { ...conEquipo.state, players: [{ ...conEquipo.state.players[0]!, wildcards: 0 }] },
-    { type: 'AssignWildcard', pkmUid: 'p1-starter', element: 'fire' },
+  // AssignMulticolor sin cartas Multicolor en el inventario.
+  const sinMulticolor = run(
+    { ...conEquipo.state, players: [{ ...conEquipo.state.players[0]!, multicolor: 0 }] },
+    { type: 'AssignMulticolor', pkmUid: 'p1-starter', element: 'fire' },
     conEquipo.ctx,
   )
-  expect(sinComodines.ok).toBe(false)
-  if (!sinComodines.ok) expect(sinComodines.error.code).toBe('ILLEGAL_COMMAND')
+  expect(sinMulticolor.ok).toBe(false)
+  if (!sinMulticolor.ok) expect(sinMulticolor.error.code).toBe('ILLEGAL_COMMAND')
 })

@@ -16,6 +16,8 @@ export const FX_IMAGE_SIZES: Readonly<Record<string, Readonly<{ w: number; h: nu
   rightslash: { w: 57, h: 56 },
   leaf1: { w: 32, h: 26 },
   leaf2: { w: 40, h: 26 },
+  shell: { w: 100, h: 92 },
+  purplewisp: { w: 100, h: 100 },
 }
 
 // Combina tamaños + manifest; las claves sin asset descargado quedan afuera (fallback).

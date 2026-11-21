@@ -1,0 +1,31 @@
+.wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.canvas {
+  position: relative;
+  width: 100%;
+  height: min(68vh, 640px);
+  min-height: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* "Movés N casilleros" (T-065/AC-5): aviso del dado en el tray, no bloquea. */
+.moveHint {
+  pointer-events: none;
+  margin: 0;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--color-surface, #fdf6e3);
+  color: #20301d;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 35%);
+}

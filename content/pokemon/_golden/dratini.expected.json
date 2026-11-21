@@ -1,0 +1,24 @@
+{
+ "_comment": "Resultado ESPERADO para el escaneo de ejemplo del dueño (carta Dratini). Es el test de oro de T-102. El archivo de imagen se copia a tools/cards-scan/fixtures/dratini.jpg (gitignored); si no existe, el test se omite.",
+ "id": "dratini",
+ "dex": 147,
+ "name": "Dratini",
+ "stage": "basic",
+ "deck": "montana",
+ "hp": 50,
+ "element": "dragon",
+ "attacks": [
+  { "id": "envolver", "name": "Envolver", "kind": "attack", "rollFaces": [4, 5], "cost": ["any"], "element": "normal",
+    "damage": { "base": 10 }, "effects": [ { "op": "rivalSkipsAttack", "faces": [4, 5, 6] } ],
+    "rawText": "4-5-6 tu rival no atacará." },
+  { "id": "agilidad", "name": "Agilidad", "kind": "ability", "rollFaces": [3], "cost": ["any"], "element": "normal",
+    "damage": { "base": 0 }, "effects": [ { "op": "startsFirst" }, { "op": "attackAgain", "faces": [4, 5, 6] } ],
+    "rawText": "Dratini empieza atacando cada combate. 4-5-6 atacá de nuevo." },
+  { "id": "attack_trueno", "name": "Attack-trueno", "kind": "attack", "rollFaces": [1, 2], "cost": ["electric"], "element": "electric",
+    "damage": { "base": 20 }, "effects": [ { "op": "rollGate", "failFaces": [1, 2], "outcome": "noAttack", "duration": "nextTurn" } ],
+    "rawText": "si tu rival saca 1-2 no ataca." }
+ ],
+ "specialties": [],
+ "evolvesTo": [ { "id": "dragonair", "xp": 2 } ],
+ "source": { "photo": "dratini.jpg", "verified": false }
+}

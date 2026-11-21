@@ -50,12 +50,14 @@ export const AttackSchema = z.object({
   officialMove: z.string().min(1).optional(), // id PokeAPI/Showdown, ej. 'flamethrower'
   officialMoveStatus: OfficialMoveStatusSchema.optional(),
   fx: FxArchetypeSchema.optional(), // arquetipo de respaldo (docs/FX-ADAPTER.md)
+  canOpen: z.boolean().optional(), // "Podés empezar con este ataque" (RULES §4)
 })
 export type Attack = z.infer<typeof AttackSchema>
 
 export const PokemonCardSchema = z.object({
-  id: z.string().min(1),
+  id: z.string().min(1), // único; el dex PUEDE repetirse entre variantes (D-25)
   dex: z.number().int().min(1).max(151),
+  variant: z.string().min(1).optional(), // '_a', '_b'… cuando hay cartas distintas del mismo PKM (D-25)
   name: z.string().min(1),
   stage: StageSchema,
   deck: CardGroupSchema,
@@ -70,6 +72,9 @@ export const PokemonCardSchema = z.object({
     manualPage: z.number().int().min(1).optional(),
     photo: z.string().optional(),
     verified: z.boolean(),
+    // T-048: marcas de edición de la casa (solo en memoria, tras aplicar parches).
+    houseEdited: z.boolean().optional(),
+    editId: z.string().min(1).optional(),
   }),
 })
 export type PokemonCard = z.infer<typeof PokemonCardSchema>

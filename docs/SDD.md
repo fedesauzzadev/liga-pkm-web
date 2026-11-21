@@ -53,7 +53,7 @@ type CostSlot = Element | 'any';            // 'any' = ícono gris "cualquier el
 type Faces = (1|2|3|4|5|6)[];
 
 interface PokemonCard {
-  id: string; dex: number; name: string;
+  id: string; dex: number; variant?: string; name: string;     // el dex puede repetirse (variantes _a, _b)
   stage: 'basic'|'evolution'|'gym'|'league'|'surprise';
   deck: DeckId|'gimnasio'|'liga'|'sorpresa'|'evolucion';
   hp: number; element: Element;
@@ -75,13 +75,14 @@ interface Attack {
   officialMove?: string;       // id de movimiento oficial (PokeAPI/Showdown, ej. 'flamethrower') → animación real
   officialMoveStatus?: 'proposed'|'verified'|'unmapped';
   fx?: FxArchetype;            // arquetipo de respaldo propio (docs/FX-ADAPTER.md)
+  canOpen?: boolean;           // "Podés empezar con este ataque"
 }
 interface PlayerState {
   id: string; position: string; cameFrom: string|null;       // nodo actual y de dónde vino (regla de no retroceder)
   team: PkmInstance[];         // máx 6
   oakPile: PkmInstance[];      // "hogar del Prof. Oak"
   elements: ElementCard[];     // sueltas; las equipadas viven en PkmInstance.equipped
-  wildcards: number; items: { pokeball: number; potion: number; /* … */ };
+  multicolor: number; items: { pokeball: number; potion: number; /* … */ };
   medals: string[];
 }
 interface PkmInstance { uid: string; cardId: string; damage: number; xp: number; equipped: ElementCard[]; status: PkmStatus; fainted: boolean }
@@ -91,7 +92,7 @@ Estados de combate (condiciones temporales) viven en `BattleState`, no en `PkmIn
 ## 5. Máquinas de estado
 **Turno (MVP-0):**
 `Setup(elegir inicial) → Organize → AwaitRoll → Moving → TileResolution → TurnEnd → Organize…`
-- `Organize`: equipar/reasignar elementos y comodines, evolucionar (si cumple XP), usar pociones fuera de combate, reordenar equipo.
+- `Organize`: equipar/reasignar energías y cartas Multicolor, evolucionar (si cumple XP), usar pociones fuera de combate, reordenar equipo.
 - `Moving`: por cada paso; si el nodo siguiente tiene >1 salida (excluyendo `cameFrom`) ⇒ `Decision.ChoosePath`; si el jugador pasa por un nodo **cuadrado** con pasos restantes ⇒ `Decision.StopOrContinue`. Los nodos redondos solo aplican efecto si se cae exacto. Fin de camino ciego ⇒ rebote (D-01).
 - `TileResolution` según tipo de nodo: `deck` (robar), `mercado` (robar ítem), `centro` (curar todo), `oak` (intercambiar equipo/pila), `gym` (opcional: pelear), `empty`, y (deshabilitados por ruleset) `duelo`, `sorpresa`, `liga`.
 

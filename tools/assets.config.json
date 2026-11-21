@@ -4,7 +4,9 @@
     "aniBack": "https://play.pokemonshowdown.com/sprites/ani-back/{id}.gif",
     "staticFront": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{dex}.png",
     "staticBack": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/{dex}.png",
-    "fx": "https://play.pokemonshowdown.com/fx/{file}"
+    "trainerFront": "https://play.pokemonshowdown.com/sprites/trainers/{id}.png",
+    "fx": "https://play.pokemonshowdown.com/fx/{file}",
+    "badges": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/badges/{file}"
   },
   "retries": 2,
   "species": [
@@ -160,6 +162,16 @@
     { "dex": 150, "name": "Mewtwo" },
     { "dex": 151, "name": "Mew" }
   ],
+  "trainers": [
+    { "name": "Brock", "sdId": "brock" },
+    { "name": "Misty", "sdId": "misty" },
+    { "name": "Lt. Surge", "sdId": "surge" },
+    { "name": "Erika", "sdId": "erika" },
+    { "name": "Koga", "sdId": "koga" },
+    { "name": "Sabrina", "sdId": "sabrina" },
+    { "name": "Blaine", "sdId": "blaine" },
+    { "name": "Giovanni", "sdId": "giovanni" }
+  ],
   "fx": [
     { "key": "iceball", "file": "iceball.png" },
     { "key": "fireball", "file": "fireball.png" },
@@ -171,6 +183,18 @@
     { "key": "leaf1", "file": "leaf1.png" },
     { "key": "leaf2", "file": "leaf2.png" },
     { "key": "hitmarker", "file": "hitmarker.png" },
-    { "key": "impact", "file": "impact.png" }
+    { "key": "impact", "file": "impact.png" },
+    { "key": "shell", "file": "shell.png" },
+    { "key": "purplewisp", "file": "purplewisp.png" }
+  ],
+  "badges": [
+    { "medal": "Roca", "file": "1.png" },
+    { "medal": "Cascada", "file": "2.png" },
+    { "medal": "Trueno", "file": "3.png" },
+    { "medal": "Arcoíris", "file": "4.png" },
+    { "medal": "Alma", "file": "5.png" },
+    { "medal": "Pantano", "file": "6.png" },
+    { "medal": "Volcán", "file": "7.png" },
+    { "medal": "Tierra", "file": "8.png" }
   ]
 }

@@ -13,7 +13,7 @@ import { turnAdvanced, withDraft } from './dispatch.ts'
 import { applyPlan, movementEvents, planMovement } from './movement.ts'
 import type { MovementPlan, MovementStep } from './movement.ts'
 import { releaseWild, resolveTile, swapWithOak } from './tiles.ts'
-import { assignWildcard, equipElement, unequipElement } from './equipment.ts'
+import { assignMulticolor, equipElement, reorderTeam, unequipElement, unassignMulticolor } from './equipment.ts'
 import { captureWild, evolvePkm, releaseCaptured } from './progression.ts'
 import { acceptGymChallenge } from './gyms.ts'
 import {
@@ -22,8 +22,11 @@ import {
   fightEncounter,
   retire,
   sendOut,
+  throwBall,
   usePotion,
 } from './battle-commands.ts'
+import { useOportunidad } from './items.ts'
+import { debugEncounter } from './debug.ts'
 import {
   assertInvariants,
   invariantChecksEnabled,
@@ -112,6 +115,21 @@ const handlers: {
     // T-012: resuelve el casillero (SDD §5) y termina el turno; si el robo dejó
     // un encuentro pendiente, el turno espera a FightOrRelease.
     if (state.phase === 'tileResolution') {
+      // T-061: OakSwap/ChallengeGym son opcionales; Advance las saltea y cierra turno.
+      if (state.pending?.type === 'OakSwap' || state.pending?.type === 'ChallengeGym') {
+        const turn = state.turn + 1
+        return {
+          ok: true,
+          value: {
+            state: produce(state, (draft) => {
+              draft.pending = null
+              draft.turn = turn
+              draft.phase = 'organize'
+            }),
+            events: [{ type: 'TurnAdvanced', turn }],
+          },
+        }
+      }
       const resolved = withDraft(state, (draft) => resolveTile(draft, ctx.content))
       if (!resolved.ok) return resolved
       if (resolved.value.state.pending !== null) return resolved
@@ -259,14 +277,15 @@ const handlers: {
     return turnAdvanced(withDraft(state, (draft) => releaseWild(draft)))
   },
   SwapWithOak: (state, command, ctx) => {
-    if (state.phase !== 'tileResolution' || state.pending !== null) {
-      return illegal('SwapWithOak requiere fase "tileResolution" sin decisión pendiente')
+    // T-061: la decisión OakSwap la deja resolveTile; el intercambio es repetible.
+    if (state.phase !== 'tileResolution' || state.pending?.type !== 'OakSwap') {
+      return illegal('SwapWithOak requiere decisión OakSwap pendiente')
     }
     return withDraft(state, (draft) =>
       swapWithOak(draft, ctx.content, command.teamUid, command.pileUid),
     )
   },
-  // T-013: equipar/desequipar/asignar comodín solo en Organize (AC-3: nunca en combate).
+  // T-013: equipar/desequipar/asignar Multicolor solo en Organize (AC-3: nunca en combate).
   Equip: (state, command) => {
     if (state.phase !== 'organize') return illegal('Equip requiere fase "organize"')
     return withDraft(state, (draft) => equipElement(draft, command))
@@ -275,14 +294,26 @@ const handlers: {
     if (state.phase !== 'organize') return illegal('Unequip requiere fase "organize"')
     return withDraft(state, (draft) => unequipElement(draft, command))
   },
-  AssignWildcard: (state, command) => {
-    if (state.phase !== 'organize') return illegal('AssignWildcard requiere fase "organize"')
-    return withDraft(state, (draft) => assignWildcard(draft, command))
+  AssignMulticolor: (state, command) => {
+    if (state.phase !== 'organize') return illegal('AssignMulticolor requiere fase "organize"')
+    return withDraft(state, (draft) => assignMulticolor(draft, command))
+  },
+  // T-104 (SPEC-T/D-30): quitar el Multicolor asignado también vive en Organize.
+  UnassignMulticolor: (state, command) => {
+    if (state.phase !== 'organize') return illegal('UnassignMulticolor requiere fase "organize"')
+    return withDraft(state, (draft) => unassignMulticolor(draft, command))
+  },
+  // T-074 (SPEC-I/AC-1): reordenar el equipo es parte de Organize (SDD §5).
+  ReorderTeam: (state, command) => {
+    if (state.phase !== 'organize') return illegal('ReorderTeam requiere fase "organize"')
+    return withDraft(state, (draft) => reorderTeam(draft, command))
   },
   // ── Batalla (SPEC-C/T-020): el dominio vive en battle-commands.ts. ──
   FightEncounter: (state, command, ctx) => withDraft(state, (draft) => fightEncounter(draft, ctx, command)),
   UsePotion: (state, command) => withDraft(state, (draft) => usePotion(draft, command)),
-  Retire: (state, command) => withDraft(state, (draft) => retire(draft, command)),
+  ThrowBall: (state, command, ctx) => withDraft(state, (draft) => throwBall(draft, ctx.content, command)),
+  UseOportunidad: (state, _command, ctx) => withDraft(state, (draft) => useOportunidad(draft, ctx)),
+  Retire: (state, command, ctx) => withDraft(state, (draft) => retire(draft, ctx, command)),
   Attack: (state, command, ctx) => withDraft(state, (draft) => attackCommand(draft, ctx, command)),
   SendOut: (state, command, ctx) => withDraft(state, (draft) => sendOut(draft, ctx, command)),
   // ── Progresión (SPEC-C/T-022): captura/liberación y evolución. ──
@@ -291,7 +322,12 @@ const handlers: {
   Evolve: (state, command, ctx) => withDraft(state, (draft) => evolvePkm(draft, ctx.content, command)),
   // ── Gimnasios (SPEC-C/T-023): el desafío es opcional (D-17). ──
   AcceptGymChallenge: (state, command, ctx) =>
-    withDraft(state, (draft) => acceptGymChallenge(draft, ctx.content, command)),
+    withDraft(state, (draft) => acceptGymChallenge(draft, ctx, command)),
+  // ── Debug (plan probar-encuentro-abra): solo en organize, sin pending. ──
+  DebugEncounter: (state, command, ctx) => {
+    if (state.phase !== 'organize') return illegal('DebugEncounter requiere fase "organize"')
+    return withDraft(state, (draft) => debugEncounter(draft, ctx.content, command))
+  },
 }
 
 export function applyCommand(
@@ -328,12 +364,20 @@ export function applyCommand(
       return finish(handlers.Equip(state, command, ctx), log)
     case 'Unequip':
       return finish(handlers.Unequip(state, command, ctx), log)
-    case 'AssignWildcard':
-      return finish(handlers.AssignWildcard(state, command, ctx), log)
+    case 'AssignMulticolor':
+      return finish(handlers.AssignMulticolor(state, command, ctx), log)
+    case 'UnassignMulticolor':
+      return finish(handlers.UnassignMulticolor(state, command, ctx), log)
+    case 'ReorderTeam':
+      return finish(handlers.ReorderTeam(state, command, ctx), log)
     case 'FightEncounter':
       return finish(handlers.FightEncounter(state, command, ctx), log)
     case 'UsePotion':
       return finish(handlers.UsePotion(state, command, ctx), log)
+    case 'ThrowBall':
+      return finish(handlers.ThrowBall(state, command, ctx), log)
+    case 'UseOportunidad':
+      return finish(handlers.UseOportunidad(state, command, ctx), log)
     case 'Retire':
       return finish(handlers.Retire(state, command, ctx), log)
     case 'Attack':
@@ -348,6 +392,8 @@ export function applyCommand(
       return finish(handlers.Evolve(state, command, ctx), log)
     case 'AcceptGymChallenge':
       return finish(handlers.AcceptGymChallenge(state, command, ctx), log)
+    case 'DebugEncounter':
+      return finish(handlers.DebugEncounter(state, command, ctx), log)
     default: {
       const unreachable: never = command // exhaustivo: falla si falta un case
       return {

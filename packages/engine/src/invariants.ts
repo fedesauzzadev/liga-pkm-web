@@ -4,6 +4,7 @@
 import { DECK_KEYS } from '@liga/content'
 import { EngineError } from './errors.ts'
 import { elementOfCardId } from './tiles.ts'
+import { BAG_ITEMS } from './state.ts'
 import type { GameState, PkmInstance } from './state.ts'
 
 export type Invariant = (state: GameState) => void
@@ -123,9 +124,9 @@ registerInvariant('setup/uid-unicos', (state) => {
 
 registerInvariant('setup/valores-no-negativos', (state) => {
   for (const p of state.players) {
-    if (p.wildcards < 0) throw new Error(`comodines < 0 (${String(p.id)})`)
-    if (p.items.pokeball < 0 || p.items.potion < 0) {
-      throw new Error(`items < 0 (${String(p.id)})`)
+    if (p.multicolor < 0) throw new Error(`multicolor < 0 (${String(p.id)})`)
+    for (const item of BAG_ITEMS) {
+      if (p.items[item] < 0) throw new Error(`items.${item} < 0 (${String(p.id)})`)
     }
     for (const pkm of allPkm(state)) {
       if (pkm.damage < 0) throw new Error(`damage < 0 (${String(pkm.uid)})`)
@@ -216,20 +217,38 @@ registerInvariant('casillero/elementos-con-id-unico', (state) => {
   }
 })
 
-// ── Invariantes de T-013 (SPEC-B: equipamiento y comodines). ──
+/** T-061: las decisiones opcionales de casillero solo viven en tileResolution. */
+registerInvariant('casillero/decision-opcional-coherente', (state) => {
+  const pending = state.pending
+  if (pending === null) return
+  if (pending.type === 'OakSwap' && state.phase !== 'tileResolution') {
+    throw new Error(`OakSwap en fase ${state.phase}`)
+  }
+  if (pending.type === 'ChallengeGym' && state.phase !== 'tileResolution') {
+    throw new Error(`ChallengeGym en fase ${state.phase}`)
+  }
+  if (pending.type === 'OakSwap') {
+    const player = state.players.find((p) => p.id === state.activePlayerId)
+    if (player !== undefined && (player.team.length === 0 || player.oakPile.length === 0)) {
+      throw new Error('OakSwap sin equipo o sin pila')
+    }
+  }
+})
 
-/** Comodines: máx 1 por PKM y nunca más asignados que comodines tiene el jugador (AC-2). */
-registerInvariant('equipamiento/comodines-coherentes', (state) => {
+// ── Invariantes de T-013 (SPEC-B: equipamiento y Multicolor). ──
+
+/** Multicolor: máx 1 por PKM y nunca más asignadas que cartas tiene el jugador (AC-2, D-23). */
+registerInvariant('equipamiento/multicolor-coherente', (state) => {
   for (const p of state.players) {
     let assigned = 0
     for (const pkm of p.team) {
-      if (pkm.wildcards.length > 1) {
-        throw new Error(`"${String(pkm.uid)}" tiene ${String(pkm.wildcards.length)} comodines (máx 1)`)
+      if (pkm.multicolor.length > 1) {
+        throw new Error(`"${String(pkm.uid)}" tiene ${String(pkm.multicolor.length)} cartas Multicolor (máx 1)`)
       }
-      assigned += pkm.wildcards.length
+      assigned += pkm.multicolor.length
     }
-    if (assigned > p.wildcards) {
-      throw new Error(`${String(p.id)}: ${String(assigned)} asignados > ${String(p.wildcards)} comodines`)
+    if (assigned > p.multicolor) {
+      throw new Error(`${String(p.id)}: ${String(assigned)} asignadas > ${String(p.multicolor)} cartas Multicolor`)
     }
   }
 })
@@ -293,6 +312,28 @@ registerInvariant('batalla/reemplazo-con-opciones', (state) => {
   for (const uid of pending.options) {
     const pkm = player?.team.find((candidate) => candidate.uid === uid)
     if (pkm === undefined || pkm.fainted) throw new Error(`opción de reemplazo inválida: ${uid}`)
+  }
+})
+
+/** turno-automatico-rival/AC-4: con batalla abierta y sin decisión pendiente,
+ * siempre es el turno del jugador — el rival ya actuó dentro del comando que
+ * cedió el turno (Attack/Retire/Advance/arranque por AGILIDAD). */
+registerInvariant('batalla/turno-del-jugador-entre-comandos', (state) => {
+  const { battle, phase, pending } = state
+  if (phase !== 'battle' || battle === null || battle.won || pending !== null) return
+  if (battle.turnSide !== 0) {
+    throw new Error(`turnSide=${String(battle.turnSide)} esperando al jugador entre comandos`)
+  }
+})
+
+/** retirada-solo-inicio-turno: la marca de "acción usada este turno" solo
+ * puede estar activa en el turno propio (se limpia al terminar/iniciar el
+ * turno del jugador; con pending/won el turno ya no es observable). */
+registerInvariant('batalla/accion-usada-en-turno-propio', (state) => {
+  const battle = state.battle
+  if (battle === null) return
+  if (battle.actedThisTurn && battle.turnSide !== 0) {
+    throw new Error('actedThisTurn=true con turnSide≠0')
   }
 })
 

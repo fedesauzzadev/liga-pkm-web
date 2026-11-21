@@ -48,6 +48,10 @@
     "pantano": {
       "entries": [
         {
+          "id": "abra",
+          "count": 2
+        },
+        {
           "id": "element_psychic",
           "count": 3
         },
@@ -65,12 +69,37 @@
     "item": {
       "entries": [
         {
-          "id": "pokeball",
-          "count": 3
+          "id": "multicolor",
+          "count": 16
         },
         {
           "id": "potion",
-          "count": 2
+          "count": 9
+        },
+        {
+          "id": "pokeball",
+          "count": 30
+        },
+        {
+          "id": "oportunidad",
+          "count": 5
+        }
+      ],
+      "devOnly": true
+    },
+    "sorpresa": {
+      "entries": [
+        {
+          "id": "super_potion",
+          "count": 8
+        },
+        {
+          "id": "ultraball",
+          "count": 3
+        },
+        {
+          "id": "masterball",
+          "count": 1
         }
       ],
       "devOnly": true

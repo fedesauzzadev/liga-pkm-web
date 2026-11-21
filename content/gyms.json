@@ -1,0 +1,13 @@
+{
+ "_status": "Leído de las cartas de líder (fotos Gimnasios1/2). Reemplaza al bloque `gyms` de board/kanto.json. Los PKM de cada líder se vinculan en T-042c por `gym.leader`.",
+ "leaders": {
+  "brock":    { "name": "Brock",           "city": "plateada", "cityLabel": "Ciudad Plateada", "medal": "Roca",     "prize": { "from": "llanura", "count": 1 }, "pokemonCount": 2 },
+  "misty":    { "name": "Misty",           "city": "celeste",  "cityLabel": "Ciudad Celeste",  "medal": "Cascada",  "prize": { "from": "isla",    "count": 1 }, "pokemonCount": 2 },
+  "surge":    { "name": "Teniente Surge",  "city": "carmin",   "cityLabel": "Ciudad Carmín",   "medal": "Trueno",   "prize": { "from": "item",    "count": 1 }, "pokemonCount": 2 },
+  "erika":    { "name": "Érika",           "city": "azulona",  "cityLabel": "Ciudad Azulona",  "medal": "Arcoíris", "prize": { "from": "bosque",  "count": 1 }, "pokemonCount": 2 },
+  "koga":     { "name": "Koga",            "city": "fucsia",   "cityLabel": "Ciudad Fucsia",   "medal": "Alma",     "prize": { "from": "pantano", "count": 1 }, "pokemonCount": 2 },
+  "sabrina":  { "name": "Sabrina",         "city": "azafran",  "cityLabel": "Ciudad Azafrán",  "medal": "Pantano",  "prize": { "from": "item",    "count": 2 }, "pokemonCount": 2 },
+  "blaine":   { "name": "Blaine",          "city": "canela",   "cityLabel": "Isla Canela",     "medal": "Volcán",   "prize": { "from": "montana", "count": 1 }, "pokemonCount": 2 },
+  "giovanni": { "name": "Giovanni",        "city": "verde",    "cityLabel": "Ciudad Verde",    "medal": "Tierra",   "prize": { "from": "sorpresa", "count": 1 }, "pokemonCount": 3, "requiresMedals": 7 }
+ }
+}

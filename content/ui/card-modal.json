@@ -1,0 +1,9 @@
+{
+ "_status": "Medidas de la ventana de carta de un Pokémon (SPEC-R/T-101). Fracciones de la ventana y px. Reutiliza <PkmCard> (T-032a) en tamaño grande; no usar la foto recortada de la carta como imagen principal.",
+ "modal": { "testid": "modal-card", "heightVh": 0.86, "maxHeightPx": 760, "minHeightPx": 520, "center": true, "backdropOpacity": 0.35, "animationMs": 180, "closeOnEsc": true, "closeOnBackdropClick": true },
+ "card": { "testid": "card-face", "aspect": 0.63, "aspectTolerance": 0.03, "fontMinPx": 13 },
+ "sidePanel": { "testid": "card-side", "widthPx": 300, "gapPx": 16, "scroll": "internal-only" },
+ "sections": ["status", "energiesEquipped", "energiesAvailable", "multicolor", "potions", "evolution"],
+ "equipChip": { "minHeightPx": 40, "minWidthPx": 88 },
+ "responsive": { "minViewport": [1024, 600], "stackBelowPx": 900 }
+}

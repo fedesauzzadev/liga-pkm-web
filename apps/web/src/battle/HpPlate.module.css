@@ -1,0 +1,51 @@
+.plate {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 4px 8px;
+  min-width: 150px;
+  max-width: 240px;
+  padding: 6px 10px;
+  background: #f3f6ee;
+  border: 3px solid var(--color-border);
+  border-radius: 10px;
+  box-shadow: 0 2px 0 var(--color-border);
+  font-size: 13px;
+}
+
+.name {
+  font-weight: 800;
+}
+
+.hp {
+  justify-self: end;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.bar {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 10px;
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  background: #d7dfd0;
+  overflow: hidden;
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  background: linear-gradient(90deg, #63c74d, #3c6e3f);
+  transition-property: transform;
+  transition-timing-function: ease-out;
+  will-change: transform;
+}
+
+.statuses {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}

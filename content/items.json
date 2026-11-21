@@ -1,0 +1,20 @@
+{
+ "_status": "Cantidades confirmadas por el dueño. Efectos de ultraball/masterball/oportunidad: ver docs/RULES.md D-12, D-19, D-21.",
+ "items": [
+  { "id": "multicolor",   "es": "Multicolor",   "deck": "item",    "copies": 16, "kind": "energy",
+    "text": "Cuenta como 1 energía de cualquier tipo. Se asigna a un PKM al organizar y es permanente." },
+  { "id": "potion",       "es": "Poción",       "deck": "item",    "copies": 9,  "kind": "consumable",
+    "effect": { "op": "heal", "amount": 30 }, "text": "Cura hasta 30 de daño." },
+  { "id": "pokeball",     "es": "Pokebola",     "deck": "item",    "copies": 30, "kind": "ball",
+    "capture": { "timing": "afterDefeat" }, "text": "Atrapa al PKM sin dueño después de derrotarlo." },
+  { "id": "oportunidad",  "es": "Oportunidad",  "deck": "item",    "copies": 5,  "kind": "consumable",
+    "effect": { "op": "rollDraw", "faces": [4, 5, 6], "from": "sorpresa", "minMedals": 4 },
+    "text": "Tirá un dado: con 4-5-6 sacás una carta del mazo Sorpresa." },
+  { "id": "super_potion", "es": "Super Poción", "deck": "sorpresa", "copies": 8, "kind": "consumable",
+    "effect": { "op": "heal", "amount": "all" }, "text": "Cura toda la vida de un PKM." },
+  { "id": "ultraball",    "es": "Ultra Ball",   "deck": "sorpresa", "copies": 3, "kind": "ball",
+    "capture": { "timing": "duringBattle", "maxRemainingHp": 40 }, "text": "Atrapa al PKM aunque le queden hasta 40 de vida." },
+  { "id": "masterball",   "es": "Master Ball",  "deck": "sorpresa", "copies": 1, "kind": "ball",
+    "capture": { "timing": "duringBattle", "guaranteed": true }, "text": "Atrapa al PKM de una." }
+ ]
+}

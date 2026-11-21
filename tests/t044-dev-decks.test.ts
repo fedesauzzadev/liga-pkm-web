@@ -14,7 +14,7 @@ test('AC: SPEC-E/T-044/AC-1 genera mazos dev desde el contenido disponible', () 
   const pantano = decks['pantano']!
   const item = decks['item']!
 
-  expect(Object.keys(decks).sort()).toEqual(['bosque', 'isla', 'item', 'llanura', 'montana', 'pantano'])
+  expect(Object.keys(decks).sort()).toEqual(['bosque', 'isla', 'item', 'llanura', 'montana', 'pantano', 'sorpresa'])
   expect(bosque.devOnly).toBe(true)
   expect(bosque.entries.some((entry) => entry.id === 'element_grass')).toBe(true)
   expect(montana.entries.some((entry) => entry.id === 'charmander')).toBe(true)
@@ -22,6 +22,12 @@ test('AC: SPEC-E/T-044/AC-1 genera mazos dev desde el contenido disponible', () 
   expect(pantano.entries.some((entry) => entry.id === 'poliwag')).toBe(true)
   expect(item.entries.some((entry) => entry.id === 'pokeball')).toBe(true)
   expect(item.entries.some((entry) => entry.id === 'potion')).toBe(true)
+  // T-049: mazo Ítem con la composición confirmada (16/9/30/5 = 60) y Sorpresa (12 no-PKM).
+  expect(item.entries.reduce((sum, entry) => sum + entry.count, 0)).toBe(60)
+  const sorpresa = decks['sorpresa']!
+  const noPkm = sorpresa.entries.filter((entry) => ['super_potion', 'ultraball', 'masterball'].includes(entry.id))
+  expect(noPkm.reduce((sum, entry) => sum + entry.count, 0)).toBe(12)
+  expect(sorpresa.devOnly).toBe(true)
 
   for (const deck of Object.values(decks)) {
     expect(deck.entries.length).toBeGreaterThan(0)
@@ -38,6 +44,7 @@ test('AC: SPEC-E/T-044/AC-1 escribe un archivo de mazos dev estable en disco', (
   expect(written.decks.bosque.entries.some((entry: { id: string }) => entry.id === 'element_grass')).toBe(true)
   expect(written.decks.item.entries.some((entry: { id: string }) => entry.id === 'pokeball')).toBe(true)
   expect(written.decks.pantano.entries.some((entry: { id: string }) => entry.id === 'element_psychic')).toBe(true)
+  expect(written.decks.sorpresa.entries.some((entry: { id: string }) => entry.id === 'masterball')).toBe(true)
 
   rmSync(tmp, { recursive: true, force: true })
 })

@@ -1,6 +1,11 @@
 {
- "_comment": "Cartas leidas a mano de manual.pdf (pags 39, 45, 67). Son fixtures de test. source.verified=true => transcripcion revisada contra la imagen.",
- "pending": ["poliwhirl", "wartortle", "charmeleon"],
+ "_comment": "Cartas leidas a mano de manual.pdf (pags 39, 45, 67) y del mazo de iniciales (foto, plan probar-encuentro-abra). Son fixtures de test. source.verified=true => transcripcion revisada contra la imagen.",
+ "pending": [
+  "poliwhirl",
+  "wartortle",
+  "kadabra",
+  "charizard"
+ ],
  "cards": [
   {
    "id": "poliwag",
@@ -304,6 +309,115 @@
    }
   },
   {
+   "id": "abra",
+   "dex": 63,
+   "name": "Abra",
+   "stage": "basic",
+   "deck": "pantano",
+   "hp": 50,
+   "element": "psychic",
+   "attacks": [
+    {
+     "id": "Confusión",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "Si tu rival saca 1-2 se auto-ataca. (10)",
+     "fx": "psychic"
+    },
+    {
+     "id": "Rayo de Confusión",
+     "name": "Rayo de Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "psiquico",
+     "name": "Psíquico",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "psychic",
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "psychic"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "kadabra",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "Iniciales_02.jpg",
+    "position": 1,
+    "verified": true
+   },
+   "needsReview": true
+  },
+  {
    "id": "tangela_erika",
    "dex": 114,
    "name": "Tangela",
@@ -377,6 +491,141 @@
    "source": {
     "manualPage": 45,
     "verified": true
+   }
+  },
+  {
+   "id": "charmeleon",
+   "dex": 5,
+   "name": "Charmeleon",
+   "stage": "evolution",
+   "deck": "montana",
+   "hp": 70,
+   "element": "fire",
+   "attacks": [
+    {
+     "id": "Rasguños",
+     "name": "Rasguños",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20,
+      "ifRoll": {
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "damage": 30
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "officialMove": "scratch",
+     "officialMoveStatus": "verified",
+     "fx": "contact"
+    },
+    {
+     "id": "Lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "fire",
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "officialMove": "flamethrower",
+     "officialMoveStatus": "verified",
+     "fx": "flame"
+    },
+    {
+     "id": "Giro-Fuego",
+     "name": "Giro-Fuego",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "fire",
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 20,
+      "ifRoll": {
+       "faces": [
+        5,
+        6
+       ],
+       "damage": 50
+      }
+     },
+     "effects": [],
+     "rawText": "",
+      "officialMoveStatus": "verified",
+      "officialMove": "fire-spin",
+     "fx": "flame"
+    },
+    {
+     "id": "Ira",
+     "name": "Ira",
+     "kind": "attack",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "fire",
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "bonusPerSelfDamage",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 10,
+       "per": 10
+      }
+     ],
+      "rawText": "",
+      "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "charizard",
+     "xp": 3
+    }
+   ],
+   "source": {
+    "verified": true,
+    "photo": "photos/scans/evolution/Charmeleon Evo.jpg"
    }
   }
  ]

@@ -3,7 +3,7 @@
 // La descarga usa el DOM solo si existe (SSR/Node-safe); en Node devuelve el reporte.
 import { createInitialState } from '@liga/engine'
 import webPkg from '../../package.json'
-import { readDebugSession } from './session'
+import { readDebugSession, type PerfInfo } from './session'
 
 interface AnchorLike {
   href: string
@@ -25,6 +25,8 @@ export interface BugReport {
   readonly stateVersion: number
   readonly seed: number | null
   readonly commandLog: readonly unknown[]
+  /** T-069/AC-6: perfil bajo del tablero 3D y último FPS medido. */
+  readonly perf: PerfInfo
   readonly error: BugReportError | null
   readonly userAgent: string
   readonly generatedAt: string
@@ -43,6 +45,7 @@ export function buildBugReport(error?: unknown): BugReport {
     stateVersion: createInitialState().version,
     seed: session.seed,
     commandLog: session.commandLog,
+    perf: session.perf,
     error: error === undefined ? null : asErrorInfo(error),
     userAgent: typeof navigator === 'undefined' ? 'desconocido' : navigator.userAgent,
     generatedAt: new Date().toISOString(),

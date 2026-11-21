@@ -1,0 +1,4028 @@
+{
+ "_status": "Generado por `pnpm models:suggest` (SPEC-K/T-070b); revisalo en /dev/models y exportá. status: proposed|approved|rejected.",
+ "kinds": {
+  "house": {
+   "targetHeight": 0.8,
+   "candidates": [
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-a.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "rejected",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-b.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "rejected",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-c.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "rejected",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-d.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "rejected",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-e.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "rejected",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-f.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-g.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-h.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "rejected",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-i.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-j.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-k.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-l.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-m.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-n.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-o.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-p.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-q.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-r.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-s.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-t.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/building-type-u.glb",
+     "weight": 1,
+     "targetHeight": 0.8,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "fence": {
+   "targetHeight": 0.35,
+   "candidates": [
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/fence-1x2.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/fence-1x3.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/fence-1x4.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/fence-2x2.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/fence-2x3.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/fence-3x2.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/fence-3x3.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/fence-low.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_city-kit-suburban_20",
+     "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/fence.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "bridge": {
+   "targetHeight": 0.4,
+   "candidates": [
+    {
+     "pack": "kenney_mini-forest_1.0",
+     "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/bridge.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_center_stone.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_center_stoneRound.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_center_wood.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_center_woodRound.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_side_stone.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_side_stoneRound.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_side_wood.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_side_woodRound.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_stone.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_stoneNarrow.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_stoneRound.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_stoneRoundNarrow.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_wood.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_woodNarrow.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_woodRound.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/bridge_woodRoundNarrow.glb",
+     "weight": 1,
+     "targetHeight": 0.4,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "rock": {
+   "targetHeight": 0.3,
+   "candidates": [
+    {
+     "pack": "kenney_mini-forest_1.0",
+     "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/rocks-high.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_mini-forest_1.0",
+     "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/rocks-low.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_mini-forest_1.0",
+     "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/rocks-ramp.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_mini-forest_1.0",
+     "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/stones.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_largeA.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_largeB.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_largeC.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_largeD.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_largeE.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_largeF.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallA.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallB.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallC.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallD.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallE.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallF.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallFlatA.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallFlatB.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallFlatC.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallG.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallH.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallI.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallTopA.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_smallTopB.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_tallA.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_tallB.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_tallC.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_tallD.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_tallE.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_tallF.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_tallG.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_tallH.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_tallI.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/rock_tallJ.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_largeA.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_largeB.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_largeC.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_largeD.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_largeE.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_largeF.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallA.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallB.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallC.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallD.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallE.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallF.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallFlatA.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallFlatB.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallFlatC.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallG.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallH.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallI.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallTopA.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_smallTopB.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_tallA.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_tallB.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_tallC.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_tallD.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_tallE.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_tallF.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_tallG.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_tallH.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_tallI.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stone_tallJ.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "tree.round": {
+   "targetHeight": 1.1,
+   "candidates": [
+    {
+     "pack": "kenney_mini-forest_1.0",
+     "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/tree-high.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_mini-forest_1.0",
+     "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/tree.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_blocks_dark.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_blocks_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_blocks.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_default_dark.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_default_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_default.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_detailed_dark.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_detailed_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_detailed.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_fat_darkh.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_fat_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_fat.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_oak_dark.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_oak_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_oak.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_plateau_dark.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_plateau_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_plateau.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_simple_dark.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_simple_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_simple.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_small_dark.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_small_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_small.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_tall_dark.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_tall_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_tall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_thin_dark.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_thin_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_thin.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "log": {
+   "targetHeight": 0.25,
+   "candidates": [
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/campfire_logs.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/log_large.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/log_stack.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/log_stackLarge.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/log.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stump_old.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stump_oldTall.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stump_round.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stump_roundDetailed.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stump_square.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stump_squareDetailed.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/stump_squareDetailedWide.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "flower": {
+   "targetHeight": 0.2,
+   "candidates": [
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/flower_purpleA.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/flower_purpleB.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/flower_purpleC.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/flower_redA.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/flower_redB.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/flower_redC.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/flower_yellowA.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/flower_yellowB.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/flower_yellowC.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/lily_large.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/lily_small.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "mushroom": {
+   "targetHeight": 0.2,
+   "candidates": [
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/mushroom_red.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/mushroom_redGroup.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/mushroom_redTall.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/mushroom_tan.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/mushroom_tanGroup.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/mushroom_tanTall.glb",
+     "weight": 1,
+     "targetHeight": 0.2,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "bush": {
+   "targetHeight": 0.35,
+   "candidates": [
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/plant_bush.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/plant_bushDetailed.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/plant_bushLarge.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/plant_bushLargeTriangle.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/plant_bushSmall.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/plant_bushTriangle.glb",
+     "weight": 1,
+     "targetHeight": 0.35,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "tree.pine": {
+   "targetHeight": 1.1,
+   "candidates": [
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_cone_dark.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_cone_fall.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_cone.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineDefaultA.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineDefaultB.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineGroundA.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineGroundB.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineRoundA.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineRoundB.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineRoundC.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineRoundD.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineRoundE.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineRoundF.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineSmallA.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineSmallB.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineSmallC.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineSmallD.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineTallA_detailed.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineTallA.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineTallB_detailed.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineTallB.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineTallC_detailed.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineTallC.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineTallD_detailed.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_nature-kit",
+     "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_pineTallD.glb",
+     "weight": 1,
+     "targetHeight": 1.1,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "barrel": {
+   "targetHeight": 0.25,
+   "candidates": [
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/barrel-open.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/barrel.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "crate": {
+   "targetHeight": 0.25,
+   "candidates": [
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/box-large-open.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/box-large.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/box-open.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/box.glb",
+     "weight": 1,
+     "targetHeight": 0.25,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "campfire": {
+   "targetHeight": 0.3,
+   "candidates": [
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/campfire-fishing-stand.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/campfire-pit.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/campfire-stand.glb",
+     "weight": 1,
+     "targetHeight": 0.3,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "sign": {
+   "targetHeight": 0.6,
+   "candidates": [
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/signpost-single.glb",
+     "weight": 1,
+     "targetHeight": 0.6,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/signpost.glb",
+     "weight": 1,
+     "targetHeight": 0.6,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "tent": {
+   "targetHeight": 0.6,
+   "candidates": [
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/tent-canvas-half.glb",
+     "weight": 1,
+     "targetHeight": 0.6,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/tent-canvas.glb",
+     "weight": 1,
+     "targetHeight": 0.6,
+     "rotY": 0,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "pack": "kenney_survival-kit",
+     "file": "kenney/kenney_survival-kit/Models/GLB format/tent.glb",
+     "weight": 1,
+     "targetHeight": 0.6,
+     "rotY": 0,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  }
+ },
+ "hgss": {
+  "starter": {
+   "targetHeight": 0.7,
+   "files": [
+    {
+     "name": "Abra",
+     "entry": "hgss/Abra/model.obj",
+     "forNodes": [],
+     "forSpecies": [
+      "abra"
+     ],
+     "targetHeight": 0.7,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Bulbasaur",
+     "entry": "hgss/Bulbasaur/model.obj",
+     "forNodes": [],
+     "forSpecies": [
+      "bulbasaur"
+     ],
+     "targetHeight": 0.7,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Charmander",
+     "entry": "hgss/Charmander/model.obj",
+     "forNodes": [],
+     "forSpecies": [
+      "charmander"
+     ],
+     "targetHeight": 0.7,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Machop",
+     "entry": "hgss/Machop/model.obj",
+     "forNodes": [],
+     "forSpecies": [
+      "machop"
+     ],
+     "targetHeight": 0.7,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Squirtle",
+     "entry": "hgss/Squirtle/model.obj",
+     "forNodes": [],
+     "forSpecies": [
+      "squirtle"
+     ],
+     "targetHeight": 0.7,
+     "status": "proposed",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "gym": {
+   "targetHeight": 1.2,
+   "files": [
+    {
+     "name": "Celadon Gym",
+     "entry": "hgss/Kanto Pokemon Gyms/Celadon Gym/Celadon Gym.obj",
+     "forNodes": [
+      "azulona"
+     ],
+     "forSpecies": [],
+     "targetHeight": 1.2,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Cerulean Gym",
+     "entry": "hgss/Kanto Pokemon Gyms/Cerulean Gym/Cerulean Gym.obj",
+     "forNodes": [
+      "celeste"
+     ],
+     "forSpecies": [],
+     "targetHeight": 1.2,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Fuchsia Gym",
+     "entry": "hgss/Kanto Pokemon Gyms/Fuchsia Gym/Fuchsia Gym.obj",
+     "forNodes": [
+      "fucsia"
+     ],
+     "forSpecies": [],
+     "targetHeight": 1.2,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Pewter Gym",
+     "entry": "hgss/Kanto Pokemon Gyms/Pewter Gym/Pewter Gym.obj",
+     "forNodes": [
+      "plateada"
+     ],
+     "forSpecies": [],
+     "targetHeight": 1.2,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Saffron Gym",
+     "entry": "hgss/Kanto Pokemon Gyms/Saffron Gym/Saffron Gym.obj",
+     "forNodes": [
+      "azafran"
+     ],
+     "forSpecies": [],
+     "targetHeight": 1.2,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Vermilion Gym",
+     "entry": "hgss/Kanto Pokemon Gyms/Vermilion Gym/Vermilion Gym.obj",
+     "forNodes": [
+      "carmin"
+     ],
+     "forSpecies": [],
+     "targetHeight": 1.2,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Viridian Gym",
+     "entry": "hgss/Kanto Pokemon Gyms/Viridian Gym/Viridian Gym.obj",
+     "forNodes": [
+      "verde"
+     ],
+     "forSpecies": [],
+     "targetHeight": 1.2,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Pokemon League",
+     "entry": "hgss/Pokemon League/Pokémon League.obj",
+     "forNodes": [
+      "liga"
+     ],
+     "forSpecies": [],
+     "targetHeight": 1.6,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "lab": {
+   "targetHeight": 1.2,
+   "files": [
+    {
+     "name": "Oak Pokemon Research Lab",
+     "entry": "hgss/Oak Pokemon Research Lab/Oak Pokemon Research Lab.obj",
+     "forNodes": [],
+     "forSpecies": [],
+     "targetHeight": 1.2,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": true,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "house": {
+   "targetHeight": 0.8,
+   "files": [
+    {
+     "name": "Pallet Town House 1",
+     "entry": "hgss/Pallet Town Houses/Pallet Town House 1/Pallet Town House.obj",
+     "forNodes": [
+      "paleta"
+     ],
+     "forSpecies": [],
+     "targetHeight": 0.8,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Pallet Town House 2",
+     "entry": "hgss/Pallet Town Houses/Pallet Town House 2/Pallet Town House 2.obj",
+     "forNodes": [
+      "paleta"
+     ],
+     "forSpecies": [],
+     "targetHeight": 0.8,
+     "status": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  },
+  "market": {
+   "targetHeight": 0.9,
+   "files": [
+    {
+     "name": "Poké Mart (Violet City and Ecruteak City)",
+     "entry": "hgss/Poke Mart/Poké Mart (Violet City and Ecruteak City)/Poké Mart (Ecruteak City).obj",
+     "forNodes": [],
+     "forSpecies": [],
+     "targetHeight": 0.9,
+     "status": "failed",
+     "failedFrom": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    },
+    {
+     "name": "Poké Mart",
+     "entry": "hgss/Poke Mart/Poké Mart/Poké Mart.obj",
+     "forNodes": [],
+     "forSpecies": [],
+     "targetHeight": 0.9,
+     "status": "failed",
+     "failedFrom": "approved",
+     "options": {
+      "ignoreTextures": false,
+      "keepOriginalMaterial": false
+     }
+    }
+   ]
+  }
+ },
+ "newModels": {
+  "gym": {
+   "file": "gim.glb",
+   "format": "glb",
+   "status": "proposed",
+   "options": {
+    "ignoreTextures": false,
+    "keepOriginalMaterial": false
+   }
+  },
+  "pokecenter": {
+   "file": "pokecenter.glb",
+   "format": "glb",
+   "status": "proposed",
+   "options": {
+    "ignoreTextures": false,
+    "keepOriginalMaterial": false
+   }
+  },
+  "market": {
+   "file": "pokemart.glb",
+   "format": "glb",
+   "status": "proposed",
+   "options": {
+    "ignoreTextures": false,
+    "keepOriginalMaterial": false
+   }
+  },
+  "league": {
+   "file": "league.glb",
+   "format": "glb",
+   "status": "proposed",
+   "options": {
+    "ignoreTextures": false,
+    "keepOriginalMaterial": false
+   }
+  },
+  "lab": {
+   "file": "oak.glb",
+   "format": "glb",
+   "status": "proposed",
+   "options": {
+    "ignoreTextures": false,
+    "keepOriginalMaterial": false
+   }
+  }
+ },
+ "unclassified": [
+  {
+   "pack": "hgss",
+   "file": "hgss/Kimono Dance Theater/Kimono Dance Theater.obj"
+  },
+  {
+   "pack": "kenney_city-kit-suburban_20",
+   "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/driveway-long.glb"
+  },
+  {
+   "pack": "kenney_city-kit-suburban_20",
+   "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/driveway-short.glb"
+  },
+  {
+   "pack": "kenney_city-kit-suburban_20",
+   "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/path-long.glb"
+  },
+  {
+   "pack": "kenney_city-kit-suburban_20",
+   "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/path-short.glb"
+  },
+  {
+   "pack": "kenney_city-kit-suburban_20",
+   "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/path-stones-long.glb"
+  },
+  {
+   "pack": "kenney_city-kit-suburban_20",
+   "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/path-stones-messy.glb"
+  },
+  {
+   "pack": "kenney_city-kit-suburban_20",
+   "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/path-stones-short.glb"
+  },
+  {
+   "pack": "kenney_city-kit-suburban_20",
+   "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/planter.glb"
+  },
+  {
+   "pack": "kenney_city-kit-suburban_20",
+   "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/tree-large.glb"
+  },
+  {
+   "pack": "kenney_city-kit-suburban_20",
+   "file": "kenney/kenney_city-kit-suburban_20/Models/GLB format/tree-small.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/building-platform.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/building-roof.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/building-structure.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/character-archer.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/fence.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/flag.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/ladder.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/patch-dirt.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/patch-grass.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/plant.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/platform.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/target.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/tent.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/weapon-arrow.glb"
+  },
+  {
+   "pack": "kenney_mini-forest_1.0",
+   "file": "kenney/kenney_mini-forest_1.0/Models/GLB format/weapon-bow.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/bed_floor.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/bed.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cactus_short.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cactus_tall.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/campfire_bricks.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/campfire_planks.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/campfire_stones.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/canoe_paddle.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/canoe.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_block_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_block_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockCave_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockCave_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockDiagonal_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockDiagonal_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockHalf_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockHalf_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockQuarter_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockQuarter_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockSlope_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockSlope_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockSlopeHalfWalls_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockSlopeHalfWalls_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockSlopeWalls_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_blockSlopeWalls_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cave_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cave_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_corner_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_corner_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cornerInner_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cornerInner_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cornerInnerLarge_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cornerInnerLarge_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cornerInnerTop_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cornerInnerTop_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cornerLarge_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cornerLarge_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cornerTop_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_cornerTop_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_diagonal_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_diagonal_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_half_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_half_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_halfCorner_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_halfCorner_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_halfCornerInner_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_halfCornerInner_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_large_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_large_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_steps_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_steps_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_stepsCorner_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_stepsCorner_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_stepsCornerInner_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_stepsCornerInner_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_top_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_top_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_topDiagonal_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_topDiagonal_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_waterfall_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_waterfall_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_waterfallTop_rock.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/cliff_waterfallTop_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crop_carrot.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crop_melon.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crop_pumpkin.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crop_turnip.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_bambooStageA.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_bambooStageB.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_cornStageA.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_cornStageB.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_cornStageC.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_cornStageD.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_dirtDoubleRow.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_dirtDoubleRowCorner.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_dirtDoubleRowEnd.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_dirtRow.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_dirtRowCorner.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_dirtRowEnd.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_dirtSingle.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_leafsStageA.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_leafsStageB.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_wheatStageA.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/crops_wheatStageB.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_bend.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_bendCenter.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_corner.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_gate.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_planks.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_planksDouble.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_simple.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_simpleCenter.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_simpleDiagonal.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_simpleDiagonalCenter.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_simpleHigh.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/fence_simpleLow.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/grass_large.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/grass_leafs.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/grass_leafsLarge.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/grass.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_grass.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathBend.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathBendBank.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathCorner.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathCornerSmall.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathCross.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathEnd.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathEndClosed.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathOpen.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathRocks.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathSide.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathSideOpen.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathSplit.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathStraight.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_pathTile.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverBend.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverBendBank.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverCorner.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverCornerSmall.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverCross.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverEnd.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverEndClosed.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverOpen.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverRocks.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverSide.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverSideOpen.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverSplit.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverStraight.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/ground_riverTile.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/hanging_moss.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/path_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/path_stoneCircle.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/path_stoneCorner.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/path_stoneEnd.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/path_wood.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/path_woodCorner.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/path_woodEnd.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/plant_flatShort.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/plant_flatTall.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/platform_beach.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/platform_grass.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/platform_stone.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/pot_large.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/pot_small.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/sign.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/statue_block.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/statue_column.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/statue_columnDamaged.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/statue_head.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/statue_obelisk.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/statue_ring.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/tent_detailedClosed.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/tent_detailedOpen.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/tent_smallClosed.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/tent_smallOpen.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_palm.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_palmBend.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_palmDetailedShort.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_palmDetailedTall.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_palmShort.glb"
+  },
+  {
+   "pack": "kenney_nature-kit",
+   "file": "kenney/kenney_nature-kit/Models/GLTF format/tree_palmTall.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/bedroll-frame.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/bedroll-packed.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/bedroll.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/bottle-large.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/bottle.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/bucket.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/chest.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/fence-doorway.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/fence-fortified.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/fence.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/fish-large.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/fish.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/floor-hole.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/floor-old.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/floor.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/grass-large.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/grass.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/metal-panel-narrow.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/metal-panel-screws-half.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/metal-panel-screws-narrow.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/metal-panel-screws.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/metal-panel.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/patch-grass-large.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/patch-grass.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/resource-planks.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/resource-stone-large.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/resource-stone.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/resource-wood.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/rock-a.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/rock-b.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/rock-c.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/rock-flat-grass.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/rock-flat.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/rock-sand-a.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/rock-sand-b.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/rock-sand-c.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/structure-canvas.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/structure-floor.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/structure-metal-doorway.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/structure-metal-floor.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/structure-metal-roof.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/structure-metal-wall.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/structure-metal.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/structure-roof.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/structure.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tool-axe-upgraded.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tool-axe.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tool-hammer-upgraded.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tool-hammer.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tool-hoe-upgraded.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tool-hoe.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tool-pickaxe-upgraded.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tool-pickaxe.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tool-shovel-upgraded.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tool-shovel.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tree-autumn-tall.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tree-autumn-trunk.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tree-autumn.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tree-log-small.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tree-log.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tree-tall.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tree-trunk.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/tree.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/workbench-anvil.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/workbench-grind.glb"
+  },
+  {
+   "pack": "kenney_survival-kit",
+   "file": "kenney/kenney_survival-kit/Models/GLB format/workbench.glb"
+  }
+ ]
+}

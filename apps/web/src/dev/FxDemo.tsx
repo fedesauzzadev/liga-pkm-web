@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
+import { FX_ARCHETYPES, archetypes, type FxDomNode } from '../fx/archetypes'
+import { playMoveFx, setShowdownAdapter } from '../fx/playMoveFx'
+import { createShowdownFxAdapter, SHOWDOWN_STAGE } from '../fx/showdown/adapter.ts'
 import { buildFxImages } from '../fx/showdown/images.ts'
 import { playShowdownMove } from '../fx/showdown/play.ts'
-import { SPIKE_MOVE_IDS } from '../fx/showdown/registry.ts'
+import { SHOWDOWN_MOVE_IDS } from '../fx/showdown/registry.ts'
 import type { FxHost } from '../fx/showdown/shim.ts'
 import { createWebHost, wrapDomElement } from '../fx/showdown/webHost.ts'
 import { es } from '../i18n/es'
@@ -22,22 +25,55 @@ const STARTERS = [
   { dex: 66, name: 'Machop' },
 ] as const
 
-const MOVE_LABELS: Readonly<Record<(typeof SPIKE_MOVE_IDS)[number], string>> = {
+const MOVE_LABELS: Readonly<Record<(typeof SHOWDOWN_MOVE_IDS)[number], string>> = {
   bubble: es.fxBubble,
   flamethrower: es.fxFlamethrower,
   scratch: es.fxScratch,
   vinewhip: es.fxVineWhip,
   thunderbolt: es.fxThunderbolt,
   doubleslap: es.fxDoubleSlap,
+  tackle: es.fxTackle,
+  headbutt: es.fxHeadbutt,
+  withdraw: es.fxWithdraw,
+  firespin: es.fxFireSpin,
+  stunspore: es.fxStunSpore,
+  absorb: es.fxAbsorb,
 }
 
-const ATK_HOME = { x: 0, y: 0, z: 0 }
-const DEF_HOME = { x: 150, y: 60, z: 120 }
-const SPRITE_SIZE = { w: 120, h: 120 }
+export { MOVE_LABELS }
+
+const ATK_HOME = SHOWDOWN_STAGE.attackerHome
+const DEF_HOME = SHOWDOWN_STAGE.defenderHome
+const SPRITE_SIZE = SHOWDOWN_STAGE.spriteSize
 const SPEEDS = [
   { value: 1, label: es.fxDemoSpeed1 },
   { value: 2, label: es.fxDemoSpeed2 },
   { value: 0, label: es.fxDemoSpeedSkip },
+] as const
+
+export const ARCHETYPE_LABELS: Readonly<Record<(typeof FX_ARCHETYPES)[number], string>> = {
+  contact: 'Contact',
+  projectile: 'Projectile',
+  beam: 'Beam',
+  flame: 'Flame',
+  water: 'Water',
+  electric: 'Electric',
+  leaves: 'Leaves',
+  psychic: 'Psychic',
+  poison: 'Poison',
+  sleep: 'Sleep',
+  heal: 'Heal',
+  explosion: 'Explosion',
+  quake: 'Quake',
+  wind: 'Wind',
+  ice: 'Ice',
+  ghost: 'Ghost',
+  buff: 'Buff',
+}
+
+const ELEMENT_OPTIONS = [
+  'normal', 'fire', 'water', 'grass', 'electric', 'psychic', 'fighting', 'poison',
+  'ground', 'flying', 'bug', 'ghost', 'ice', 'rock', 'dragon',
 ] as const
 
 function measureFps(until: Promise<unknown>): Promise<string> {
@@ -77,6 +113,7 @@ export function FxDemo() {
   const [reduced, setReduced] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [status, setStatus] = useState('')
+  const [element, setElement] = useState<(typeof ELEMENT_OPTIONS)[number]>('fire')
 
   const viewportRef = useRef<HTMLDivElement | null>(null)
   const stageRef = useRef<HTMLDivElement | null>(null)
@@ -122,6 +159,21 @@ export function FxDemo() {
     return () => ro.disconnect()
   }, [])
 
+  useEffect(() => {
+    // Eslabón 1 de FX-ADAPTER activo en la demo (T-032c2): la capa declara el
+    // stage del shim, así playMoveFx resuelve primero el adaptador Showdown.
+    if (fx === null) return
+    setShowdownAdapter(
+      createShowdownFxAdapter({
+        manifest: fx,
+        hostOf: (layer) =>
+          createWebHost({ fx: layer as unknown as HTMLElement, bg: layer as unknown as HTMLElement }),
+        wrap: (node) => wrapDomElement(node as unknown as HTMLElement),
+      }),
+    )
+    return () => setShowdownAdapter(null)
+  }, [fx])
+
   const atkEntry = sprites?.[String(atkDex)]
   const defEntry = sprites?.[String(defDex)]
   const atkUrl = atkEntry?.back ?? null
@@ -129,7 +181,7 @@ export function FxDemo() {
   const atkName = STARTERS.find((s) => s.dex === atkDex)?.name ?? ''
   const defName = STARTERS.find((s) => s.dex === defDex)?.name ?? ''
 
-  const play = (moveId: (typeof SPIKE_MOVE_IDS)[number]): void => {
+  const play = (moveId: (typeof SHOWDOWN_MOVE_IDS)[number]): void => {
     if (playing) return
     const fxLayer = fxRef.current
     const bgLayer = bgRef.current
@@ -172,6 +224,64 @@ export function FxDemo() {
     })()
   }
 
+  const playArchetype = (archetype: (typeof FX_ARCHETYPES)[number]): void => {
+    if (playing) return
+    const fxLayer = fxRef.current
+    const atk = atkRef.current
+    const def = defRef.current
+    if (!fxLayer || !atk || !def) return
+    setPlaying(true)
+    setStatus(`${ARCHETYPE_LABELS[archetype]} · ${element}`)
+    void (async () => {
+      const layer = fxLayer
+      const move = archetypes[archetype]
+      if (move === undefined) {
+        setPlaying(false)
+        return
+      }
+      try {
+        await move({
+          attacker: atk as unknown as FxDomNode,
+          defender: def as unknown as FxDomNode,
+          layer: layer as unknown as FxDomNode,
+          element,
+          speed,
+          reducedMotion: reduced,
+        })
+      } finally {
+        setPlaying(false)
+      }
+    })()
+  }
+
+  /** Cadena completa de FX-ADAPTER (T-032c2): adaptador → arquetipo. */
+  const playChain = (): void => {
+    if (playing) return
+    const fxLayer = fxRef.current
+    const atk = atkRef.current
+    const def = defRef.current
+    if (!fxLayer || !atk || !def) return
+    setPlaying(true)
+    setStatus(es.fxChain)
+    void (async () => {
+      try {
+        await playMoveFx(
+          { officialMove: 'flamethrower', element: 'fire' },
+          {
+            attacker: atk as unknown as FxDomNode,
+            defender: def as unknown as FxDomNode,
+            layer: fxLayer as unknown as FxDomNode,
+            element: 'fire',
+            speed,
+            ...(reduced ? { reducedMotion: true } : {}),
+          },
+        )
+      } finally {
+        setPlaying(false)
+      }
+    })()
+  }
+
   return (
     <section className={styles.demo}>
       <h1 className={styles.title}>{es.fxDemoTitle}</h1>
@@ -193,7 +303,7 @@ export function FxDemo() {
               <img className={styles.sprite} src={defUrl} alt={defName} />
             )}
           </div>
-          <div className={styles.fx} ref={fxRef} />
+          <div className={styles.fx} data-fx-stage="showdown" ref={fxRef} />
         </div>
       </div>
       <div className={styles.controls}>
@@ -236,15 +346,38 @@ export function FxDemo() {
             </option>
           ))}
         </select>
+        <span className={styles.label}>{es.fxDemoElement}</span>
+        <select
+          className={styles.select}
+          value={element}
+          onChange={(e) => setElement(e.target.value as (typeof ELEMENT_OPTIONS)[number])}
+          aria-label={es.fxDemoElement}
+        >
+          {ELEMENT_OPTIONS.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
         <label className={styles.check}>
           <input type="checkbox" checked={reduced} onChange={(e) => setReduced(e.target.checked)} />
           {es.fxDemoReduced}
         </label>
       </div>
       <div className={styles.moves}>
-        {SPIKE_MOVE_IDS.map((id) => (
+        {SHOWDOWN_MOVE_IDS.map((id) => (
           <button key={id} type="button" className={styles.move} disabled={playing} onClick={() => play(id)}>
             {MOVE_LABELS[id]}
+          </button>
+        ))}
+        <button type="button" className={styles.move} disabled={playing || fx === null} onClick={() => playChain()}>
+          {es.fxChain}
+        </button>
+      </div>
+      <div className={styles.moves}>
+        {FX_ARCHETYPES.map((id) => (
+          <button key={id} type="button" className={styles.move} disabled={playing} onClick={() => playArchetype(id)}>
+            {ARCHETYPE_LABELS[id]}
           </button>
         ))}
       </div>

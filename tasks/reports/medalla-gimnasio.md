@@ -1,0 +1,17 @@
+# Reporte medalla-gimnasio — Medalla al ganar un gimnasio + aviso de ya ganado
+- Estado: REVIEW | Rama/commit: trabajo sin commitear (árbol del dueño)
+- Resumen: al ganar un duelo de gimnasio el overlay de resultado muestra el bloque de medalla ("¡Ganaste la Medalla {medal}!" + líder + insignia `<img>`, todo derivado del `MedalWon` del guion); aterrizar en un gimnasio ya ganado ahora emite `GymAlreadyWon` (antes `TileResolved none` silencioso) con mensaje en el panel e historial. Pipeline de assets extendido: 8 insignias a `public/badges/` + manifest `badges.json` con fallback CSS sin red.
+- Archivos clave:
+  - Motor: `packages/engine/src/events.ts` (`GymAlreadyWon`), `tiles.ts` (caso gym), `index.ts` (export), `index.test.ts` (test AC-2).
+  - UI: `apps/web/src/i18n/es.ts` (`battleResultMedal`, `battleResultMedalLeader`, `tileMsgGymAlreadyWon`, `historyGymAlreadyWon`), `game/TilePanel.tsx` (+test), `i18n/event-log.ts` (+test; también caso explícito `TrainerAppeared → null`, deuda de lint tapada por el cache), `hud/history.ts` (kind `system`).
+  - Overlay: `popup/model.ts` (`battleMedal` + test), `popup/BattlePopup.tsx` (`BattleResultMedal` + bloque con img/fallback + test), `popup/popup.module.css`, `battle/sprites.ts` (`useBadges` + `isBadgesManifest`), `game/PlayScreen.tsx` (pasa manifest).
+  - Assets: `tools/assets.ts` (sección badges: `BadgeEntry`, `parseBadges`, `BadgeTask`, `buildBadgeManifest`, `badges.json`), `tools/assets.config.json` (fuente + 8 entradas), `.gitignore`, `docs/ASSETS.md`, `tests/t043-assets.test.ts`.
+- AC → test:
+  - AC-1 → `apps/web/src/popup/model.test.ts` (battleMedal) + `BattlePopup.test.tsx` (overlay con medalla)
+  - AC-2 → `packages/engine/src/index.test.ts` + `TilePanel.test.tsx` + `event-log.test.ts`
+  - AC-3 → `tests/t043-assets.test.ts` (badges: archivo, manifest, guard git) + corrida real `pnpm assets`
+  - AC-4 → `BattlePopup.test.tsx` (fallback disco CSS) + `content:validate`/build verdes sin assets
+  - AC-5/AC-6 → strings centralizados en `es.ts`; nombres de gyms.json sin hardcodear; `pnpm verify` verde
+- `pnpm verify`: OK (typecheck+lint+test 1115+content:validate+build+deps+size+bench). `pnpm assets`: 331/331, 0 faltantes (8 insignias + `badges.json` UTF-8 verificado).
+- Decisiones: los archivos de insignias del repo PokeAPI/sprites son numéricos; 1-8 = Kanto en orden canónico (identificado por análisis de color offline con las tools de Python: 1 gris=Roca… 8 verde=Tierra). El bloque de medalla solo con `result==='won'` + `MedalWon` en guion; líder desde `gameContent.gyms` (mismo lookup que `leaderNameOf`); color del fallback desde `BOARD3D.decor.medalColors`. `pnpm --filter …test` no existe en los paquetes (tests solo desde raíz): usé `pnpm exec vitest run …`.
+- Dudas nuevas: ninguna (sin ER). Riesgos/deuda: la identificación de 1-8.png es por orden+color (consistente con el listado de Bulbapedia que sigue el repo); si alguna insignia quedara cruzada, es un cambio de `assets.config.json` sin tocar código.

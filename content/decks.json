@@ -1,11 +1,17 @@
 {
-  "_comment": "Mazos de desarrollo (D-14, T-010): solo cartas ya ingresadas en content/pokemon/_samples.json + cartas de elemento por tipo. T-044 (gen-dev-decks) los regenera con todo el contenido disponible.",
-  "decks": {
-    "bosque": { "entries": [{ "id": "element_grass", "count": 6 }], "devOnly": true },
-    "montana": { "entries": [{ "id": "element_fire", "count": 5 }, { "id": "charmander", "count": 1 }], "devOnly": true },
-    "isla": { "entries": [{ "id": "element_water", "count": 5 }, { "id": "squirtle", "count": 1 }], "devOnly": true },
-    "llanura": { "entries": [{ "id": "element_fighting", "count": 6 }], "devOnly": true },
-    "pantano": { "entries": [{ "id": "element_psychic", "count": 3 }, { "id": "element_water", "count": 3 }, { "id": "poliwag", "count": 1 }], "devOnly": true },
-    "item": { "entries": [{ "id": "pokeball", "count": 3 }, { "id": "potion", "count": 2 }], "devOnly": true }
-  }
+ "_status": "Energías e ítems CONFIRMADOS por el dueño. Las listas `pokemon` las completa T-042c a partir de las fotos. `expectedPokemonInPhoto` es el conteo a ojo de la foto (verificar).",
+ "_check": "Si cada mazo de terreno debe sumar 60: bosque 40+20=60 OK, montana 40+20=60 OK, llanura 38+22=60 OK, isla 38+20=58 (faltan 2?), pantano 40+19=59 (falta 1?). T-042c debe reportar esta diferencia y NO inventar cartas.",
+ "terrain": {
+  "bosque":  { "photo": "Pokemon_mazo_bosque.jpg",   "energy": { "grass": 20, "bug": 10, "flying": 10 },   "expectedPokemonInPhoto": 20, "expectedTotal": 60, "pokemon": [] },
+  "montana": { "photo": "Pokemon_mazo_montaña.jpg",  "energy": { "fire": 20, "electric": 11, "ground": 9 }, "expectedPokemonInPhoto": 20, "expectedTotal": 60, "pokemon": [] },
+  "isla":    { "photo": "Pokemon_mazo_lago.jpg",     "energy": { "water": 18, "rock": 8, "ice": 12 },      "expectedPokemonInPhoto": 20, "expectedTotal": 60, "pokemon": [] },
+  "llanura": { "photo": "Pokemon_mazo_llanura.jpg",  "energy": { "fighting": 23, "ghost": 15 },            "expectedPokemonInPhoto": 22, "expectedTotal": 60, "pokemon": [] },
+  "pantano": { "photo": "Pokemon_mazo_pantano.jpg",  "energy": { "poison": 10, "water": 8, "psychic": 22 }, "expectedPokemonInPhoto": 19, "expectedTotal": 60, "pokemon": [] }
+ },
+ "item": { "multicolor": 16, "potion": 9, "pokeball": 30, "oportunidad": 5, "total": 60 },
+ "sorpresa": { "super_potion": 8, "ultraball": 3, "masterball": 1, "expectedPokemonInPhoto": 28, "expectedTotal": 40, "pokemon": [] },
+ "evolucion": { "photos": ["Evoluciones1.jpg", "Evolucion_2.jpg", "Evoluciones3.jpg", "Evolucion4.jpg"], "expectedPokemonInPhotos": 84, "pokemon": [] },
+ "gimnasio": { "photos": ["Gimnasios1.jpg", "Gimnasios_2.jpg"], "leaders": 8, "expectedCardsInPhotos": 25 },
+ "liga": { "photos": ["Liga_pokemon.jpg", "Ash.jpg"], "trainers": 5, "expectedCardsInPhotos": 25 },
+ "iniciales": { "photo": "Iniciales.jpg", "note": "3 cartas en la foto (Charmander, Abra, Bulbasaur). Squirtle está en el mazo Isla y Machop en Llanura." }
 }

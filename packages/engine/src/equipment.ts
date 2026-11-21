@@ -1,7 +1,7 @@
 // Equipamiento, costos e inventario (SPEC-B/T-013). Reglas: RULES §3 (un ataque se
-// evalúa solo, comodín = 1 elemento del asignado, máx 1 por PKM) y §4 (primer
-// ataque). Funciones puras + mutadores de draft immer; los handlers de engine.ts
-// validan fase (`organize`, AC-3) y despachan. Sin azar, sin DOM (ADR-1).
+// evalúa solo, Multicolor = 1 elemento del asignado, máx 1 por PKM; D-23) y §4
+// (primer ataque). Funciones puras + mutadores de draft immer; los handlers de
+// engine.ts validan fase (`organize`, AC-3) y despachan. Sin azar, sin DOM (ADR-1).
 import type { WritableDraft } from 'immer'
 import { ELEMENTS } from '@liga/content'
 import type { Attack, CardId, Element, PokemonCard } from '@liga/content'
@@ -11,7 +11,9 @@ import type {
   ElementEquipped,
   ElementUnequipped,
   GameEvent,
-  WildcardAssigned,
+  MulticolorAssigned,
+  MulticolorUnassigned,
+  TeamReordered,
 } from './events.ts'
 import type { GameState, PlayerState, PkmInstance } from './state.ts'
 
@@ -23,21 +25,21 @@ function illegal(message: string): Result<never, EngineError> {
   return { ok: false, error: new EngineError('ILLEGAL_COMMAND', message) }
 }
 
-/** Cuenta un elemento entre equipados y comodines asignados de un PKM. */
+/** Cuenta un elemento entre equipados y cartas Multicolor asignadas de un PKM. */
 function have(pkm: PkmInstance, element: Element): number {
   const equipped = pkm.equipped.filter((card) => card.element === element).length
-  const wildcards = pkm.wildcards.filter((assigned) => assigned === element).length
-  return equipped + wildcards
+  const multicolor = pkm.multicolor.filter((assigned) => assigned === element).length
+  return equipped + multicolor
 }
 
 /**
  * ¿El PKM propio puede usar `attack`? (AC-1, RULES §3): por cada elemento
- * específico, #equipados + comodines asignados ≥ requeridos del mismo; total
- * equipado (+comodines) ≥ `cost.length`. Cada ataque se evalúa solo; los
+ * específico, #equipados + Multicolor asignado ≥ requeridos del mismo; total
+ * equipado (+Multicolor) ≥ `cost.length`. Cada ataque se evalúa solo; los
  * elementos no se consumen. Costo vacío (salvajes/líderes) ⇒ siempre true.
  */
 export function canUse(pkm: PkmInstance, attack: Attack): boolean {
-  const total = pkm.equipped.length + pkm.wildcards.length
+  const total = pkm.equipped.length + pkm.multicolor.length
   if (total < attack.cost.length) return false
   for (const element of ELEMENTS) {
     const required = attack.cost.filter((slot) => slot === element).length
@@ -78,16 +80,16 @@ export function legalAttacks(
   )
 }
 
-/** Comodines del jugador ya asignados a su equipo. */
-function assignedWildcardCount(player: PlayerState): number {
-  return player.team.reduce((count, pkm) => count + pkm.wildcards.length, 0)
+/** Cartas Multicolor del jugador ya asignadas a su equipo. */
+function assignedMulticolorCount(player: PlayerState): number {
+  return player.team.reduce((count, pkm) => count + pkm.multicolor.length, 0)
 }
 
-/** ¿Queda un comodín libre para `pkmUid`, o el PKM ya tiene uno que reasignar? (AC-2) */
-export function canAssignWildcard(player: PlayerState, pkmUid: string): boolean {
-  const target = player.team.find((pkm) => pkm.uid === pkmUid)
+/** ¿Queda una carta Multicolor libre para `pkmUid`, o el PKM ya tiene una que reasignar? (AC-2) */
+export function canAssignMulticolor(player: PlayerState, pkmUid: string): boolean {
+  const target = player.team.find((p) => p.uid === pkmUid)
   if (target === undefined) return false
-  return target.wildcards.length > 0 || assignedWildcardCount(player) < player.wildcards
+  return target.multicolor.length > 0 || assignedMulticolorCount(player) < player.multicolor
 }
 
 /** PKM del equipo por uid (draft) o error tipado. */
@@ -143,8 +145,8 @@ export function unequipElement(
   return { ok: true, value: [event] }
 }
 
-/** Asigna/reasigna un comodín al PKM como `element` (AC-2/AC-3, RULES §3). */
-export function assignWildcard(
+/** Asigna/reasigna una carta Multicolor al PKM como `element` (AC-2/AC-3, RULES §3, D-23). */
+export function assignMulticolor(
   draft: Draft,
   command: { readonly pkmUid: string; readonly element: Element },
 ): Result<readonly GameEvent[], EngineError> {
@@ -152,15 +154,59 @@ export function assignWildcard(
   if (player === undefined) return illegal('sin jugador activo')
   const pkm = teamPkm(player, command.pkmUid)
   if (!pkm.ok) return pkm
-  if (!canAssignWildcard(player, command.pkmUid)) {
-    return illegal('no quedan comodines sin asignar (reasigná uno ya asignado)')
+  if (!canAssignMulticolor(player, command.pkmUid)) {
+    return illegal('no quedan cartas Multicolor sin asignar (reasigná una ya asignada)')
   }
-  pkm.value.wildcards = [command.element]
-  const event: WildcardAssigned = {
-    type: 'WildcardAssigned',
+  pkm.value.multicolor = [command.element]
+  const event: MulticolorAssigned = {
+    type: 'MulticolorAssigned',
     player: player.id,
     pkmUid: command.pkmUid,
     element: command.element,
+  }
+  return { ok: true, value: [event] }
+}
+
+/** Quita la carta Multicolor asignada al PKM: vuelve a los libres (SPEC-T/T-104/AC-1, D-30). */
+export function unassignMulticolor(
+  draft: Draft,
+  command: { readonly pkmUid: string },
+): Result<readonly GameEvent[], EngineError> {
+  const player = draft.players.find((p) => p.id === draft.activePlayerId)
+  if (player === undefined) return illegal('sin jugador activo')
+  const pkm = teamPkm(player, command.pkmUid)
+  if (!pkm.ok) return pkm
+  if (pkm.value.multicolor.length === 0) {
+    return illegal(`"${command.pkmUid}" no tiene cartas Multicolor asignadas`)
+  }
+  pkm.value.multicolor = []
+  const event: MulticolorUnassigned = {
+    type: 'MulticolorUnassigned',
+    player: player.id,
+    pkmUid: command.pkmUid,
+  }
+  return { ok: true, value: [event] }
+}
+
+/** Mueve el PKM `uid` a la posición `to` del equipo (SPEC-I/T-074/AC-1, solo Organize). */
+export function reorderTeam(
+  draft: Draft,
+  command: { readonly uid: string; readonly to: number },
+): Result<readonly GameEvent[], EngineError> {
+  const player = draft.players.find((p) => p.id === draft.activePlayerId)
+  if (player === undefined) return illegal('sin jugador activo')
+  const at = player.team.findIndex((pkm) => pkm.uid === command.uid)
+  if (at < 0) return illegal(`"${command.uid}" no está en el equipo`)
+  if (!Number.isInteger(command.to) || command.to < 0 || command.to >= player.team.length) {
+    return illegal(`posición inválida: ${String(command.to)}`)
+  }
+  const [moved] = player.team.splice(at, 1)
+  player.team.splice(command.to, 0, moved!)
+  const event: TeamReordered = {
+    type: 'TeamReordered',
+    player: player.id,
+    uid: command.uid,
+    to: command.to,
   }
   return { ok: true, value: [event] }
 }

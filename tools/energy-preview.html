@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><title>Íconos de energía</title>
+<style>body{font:14px system-ui;background:#222;color:#eee;padding:16px}.g{display:flex;flex-wrap:wrap;gap:16px}.c{text-align:center;width:96px}.c img{width:72px;height:72px;display:block;margin:0 auto 6px}.s img{width:24px;height:24px;display:inline-block}</style>
+<h3>Íconos de energía (abrir este archivo desde la carpeta tools/ del proyecto)</h3><div class="g" id="g"></div>
+<h3>Tamaño chico (como en el costo de un ataque)</h3><div class="s" id="s"></div>
+<script>
+const ids=['grass','bug','flying','fire','electric','ground','water','rock','ice','fighting','ghost','poison','psychic','normal','dragon','multicolor'];
+for(const i of ids){const u='../apps/web/src/assets/energy/'+i+'.svg';
+document.getElementById('g').insertAdjacentHTML('beforeend',`<div class="c"><img src="${u}" alt="${i}">${i}</div>`);
+document.getElementById('s').insertAdjacentHTML('beforeend',`<img src="${u}" alt="${i}"> `);}
+</script>

@@ -11,7 +11,10 @@ export const NodeTypeSchema = z.enum([
 ])
 export type NodeType = z.infer<typeof NodeTypeSchema>
 
-export const BoardStatusSchema = z.enum(['DRAFT_UNVERIFIED', 'EDITED_PENDING_REVIEW', 'VERIFIED'])
+/** Estado base + sufijos de transformación de datos (ej: `VERIFIED+deck4`). */
+export const BoardStatusSchema = z
+  .string()
+  .regex(/^(DRAFT_UNVERIFIED|EDITED_PENDING_REVIEW|VERIFIED)(\+[a-z0-9]+)*$/)
 export type BoardStatus = z.infer<typeof BoardStatusSchema>
 
 export const GymDefSchema = z.object({
@@ -53,6 +56,8 @@ export const BoardGraphSchema = z.object({
     source: z.string().optional(),
     imageSize: z.tuple([z.number(), z.number()]).optional(),
     note: z.string().optional(),
+    /** Registro de la transformación deck4 (fecha + factor de escala aplicado). */
+    deck4: z.object({ date: z.string().min(1), scale: z.number().positive() }).optional(),
   }),
   gyms: z.record(z.string().min(1), GymDefSchema),
   nodes: z.array(BoardNodeSchema).min(1),

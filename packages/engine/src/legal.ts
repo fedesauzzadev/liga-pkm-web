@@ -1,26 +1,10 @@
 // Comandos legales por estado (SDD §3): lo que la UI/tests/IA pueden enviar.
 // Vive fuera de engine.ts desde T-012 (límite de 400 líneas por archivo).
-import { ELEMENTS, type BoardNode, type NodeType } from '@liga/content'
+import { ELEMENTS } from '@liga/content'
 import type { Command } from './commands.ts'
-import { boardIndexFor } from './board.ts'
-import { canAssignWildcard, legalAttacks } from './equipment.ts'
+import { canAssignMulticolor, legalAttacks } from './equipment.ts'
 import type { Ctx } from './engine.ts'
-import { gymChallengeable } from './gyms.ts'
 import type { GameState, PlayerState } from './state.ts'
-
-/** Tipo del nodo actual del jugador (null si el tablero no lo tiene). */
-function nodeTypeAt(ctx: Ctx, position: string): NodeType | null {
-  return nodeAt(ctx, position)?.type ?? null
-}
-
-/** Nodo actual del jugador (null si el tablero no lo tiene). */
-function nodeAt(ctx: Ctx, position: string): BoardNode | null {
-  try {
-    return boardIndexFor(ctx.content.board).node(position)
-  } catch {
-    return null
-  }
-}
 
 export function legalCommands(state: GameState, ctx: Ctx): Command[] {
   const pending = state.pending
@@ -57,6 +41,30 @@ export function legalCommands(state: GameState, ctx: Ctx): Command[] {
         }
         return commands
       }
+      // T-061: intercambio opcional en el casillero de Oak (repetible; Advance termina).
+      case 'OakSwap': {
+        if (state.phase !== 'tileResolution') return []
+        const player = state.players.find((p) => p.id === state.activePlayerId)
+        if (player === undefined) return [{ type: 'Advance' }]
+        const commands: Command[] = [{ type: 'Advance' }]
+        for (const teamPkm of player.team) {
+          for (const pilePkm of player.oakPile) {
+            commands.push({ type: 'SwapWithOak', teamUid: teamPkm.uid, pileUid: pilePkm.uid })
+          }
+        }
+        return commands
+      }
+      // T-061/T-023: desafío opcional al líder (D-17); Advance lo saltea.
+      case 'ChallengeGym': {
+        if (state.phase !== 'tileResolution') return []
+        const player = state.players.find((p) => p.id === state.activePlayerId)
+        if (player === undefined) return [{ type: 'Advance' }]
+        const commands: Command[] = [{ type: 'Advance' }]
+        for (const pkm of player.team.filter((candidate) => !candidate.fainted)) {
+          commands.push({ type: 'AcceptGymChallenge', pkmUid: pkm.uid })
+        }
+        return commands
+      }
       // Decisiones que todavía no tienen comandos que las resuelvan:
       case 'ChooseAttack':
         return []
@@ -67,7 +75,7 @@ export function legalCommands(state: GameState, ctx: Ctx): Command[] {
       return [{ type: 'Advance' }, { type: 'Roll' }]
     case 'organize': {
       if (state.ruleset === null || state.players.length === 0) return []
-      // T-013: en Organize se puede equipar/desequipar/asignar comodines (AC-3).
+      // T-013: en Organize se puede equipar/desequipar/asignar Multicolor (AC-3).
       const commands: Command[] = [{ type: 'RollMove' }]
       const player = state.players.find((p) => p.id === state.activePlayerId)
       if (player !== undefined) {
@@ -78,11 +86,36 @@ export function legalCommands(state: GameState, ctx: Ctx): Command[] {
           for (const card of pkm.equipped) {
             commands.push({ type: 'Unequip', pkmUid: pkm.uid, elementId: card.id })
           }
-          if (canAssignWildcard(player, pkm.uid)) {
+          if (canAssignMulticolor(player, pkm.uid)) {
             for (const element of ELEMENTS) {
-              commands.push({ type: 'AssignWildcard', pkmUid: pkm.uid, element })
+              commands.push({ type: 'AssignMulticolor', pkmUid: pkm.uid, element })
             }
           }
+          // T-104 (SPEC-T/D-30): quitar el Multicolor asignado, mismo gating que Unequip.
+          if (pkm.multicolor.length > 0) {
+            commands.push({ type: 'UnassignMulticolor', pkmUid: pkm.uid })
+          }
+        }
+        // T-074 (SPEC-I/AC-1): reordenar el equipo en Organize.
+        player.team.forEach((pkm, from) => {
+          for (let to = 0; to < player.team.length; to++) {
+            if (to !== from) commands.push({ type: 'ReorderTeam', uid: pkm.uid, to })
+          }
+        })
+        // T-073 (D-11): fuera de combate la poción cura a cualquier PKM del equipo en Organize.
+        for (const pkm of player.team) {
+          if (pkm.fainted || pkm.damage <= 0) continue
+          if (player.items.potion > 0) commands.push({ type: 'UsePotion', pkmUid: pkm.uid, target: pkm.uid })
+          if (player.items.super_potion > 0) {
+            commands.push({ type: 'UsePotion', pkmUid: pkm.uid, target: pkm.uid, item: 'super_potion' })
+          }
+        }
+        // T-049 (D-21): sin medallas suficientes no se ofrece (el handler explica el rechazo).
+        if (
+          player.items.oportunidad > 0 &&
+          player.medals.length >= state.ruleset.oportunidad.minMedals
+        ) {
+          commands.push({ type: 'UseOportunidad' })
         }
         evolveOptions(player, ctx, commands)
       }
@@ -95,28 +128,9 @@ export function legalCommands(state: GameState, ctx: Ctx): Command[] {
     case 'finished':
       return [] // fin de la partida: no hay más decisiones (T-023/AC-4)
     case 'tileResolution': {
-      // Oak: el intercambio es opcional y se puede repetir antes de terminar.
+      // T-061: resolver el casillero; Oak/gym ya dejan pending (ver arriba).
       const commands: Command[] = [{ type: 'Advance' }]
       const player = state.players.find((p) => p.id === state.activePlayerId)
-      if (player !== undefined && nodeTypeAt(ctx, player.position) === 'oak') {
-        for (const teamPkm of player.team) {
-          for (const pilePkm of player.oakPile) {
-            commands.push({ type: 'SwapWithOak', teamUid: teamPkm.uid, pileUid: pilePkm.uid })
-          }
-        }
-      }
-      // T-023: el desafío al líder es opcional (D-17); con cualquier PKM sano.
-      if (player !== undefined) {
-        const node = nodeAt(ctx, player.position)
-        if (
-          node !== null && node.type === 'gym' && node.gym !== undefined &&
-          gymChallengeable(ctx.content, player.medals, node.gym)
-        ) {
-          for (const pkm of player.team.filter((candidate) => !candidate.fainted)) {
-            commands.push({ type: 'AcceptGymChallenge', pkmUid: pkm.uid })
-          }
-        }
-      }
       // D-06: la evolución también se ofrece al terminar un combate ganado.
       if (player !== undefined) evolveOptions(player, ctx, commands)
       return commands
@@ -141,7 +155,10 @@ function evolveOptions(player: PlayerState, ctx: Ctx, commands: Command[]): void
 function battleCommands(state: GameState, ctx: Ctx): Command[] {
   const battle = state.battle
   if (battle === null || battle.won) return []
-  if (battle.turnSide === 1) return [{ type: 'Advance' }] // corre el turno del rival
+  // Red de seguridad (turno-automatico-rival): entre comandos turnSide nunca es 1
+  // (invariante batalla/turno-del-jugador-entre-comandos); si un estado corrupto
+  // llegara acá, Advance sigue siendo la única salida posible.
+  if (battle.turnSide === 1) return [{ type: 'Advance' }]
   const player = state.players.find((p) => p.id === state.activePlayerId)
   if (player === undefined) return []
   const uid = battle.active[0]
@@ -157,11 +174,37 @@ function battleCommands(state: GameState, ctx: Ctx): Command[] {
       }
     }
   }
-  if (pkm !== undefined && player.items.potion > 0 && pkm.damage > 0) {
-    commands.push({ type: 'UsePotion', pkmUid: uid, target: uid }) // D-11: solo el activo
+  if (pkm !== undefined && pkm.damage > 0) {
+    if (player.items.potion > 0) commands.push({ type: 'UsePotion', pkmUid: uid, target: uid }) // D-11: solo el activo
+    if (player.items.super_potion > 0) {
+      commands.push({ type: 'UsePotion', pkmUid: uid, target: uid, item: 'super_potion' })
+    }
   }
-  for (const other of player.team) {
-    if (!other.fainted && other.uid !== uid) commands.push({ type: 'Retire', to: other.uid })
+  // retirada-solo-inicio-turno (D-32): sin acciones previas este turno; la
+  // poción en combate consume la ventana de retiro (no la de atacar, D-11).
+  if (!battle.actedThisTurn) {
+    for (const other of player.team) {
+      if (!other.fainted && other.uid !== uid) commands.push({ type: 'Retire', to: other.uid })
+    }
+  }
+  // T-049 (D-12): Ultra/Master Ball contra PKM sin dueño, en tu turno.
+  if (battle.kind === 'wild' && state.ruleset !== null) {
+    const rival = battle.rival[0]
+    const card = rival === undefined ? undefined : ctx.content.cards.find((c) => c.id === battle.card)
+    for (const ball of ['ultraball', 'masterball'] as const) {
+      if (player.items[ball] <= 0) continue
+      const rule = state.ruleset.capture[ball]
+      if (rule.timing !== 'duringBattle') continue
+      if (
+        rule.maxRemainingHp !== undefined &&
+        card !== undefined &&
+        rival !== undefined &&
+        card.hp - rival.damage > rule.maxRemainingHp
+      ) {
+        continue
+      }
+      commands.push({ type: 'ThrowBall', ball })
+    }
   }
   return commands
 }

@@ -1,0 +1,16 @@
+archivo,grupo,mazo,cartas_esperadas,notas
+Pokemon_mazo_montaña.jpg,terreno,montana,20,grilla 5x4. Hay repetidas con ataques distintos (Magmar x2) e iguales (Diglett x2). Algunas cartas son Evolucion aunque estan en este mazo (Sandslash).
+Pokemon_mazo_bosque.jpg,terreno,bosque,20,grilla 5x4. Repetidas: Caterpie x2 (distintas) Kakuna x2 Tangela x2 (distintas).
+Pokemon_mazo_lago.jpg,terreno,isla,20,"grilla 5x4. El archivo dice 'lago' pero es el mazo ISLA. Lapras x2 (distintas)."
+Pokemon_mazo_llanura.jpg,terreno,llanura,22,grilla 5x4 + fila de 2. Eevee x2.
+Pokemon_mazo_pantano.jpg,terreno,pantano,19,grilla 5x3 + fila de 4. Drowzee x2 Jynx x2 Psyduck x2 (verificar variantes).
+Evolucion4.jpg,evolucion,evolucion,14,fila de 4 + 4 + 4 + 2. Algunas cartas sin recuadro de evolucion siguiente.
+Evoluciones3.jpg,evolucion,evolucion,20,grilla 5x4.
+Evoluciones1.jpg,evolucion,evolucion,25,grilla 5x5. Hay Poliwrath x2 Hypno x2 Golduck x2.
+Evolucion_2.jpg,evolucion,evolucion,25,grilla 5x5. Pidgeot x2 Vileplume x2 Butterfree x2.
+Mazo_Sorpresa.jpg,sorpresa,sorpresa,28,fondo dorado. Todas tienen 'Oportunidad: n'. Las demas 12 cartas del mazo (Super Pocion 8 Ultra 3 Master 1) NO estan en la foto.
+Iniciales.jpg,iniciales,,3,"Charmander (desteñida: conviene volver a fotografiar) Abra Bulbasaur."
+Gimnasios1.jpg,gimnasio,gimnasio,12,"4 filas: lider + 2 PKM. Koga Erika Blaine Misty. Premio y medalla estan en la carta del lider."
+Gimnasios_2.jpg,gimnasio,gimnasio,13,"Surge Brock Sabrina (lider + 2) y Giovanni (lider + 3 PKM)."
+Liga_pokemon.jpg,liga,liga,16,"Brock Lance Gary Misty: entrenador + 3 PKM cada uno. Atacan con 6."
+Ash.jpg,liga,liga,9,"Ash (final): entrenador + 8 PKM."

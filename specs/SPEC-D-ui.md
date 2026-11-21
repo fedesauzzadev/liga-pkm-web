@@ -21,7 +21,7 @@ Referencias: `docs/adr/ADR-6-battle-presentation.md`, `docs/FX-ADAPTER.md`, SDD 
 ### T-032a Escena y cartas
 - AC-1 Capas en orden: fondo → sprites → FX (`pointer-events:none`) → HUD/caja de texto → bandeja de carta y mesa del dado. Rival arriba-derecha, jugador abajo-izquierda; usable en 360×640 y en escritorio.
 - AC-2 Sprites animados frente/espalda desde `sprites.json`; si falta uno, tarjeta con el nombre (sin error).
-- AC-3 `<PkmCard>` se dibuja desde datos: marco por mazo, nombre, HP actual/máx, elemento, arte (sprite estático), filas de ataque con `rollFaces`, daño e íconos de costo; estados: normal / seleccionado / deshabilitado (con motivo) / levantado (atacando) / fila iluminada.
+- AC-3 `<PkmCard>` se dibuja desde datos: marco por mazo, nombre, HP actual/máx, elemento, arte (sprite estático), filas de ataque con `rollFaces`, daño y costos con `<EnergyIcon>` (T-047); estados: normal / seleccionado / deshabilitado (con motivo) / levantado (atacando) / fila iluminada.
 - AC-4 Elegir ataque: tocar una fila la previsualiza (efecto en texto); botón "Usar" confirma; los ataques ilegales (costo o regla de primer ataque) se ven apagados con el motivo.
 - AC-5 Carta del rival: se muestra al entrar; cuando llega `DieRolled{attackSelect}` la fila correspondiente se ilumina con el valor; si no hay ataque (6), se muestra "no ataca".
 - AC-6 Placas con nombre y barra de HP (tween 600 ms) e íconos de estado (dormido, envenenado, "no atacará", "(-10)") con tooltip.
@@ -51,12 +51,12 @@ Seguir los 5 pasos de `docs/FX-ADAPTER.md`. Entregables: `tasks/reports/T-032c0.
 
 ### T-032d Coreografía de eventos
 - AC-1 Una función `play` por tipo de `GameEvent` de combate: encuentro (barrido + entrada de sprites), PKM entra, dado, "X usó Y" (typewriter), carta se levanta, `playMoveFx`, daño (parpadeo ×3, número flotante, barra), efectos/estados, curación/drenaje, derrota, XP, evolución (destello + cambio de sprite), captura (arco, 3 sacudidas, destello; resultado determinista), líder de gimnasio (intro y medalla).
-- AC-2 Tiempo de un turno típico de ataque ≤ 3,5 s a 1× y ≤ 1,5 s a 2×; `skip` ⇒ estado visual final idéntico (test).
+- AC-2 Tiempo de un turno típico de ataque ≤ 3,5 s a 1× y ≤ 1,5 s a 2×; `skip` ⇒ estado visual final idéntico (test). El turno típico mide ataque+daño (typewriter incluido); combate-legible subió `messageMs` a 900 ms (≥ 800 legibles) y las pausas extra (mensajes de estado, tiradas anunciadas de attackSelect/gate) suman lo suyo — el turno de un confundido con DOS dados anunciados queda fuera de lo típico.
 - AC-3 Todo evento tiene test con temporizadores falsos que verifica orden y resolución de la promesa. AC-4 Ninguna animación modifica estado del juego.
 
 ## T-033 Equipo / inventario
 - AC-1 Vista de equipo (≤ 6) + pila de Oak; ficha de carta con ataques, costos (íconos), efectos y `rawText`.
-- AC-2 Equipar/desequipar elementos y asignar comodines con drag&drop **o** botones (accesible por teclado/touch).
+- AC-2 Equipar/desequipar elementos y asignar cartas Multicolor con drag&drop **o** botones (accesible por teclado/touch).
 - AC-3 Evolucionar desde la ficha si cumple XP; elección si hay varias evoluciones.
 - AC-4 Muestra medallas (8 espacios) y contador de ítems.
 

@@ -15,7 +15,7 @@ import { createInitialState } from './state.ts'
 import type { DeckStacks, ElementCard, GameState, PkmInstance, PlayerState } from './state.ts'
 
 /** Inicial por mazo (RULES §1 p.6-7); el elemento sale de la propia carta. */
-const STARTERS: Readonly<Record<DeckId, string>> = {
+export const STARTER_BY_DECK: Readonly<Record<DeckId, string>> = {
   bosque: 'bulbasaur',
   montana: 'charmander',
   isla: 'squirtle',
@@ -57,7 +57,7 @@ function invalid(message: string): Result<CommandOk, EngineError> {
 
 export function newGame(options: NewGameOptions, content: Content): Result<CommandOk, EngineError> {
   const { seed, starterDeck, ruleset } = options
-  const starterId = STARTERS[starterDeck]
+  const starterId = STARTER_BY_DECK[starterDeck]
   const starterCard = content.cards.find((c) => c.id === starterId)
   if (starterCard === undefined) {
     return invalid(
@@ -85,7 +85,7 @@ export function newGame(options: NewGameOptions, content: Content): Result<Comma
   // El stream del dado continúa donde quedó el barajado (rngState ⇒ save/replay).
   const rngState = rng.snapshot()
 
-  const equipped: ElementCard[] = Array.from({ length: ruleset.start.starterElementCards }, (_, i) => ({
+  const equipped: ElementCard[] = Array.from({ length: ruleset.start.starterEnergyCards }, (_, i) => ({
     id: parseCardId(`element_${starterCard.element}#${i + 1}`),
     element: starterCard.element,
   }))
@@ -95,7 +95,7 @@ export function newGame(options: NewGameOptions, content: Content): Result<Comma
     damage: 0,
     xp: 0,
     equipped,
-    wildcards: [], // los comodines arrancan sin asignar (T-013)
+    multicolor: [], // las cartas Multicolor arrancan sin asignar (T-013)
     fainted: false,
   }
   const player: PlayerState = {
@@ -105,8 +105,15 @@ export function newGame(options: NewGameOptions, content: Content): Result<Comma
     team: [starter],
     oakPile: [],
     elements: [],
-    wildcards: ruleset.start.wildcards,
-    items: { pokeball: ruleset.start.pokeballs, potion: 0 },
+    multicolor: ruleset.start.multicolor,
+    items: {
+      pokeball: ruleset.start.pokeballs,
+      potion: 0,
+      oportunidad: 0,
+      super_potion: 0,
+      ultraball: 0,
+      masterball: 0,
+    },
     medals: [],
   }
   const state: GameState = {

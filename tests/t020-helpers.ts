@@ -108,7 +108,7 @@ export const secondPkm = (): PkmInstance => ({
   damage: 0,
   xp: 0,
   equipped: [{ id: parseCardId('element_water#9'), element: 'water' }],
-  wildcards: [],
+  multicolor: [],
   fainted: false,
 })
 

@@ -1,0 +1,317 @@
+/* Shell de pantalla completa (SPEC-I/T-071). El tablero es la pantalla: el
+   mundo (canvas) queda fijo detrás y el HUD son paneles de vidrio con
+   pointer-events auto sobre una capa que no captura clics (AC-2). Las vars
+   vienen de layout.json → style (AC-6). */
+
+.root {
+  position: fixed;
+  inset: 0;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden; /* AC-1: sin scroll de página */
+  background: var(--color-bg);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* layout.json › style (via inline --hud-*); el media query de abajo puede
+     pisar --panel-opacity/--blur porque compite hoja vs hoja, no vs inline. */
+  --panel-opacity: var(--hud-opacity, 0.78);
+  --blur: var(--hud-blur, 6px);
+  --radius: var(--hud-radius, 16px);
+  --border: var(--hud-border, 2px);
+}
+
+/* ── Mundo (z0): canvas 3D a pantalla completa (AC-2) ── */
+
+.world {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* El tablero (2D o 3D) llena el mundo; su canvas/svg pasa a pantalla completa. */
+.world [data-testid='board-3d'],
+.world [data-testid='board-2d'] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.world [data-testid='board-3d'] > div:first-child {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border-radius: 0;
+}
+
+.world canvas,
+.world svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+/* Chrome del tablero (bandeja del dado, decisiones): flota arriba al centro,
+   sin tapar los paneles del HUD (zona libre del layout). */
+.world [data-testid='board-3d'] > div:nth-child(2),
+.world [data-testid='board-3d'] > div:nth-child(3),
+.world [data-testid='board-2d'] > div:nth-child(2),
+.world [data-testid='board-2d'] > div:nth-child(3) {
+  position: absolute;
+  top: 1.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: max-content;
+  max-width: 40vw;
+  margin: 0;
+}
+
+/* Las decisiones van debajo de la bandeja del dado. */
+.world [data-testid='board-3d'] > div:nth-child(3),
+.world [data-testid='board-2d'] > div:nth-child(3) {
+  top: calc(1.5% + 64px);
+}
+
+/* ── Overlay de controles (z5): no captura clics, su contenido sí ── */
+
+.overlay {
+  position: absolute;
+  left: 15%;
+  top: 3%;
+  width: 22%;
+  height: 66%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ── HUD (z10): la capa no captura; cada panel sí (AC-2) ── */
+
+.hud {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.panel,
+.panelButton {
+  position: absolute;
+  pointer-events: auto;
+  border: var(--border) solid rgba(34, 48, 28, 0.85);
+  border-radius: var(--radius);
+  background: rgba(232, 240, 224, var(--panel-opacity));
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  color: var(--color-ink);
+  overflow: hidden;
+}
+
+.panel {
+  /* T-082: container queries ⇒ el contenido se adapta al alto fijo del panel
+     (panel-turn compacta sin cortar el botón de tirada). */
+  container-type: size;
+  padding: 0.4rem 0.5rem;
+}
+
+/* T-082/AC-1: panel-turn es bajo (h 0.125) ⇒ padding vertical mínimo. */
+.panel[data-panel='turn'] {
+  padding-block: 2px;
+}
+
+/* T-092: panel-dice (h 0.14) casi igual de bajo ⇒ padding mínimo también. */
+.panel[data-panel='dice'] {
+  padding: 2px;
+}
+
+.panel:focus-visible,
+.panelButton:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.panelButton {
+  min-height: 0;
+  padding: 0 0.5rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Plan ocultar-hud: botón de anteojitos, solo ícono (vidrio del shell). */
+.hudToggleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.hudToggleIcon {
+  width: 68%;
+  height: 68%;
+}
+
+.placeholder {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+/* ── Popups (z20): encima de todo, contenido propio (T-075) ── */
+
+.popups {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.popup {
+  position: absolute;
+  pointer-events: auto;
+  border: var(--border) solid rgba(34, 48, 28, 0.9);
+  border-radius: var(--radius);
+  background: rgba(253, 246, 227, var(--panel-opacity));
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+}
+
+/* Placeholder de medición (?layoutDebug=1): solo contorno, no captura clics. */
+.debugBox {
+  pointer-events: none;
+  border-style: dashed;
+  background: rgba(253, 246, 227, calc(var(--panel-opacity) / 3));
+}
+
+/* T-075/AC-3: el popup de combate es un contenedor de tamaño (container
+   queries): su contenido escala según esta caja — normal o ampliada —, no según
+   la ventana. rediseno-combate-max/AC-0: sin borde/radius (la caja ampliada es
+   la ventana completa y el header de 56 px se descuenta adentro; nota n.º 8). */
+.popupBattle {
+  container-type: size;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  border-radius: 0;
+}
+
+/* ── Menú (z30), tip F11 (z40) y aviso de viewport (z50) ── */
+
+.menu {
+  position: absolute;
+  right: 1.5%;
+  bottom: 7.5%;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 84vh;
+  padding: 0.6rem 0.75rem;
+  overflow: hidden auto;
+  border: var(--border) solid rgba(34, 48, 28, 0.9);
+  border-radius: var(--radius);
+  background: rgba(232, 240, 224, var(--panel-opacity));
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+}
+
+.menuButton {
+  min-height: 44px;
+  padding: 0 0.85rem;
+  font: inherit;
+  font-weight: 700;
+  background: var(--color-accent);
+  color: #fff;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.menuHint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.tip {
+  position: absolute;
+  left: 50%;
+  bottom: 21%;
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.7rem;
+  border: var(--border) solid rgba(34, 48, 28, 0.9);
+  border-radius: var(--radius);
+  background: rgba(232, 240, 224, var(--panel-opacity));
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.tipClose {
+  min-height: 34px;
+  padding: 0 0.6rem;
+  font: inherit;
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.viewportWarning {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  text-align: center;
+  background: var(--color-bg);
+}
+
+.warningTitle {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: clamp(1rem, 4vw, 1.6rem);
+  color: var(--color-accent);
+}
+
+.warningText {
+  margin: 0;
+  max-width: 30rem;
+  color: var(--color-muted);
+}
+
+.warningButton {
+  min-height: 44px;
+  padding: 0 1rem;
+  font: inherit;
+  font-weight: 700;
+  background: var(--color-accent);
+  color: #fff;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* AC-6: sin transparencias si el usuario lo pide ⇒ paneles opacos. */
+@media (prefers-reduced-transparency: reduce) {
+  .root {
+    --panel-opacity: 1;
+    --blur: 0px;
+  }
+}

@@ -17,7 +17,7 @@ const synthPkm = (cardId: string, uid: string, damage = 0): PkmInstance => ({
   damage,
   xp: 0,
   equipped: [],
-  wildcards: [],
+  multicolor: [],
   fainted: false,
 })
 
@@ -111,7 +111,11 @@ test('AC-8 explosión derriba a ambos: fin del turno del atacante y victoria con
 test('pociones: curan hasta ruleset.potionHeal, vuelven al fondo del mazo ítem y agotan la bolsa', () => {
   const game = toBattle({
     rng: rngOf(),
-    player: (p) => ({ ...p, team: [{ ...p.team[0]!, damage: 50 }], items: { pokeball: 5, potion: 2 } }),
+    player: (p) => ({
+      ...p,
+      team: [{ ...p.team[0]!, damage: 50 }],
+      items: { pokeball: 5, potion: 2, oportunidad: 0, super_potion: 0, ultraball: 0, masterball: 0 },
+    }),
   })
   const first = run(game.state, { type: 'UsePotion', pkmUid: 'p1-starter', target: 'p1-starter' }, game.ctx)
   expect(first.ok).toBe(true)

@@ -1,0 +1,23 @@
+# Reporte fix-combate-refresco — Reanudar combate tras refrescar la página
+- Estado: REVIEW | Rama/commit: main (sin commitear)
+- Resumen (≤ 5 líneas): la escena de combate se reconstruye desde `state.battle` cuando el popup monta con guion vacío y batalla viva (partida restaurada): snapshot instantáneo puro (`resumeStage`), sin tocar motor ni formato del save. `BattleChoreographer` acepta `initialStage` y los eventos nuevos parchean encima.
+- Archivos clave tocados (rutas):
+  - `apps/web/src/battle/choreo/resume.ts` (nuevo, builder puro)
+  - `apps/web/src/battle/choreo/BattleChoreographer.ts` (opción `initialStage`)
+  - `apps/web/src/battle/ChoreographedBattle.tsx` (prop `initialStage`)
+  - `apps/web/src/popup/model.ts` (`battleShouldResume`) + `apps/web/src/popup/BattlePopup.tsx` (wiring)
+  - `apps/web/src/i18n/es.ts` (`battleMsgResume`)
+  - Tests: `choreo/resume.test.ts` (nuevo), `choreo/resume.fixtures.ts` (nuevo, solo tests), `ChoreographedBattle.test.tsx`, `popup/model.test.ts`, `popup/BattlePopup.test.tsx`, `game/PlayScreen.test.tsx`
+- AC cubiertos → test:
+  - AC-1 → `choreo/resume.test.ts` (snapshot wild + null sin batalla), `ChoreographedBattle.test.tsx` (escena montada, sin battle-wait), `popup/model.test.ts` (battleShouldResume), `game/PlayScreen.test.tsx` (popup abierto tras restore)
+  - AC-2 → `popup/BattlePopup.test.tsx` (despacho legal + HP fluye en el DOM), `ChoreographedBattle.test.tsx` (parcheo sobre stage reanudado), `game/PlayScreen.test.tsx` (guion acumulado desde vacío)
+  - AC-3 → `choreo/resume.test.ts` (trainerAppeared gym/wild/repostrado), `popup/BattlePopup.test.tsx` (DOM: trainer en gym, ausente en wild)
+  - AC-4 → `choreo/resume.test.ts` (activo caído en escena), `popup/BattlePopup.test.tsx` (Cambiar forzada con script vacío)
+  - AC-5 → `game/PlayScreen.test.tsx` (restore + captura pendiente: popup cerrado, TilePanel)
+- `pnpm verify`: OK (typecheck + lint + test + content:validate + build + deps:check + size + bench en verde)
+- Decisiones tomadas / defaults aplicados:
+  - Rival en escena = `battle.active[1]`; fallback defensivo al primer rival sano.
+  - `trainerAppeared` solo en gym mientras el primer PKM del líder no cayó (espeja RivalSentOut que retira al líder); mensaje inicial `battleMsgResume`.
+  - `initialStage` solo cuenta al montar el coreógrafo (deps estables); `PlayScreen` no necesitó cambios (el guion vacío + `state.battle` ya llegan al popup).
+- Dudas nuevas: ninguna. ER solicitados: ninguno.
+- Riesgos / deuda: la escena reanudada no restaura condiciones visuales transitorias (dados/floaters en vuelo) — irrelevante al punto de restauración (turno del jugador).

@@ -1,0 +1,26 @@
+# Reporte layout-carta-modal — Layout de la carta grande del modal (sin huecos ni desbordes)
+- Estado: REVIEW | Plan: `.opencode/plan/layout-carta-modal.md`
+- Resumen (≤ 5 líneas): `card-face` pasa a columna consecutiva (flex-start + gap 10 + padding 14, sin márgenes automáticos), el arte es el único que crece (flex 1 1 auto, min 140 px, sin `modal.boxHeightPx`), el pie queda dentro (XP debajo del texto, nombre de evolución capitalizado) y la geometría deriva el alto de la carta de la zona de contenido de la ventana. Tipografía proporcional por container queries con piso 13 px.
+- Archivos clave tocados (rutas):
+  - `apps/web/src/cardmodal/CardModal.module.css` (columna, arte, pie, cqw)
+  - `apps/web/src/cardmodal/CardFace.tsx` (data-testids, specialties en el header, capitalize, ResizeObserver del nombre)
+  - `apps/web/src/cardmodal/CardModal.tsx` (`faceStyle` con `max-height: 100%` de seguridad)
+  - `apps/web/src/cardmodal/model.ts` (`WINDOW_CHROME_PX`; `cardH = h − chrome − gap`)
+  - `content/ui/card-art.json` (sin `modal.boxHeightPx`) + `packages/content/src/card-art.test.ts`
+  - `apps/web/src/cardmodal/CardModal.test.tsx` (test del tope reescrito)
+  - `e2e/t103-card-layout.mjs` (NUEVO) + `package.json` (script `e2e`)
+- AC cubiertos → test:
+  - AC-a..AC-g → `e2e/t103-card-layout.mjs` (12 casos: 3 viewports × 1-4 ataques, nombre/desc largos por mutación de DOM)
+  - AC-3 (sin tope inline) → `CardModal.test.tsx:'AC: layout-carta-modal/AC-3'` + `card-art.test.ts` (modal sin `boxHeightPx`)
+  - AC-5 (capitalizar evolución) → `CardModal.test.tsx:'AC: SPEC-R/T-103/AC-10'` (Charmander)
+  - Regresión → `e2e/t103-card-modal.mjs` verde (aspecto 0,63, 70-86 % a 1366×768, textos ≥ 13 px)
+- `pnpm verify`: typecheck/lint/content:validate/build/deps:check/size/bench OK; `pnpm test` falla en 4 tests PREEXISTENTES ajenos a esta tarea (`tests/t032c2-showdown-port.test.ts` espera "12/15" en el reporte; `tests/t045-pokeapi.test.ts` y `tests/t048-house-edits.test.ts`×2: `charmander → evolvesTo "charmeleon"` no existe en `content/pokemon/main.json`). Ninguno importa cardmodal ni card-art; sin mis cambios fallan igual (datos de contenido, no UI).
+- Decisiones tomadas / defaults aplicados:
+  - AC-8: `specialties` pasó a segunda fila DENTRO de `card-header` (nueva `.cardHeaderRow`), mismo contenido y orden visual, como pedía el plan.
+  - `WINDOW_CHROME_PX = 58` en `model.ts` es espejo del CSS (borde 3×2 + padding 10×2 + header 32): si cambia `.window`/`.close` hay que actualizarlo (documentado en ambos lados).
+  - El autoajuste del nombre (AC-6 viejo) pasó a re-ejecutarse con `ResizeObserver`: antes solo corría al abrir y mi carta más angosta a 1024×600 lo exponía (nombre recortado en la regresión).
+  - `e2e/t103-card-layout.mjs` corre en puerto 4180 (modal usa 4179).
+- Dudas nuevas (→ OPEN-QUESTIONS.md): ninguna de esta tarea. Señalado aparte: los 4 tests preexistentes de arriba dejan `pnpm verify` rojo para cualquier tarea (entrada para el jefe, fuera de mi alcance).
+- Riesgos / deuda:
+  - `CardModal.module.css` quedó en 456 líneas (límite 400); ya venía en 435 — dividirlo es tarea aparte.
+  - `t103-card-modal.mjs` tuvo 1 flake (ratio 0,58 por carrera de render 3D-CPU tras resize; esperas de 250 ms): 3 corridas posteriores verdes. Si reaparece, esperar estabilidad del modal en el e2e.

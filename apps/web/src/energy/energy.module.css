@@ -1,0 +1,33 @@
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.costRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.token {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  line-height: 0;
+  cursor: grab;
+}
+
+.token[data-equipped='true'] {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent);
+  cursor: default;
+}
+
+.token:disabled {
+  opacity: 0.45;
+  cursor: default;
+}

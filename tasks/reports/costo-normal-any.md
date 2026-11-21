@@ -1,0 +1,18 @@
+# Reporte costo-normal-any — Costo "energía normal" = `any`
+- Estado: REVIEW | Plan: `.opencode/plan/costo-normal-any.md`
+- Resumen (≤ 5 líneas): El círculo gris "cualquier energía" es el slot `any` (D-24): Charmeleon "Rasguños" pasó de `["normal","normal"]` a `["any","any"]`; `validate.ts` gana `crossCheckCosts` (rechaza slots de costo de elementos sin carta de energía —`normal`/`dragon`— sugiriendo `any`). El motor NO se tocó: `canUse` ya trataba `any` solo con el chequeo de total (verificado con tests nuevos AC-3/AC-4, incl. mixto `["fire","any"]`).
+- Archivos clave tocados (rutas):
+  - `content/pokemon/_samples.json` (dato: cost de Charmeleon → `any,any`)
+  - `packages/content/src/validate.ts` (`crossCheckCosts` exportada + wiring en `collect` tras cargar `energy.json`)
+  - `tests/t013-equipment.test.ts` (AC-3/AC-4 del plan, comentario `// AC:` por caso)
+  - `tests/t002b-content.test.ts` (AC-1+AC-2: rechaza `normal`/`dragon` con sugerencia `any`, dedup por ataque; contenido real valida y Charmeleon queda `["any","any"]`)
+  - `apps/web/src/cardmodal/model.test.ts` (AC-5: espejo `costGaps` con `["any","any"]` — nunca gap `normal`, con 1 energía gap genérico)
+- AC cubiertos → test (plan costo-normal-any): AC-1 → t002b:"AC-2 (costo-normal-any)" (assert de charmeleon) · AC-2 → t002b ídem + `crossCheckCosts` unitario · AC-3 → t013:"AC-3 (costo-normal-any)" · AC-4 → t013:"AC-4 (costo-normal-any)" · AC-5 → model.test:"AC: plan costo-normal-any/AC-5".
+- `pnpm verify`: FALLA por 4 tests PREEXISTENTES ajenos a la tarea (verificado revirtiendo mis 2 ediciones fuente y re-corriendo: fallan igual; Q-091). Con mis cambios: typecheck+lint+test de la spec verdes; `pnpm content:validate` OK; `pnpm build` OK (35,67 kB gzip index / board3d igual que antes). Tests: 977 passed + 4 failed (los preexistentes: t045-pokeapi AC-2, t048-house-edits AC-1/AC-5, t032c2-showdown-port AC-4).
+- Decisiones tomadas / defaults aplicados:
+  - La guarda corre sobre los archivos canónicos `content/pokemon/*.json` (con atribución `archivo#carta`); `_staging` sigue sin bloquear (pre-revisión) y house-edits no se re-chequean por costo (alcance mínimo del plan).
+  - Dedup de slots repetidos por ataque (`["normal","normal"]` ⇒ 1 error, no 2).
+  - Mensaje: `…#charmeleon: el costo de "Rasguños" usa "normal", que no tiene carta de energía (D-24): usá "any"`.
+  - `equipment.ts` sin cambios: los tests nuevos pasan contra la implementación vigente.
+- Dudas nuevas (→ OPEN-QUESTIONS.md): Q-091 (los 4 tests de `pnpm verify` rotos de antes de esta tarea). Sin ER.
+- Riesgos / deuda: si una edición de la casa (`house-edits`) inyectara un costo `normal`/`dragon`, hoy no lo bloquea esta guarda (solo el esquema Zod); cubrirlo es un cambio chico en `collect` si el jefe lo pide.

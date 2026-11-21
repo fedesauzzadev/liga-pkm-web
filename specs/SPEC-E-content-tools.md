@@ -9,14 +9,12 @@ Detalle del proceso: `docs/CARD-INGESTION.md`.
 - AC-5 Navegación con teclado para revisar ≥ 30 cartas por hora.
 
 ## T-041 Extracción por visión
-- AC-1 `pnpm extract <carpeta-de-fotos>` genera `_staging/*.json` con el prompt de CARD-INGESTION §3 (la clave de API del modelo se lee de variable de entorno; nunca se commitea).
+- AC-1 `pnpm extract <carpeta-de-recortes>` genera `_staging/*.json` con el prompt de CARD-INGESTION §3 (la clave de API del modelo se lee de variable de entorno; nunca se commitea).
 - AC-2 Salida validada contra el esquema; las cartas inválidas se guardan en `_staging/_errors/` con el motivo.
 - AC-3 Modo `--dry-run` que no llama a la API (para tests, usa respuestas grabadas).
 - AC-4 Informe: # cartas, # con `needsReview`, # con `custom`.
 
-## T-042 Lote piloto
-- AC-1 12 cartas fotografiadas, extraídas y verificadas; el jefe revisa la tasa de error y ajusta el prompt antes de escalar.
-- AC-2 Luego 40-60 cartas con al menos 1 por mazo y los 5 iniciales con sus evoluciones.
+## T-042 → reemplazada por T-042a/b/c (ver `specs/SPEC-F-cards-and-items.md`)
 
 ## T-043 Assets (sprites y efectos)
 - AC-1 `pnpm assets` descarga a `apps/web/public/sprites/` los sprites frente/espalda (animados si existen; si no, estáticos) de los 151 y a `apps/web/public/fx/` las imágenes de efectos que pida el adaptador; genera `sprites.json {dex:{front,back}}` y `fx.json`. Reintentos, reporte de faltantes, fuente configurable.
@@ -24,7 +22,8 @@ Detalle del proceso: `docs/CARD-INGESTION.md`.
 - AC-3 `docs/ASSETS.md` completo con URL y licencia por fuente (si la licencia no permite uso privado, se frena y se avisa al jefe).
 
 ## T-044 Mazos de desarrollo
-- AC-1 `tools/gen-dev-decks.ts` arma `content/decks.dev.json` con las cartas disponibles + elementos sintéticos por mazo + ítems (pokebolas/pociones), marcado `devOnly:true`; el juego usa `decks.json` real cuando exista y valide.
+- AC-1 `tools/gen-dev-decks.ts` arma `content/decks.dev.json` usando las **energías e ítems reales** de `content/decks.json`/`items.json` y, como PKM, las cartas disponibles en `content/pokemon/` (muestras o reales); marcado `devOnly:true`. Si falta algún PKM, se completa con copias de las muestras de forma explícita.
+- AC-2 El juego usa `decks.json` completo cuando todas sus listas `pokemon` estén completas y validen; si no, `decks.dev.json`.
 
 ## T-045 Datos de referencia de PokeAPI
 - AC-1 `pnpm pokeapi` genera (gitignored) `content/reference/pokeapi/{species,moves,evolutions}.json` para dex 1-151 y los movimientos de Gen 1: id, nombres en inglés y español, tipo, evolución.

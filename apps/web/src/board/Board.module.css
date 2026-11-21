@@ -1,0 +1,116 @@
+.boardWrap {
+  width: min(92vw, 540px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.boardSvg {
+  width: 100%;
+  height: auto;
+  border: 3px solid var(--color-border);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #edf4d9 0%, #dfeac6 60%, #d8deb1 100%);
+  box-shadow: 0 12px 32px rgba(34, 48, 28, 0.13);
+}
+
+.edge {
+  stroke: rgba(34, 48, 28, 0.48);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.nodeGroup {
+  cursor: pointer;
+}
+
+.nodeLabel {
+  fill: #20301d;
+  font-size: 12px;
+  font-weight: 600;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+
+.selectionMarker {
+  fill: #3c6e3f;
+  stroke: #fff;
+  stroke-width: 2;
+  cursor: pointer;
+}
+
+.tokenGroup {
+  transform-origin: center;
+  transition: transform 150ms ease;
+}
+
+.tokenOuter {
+  fill: #f5d257;
+  stroke: #22301c;
+  stroke-width: 3;
+}
+
+.tokenInner {
+  fill: #fffbec;
+  stroke: #22301c;
+  stroke-width: 2;
+}
+
+.diceTray {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.rollButton {
+  min-height: 44px;
+  padding: 0.5rem 0.8rem;
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.choicePanel {
+  width: min(100%, 460px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  align-items: center;
+  border: 2px solid var(--color-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.45);
+  padding: 0.75rem 0.9rem;
+}
+
+.choiceTitle {
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.choiceList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.choiceButton {
+  min-height: 44px;
+  padding: 0.5rem 0.8rem;
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-weight: 700;
+  cursor: pointer;
+}

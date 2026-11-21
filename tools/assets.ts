@@ -8,6 +8,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 
 export const SPRITES_DIR = 'sprites'
 export const FX_DIR = 'fx'
+export const BADGES_DIR = 'badges'
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 export type FetchResult = { ok: true; bytes: Uint8Array } | { ok: false; status: number; error?: string }
@@ -19,8 +20,16 @@ export interface SpeciesEntry {
   name: string
   sdId?: string
 }
+export interface TrainerEntry {
+  name: string
+  sdId: string
+}
 export interface FxEntry {
   key: string
+  file: string
+}
+export interface BadgeEntry {
+  medal: string
   file: string
 }
 export interface AssetSources {
@@ -28,13 +37,17 @@ export interface AssetSources {
   aniBack: string
   staticFront: string
   staticBack: string
+  trainerFront: string
   fx: string
+  badges: string
 }
 export interface AssetsConfig {
   sources: AssetSources
   retries: number
   species: SpeciesEntry[]
+  trainers: TrainerEntry[]
   fx: FxEntry[]
+  badges: BadgeEntry[]
 }
 
 export class ConfigError extends Error {}
@@ -91,21 +104,54 @@ function parseFx(raw: unknown): FxEntry[] {
   return out
 }
 
+// medalla-gimnasio/AC-3: insignias de los 8 gimnasios (manifest {medal → ruta}).
+function parseBadges(raw: unknown): BadgeEntry[] {
+  if (!Array.isArray(raw)) throw new ConfigError('badges: debe ser lista')
+  const seen = new Set<string>()
+  const out: BadgeEntry[] = []
+  for (const item of raw) {
+    if (!isRec(item)) throw new ConfigError('badges: cada entrada debe ser objeto {medal,file}')
+    const medal = reqStr(item, 'medal', 'badges')
+    const file = reqStr(item, 'file', 'badges')
+    if (file.includes('/') || file.includes('\\') || file.includes('..')) throw new ConfigError(`badges file inválido: "${file}"`)
+    if (seen.has(medal)) throw new ConfigError(`badges medal duplicado: "${medal}"`)
+    seen.add(medal)
+    out.push({ medal, file })
+  }
+  return out
+}
+
+function parseTrainer(raw: unknown): TrainerEntry[] {
+  if (!Array.isArray(raw)) throw new ConfigError('trainers: debe ser lista')
+  const out: TrainerEntry[] = []
+  for (const item of raw) {
+    if (!isRec(item)) throw new ConfigError('trainers: cada entrada debe ser objeto {name,sdId}')
+    const name = reqStr(item, 'name', 'trainers')
+    const sdId = reqStr(item, 'sdId', 'trainers')
+    out.push({ name, sdId })
+  }
+  return out
+}
+
 function parseSources(raw: unknown): AssetSources {
-  if (!isRec(raw)) throw new ConfigError('sources: falta objeto con las 5 fuentes')
+  if (!isRec(raw)) throw new ConfigError('sources: falta objeto con las 6 fuentes')
   const s: AssetSources = {
     aniFront: reqStr(raw, 'aniFront', 'sources'),
     aniBack: reqStr(raw, 'aniBack', 'sources'),
     staticFront: reqStr(raw, 'staticFront', 'sources'),
     staticBack: reqStr(raw, 'staticBack', 'sources'),
+    trainerFront: reqStr(raw, 'trainerFront', 'sources'),
     fx: reqStr(raw, 'fx', 'sources'),
+    badges: reqStr(raw, 'badges', 'sources'),
   }
   for (const [key, ph] of Object.entries({
     aniFront: '{id}',
     aniBack: '{id}',
     staticFront: '{dex}',
     staticBack: '{dex}',
+    trainerFront: '{id}',
     fx: '{file}',
+    badges: '{file}',
   }) as Array<[keyof AssetSources, string]>) {
     if (!s[key].includes(ph)) throw new ConfigError(`sources.${key} debe contener ${ph}`)
     if (!s[key].startsWith('https://')) throw new ConfigError(`sources.${key} debe ser https://`)
@@ -123,7 +169,9 @@ export function parseConfig(raw: unknown): AssetsConfig {
     sources: parseSources(raw.sources),
     retries,
     species: parseSpecies(raw.species),
+    trainers: parseTrainer(raw.trainers),
     fx: parseFx(raw.fx),
+    badges: parseBadges(raw.badges),
   }
 }
 
@@ -147,7 +195,19 @@ export interface FxTask {
   key: string
   candidates: Candidate[]
 }
-export type PlanTask = SpriteTask | FxTask
+export interface TrainerTask {
+  kind: 'trainer'
+  id: string
+  name: string
+  candidates: Candidate[]
+}
+export interface BadgeTask {
+  kind: 'badge'
+  id: string
+  medal: string
+  candidates: Candidate[]
+}
+export type PlanTask = SpriteTask | FxTask | TrainerTask | BadgeTask
 
 /** Id de sprite de Showdown: minúsculas, solo [a-z0-9] ("Mr. Mime"→"mrmime"). */
 export function toShowdownId(name: string): string {
@@ -180,12 +240,38 @@ export function buildPlan(config: AssetsConfig): PlanTask[] {
       })
     }
   }
+  for (const t of config.trainers) {
+    const id = toShowdownId(t.name)
+    tasks.push({
+      kind: 'trainer',
+      id: `tr:${t.sdId}`,
+      name: t.name,
+      candidates: [
+        {
+          url: s.trainerFront.replace('{id}', id),
+          destRel: `${SPRITES_DIR}/${t.sdId}-front.gif`,
+        },
+        {
+          url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon-trainers/${t.sdId}.png`.replace('{sdId}', t.sdId),
+          destRel: `${SPRITES_DIR}/trainers/${t.sdId}.png`,
+        },
+      ],
+    })
+  }
   for (const f of config.fx) {
     tasks.push({
       kind: 'fx',
       id: `f:${f.key}`,
       key: f.key,
       candidates: [{ url: s.fx.replace('{file}', f.file), destRel: `${FX_DIR}/${f.file}` }],
+    })
+  }
+  for (const b of config.badges) {
+    tasks.push({
+      kind: 'badge',
+      id: `b:${b.medal}`,
+      medal: b.medal,
+      candidates: [{ url: s.badges.replace('{file}', b.file), destRel: `${BADGES_DIR}/${b.file}` }],
     })
   }
   return tasks
@@ -226,7 +312,11 @@ async function fetchCandidate(c: Candidate, deps: RunDeps): Promise<{ res: Fetch
 }
 
 async function runTask(task: PlanTask, deps: RunDeps): Promise<TaskOutcome> {
-  const label = task.kind === 'sprite' ? `${task.dex} ${task.name} ${task.side}` : `fx ${task.key}`
+  const label =
+    task.kind === 'sprite' ? `${task.dex} ${task.name} ${task.side}`
+    : task.kind === 'trainer' ? `trainer ${task.name}`
+    : task.kind === 'badge' ? `badge ${task.medal}`
+    : `fx ${task.key}`
   let attempts = 0
   for (const c of task.candidates) {
     const { res, tries } = await fetchCandidate(c, deps)
@@ -249,11 +339,36 @@ export const defaultFetcher: Fetcher = async (url) => {
 }
 export const defaultSleeper: Sleeper = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
-// ── Manifests (puros) ─────────────────────────────────────────────────────────
-export type SpriteManifest = Record<string, { front: string | null; back: string | null }>
-export type FxManifest = Record<string, string>
+function served(rel: string): string {
+  return `/${rel}`
+}
 
-const served = (destRel: string): string => `/${destRel}`
+export interface FxManifest {
+  [key: string]: string
+}
+
+/** medalla-gimnasio/AC-3: {medal → ruta servida}. */
+export type BadgeManifest = FxManifest
+
+export interface SpriteManifest {
+  [key: string]: { front: string | null; back: string | null }
+}
+export interface TrainerManifest {
+  front: string | null
+}
+export type TrainerManifests = Record<string, TrainerManifest>
+
+export function buildTrainerManifest(config: AssetsConfig, report: readonly TaskReport[]): TrainerManifests {
+  const byId = new Map(report.map((r) => [r.id, r]))
+  const manifest: TrainerManifests = {}
+  for (const t of config.trainers) {
+    const r = byId.get(`tr:${t.sdId}`)
+    manifest[t.sdId] = {
+      front: r?.status === 'ok' && r.destRel !== null ? served(r.destRel) : null,
+    }
+  }
+  return manifest
+}
 
 export function buildSpritesManifest(config: AssetsConfig, report: readonly TaskReport[]): SpriteManifest {
   const byId = new Map(report.map((r) => [r.id, r]))
@@ -266,6 +381,9 @@ export function buildSpritesManifest(config: AssetsConfig, report: readonly Task
       back: back?.status === 'ok' && back.destRel !== null ? served(back.destRel) : null,
     }
   }
+  // Solo especies: una clave ajena (p.ej. "trainers" anidado) invalida la
+  // guarda isSpritesManifest de la UI y deja TODO el manifiesto en null. Los
+  // entrenadores van en trainers.json (buildTrainerManifest, ER-001).
   return manifest
 }
 
@@ -275,6 +393,16 @@ export function buildFxManifest(config: AssetsConfig, report: readonly TaskRepor
   for (const f of config.fx) {
     const r = byId.get(`f:${f.key}`)
     if (r?.status === 'ok' && r.destRel !== null) manifest[f.key] = served(r.destRel)
+  }
+  return manifest
+}
+
+export function buildBadgeManifest(config: AssetsConfig, report: readonly TaskReport[]): BadgeManifest {
+  const byId = new Map(report.map((r) => [r.id, r]))
+  const manifest: BadgeManifest = {}
+  for (const b of config.badges) {
+    const r = byId.get(`b:${b.medal}`)
+    if (r?.status === 'ok' && r.destRel !== null) manifest[b.medal] = served(r.destRel)
   }
   return manifest
 }
@@ -294,12 +422,11 @@ export function buildSummary(report: readonly TaskReport[]): string[] {
 export interface AssetsRun {
   report: TaskReport[]
   sprites: SpriteManifest
+  trainers: TrainerManifests
   fx: FxManifest
+  badges: BadgeManifest
   summary: string[]
 }
-
-const CONCURRENCY = 6
-
 export async function syncAssets(
   config: AssetsConfig,
   outRoot: string,
@@ -329,19 +456,29 @@ export async function syncAssets(
       }
     }
   }
-  await Promise.all(Array.from({ length: Math.min(CONCURRENCY, plan.length) }, () => worker()))
+  await Promise.all(Array.from({ length: Math.min(4, plan.length) }, () => worker()))
   const report = outcomes.map((o) => o.report)
 
   const sprites = buildSpritesManifest(config, report)
+  const trainers = buildTrainerManifest(config, report)
   const fx = buildFxManifest(config, report)
+  const badges = buildBadgeManifest(config, report)
+
   const spritesPath = join(outRoot, SPRITES_DIR, 'sprites.json')
+  const trainersPath = join(outRoot, SPRITES_DIR, 'trainers.json')
   const fxPath = join(outRoot, FX_DIR, 'fx.json')
+  const badgesPath = join(outRoot, BADGES_DIR, 'badges.json')
+
   mkdirSync(dirname(spritesPath), { recursive: true })
   mkdirSync(dirname(fxPath), { recursive: true })
-  writeFileSync(spritesPath, `${JSON.stringify(sprites, null, 2)}\n`)
-  writeFileSync(fxPath, `${JSON.stringify(fx, null, 2)}\n`)
+  mkdirSync(dirname(badgesPath), { recursive: true })
 
-  return { report, sprites, fx, summary: buildSummary(report) }
+  writeFileSync(spritesPath, `${JSON.stringify(sprites, null, 2)}\n`)
+  writeFileSync(trainersPath, `${JSON.stringify(trainers, null, 2)}\n`)
+  writeFileSync(fxPath, `${JSON.stringify(fx, null, 2)}\n`)
+  writeFileSync(badgesPath, `${JSON.stringify(badges, null, 2)}\n`)
+
+  return { report, sprites, trainers, fx, badges, summary: buildSummary(report) }
 }
 
 // ── CLI: pnpm assets [--config ruta] [--out dir] ─────────────────────────────

@@ -1,41 +1,80 @@
 {
-  "name": "liga-pkm-web",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "pnpm --filter @liga/web dev",
-    "build": "pnpm --filter @liga/web build",
-    "preview": "pnpm --filter @liga/web preview",
-    "typecheck": "tsc --noEmit -p packages/content && tsc --noEmit -p packages/engine && tsc --noEmit -p apps/web && tsc --noEmit -p tsconfig.json",
-    "lint": "eslint .",
-    "test": "vitest run",
-    "content:validate": "node tools/content-validate.ts",
-    "gen:dev-decks": "node tools/gen-dev-decks.ts",
-    "assets": "node tools/assets.ts",
-    "digest": "node tools/digest.ts",
-    "deps:check": "depcruise apps packages --config .dependency-cruiser.cjs",
-    "size": "size-limit",
-    "bench": "node tools/bench.ts",
-    "verify:selftest": "node tools/verify-selftest.mjs",
-    "verify": "pnpm typecheck && pnpm lint && pnpm test && pnpm content:validate && pnpm build && pnpm deps:check && pnpm size && pnpm bench"
+ "name": "liga-pkm-web",
+ "private": true,
+ "type": "module",
+ "scripts": {
+  "dev": "pnpm --filter @liga/web dev",
+  "build": "pnpm --filter @liga/web build",
+  "preview": "pnpm --filter @liga/web preview",
+  "typecheck": "tsc --noEmit -p packages/content --incremental --tsBuildInfoFile node_modules/.cache/tsc/content.tsbuildinfo && tsc --noEmit -p packages/engine --incremental --tsBuildInfoFile node_modules/.cache/tsc/engine.tsbuildinfo && tsc --noEmit -p apps/web --incremental --tsBuildInfoFile node_modules/.cache/tsc/web.tsbuildinfo && tsc --noEmit -p tsconfig.json --incremental --tsBuildInfoFile node_modules/.cache/tsc/root.tsbuildinfo",
+  "lint": "eslint . --cache --cache-location node_modules/.cache/.eslintcache",
+  "test": "vitest run",
+   "e2e": "node e2e/sprites-serve.mjs && node e2e/t061-tiles.mjs && node e2e/t064-draw.mjs && node e2e/t071-shell.mjs && node e2e/t073-backpack.mjs && node e2e/t082-hud.mjs && node e2e/t089-team-tab.mjs && node e2e/t092-dice.mjs && node e2e/t103-card-modal.mjs && node e2e/t103-card-layout.mjs && node e2e/unificar-popup-encuentro.mjs && node e2e/rediseno-combate-max.mjs",
+  "shots": "node e2e/t066-shots.mjs",
+  "content:validate": "node tools/content-validate.ts",
+  "gen:dev-decks": "node tools/gen-dev-decks.ts",
+  "assets": "node tools/assets.ts",
+  "models:scan": "node tools/models-scan.ts",
+  "models:suggest": "node tools/models-suggest.ts",
+  "models:import": "node tools/models-import.ts",
+  "models:new": "node tools/models-new.ts",
+  "models:use-new": "node tools/models-use-new.ts",
+  "models:check": "node e2e/models-check.mjs",
+  "placements:report": "node tools/placements-report.ts",
+  "decor:report": "node tools/decor-report.ts",
+  "mvp:checklist": "node e2e/t093-checklist.mjs",
+  "pokeapi": "node tools/pokeapi.ts",
+  "map-moves": "node tools/map-moves.ts",
+  "triage": "node tools/triage-customs.ts",
+  "cards:scan": "node tools/cards-scan/run.ts",
+  "cards:status": "node tools/cards-status.ts",
+  "cards:icons:learn": "node tools/cards-scan/learn.ts",
+  "cards:measure": "node tools/cards-scan/measure.ts",
+  "cards:eval": "node tools/cards-scan/eval.ts",
+  "cards:segcheck": "node tools/cards-scan/segcheck.ts",
+  "crop-cards": "python tools/crop_cards.py",
+  "digest": "node tools/digest.ts",
+  "deps:check": "depcruise apps packages --config .dependency-cruiser.cjs",
+  "size": "size-limit",
+  "bench": "node tools/bench.ts",
+  "verify:selftest": "node tools/verify-selftest.mjs",
+  "verify": "pnpm typecheck && pnpm lint && pnpm test && pnpm content:validate && pnpm build && pnpm deps:check && pnpm size && pnpm bench",
+  "cards:glyphs:learn": "node tools/cards-scan/glyphlearn.ts",
+  "cards:glyphs:check": "node tools/cards-scan/glyphcheck.ts"
+ },
+ "size-limit": [
+  {
+   "name": "JS inicial (gzip)",
+   "path": [
+    "apps/web/dist/assets/index-*.js"
+   ],
+   "limit": "200 KB",
+   "rolldown": false
   },
-  "size-limit": [
-    {
-      "name": "JS inicial (gzip)",
-      "path": ["apps/web/dist/assets/*.js"],
-      "limit": "200 KB"
-    }
-  ],
-  "devDependencies": {
-    "@eslint/js": "^9.36.0",
-    "@size-limit/preset-small-lib": "^14.2.0",
-    "@types/node": "^24.5.0",
-    "dependency-cruiser": "^18.5.0",
-    "eslint": "^9.36.0",
-    "fast-check": "^4.10.2",
-    "size-limit": "^14.2.0",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.44.0",
-    "vitest": "^3.2.4"
+  {
+   "name": "Chunk tablero 3D (gzip, ADR-8)",
+   "path": [
+    "apps/web/dist/assets/board3d-*.js"
+   ],
+   "limit": "450 KB",
+   "rolldown": false
   }
+ ],
+ "devDependencies": {
+  "@eslint/js": "^9.36.0",
+  "@size-limit/preset-small-lib": "^14.2.0",
+  "@testing-library/react": "^16.3.3",
+  "@types/node": "^24.5.0",
+  "dependency-cruiser": "^18.5.0",
+  "eslint": "^9.36.0",
+  "fast-check": "^4.10.2",
+  "jsdom": "^30.1.3",
+  "playwright": "^1.57.0",
+  "sharp": "^0.35.5",
+  "size-limit": "^14.2.0",
+  "tesseract.js": "^7.0.0",
+  "typescript": "^5.9.2",
+  "typescript-eslint": "^8.44.0",
+  "vitest": "^3.2.4"
+ }
 }

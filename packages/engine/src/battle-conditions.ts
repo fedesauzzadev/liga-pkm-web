@@ -67,6 +67,7 @@ export function applyAttackEffects(
           setCondition(draft, attackerUid, (c) => {
             c.selfBoost = effect.amount
           })
+          events.push({ type: 'ConditionApplied', pkmUid: attackerUid, condition: 'selfBoost' })
         }
         break
       case 'modifyRivalDamage':
@@ -75,6 +76,7 @@ export function applyAttackEffects(
             if (effect.duration === 'nextTurn') c.rivalDamageMod = effect.amount
             else c.combatDamageMod = effect.amount
           })
+          events.push({ type: 'ConditionApplied', pkmUid: victimUid, condition: 'weakened' })
         }
         break
       case 'flatReduction': {
@@ -84,6 +86,7 @@ export function applyAttackEffects(
           setCondition(draft, holder, (c) => {
             c.damageModCombat = effect.amount
           })
+          events.push({ type: 'ConditionApplied', pkmUid: holder, condition: 'shield' })
         }
         break
       }
@@ -95,6 +98,7 @@ export function applyAttackEffects(
           setCondition(draft, victimUid, (c) => {
             c.skipNextAttack = true
           })
+          events.push({ type: 'ConditionApplied', pkmUid: victimUid, condition: 'skip' })
         }
         break
       case 'rivalSleep':
@@ -105,12 +109,19 @@ export function applyAttackEffects(
           setCondition(draft, victimUid, (c) => {
             c.asleep = { wakeFaces: [...effect.wakeFaces] }
           })
+          events.push({ type: 'ConditionApplied', pkmUid: victimUid, condition: 'asleep' })
         }
         break
       case 'rollGate':
         if (victimAlive()) {
           setCondition(draft, victimUid, (c) => {
             c.rollGate = { failFaces: [...effect.failFaces], outcome: effect.outcome, duration: effect.duration }
+          })
+          events.push({
+            type: 'ConditionApplied',
+            pkmUid: victimUid,
+            condition: effect.outcome === 'selfHit' ? 'confused' : 'noAttackGate',
+            faces: [...effect.failFaces],
           })
         }
         break
@@ -119,6 +130,7 @@ export function applyAttackEffects(
           setCondition(draft, victimUid, (c) => {
             c.poison = effect.amount
           })
+          events.push({ type: 'ConditionApplied', pkmUid: victimUid, condition: 'poison' })
         }
         break
       case 'drainEachTurn':
@@ -126,14 +138,17 @@ export function applyAttackEffects(
           setCondition(draft, victimUid, (c) => {
             c.drain = effect.amount
           })
+          events.push({ type: 'ConditionApplied', pkmUid: victimUid, condition: 'drain' })
         }
         break
-      case 'drainNow': // directo, sin modificadores (RULES §4)
+      case 'drainNow': // directo, sin modificadores (RULES §4; D-33: selfHit ⇒ daño sin curación)
         {
           const hit = applyDamage(draft, ctx.content, victimUid, effect.amount, 'drainNow', events)
           if (!hit.ok) return hit
-          const healed = healPkm(draft, ctx.content, attackerUid, effect.amount, 'drainNow', events)
-          if (!healed.ok) return healed
+          if (victimUid !== attackerUid) {
+            const healed = healPkm(draft, ctx.content, attackerUid, effect.amount, 'drainNow', events)
+            if (!healed.ok) return healed
+          }
         }
         break
       case 'selfDamage': {
@@ -150,6 +165,7 @@ export function applyAttackEffects(
         setCondition(draft, attackerUid, (c) => {
           c.dodge = { faces: [...effect.faces] }
         })
+        events.push({ type: 'ConditionApplied', pkmUid: attackerUid, condition: 'dodge' })
         break
       case 'custom': {
         const handler = customHandlers.get(effect.handler)
@@ -160,10 +176,13 @@ export function applyAttackEffects(
         }
         break
       }
-      // Set 2 (post-MVP): el motor nunca se rompe por una carta que las use.
+      // Set 2 (post-MVP) + set de T-002b (fixedRolls/nextAttackBonus esperan su
+      // wiring en el pipeline, Q-025): el motor nunca se rompe por una carta que las use.
       case 'rest':
       case 'transform':
       case 'disableRandomAttack':
+      case 'fixedRolls':
+      case 'nextAttackBonus':
         events.push({ type: 'UnsupportedEffect', handler: effect.op, attackId: attack.id })
         break
     }

@@ -1,13 +1,17 @@
 {
  "meta": {
   "id": "kanto-classic",
-   "status": "VERIFIED",
+  "status": "VERIFIED+deck4",
   "source": "foto del tablero fisico (1176x1600 px)",
   "imageSize": [
    1176,
    1600
   ],
-  "note": "Coordenadas y aristas inferidas a ojo de la foto. Verificar con tools/board-overlay.html (task T-003) antes de usar en el motor."
+  "note": "Coordenadas y aristas inferidas a ojo de la foto. Verificar con tools/board-overlay.html (task T-003) antes de usar en el motor.",
+  "deck4": {
+   "date": "2026-10-24",
+   "scale": 1
+  }
  },
  "gyms": {
   "brock": {
@@ -126,6 +130,14 @@
    "deck": "montana"
   },
   {
+   "id": "mont_4",
+   "type": "deck",
+   "shape": "round",
+   "x": 113,
+   "y": 1433,
+   "deck": "montana"
+  },
+  {
    "id": "canela",
    "type": "gym",
    "shape": "square",
@@ -192,6 +204,14 @@
    "deck": "isla"
   },
   {
+   "id": "isla_4",
+   "type": "deck",
+   "shape": "round",
+   "x": 611,
+   "y": 1112,
+   "deck": "isla"
+  },
+  {
    "id": "pb_535",
    "type": "empty",
    "shape": "round",
@@ -227,6 +247,14 @@
    "shape": "round",
    "x": 1095,
    "y": 1255,
+   "deck": "bosque"
+  },
+  {
+   "id": "bosque_4",
+   "type": "deck",
+   "shape": "round",
+   "x": 1028,
+   "y": 1393,
    "deck": "bosque"
   },
   {
@@ -300,6 +328,14 @@
    "shape": "round",
    "x": 531,
    "y": 336,
+   "deck": "pantano"
+  },
+  {
+   "id": "pant_4",
+   "type": "deck",
+   "shape": "round",
+   "x": 678,
+   "y": 470,
    "deck": "pantano"
   },
   {
@@ -409,6 +445,14 @@
    "shape": "round",
    "x": 107,
    "y": 297,
+   "deck": "llanura"
+  },
+  {
+   "id": "llan_4",
+   "type": "deck",
+   "shape": "round",
+   "x": 111,
+   "y": 531,
    "deck": "llanura"
   },
   {
@@ -528,6 +572,10 @@
   ],
   [
    "mont_1",
+   "mont_4"
+  ],
+  [
+   "mont_4",
    "mont_3"
   ],
   [
@@ -539,12 +587,12 @@
    "mercado_l"
   ],
   [
-    "mercado_l",
-    "centro_l"
+   "mercado_l",
+   "centro_l"
   ],
   [
-    "pb_780",
-    "bosque_3"
+   "pb_780",
+   "bosque_3"
   ],
   [
    "pb_780",
@@ -552,6 +600,10 @@
   ],
   [
    "bosque_3",
+   "bosque_4"
+  ],
+  [
+   "bosque_4",
    "bosque_2"
   ],
   [
@@ -588,6 +640,10 @@
   ],
   [
    "pant_3",
+   "pant_4"
+  ],
+  [
+   "pant_4",
    "pant_2"
   ],
   [
@@ -620,6 +676,10 @@
   ],
   [
    "llan_1",
+   "llan_4"
+  ],
+  [
+   "llan_4",
    "llan_2"
   ],
   [
@@ -716,6 +776,10 @@
   ],
   [
    "isla_1",
+   "isla_4"
+  ],
+  [
+   "isla_4",
    "isla_2"
   ],
   [

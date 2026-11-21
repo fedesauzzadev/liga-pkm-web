@@ -1,0 +1,19 @@
+# Reporte turno-automatico-rival — Turno automático del rival en PvE
+- Estado: REVIEW | Plan: `.opencode/plan/turno-automatico-rival.md`
+- Resumen (≤ 5 líneas): El turno del rival (inicio → dado `attackSelect` → acción/NoAttack → fin + inicio del turno propio) corre DENTRO del comando que cede el turno: `Attack`, `Retire`, `Advance` (pasar) y el arranque por AGILIDAD (`FightEncounter`/`AcceptGymChallenge`). Con `pending` o fin de batalla el rival no actúa (flujo vigente, D-02). Nueva invariante: batalla abierta sin `pending` ⇒ `turnSide === 0` entre comandos. UI: el botón "turno del rival / continuar" desaparece; el único `Advance` es "Pasar".
+- Archivos clave tocados (rutas):
+  - Motor: `packages/engine/src/battle.ts` (nuevo `runRivalTurn`), `battle-commands.ts` (attack/retire/fightEncounter/advanceBattle), `gyms.ts` (acceptGymChallenge firma `ctx`), `engine.ts` (handlers), `invariants.ts` (nueva invariante), `legal.ts` (comentario red de seguridad).
+  - Tests motor: `tests/turno-automatico-rival.test.ts` (NUEVO); actualizados `t020-battle`, `t020-damage`, `t021-primitives`, `t021-interaction`, `t022-progression`, `t023-gyms`, `t024-golden`, `t072-condition-applied`.
+  - UI: `apps/web/src/popup/model.ts`, `i18n/es.ts` (−`popupBattleRivalTurn`), `popup/model.test.ts`, `popup/BattlePopup.test.tsx`, `game/PlayScreen.test.tsx`.
+  - Specs: `specs/SPEC-C-battle.md` (T-020/AC-9 nuevo), `specs/SPEC-I-hud-and-camera.md` (T-075/AC-2).
+- AC cubiertos → test (turno-automatico-rival → archivo:test):
+  - AC-1..AC-6, AC-8 → `tests/turno-automatico-rival.test.ts` (un test por AC, `// AC: turno-automatico-rival/AC-n`).
+  - AC-7 → `apps/web/src/popup/model.test.ts` + `apps/web/src/popup/BattlePopup.test.tsx` (etiquetados AC-7).
+- `pnpm verify`: OK (typecheck · lint · tests 380+ · content:validate · build · deps:check · size · bench, todo verde)
+- Decisiones tomadas / defaults aplicados:
+  - Tests de AC en `tests/turno-automatico-rival.test.ts` y no en `packages/engine/src/index.test.ts` (como decía el plan): los fixtures de batalla (tablero sintético, RNG guionado, `newGame`) viven en `tests/`; meterlos al paquete engine cruzaría la frontera de paquete al revés. Se mantiene el comentario `// AC: turno-automatico-rival/AC-n` (uno por AC).
+  - `acceptGymChallenge` ahora recibe `Ctx` completo (necesita `rng` para el dado del líder); sin cambio de comportamiento sin AGILIDAD.
+  - En `Attack`, el arranque del turno propio posterior (poison/drain/wake) queda dentro del mismo comando: mismo número de ticks por turno que antes, redistribuido entre comandos (t020/AC-1 actualizado con comentario).
+  - Advance en batalla mantiene su semántica (pasar si `turnSide === 0`; red de seguridad si un estado corrupto llegara con `turnSide === 1`).
+- Dudas nuevas (→ OPEN-QUESTIONS.md) y ER solicitados: ninguna / ninguno.
+- Riesgos / deuda: la coreografía recibe secuencias de eventos más largas por comando (tu ataque + dado y ataque del rival); conviene revisión visual del popup de combate (`pnpm shots`). Guardas de saves viejos: un estado persistido con `turnSide === 1` y sin `pending` viola la invariante nueva solo si los checks están habilitados (dev); no hay migración de saves en el MVP.

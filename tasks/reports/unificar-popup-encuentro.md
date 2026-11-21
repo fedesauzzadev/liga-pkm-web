@@ -1,0 +1,14 @@
+# Reporte unificar-popup-encuentro — Un solo popup para el encuentro salvaje
+- Estado: REVIEW | Rama/commit: trabajo sin commitear (árbol del dueño)
+- Resumen: reemplazó los DOS avisos de FightOrRelease (título+botones en tile-panel y popup-card con btn-card-fight/release) por UN `<EncounterPopup data-testid="popup-encounter">`: carta grande de T-101 (`CardFace`, testid `card-face`, instancia sintética `wild-<cardId>` de solo lectura) a la izquierda y decisión (pelear/dejar ir) a la derecha. Motor intacto: solo test de regresión (AC-7).
+- Archivos clave:
+  - Nuevos: `content/ui/encounter-popup.json`; `packages/content/src/encounter-popup.ts` (Zod + crosscheck, exportado y validado en `validate.ts`); `apps/web/src/popup/{EncounterPopup.tsx,EncounterPopup.module.css,encounter-model.ts,EncounterPopup.test.tsx}`; `e2e/unificar-popup-encuentro.mjs`.
+  - Modificados: `TilePanel.tsx` (sin rama FightOrRelease), `CardPopup.tsx`/`model.ts` (fuera `cardPopupStays`/botones; queda el cierre automático), `PlayScreen.tsx` (monta el popup, tile-panel limpio, opciones con HP y líder primero), `GameShell.tsx` (slot `encounterPopup` debajo de popup-battle), `DrawnCard.tsx` (vuela a popup-encounter con fallback centro del safeArea y cede al terminar el revelado), `i18n/es.ts` (`encounterNoHealthy`, `encounterHpLabel`, `historyReleasedWild`), `i18n/event-log.ts` (CardToBottom de PKM ⇒ "Dejaste ir a {name}."), `engine/index.test.ts`, `e2e/t061-tiles.mjs` y `e2e/t064-draw.mjs` (expectativas del nuevo flujo), `package.json` (e2e).
+- AC → test:
+  - AC-1, AC-2, AC-3 (precarga), AC-4, AC-5, AC-8 → `apps/web/src/popup/EncounterPopup.test.tsx`
+  - AC-2 (geometría 3 tamaños) → `EncounterPopup.test.tsx` + `e2e/unificar-popup-encuentro.mjs` (boundingBox vs layout.json en 1024×600/1366×768/1920×1080)
+  - AC-6 (historial) → `apps/web/src/i18n/event-log.test.ts` + e2e (turno +1 y "Dejaste ir a Abra.")
+  - AC-7 → `packages/engine/src/index.test.ts` (regresión ReleaseWild)
+- `pnpm verify`: OK (typecheck+lint+test 1022+content:validate+build+deps+size+bench). `pnpm e2e`: OK, 10 scripts (incluye el nuevo en 3 viewports + pelear + dejar ir).
+- Decisiones: el popup monta apenas llega el pending (mismo criterio que el popup-card actual); el vuelo T-064 no cambia hasta el revelado y al terminar la carta cede (drawn-card se oculta en `done`); los popups de layout.json NO cuentan como obstáculos del HUD (AC-2); es.ts ya decía "Centrar en mí" ⇒ se actualizó la expectativavieja de `e2e/t082-hud.mjs` ("Recentrar") para desbloquear `pnpm e2e` (desajuste preexistente del árbol, no de este plan).
+- Dudas nuevas: ninguna (sin ER). Riesgos/deuda: en 1024×600 la carta queda chica (~173×274 px) por esquivar panel-dice/turn + teamTab; el texto escala por container queries.

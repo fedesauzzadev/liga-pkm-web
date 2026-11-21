@@ -69,3 +69,29 @@
   font: inherit;
   cursor: pointer;
 }
+
+/* Insignia de modelos nuevos (SPEC-O/T-094/AC-3, ?debug=1). */
+.models {
+  margin: 0.75rem 0 0;
+  border-top: 2px dashed var(--color-border);
+  padding-top: 0.5rem;
+}
+
+.models p {
+  margin: 0.1rem 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.modelOk {
+  color: var(--color-ok, #2e7d32);
+}
+
+.modelFallback {
+  color: var(--color-danger, #b3402a);
+}
+
+.modelsHint {
+  color: var(--color-muted);
+  font-size: 0.65rem;
+  margin-top: 0.4rem;
+}

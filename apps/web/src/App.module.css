@@ -9,6 +9,20 @@
   margin: 1rem;
 }
 
+/* SPEC-I/T-071/AC-1: con la partida montada (shell a pantalla completa) el
+   marco no debe sumar margen/altura ⇒ sin scroll de página. */
+.shell:has([data-shell-root]) {
+  margin: 0;
+  min-height: 0;
+  border: none;
+}
+
+/* lobby-logo-sin-scroll/AC-3: el lobby tampoco genera scroll: sin margen;
+   el borde queda dentro del min-height (border-box) ⇒ 100dvh exactos. */
+.shell:has([data-title-screen]) {
+  margin: 0;
+}
+
 .title {
   font-family: var(--font-title);
   font-size: clamp(1.25rem, 6vw, 2.5rem);
@@ -20,4 +34,28 @@
 .subtitle {
   margin: 0;
   color: var(--color-muted);
+}
+
+.statePanel {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.actions button {
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
 }

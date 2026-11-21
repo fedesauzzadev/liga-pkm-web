@@ -1,0 +1,231 @@
+/* Mochila (SPEC-I/T-073): interior de panel-backpack. El vidrio lo pone el
+   shell; acá las 5 filas, tokens apilados, ghost del drag, sacudida ilegal,
+   selector Multicolor y estados de drop (válido resalta, inválido atenúa). */
+
+.backpack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 100%;
+  min-height: 0;
+  padding: 1px;
+  font-size: 13px;
+  overflow: hidden auto;
+  touch-action: pan-y;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* T-082/AC-3: fila ≥ 28 px y letra 13 px (mínimo del HUD). */
+.row {
+  display: grid;
+  grid-template-columns: 5.5em 1fr;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 1px 2px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: rgba(253, 246, 227, 0.45);
+}
+
+.rowLabel {
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.1;
+  color: var(--color-muted);
+}
+
+.rowTokens {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+  min-width: 0;
+}
+
+.rowEmpty {
+  color: var(--color-muted);
+}
+
+.token {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 26px;
+  padding: 1px 3px;
+  font: inherit;
+  font-size: 13px;
+  background: rgba(232, 240, 224, 0.9);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: grab;
+  touch-action: none; /* AC-1: el drag con pointer events no scrollea */
+  user-select: none;
+}
+
+.token:active {
+  cursor: grabbing;
+}
+
+.tokenSelected {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(64, 96, 48, 0.35);
+}
+
+.glyph {
+  min-width: 1.6em;
+  text-align: center;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.count {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.useButton {
+  min-height: 24px;
+  padding: 0 0.45rem;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-accent);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.useButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.detail,
+.detailHint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.note {
+  margin: 0;
+  padding: 2px 4px;
+  font-size: 13px;
+  border: 1px solid #b03a2e;
+  border-radius: 8px;
+  background: rgba(217, 79, 43, 0.12);
+}
+
+/* AC-3: sacudida al volver a la fila. */
+.shake {
+  animation: backpack-shake 0.4s ease-in-out;
+}
+
+@keyframes backpack-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shake {
+    animation: none;
+  }
+}
+
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 2px;
+  padding: 3px;
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+  background: rgba(253, 246, 227, 0.75);
+}
+
+.pickerText {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.pickerElements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.pickerButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  min-width: 24px;
+  padding: 1px;
+  background: rgba(232, 240, 224, 0.9);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pickerCancel {
+  align-self: flex-end;
+  min-height: 20px;
+  padding: 0 0.4rem;
+  font: inherit;
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* Ghost (AC-1): carta fantasma que sigue al puntero; vive portaleada al body. */
+.ghost {
+  position: fixed;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink);
+  background: rgba(253, 246, 227, 0.92);
+  border: 2px solid var(--color-accent);
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transform: translate(-50%, -130%);
+  pointer-events: none;
+}
+
+.hidden {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}

@@ -1,0 +1,281 @@
+/* Pantallas de inicio/setup/ajustes/juego (SPEC-D/T-034). */
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
+  padding: 0.5rem 0.75rem 1rem;
+}
+
+/* lobby-logo-sin-scroll: logo de la pantalla de título; se achica con el
+   viewport (dvh) para que logo + menú entre en 100dvh sin scroll. */
+.logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 50dvh;
+  object-fit: contain;
+}
+
+.screenTitle {
+  font-family: var(--font-title);
+  font-size: clamp(1.1rem, 5vw, 2rem);
+  color: var(--color-accent);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.screenSubtitle {
+  margin: 0;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: min(22rem, 100%);
+}
+
+.menuButton {
+  min-height: 44px;
+  font-size: 1rem;
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.menuButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.demos {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.demosButton {
+  min-height: 44px;
+  padding: 0 0.85rem;
+  background: transparent;
+  color: var(--color-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.warning {
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid #b3563d;
+  border-radius: 8px;
+  color: #7c2d12;
+  background: #f7e2da;
+  max-width: 34rem;
+  text-align: center;
+}
+
+.error {
+  margin: 0;
+  color: #7c2d12;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 0.6rem;
+  width: min(46rem, 100%);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.6rem;
+  text-align: left;
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cardDeck {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+}
+
+.cardName {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cardFacts,
+.cardAttacks {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.cardAttack {
+  margin: 0;
+}
+
+.seedRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: min(22rem, 100%);
+}
+
+.seedInput {
+  min-height: 44px;
+  padding: 0 0.6rem;
+  font-size: 1rem;
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  width: min(22rem, 100%);
+}
+
+.legend {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  padding: 0 0.2rem;
+}
+
+.optionRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+}
+
+.optionRow input {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.factRow {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.hud {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.actions button {
+  min-height: 44px;
+  padding: 0 0.85rem;
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  max-width: 34rem;
+}
+
+.panelTitle {
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  margin: 0;
+  color: var(--color-accent);
+  text-align: center;
+}
+
+.note {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* T-071: cluster de controles dentro del overlay del shell (mundo 3D detrás).
+   Scroll interno (principio SPEC-I §1) y vidrio con las vars del shell.
+   T-082/AC-2: solo se monta si hay contenido (sin panel vacío de inventario). */
+.legacy {
+  pointer-events: auto;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  border: var(--border, 2px) solid rgba(34, 48, 28, 0.85);
+  border-radius: var(--radius, 16px);
+  background: rgba(232, 240, 224, var(--panel-opacity, 1));
+  backdrop-filter: blur(var(--blur, 0px));
+}
+
+/* T-082/AC-2: el detalle de equipo se abre tocando un slot del panel-team;
+   esta barra da el cierre (el botón de inventario se quitó). */
+.detailBar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.detailClose {
+  align-self: flex-end;
+  min-height: 30px;
+  padding: 0 0.6rem;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink);
+  background: rgba(232, 240, 224, 0.9);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+}

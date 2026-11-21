@@ -1,0 +1,23 @@
+# Reporte camara-libre-sin-ficha — Cámara libre sin seguimiento de ficha + "Centrar en mí"
+- Estado: REVIEW | Rama/commit: main (sin commit)
+- Resumen (≤ 5 líneas): explore deja de seguir a la ficha (`targetFollowsToken:false`; ancla única en `exploreAnchor` usada por desiredExploreTarget/syncExplore/exploreKeyStep ⇒ paneo absoluto sin saltos). La tirada ya NO cue-a la cámara (fuera el efecto ROLL del dieNonce) y el dado reposa delante de la cámara con cualquier pose. RECENTER → CENTER_ON_ME (posición de MI ficha, `myTokenId` = players[0]): desde explore mueve el objetivo con damping preservando órbita/zoom; desde overview/free transiciona a explore centrado en mi ficha. Al montar arranca encuadrando mi ficha una sola vez (`initialTarget`). battleCameraCue intacto (AC-6).
+- Archivos clave tocados (rutas):
+  - `content/ui/camera.json` (targetFollowsToken false; buttons/keys recenter → centerOnMe)
+  - `packages/content/src/ui.ts` (UiCameraSchema renombra claves; comentarios)
+  - `apps/web/src/board3d/rig.ts` (evento CENTER_ON_ME {x,z}; exploreAnchor; initialTarget; fuera snaps RECENTER)
+  - `apps/web/src/board3d/explore.ts` (exploreKeyStep con ancla: paneo absoluto)
+  - `apps/web/src/board3d/CameraRig.tsx` (sin cue ROLL del dieNonce; dieRest siempre diePosInFront; centerOnMeRef + myTarget)
+  - `apps/web/src/board3d/{Board3D.tsx,Board3D.shared.ts,useCameraKeys.ts}` (prop myTokenId, btn-center-on-me, doble click, tecla C)
+  - `apps/web/src/board/{Board.tsx,BoardHost.tsx}` (BoardViewProps += myTokenId) · `apps/web/src/game/PlayScreen.tsx` (pasa players[0])
+  - `apps/web/src/i18n/es.ts` (board3dCenterOnMe 'Centrar en mí')
+- AC cubiertos → test (camara-libre-sin-ficha/AC-n):
+  - AC-1..AC-8 → `apps/web/src/board3d/camara-libre-sin-ficha.test.ts` (uno por AC; AC-2 combina fuente de CameraRig + diePosInFront con pose explore)
+  - Actualizados: `rig.test.ts` (T-076/AC-7, T-077/AC-3), `camara-libre-3d.test.ts` (AC-7: C ya no resetea, preserva órbita), `labels.test.ts` (exploreCamera usa initialTarget), `hud/t082.test.tsx` (es.board3dCenterOnMe)
+- `pnpm verify`: OK (typecheck, lint, test, content:validate, build, deps:check 341 módulos, size inicial 23,32 ≤ 200 / chunk 3D 384,46 ≤ 450 kB, bench OK)
+- Decisiones tomadas / defaults aplicados:
+  - CENTER_ON_ME desde overview/free usa transitionOut (destino buttons.centerOnMe='explore'); desde explore no cambia modo: solo offset del objetivo, el viaje dampa con explore.damping (reducedMotion/skip snapean, como antes).
+  - RECENTER (reset de órbita + snap) se elimina por decisión del dueño: "Centrar en mí" reemplaza el slot/tecla C/doble click; la órbita NUNCA se resetea sola.
+  - Encuadre inicial solo en el constructor del rig (initialTarget = world pos de mi ficha, clamp panBounds): una sola vez, sin re-encuadre posterior.
+  - CHOOSE_PATH/TURN_END siguen cableados en CameraRig (los consume la cámara de combate); desde explore son no-ops ya rechazados por nextMode.
+- Dudas nuevas → OPEN-QUESTIONS.md: Q-046 (fork nunca más se dispara; elección solo en DecisionPanels). Sin ER.
+- Riesgos / deuda: `rig.ts` queda en ~450 líneas (tope 400 preexistente, ya anotado en camara-libre-3d); revisión visual con el dueño vía `pnpm shots` (dado delante de la cámara en explore, feel del damping de "Centrar en mí").

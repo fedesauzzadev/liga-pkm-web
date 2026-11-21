@@ -19,7 +19,7 @@ Entregables: Zod + tipos para `PokemonCard`, `Attack`, `Effect` (todas las primi
 ## T-003 Tablero
 Entregables: `BoardGraph` (nodos, aristas no dirigidas, tipos, forma `round|square|none`), API: `neighbors(id)`, `forwardOptions(id, cameFrom)`, `isSquare(id)`, `isDeadEnd(id)`.
 Verificación: **el dueño** usa `tools/board-overlay.html` con la foto y `content/board/kanto.json`; corrige posiciones/aristas y exporta. Un worker integra el JSON corregido y lo marca `status:"VERIFIED"`.
-- AC-1 Grafo conexo; 8 ciudades-gimnasio, 4 centros, 2 Oak, 5 mercados, 4 duelos, 15 nodos de mazo (3 por mazo), 1 start, 1 sorpresa, 1 liga (los conteos pueden ajustarse tras verificar y se documentan en el reporte).
+- AC-1 Grafo conexo; 8 ciudades-gimnasio, 4 centros, 2 Oak, 5 mercados, 4 duelos, 20 nodos de mazo (4 por mazo, deck4), 1 start, 1 sorpresa, 1 liga (los conteos pueden ajustarse tras verificar y se documentan en el reporte).
 - AC-2 `forwardOptions('pb_r','centro_r')` devuelve todos los vecinos menos `centro_r`; en callejón (`sorpresa`) devuelve `[]`.
 - AC-3 Un test lista los nodos de grado ≠ 2 y coincide con el reporte (bifurcaciones y extremos).
 - AC-4 El reporte incluye captura de pantalla del overlay con el grafo corregido. **Gate G0: el jefe revisa esa captura.**

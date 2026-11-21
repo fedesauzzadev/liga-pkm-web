@@ -29,6 +29,10 @@ export type Decision =
   | { readonly type: 'ChooseAttack'; readonly options: readonly string[] }
   /** Batalla: el activo cayó y hay banquillo sano; el lado que repone actúa (D-02). */
   | { readonly type: 'ChooseReplacement'; readonly options: readonly string[] }
+  /** Prof. Oak: intercambio opcional 1 a 1 equipo ↔ pila (T-061/AC-2); se saltea con Advance. */
+  | { readonly type: 'OakSwap' }
+  /** Gimnasio desafiable: aceptar el duelo (opcional, D-17) o seguir (T-061/AC-2). */
+  | { readonly type: 'ChallengeGym'; readonly gym: string }
 
 /** Fases de la máquina de turnos (SDD §5). T-011: ciclo organize → moving → tileResolution. */
 export type Phase = 'idle' | 'organize' | 'moving' | 'tileResolution' | 'battle' | 'finished'
@@ -47,16 +51,25 @@ export interface PkmInstance {
   readonly damage: number
   readonly xp: number
   readonly equipped: readonly ElementCard[]
-  /** Comodines asignados a este PKM (RULES §3): máx 1, vale como 1 elemento del asignado. */
-  readonly wildcards: readonly Element[]
+  /** Cartas Multicolor asignadas a este PKM (RULES §3, D-23): máx 1, vale como 1 elemento del asignado. */
+  readonly multicolor: readonly Element[]
   readonly fainted: boolean
 }
 
-/** Inventario de ítems (SDD §4; T-012 agrega los que faltan). */
-export interface ItemBag {
-  readonly pokeball: number
-  readonly potion: number
-}
+/** Ítems de la bolsa por id de carta (T-049). Multicolor vive aparte (`multicolor`). */
+export type BagItem = 'pokeball' | 'potion' | 'oportunidad' | 'super_potion' | 'ultraball' | 'masterball'
+
+/** Las 6 keys de la bolsa (para invariantes y UI). */
+export const BAG_ITEMS: readonly BagItem[] = [
+  'pokeball',
+  'potion',
+  'oportunidad',
+  'super_potion',
+  'ultraball',
+  'masterball',
+]
+
+export type ItemBag = { readonly [K in BagItem]: number }
 
 export interface PlayerState {
   readonly id: PlayerId
@@ -66,7 +79,7 @@ export interface PlayerState {
   readonly team: readonly PkmInstance[] // máx 6 (ruleset.teamLimit)
   readonly oakPile: readonly PkmInstance[]
   readonly elements: readonly ElementCard[]
-  readonly wildcards: number
+  readonly multicolor: number
   readonly items: ItemBag
   readonly medals: readonly string[]
 }
@@ -124,6 +137,7 @@ interface BattleCore {
   /** uid activo de cada lado; el del jugador apunta a PlayerState.team. */
   readonly active: readonly [PkmUid, PkmUid]
   readonly turnSide: 0 | 1
+  readonly trainerId: string | null
   readonly conditions: { readonly [uid: string]: PkmConditions }
   /** PKM propios en su primer turno de la carta (regla de primer ataque, RULES §4). */
   readonly firstTurn: readonly PkmUid[]
@@ -133,6 +147,9 @@ interface BattleCore {
   readonly won: boolean
   /** El activo de este turno no puede atacar (falló la tirada de despertar). */
   readonly noAttackThisTurn: boolean
+  /** retirada-solo-inicio-turno (D-32): ya se usó una acción este turno propio
+   * (poción en combate); Retire solo es legal al inicio del turno, sin acciones previas. */
+  readonly actedThisTurn: boolean
 }
 
 /** Encuentro salvaje: `card` está fuera del mazo `deck` mientras dure la batalla. */
@@ -140,14 +157,16 @@ export interface WildBattle extends BattleCore {
   readonly kind: 'wild'
   readonly card: CardId
   readonly deck: DeckKey
+  /** PKM propios derrotados: con `chances` (D-22) el rival escapa al llegar a n. */
+  lostCount: number
 }
 
 /** Duelo de gimnasio (T-023): snapshot del líder para que el estado sea autocontenido. */
 export interface GymBattle extends BattleCore {
   readonly kind: 'gym'
-  /** Key del gimnasio en board.gyms / gyms.json (identifica la medalla). */
+  /** Key del gimnasio: nodo del tablero e id del líder en content/gyms.json. */
   readonly gym: string
-  /** Nombre de la medalla (board.gyms[gym].medal, para el evento y la UI). */
+  /** Nombre de la medalla (gyms.json, para el evento y la UI). */
   readonly medal: string
   /** Premio de la carta del líder (p.50). */
   readonly prize: GymPrize
@@ -191,6 +210,6 @@ export function createInitialState(): GameState {
     ruleset: null,
     players: [],
     activePlayerId: null,
-    decks: { bosque: [], montana: [], isla: [], llanura: [], pantano: [], item: [] },
+    decks: { bosque: [], montana: [], isla: [], llanura: [], pantano: [], item: [], sorpresa: [] },
   }
 }

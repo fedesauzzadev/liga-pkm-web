@@ -1,0 +1,504 @@
+/* Escena de combate (rediseno-combate-max/AC-0): 3 columnas dentro del lienzo
+   1440×810 — laterales 340 (carta 340×540 + caja de dado 340×96 a 16 px) y
+   central 690 (recuadro 690×460 + pestañas 52 + acciones 200, gaps 12).
+   Márgenes 20 y separación 15 (nota n.º 1: 20+340+15+690+15+340+20 = 1440).
+   Medidas en px de diseño: el lienzo (BattleStage) escala uniformemente. */
+
+.scene {
+  display: grid;
+  grid-template-columns: 340px 690px 340px;
+  gap: 15px;
+  width: 1440px;
+  height: 810px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.sideCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 340px;
+}
+
+.centerCol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 690px;
+}
+
+.cardSlot {
+  width: 340px;
+  height: 540px;
+}
+
+/* ── Caja de dado (AC-0/AC-2): 340×96, dado 72 px + etiqueta a la derecha ── */
+.dieBox {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 340px;
+  height: 96px;
+  padding: 8px 12px;
+  border: 3px dashed var(--color-border);
+  border-radius: 10px;
+  background: rgba(243, 246, 238, 0.6);
+}
+
+.dieMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.dieSide {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.diePurpose {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dieChain {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+/* dados-legibles: resultado de la tirada como número grande (no contar puntos). */
+.dieValue {
+  margin: 0;
+  min-width: 44px;
+  text-align: center;
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent);
+}
+
+/* ── Recuadro Game Boy (AC-1): 690×460, internos ≈ +25 % ── */
+.arena {
+  position: relative;
+  width: 690px;
+  height: 460px;
+  border: 4px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #cfe3c1;
+}
+
+.background,
+.sprites,
+.fx,
+.hud {
+  position: absolute;
+  inset: 0;
+}
+
+.background {
+  z-index: 0;
+  background:
+    linear-gradient(180deg, #bfe0f2 0%, #d8ecd9 58%, #a9c98f 58%, #8fb873 100%);
+}
+
+/* Línea de piso tipo Game Boy (solo decorativa, sin assets). */
+.background::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 58%;
+  border-top: 4px solid rgba(34, 48, 28, 0.35);
+}
+
+.sprites {
+  z-index: 1;
+}
+
+.rival,
+.player,
+.trainer {
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* Rival arriba-derecha (frente), jugador abajo-izquierda (espalda).
+   AC-1: sprites ×1,25 (150 → 188 px). */
+.rival {
+  top: 6%;
+  right: 8%;
+  width: 42%;
+}
+
+.player {
+  bottom: 4%;
+  left: 8%;
+  width: 48%;
+}
+
+/* fix-sprites-lideres-gimnasio/AC-2: slot propio del líder — misma zona rival
+   pero a la IZQUIERDA del pokémon (right 52–72 % vs .rival 8–50 %): se ven
+   simultáneos sin solaparse ni heredar la posición de .rival. */
+.trainer {
+  top: 6%;
+  right: 52%;
+  width: 20%;
+}
+
+.trainer .sprite {
+  max-width: 120px;
+}
+
+.sprite {
+  width: 100%;
+  max-width: 188px;
+  image-rendering: pixelated;
+}
+
+.spriteFallback {
+  padding: 14px 12px;
+  background: rgba(243, 246, 238, 0.9);
+  border: 3px dashed var(--color-border);
+  border-radius: 10px;
+  font-weight: 800;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.fx {
+  z-index: 2; /* pointer-events: none va inline para que sea auditable en SSR */
+}
+
+/* ── Visuales de la coreografía (T-032d): solo transform/opacity ── */
+
+/* Encuentro: barrido de pantalla (AC-1). */
+.sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(248, 252, 240, 0.85) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: sweepX 550ms ease-out forwards;
+}
+
+@keyframes sweepX {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* Entrada de sprite: entra desde su lado (AC-1). */
+.rival[data-enter='true'],
+.trainer[data-enter='true'],
+.player[data-enter='true'] {
+  animation: enterFromSide 450ms ease-out;
+}
+
+.rival[data-enter='true'],
+.trainer[data-enter='true'] {
+  --enter-from: 34%;
+}
+
+.player[data-enter='true'] {
+  --enter-from: -34%;
+}
+
+@keyframes enterFromSide {
+  from {
+    opacity: 0;
+    transform: translateX(var(--enter-from, 0));
+  }
+}
+
+/* Golpe: parpadeo ×3 (lo togglean los patches del stage, AC-1). */
+.rival[data-blink='true'],
+.player[data-blink='true'] {
+  filter: brightness(2.4) saturate(0.2);
+}
+
+/* Derrota: caída + gris (AC-1). */
+.rival[data-fainted='true'],
+.player[data-fainted='true'] {
+  filter: grayscale(1);
+  opacity: 0.55;
+  transform: translateY(10px) rotate(5deg);
+  transition:
+    transform 500ms ease-in,
+    opacity 500ms ease-in,
+    filter 500ms ease-in;
+}
+
+/* Destellos: evolución / captura / medalla (AC-1). */
+.flashOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 250, 0.55) 45%, transparent 75%);
+  animation: flashPulse 420ms ease-out forwards;
+}
+
+.flashOverlay[data-flash='capture'] {
+  background: radial-gradient(circle at 68% 30%, rgba(255, 216, 100, 0.95) 0%, transparent 65%);
+}
+
+.flashOverlay[data-flash='medal'] {
+  background: radial-gradient(circle at 50% 50%, rgba(255, 200, 60, 0.9) 0%, transparent 60%);
+}
+
+.flashOverlay[data-flash='trainer'] {
+  background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.9) 0%, transparent 60%);
+}
+
+@keyframes flashPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
+/* Evolución clásica: silueta blanca pulsante + revelación (AC-4). */
+.rival[data-evolve='pulse'] .sprite,
+.player[data-evolve='pulse'] .sprite,
+.rival[data-evolve='pulse'] .spriteFallback,
+.player[data-evolve='pulse'] .spriteFallback {
+  filter: brightness(0) invert(1);
+  animation: evolveSilhouette var(--evolve-pulse-ms, 320ms) ease-in-out;
+}
+
+.rival[data-evolve='pulse'][data-pulse='1'],
+.player[data-evolve='pulse'][data-pulse='1'] {
+  --evolve-scale: 1.05;
+}
+
+.rival[data-evolve='pulse'][data-pulse='2'],
+.player[data-evolve='pulse'][data-pulse='2'] {
+  --evolve-scale: 1.12;
+}
+
+.rival[data-evolve='pulse'][data-pulse='3'],
+.player[data-evolve='pulse'][data-pulse='3'] {
+  --evolve-scale: 1.2;
+}
+
+@keyframes evolveSilhouette {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(0) invert(1);
+  }
+
+  50% {
+    transform: scale(var(--evolve-scale, 1.05));
+    filter: brightness(0) invert(1) drop-shadow(0 0 10px #fff);
+  }
+}
+
+.rival[data-evolve='reveal'] .sprite,
+.player[data-evolve='reveal'] .sprite,
+.rival[data-evolve='reveal'] .spriteFallback,
+.player[data-evolve='reveal'] .spriteFallback {
+  animation: evolveReveal var(--evolve-reveal-ms, 500ms) ease-out;
+}
+
+@keyframes evolveReveal {
+  0% {
+    transform: scale(1.2);
+    filter: brightness(0) invert(1);
+  }
+
+  60% {
+    transform: scale(1.02);
+    filter: none;
+  }
+
+  100% {
+    transform: scale(1);
+    filter: none;
+  }
+}
+
+/* Captura: arco de la pelota, sacudidas y captura (AC-1, determinista).
+   captura-en-popup-combate/AC-6: duraciones espejo de captureArcMs 700 /
+   captureShakeMs 400 / captureFlashMs 500 (anim.config.ts). */
+.captureBall {
+  position: absolute;
+  top: 30%;
+  right: 16%;
+  width: 26px;
+  height: 26px;
+  border: 2px solid #30343b;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #e3350d 46%, #f8f8f8 54%);
+}
+
+.captureBall[data-capture='arc'] {
+  animation: ballArc 700ms cubic-bezier(0.35, 0, 0.65, 1) forwards;
+}
+
+.captureBall[data-capture='shake'] {
+  animation: ballShake 400ms ease-in-out;
+}
+
+.captureBall[data-capture='caught'] {
+  animation: ballCaught 500ms ease-out forwards;
+}
+
+@keyframes ballArc {
+  from {
+    transform: translate(-160%, 120%) scale(0.8);
+  }
+}
+
+@keyframes ballShake {
+  25% {
+    transform: translateX(-5px) rotate(-14deg);
+  }
+
+  75% {
+    transform: translateX(5px) rotate(14deg);
+  }
+}
+
+@keyframes ballCaught {
+  to {
+    transform: scale(1.25);
+    filter: brightness(1.8);
+  }
+}
+
+/* Números flotantes: daño (rojo), curación (verde), XP (azul). */
+.floater {
+  position: absolute;
+  font-size: 22px;
+  font-weight: 900;
+  text-shadow: 0 2px 0 rgba(30, 34, 28, 0.6);
+  animation: floaterRise 700ms ease-out forwards;
+}
+
+.floater[data-side='rival'] {
+  top: 30%;
+  right: 20%;
+}
+
+.floater[data-side='player'] {
+  bottom: 34%;
+  left: 18%;
+}
+
+.floater[data-tone='damage'] {
+  color: #e0393e;
+}
+
+.floater[data-tone='heal'] {
+  color: #3aa55c;
+}
+
+.floater[data-tone='xp'] {
+  color: #3a6fd8;
+}
+
+@keyframes floaterRise {
+  from {
+    opacity: 1;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-26px);
+  }
+}
+
+/* Accesibilidad: sin movimiento ⇒ transiciones instantáneas (T-030/AC-2). */
+@media (prefers-reduced-motion: reduce) {
+  .sweep,
+  .flashOverlay,
+  .captureBall,
+  .floater,
+  .rival[data-enter='true'],
+  .trainer[data-enter='true'],
+  .player[data-enter='true'],
+  .rival[data-evolve='pulse'] .sprite,
+  .player[data-evolve='pulse'] .sprite,
+  .rival[data-evolve='pulse'] .spriteFallback,
+  .player[data-evolve='pulse'] .spriteFallback,
+  .rival[data-evolve='reveal'] .sprite,
+  .player[data-evolve='reveal'] .sprite,
+  .rival[data-evolve='reveal'] .spriteFallback,
+  .player[data-evolve='reveal'] .spriteFallback {
+    animation: none;
+  }
+}
+
+.hud {
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hud > * {
+  pointer-events: auto;
+}
+
+/* AC-1: placas de nombre/barras ×1,2. */
+.rivalPlate {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  transform: scale(1.2);
+  transform-origin: top left;
+}
+
+.playerPlate {
+  position: absolute;
+  bottom: 62px;
+  right: 10px;
+  transform: scale(1.2);
+  transform-origin: bottom right;
+}
+
+/* AC-1: texto del cuadro de mensajes ×1,15 (13 → 15 px). */
+.textbox {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  margin: 0;
+  min-height: 46px;
+  padding: 9px 14px;
+  background: #f3f6ee;
+  border: 3px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Combate de otro jugador: "Turno de {nombre}" bajo las acciones (AC-6). */
+.turnOf {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-muted);
+  text-align: center;
+}

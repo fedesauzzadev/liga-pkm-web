@@ -58,8 +58,14 @@ const onix = gymPkm('onix', 2, 'brock', { attacks: [{ ...geodude.attacks[0]!, id
 const gioPkm = (slot: 1 | 2): PokemonCard =>
   gymPkm(`gio-${String(slot)}`, slot, 'giovanni', { attacks: [{ ...geodude.attacks[0]!, rollFaces: [1] }] })
 
-const brockLeader = (prize: GymPrize): GymLeader => ({ id: 'brock', name: 'Brock', prize, verified: false })
-const giovanniLeader: GymLeader = { id: 'giovanni', name: 'Giovanni', prize: { kind: 'item', count: 1 }, verified: false }
+const brockLeader = (prize: GymPrize): GymLeader => ({
+  id: 'brock', name: 'Brock', city: 'plateada', cityLabel: 'Ciudad Plateada', medal: 'Roca',
+  prize, pokemonCount: 2,
+})
+const giovanniLeader: GymLeader = {
+  id: 'giovanni', name: 'Giovanni', city: 'verde', cityLabel: 'Ciudad Verde', medal: 'Tierra',
+  prize: { from: 'item', count: 1 }, pokemonCount: 2, requiresMedals: 7,
+}
 
 const gymBoard = (): BoardGraph => ({
   meta: { id: 't023-test', status: 'VERIFIED' },
@@ -88,7 +94,7 @@ const atGym = (options: GymGameOptions = {}): { state: GameState; ctx: Ctx } => 
   const basePlayer = base.players[0]!
   const player = options.player === undefined ? basePlayer : options.player(basePlayer)
   const gyms = options.gyms ?? [
-    brockLeader(options.prize ?? { kind: 'deck', deck: 'bosque', count: 1 }),
+    brockLeader(options.prize ?? { from: 'bosque', count: 1 }),
     giovanniLeader,
   ]
   const ctx: Ctx = {
@@ -122,7 +128,7 @@ const synthPkm = (uid: string): PkmInstance => ({
   damage: 0,
   xp: 0,
   equipped: [],
-  wildcards: [],
+  multicolor: [],
   fainted: false,
 })
 
@@ -148,14 +154,19 @@ test('AC-1 Giovanni cerrojo con GymLocked y sin desafío; con 7 medallas se ofre
   expect(advanced.value.state.phase).toBe('organize') // el turno cierra igual
   expect(legalCommands(locked.state, locked.ctx)).toEqual([{ type: 'Advance' }])
 
-  // (b) Con 7 medallas: el menú ofrece el desafío (opcional, D-17) y Advance lo declina.
+  // (b) Con 7 medallas: resolver el casillero deja pending=ChallengeGym (T-061,
+  // opcional D-17); el menú lo ofrece y Advance lo declina cerrando el turno.
   const seven = ['brock', 'misty', 'surge', 'erika', 'koga', 'sabrina', 'blaine']
   const unlocked = atGym({ at: 'gym_giovanni', player: (p) => ({ ...p, medals: seven }) })
-  expect(legalCommands(unlocked.state, unlocked.ctx)).toEqual([
+  const offered = run(unlocked.state, { type: 'Advance' }, unlocked.ctx)
+  expect(offered.ok).toBe(true)
+  if (!offered.ok) throw new Error(offered.error.message)
+  expect(offered.value.state.pending).toEqual({ type: 'ChallengeGym', gym: 'giovanni' })
+  expect(legalCommands(offered.value.state, unlocked.ctx)).toEqual([
     { type: 'Advance' },
     { type: 'AcceptGymChallenge', pkmUid: 'p1-starter' },
   ])
-  const declined = run(unlocked.state, { type: 'Advance' }, unlocked.ctx)
+  const declined = run(offered.value.state, { type: 'Advance' }, unlocked.ctx)
   expect(declined.ok).toBe(true)
   if (!declined.ok) throw new Error(declined.error.message)
   expect(declined.value.events.some((event) => event.type === 'GymLocked')).toBe(false)
@@ -166,7 +177,10 @@ test('AC-1 Giovanni cerrojo con GymLocked y sin desafío; con 7 medallas se ofre
 // AC: SPEC-C/T-023/AC-2 — líder 2v2: repones al rival, +1 XP por PKM del líder, medalla y premio.
 test('AC-2 derrota al líder 2v2: RivalSentOut + XP, Medalla + premio de mazo; queda en tileResolution', () => {
   const game = atGym({ rngFaces: [6, 6, 6] }) // efecto (20) · attackSelect del líder (6 = no ataca) · efecto (20)
-  const accepted = run(game.state, { type: 'AcceptGymChallenge', pkmUid: 'p1-starter' }, game.ctx)
+  const offered = run(game.state, { type: 'Advance' }, game.ctx) // T-061: deja pending=ChallengeGym
+  expect(offered.ok).toBe(true)
+  if (!offered.ok) throw new Error(offered.error.message)
+  const accepted = run(offered.value.state, { type: 'AcceptGymChallenge', pkmUid: 'p1-starter' }, game.ctx)
   expect(accepted.ok).toBe(true)
   if (!accepted.ok) throw new Error(accepted.error.message)
   expect(accepted.value.events).toContainEqual({ type: 'BattleStarted', player: 'p1', kind: 'gym', rival: 'brock', active: 'p1-starter' })
@@ -175,7 +189,8 @@ test('AC-2 derrota al líder 2v2: RivalSentOut + XP, Medalla + premio de mazo; q
   expect(battle?.turnSide).toBe(0) // el retador arranca (sin AGILIDAD, D-02)
   expect(battle?.rival.map((pkm) => `${String(pkm.uid)}:${String(pkm.cardId)}`)).toEqual(['rival-1:geodude', 'rival-2:onix'])
 
-  // KO del 1.º: +1 XP a los participantes y el líder repone al 2.º (D-02).
+  // KO del 1.º: +1 XP a los participantes y el líder repone al 2.º (D-02); el
+  // turno del reemplazo corre en el MISMO comando (turno-automatico-rival).
   const firstKo = run(seedRival(accepted.value.state, 'rival-1', 30), { type: 'Attack', attackId: 'rasgunos' }, game.ctx)
   expect(firstKo.ok).toBe(true)
   if (!firstKo.ok) throw new Error(firstKo.error.message)
@@ -183,12 +198,11 @@ test('AC-2 derrota al líder 2v2: RivalSentOut + XP, Medalla + premio de mazo; q
   expect(firstKo.value.state.battle?.won).toBe(false)
   expect(firstKo.value.events).toContainEqual({ type: 'XpGained', pkmUid: 'p1-starter', amount: 1 })
   expect(firstKo.value.events).toContainEqual({ type: 'RivalSentOut', pkmUid: 'rival-2' })
+  expect(firstKo.value.events).toContainEqual({ type: 'NoAttack', attacker: 'rival-2', reason: 'attackSelect' })
+  expect(firstKo.value.state.battle?.turnSide).toBe(0)
 
-  // El turno del reemplazo corre con Advance; el 2.º KO cierra: medalla + premio.
-  const rivalTurn = run(firstKo.value.state, { type: 'Advance' }, game.ctx)
-  if (!rivalTurn.ok) throw new Error(rivalTurn.error.message)
-  expect(rivalTurn.value.events).toContainEqual({ type: 'NoAttack', attacker: 'rival-2', reason: 'attackSelect' })
-  const secondKo = run(seedRival(rivalTurn.value.state, 'rival-2', 30), { type: 'Attack', attackId: 'rasgunos' }, game.ctx)
+  // El 2.º KO cierra: medalla + premio.
+  const secondKo = run(seedRival(firstKo.value.state, 'rival-2', 30), { type: 'Attack', attackId: 'rasgunos' }, game.ctx)
   expect(secondKo.ok).toBe(true)
   if (!secondKo.ok) throw new Error(secondKo.error.message)
   expect(secondKo.value.events).toContainEqual({ type: 'BattleEnded', player: 'p1', result: 'won' })
@@ -211,7 +225,7 @@ test('AC-2 el líder gana al derrotar 2 PKM propios aunque quede banca sana (sin
     gymPkm(id, slot, 'brock', { attacks: [{ ...geodude.attacks[0]!, damage: { base: 100 } }] })
   const game = atGym({
     rngFaces: [1, 1], // attackSelect del líder en cada turno (placaje 100 ⇒ KO)
-    gyms: [brockLeader({ kind: 'item', count: 1 }), giovanniLeader],
+    gyms: [brockLeader({ from: 'item', count: 1 }), giovanniLeader],
     player: (p) => ({ ...p, team: [...p.team, secondPkm(), synthPkm('p1-third')] }),
   })
   const ctx: Ctx = {
@@ -221,7 +235,9 @@ test('AC-2 el líder gana al derrotar 2 PKM propios aunque quede banca sana (sin
       cards: [...game.ctx.content.cards.filter((card) => card.id !== 'geodude' && card.id !== 'onix'), strong('geodude', 1), strong('onix', 2)],
     },
   }
-  const accepted = run(game.state, { type: 'AcceptGymChallenge', pkmUid: 'p1-starter' }, ctx)
+  const offered = run(game.state, { type: 'Advance' }, ctx) // T-061: deja pending=ChallengeGym
+  if (!offered.ok) throw new Error(offered.error.message)
+  const accepted = run(offered.value.state, { type: 'AcceptGymChallenge', pkmUid: 'p1-starter' }, ctx)
   if (!accepted.ok) throw new Error(accepted.error.message)
   const firstLoss = run(accepted.value.state, { type: 'Advance' }, ctx) // pasa y el líder mata al starter
   if (!firstLoss.ok) throw new Error(firstLoss.error.message)
@@ -241,13 +257,14 @@ test('AC-2 el líder gana al derrotar 2 PKM propios aunque quede banca sana (sin
 // AC: SPEC-C/T-023/AC-3 — premio PKM se conserva sin gastar Pokebola (p.50).
 test('AC-3 premio PKM entra al equipo sano y sin gastar Pokebola', () => {
   const game = atGym({ rngFaces: [6, 6, 6], prize: { kind: 'pkm', card: 'onix' } })
-  const accepted = run(game.state, { type: 'AcceptGymChallenge', pkmUid: 'p1-starter' }, game.ctx)
+  const offered = run(game.state, { type: 'Advance' }, game.ctx) // T-061: deja pending=ChallengeGym
+  if (!offered.ok) throw new Error(offered.error.message)
+  const accepted = run(offered.value.state, { type: 'AcceptGymChallenge', pkmUid: 'p1-starter' }, game.ctx)
   if (!accepted.ok) throw new Error(accepted.error.message)
   const firstKo = run(seedRival(accepted.value.state, 'rival-1', 30), { type: 'Attack', attackId: 'rasgunos' }, game.ctx)
   if (!firstKo.ok) throw new Error(firstKo.error.message)
-  const rivalTurn = run(firstKo.value.state, { type: 'Advance' }, game.ctx)
-  if (!rivalTurn.ok) throw new Error(rivalTurn.error.message)
-  const secondKo = run(seedRival(rivalTurn.value.state, 'rival-2', 30), { type: 'Attack', attackId: 'rasgunos' }, game.ctx)
+  // El turno del reemplazo ya corrió dentro del primer KO; directo al 2.º KO.
+  const secondKo = run(seedRival(firstKo.value.state, 'rival-2', 30), { type: 'Attack', attackId: 'rasgunos' }, game.ctx)
   if (!secondKo.ok) throw new Error(secondKo.error.message)
   expect(secondKo.value.events).toContainEqual({
     type: 'PrizePkmWon',
@@ -265,14 +282,16 @@ test('AC-3 premio PKM entra al equipo sano y sin gastar Pokebola', () => {
 test('AC-4 la Medalla Tierra completa las 8: GameWon, fase finished y menú vacío', () => {
   const seven = ['brock', 'misty', 'surge', 'erika', 'koga', 'sabrina', 'blaine']
   const game = atGym({ at: 'gym_giovanni', rngFaces: [6, 6, 6], player: (p) => ({ ...p, medals: seven }) })
-  expect(legalCommands(game.state, game.ctx)).toContainEqual({ type: 'AcceptGymChallenge', pkmUid: 'p1-starter' })
-  const accepted = run(game.state, { type: 'AcceptGymChallenge', pkmUid: 'p1-starter' }, game.ctx)
+  const offered = run(game.state, { type: 'Advance' }, game.ctx) // T-061: deja pending=ChallengeGym
+  expect(offered.ok).toBe(true)
+  if (!offered.ok) throw new Error(offered.error.message)
+  expect(legalCommands(offered.value.state, game.ctx)).toContainEqual({ type: 'AcceptGymChallenge', pkmUid: 'p1-starter' })
+  const accepted = run(offered.value.state, { type: 'AcceptGymChallenge', pkmUid: 'p1-starter' }, game.ctx)
   if (!accepted.ok) throw new Error(accepted.error.message)
   const firstKo = run(seedRival(accepted.value.state, 'rival-1', 30), { type: 'Attack', attackId: 'rasgunos' }, game.ctx)
   if (!firstKo.ok) throw new Error(firstKo.error.message)
-  const rivalTurn = run(firstKo.value.state, { type: 'Advance' }, game.ctx)
-  if (!rivalTurn.ok) throw new Error(rivalTurn.error.message)
-  const secondKo = run(seedRival(rivalTurn.value.state, 'rival-2', 30), { type: 'Attack', attackId: 'rasgunos' }, game.ctx)
+  // El turno del reemplazo ya corrió dentro del primer KO; directo al 2.º KO.
+  const secondKo = run(seedRival(firstKo.value.state, 'rival-2', 30), { type: 'Attack', attackId: 'rasgunos' }, game.ctx)
   if (!secondKo.ok) throw new Error(secondKo.error.message)
   expect(secondKo.value.events).toContainEqual({ type: 'MedalWon', player: 'p1', gym: 'giovanni', medal: 'Tierra' })
   expect(secondKo.value.events).toContainEqual({ type: 'GameWon', player: 'p1' })
@@ -288,26 +307,34 @@ test('AC-5 GymsFileSchema/crossCheckGyms validan líderes ↔ tablero ↔ cartas
   const board = gymBoard()
   const cards = [geodude, onix, gioPkm(1), gioPkm(2)]
   const gyms: readonly GymLeader[] = [brockLeader({ kind: 'pkm', card: 'onix' }), giovanniLeader]
+  const toFile = (leaders: readonly GymLeader[]): object => ({
+    leaders: Object.fromEntries(leaders.map(({ id, ...body }) => [id, body])),
+  })
 
-  // (a) El archivo de líderes valida y los chequeos cruzados pasan.
-  expect(GymsFileSchema.safeParse({ leaders: gyms }).success).toBe(true)
-  expect(crossCheckGyms(gyms, board, content.ruleset, cards, [])).toEqual([])
+  // (a) El archivo de líderes valida (record por id) y los chequeos cruzados pasan.
+  expect(GymsFileSchema.safeParse(toFile(gyms)).success).toBe(true)
+  expect(crossCheckGyms(gyms, board, cards, [])).toEqual([])
 
   // (b) Errores: premio inválido, líder fuera del tablero, gimnasio sin líder, slots repetidos.
-  expect(GymsFileSchema.safeParse({ leaders: [{ ...giovanniLeader, prize: { kind: 'deck' } }] }).success).toBe(false)
+  expect(GymsFileSchema.safeParse(toFile([{ ...giovanniLeader, prize: { kind: 'deck' } as never }])).success).toBe(false)
   const lonely: readonly GymLeader[] = [{ ...giovanniLeader, id: 'misty' }]
-  const lonelyErrors = crossCheckGyms(lonely, board, content.ruleset, cards, [])
-  expect(lonelyErrors.some((error) => error.includes('no está en board.gyms'))).toBe(true)
+  const lonelyErrors = crossCheckGyms(lonely, board, cards, [])
+  expect(lonelyErrors.some((error) => error.includes('no tiene nodo de gimnasio'))).toBe(true)
   expect(lonelyErrors.some((error) => error.includes('"giovanni" del tablero sin líder'))).toBe(true)
   const badSlot = gymPkm('geodude2', 1, 'brock') // slot repetido con geodude
-  expect(crossCheckGyms(gyms, board, content.ruleset, [...cards, badSlot], []).some((error) => error.includes('slots de gimnasio repetidos'))).toBe(true)
-  const unknownPrize = crossCheckGyms([brockLeader({ kind: 'pkm', card: 'desconocido' }), giovanniLeader], board, content.ruleset, cards, [])
+  expect(crossCheckGyms(gyms, board, [...cards, badSlot], []).some((error) => error.includes('slots de gimnasio repetidos'))).toBe(true)
+  const unknownPrize = crossCheckGyms([brockLeader({ kind: 'pkm', card: 'desconocido' }), giovanniLeader], board, cards, [])
   expect(unknownPrize.some((error) => error.includes('premio PKM "desconocido"'))).toBe(true)
 
   // (c) Sin datos de líderes (gyms.json ausente): el desafío no se ofrece ni se acepta.
+  // T-061: sin líder no hay pending=ChallengeGym; el comando se rechaza sin decisión.
   const bare = atGym({ gyms: [] })
+  const resolved = run(bare.state, { type: 'Advance' }, bare.ctx)
+  expect(resolved.ok).toBe(true)
+  if (!resolved.ok) throw new Error(resolved.error.message)
+  expect(resolved.value.state.pending).toBeNull()
   expect(legalCommands(bare.state, bare.ctx)).toEqual([{ type: 'Advance' }])
   const refused = run(bare.state, { type: 'AcceptGymChallenge', pkmUid: 'p1-starter' }, bare.ctx)
   expect(refused.ok).toBe(false)
-  if (!refused.ok) expect(refused.error.code).toBe('INVALID_CONTENT')
+  if (!refused.ok) expect(refused.error.code).toBe('ILLEGAL_COMMAND')
 })

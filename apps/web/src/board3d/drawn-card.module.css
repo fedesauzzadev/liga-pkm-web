@@ -1,0 +1,59 @@
+/* Carta DOM voladora (SPEC-G/T-064/AC-1): dorso → giro rotateY 0→180° → cara. */
+.host {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  perspective: 900px;
+  will-change: transform;
+}
+
+.flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  backface-visibility: hidden;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 45%);
+}
+
+.back {
+  flex-direction: column;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #3a5a8c, #20301d);
+  color: #f5f1e6;
+  font-weight: 700;
+}
+
+.back::after {
+  content: '';
+  width: 44%;
+  height: 58%;
+  border: 2px dashed rgb(245 241 230 / 55%);
+  border-radius: 8px;
+}
+
+.front {
+  transform: rotateY(180deg);
+  background: var(--color-surface, #fdf6e3);
+  overflow: hidden;
+}
+
+.pkm {
+  transform-origin: center;
+}

@@ -1,0 +1,23 @@
+{
+ "_comment": "Ediciones de la casa: cambios tuyos sobre las cartas SIN tocar la transcripción original. Se aplican encima, en orden, solo si ruleset.features.houseEdits=true y enabled=true. Copiá este archivo como content/house-edits/mis-cambios.json. Antes de habilitar fijate que los targets existan en content/pokemon (el panel de /admin/cards rechaza ediciones que no aplican).",
+ "enabled": false,
+ "edits": [
+  {
+   "id": "edit-001",
+   "target": "charmander",
+   "reason": "Ejemplo: más vida y Giro-fuego más fuerte",
+   "set": {
+    "hp": 70
+   },
+   "attacks": {
+    "giro_fuego": {
+     "damage": {
+      "base": 30
+     }
+    }
+   },
+   "addAttacks": [],
+   "removeAttacks": []
+  }
+ ]
+}

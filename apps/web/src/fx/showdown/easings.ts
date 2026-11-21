@@ -8,6 +8,7 @@ export type Easing =
   | 'ballistic'
   | 'ballistic2'
   | 'ballistic2Back'
+  | 'ballistic2Under'
 
 export type EaseFn = (t: number) => number
 
@@ -46,6 +47,8 @@ export function axisEasings(transition: Easing | undefined, movesUp: boolean, to
       return { h: linear, v: movesUp ? quadUp : quadDown }
     case 'ballistic2Back':
       return { h: linear, v: toBack ? quadUp : quadDown }
+    case 'ballistic2Under':
+      return { h: linear, v: movesUp ? quadDown : quadUp }
     case 'linear':
       return { h: linear, v: linear }
   }

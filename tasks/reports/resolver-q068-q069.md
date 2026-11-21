@@ -1,0 +1,20 @@
+# Reporte resolver-q068-q069 — Cierre de dudas de T-095
+- Estado: REVIEW | Rama/commit: (sin commit; working tree)
+- Resumen (≤ 5 líneas): Q-068 resuelta con agua bajo camino (flag `underRoads`): lago r≈0,77 en Isla, cinta como puente sobre depresión; `minRadius` bajó a 0,75. Q-069: densidad confirmada (88 spots tras lago); piezas Paleta viejas se ocultan (modelos nuevos mandan). OPEN-QUESTIONS actualizado. `pnpm verify` verde.
+- Archivos clave tocados (rutas):
+  - `packages/content/src/decor-collision.ts` — schema `underRoads` + `waterFreeDistanceAt` saltea aristas
+  - `content/board/decor.collision.json` — `underRoads: true`, `minRadius: 0.75`
+  - `docs/OPEN-QUESTIONS.md` — Q-068/Q-069 → resueltas por dueño (2026-10-20)
+  - `tests/decor-report.test.ts` — tests actualizados (lago presente, no omitido)
+  - `apps/web/src/board3d/t095-decor-overlaps.test.ts` — agua excluida del check de nodeBuffer
+  - `shots/decor-overlaps.svg` + `.report.json` — regenerados
+- AC cubiertos → test (SPEC-x/AC-n → archivo:test):
+  - SPEC-O/T-095/AC-3 → `tests/decor-report.test.ts` (lago presente r≥0,75, omittedWater vacío)
+  - SPEC-O/T-095/AC-6 → `tests/decor-report.test.ts` (0 solapamientos, resumen sin OMITIDA)
+  - SPEC-O/T-095/AC-1 → `apps/web/src/board3d/t095-decor-overlaps.test.ts` (0 solapamientos; agua salteada del check de nodos)
+- `pnpm verify`: OK (typecheck + lint + 737 tests + content:validate + build + deps + size + bench)
+- Decisiones tomadas / defaults aplicados:
+  - Q-068 (dueño 2026-10-20): agua bajo camino con puente — `underRoads: true` en waterRules; agua ignora aristas al situarse (nodos intocables); `minRadius` 0,8 → 0,75. Lago en (1,17; 1,65) r=0,77. Scatter bajó de 91 a 88 spots (lago ocupa espacio).
+  - Q-069 (dueño 2026-10-20): densidad actual confirmada (sin cambio de buffers). Piezas Paleta: usar modelos nuevos (Pallet Town House 1/2); viejas (paleta:1 casa, paleta:2 árbol) ocultas por colisión — comportamiento correcto.
+- Dudas nuevas (→ OPEN-QUESTIONS.md) y ER solicitados (→ effect-requests/): ninguna.
+- Riesgos / deuda: bajo. El lago cruza 2 aristas (efecto puente visual pendiente de revisión en escena 3D con `pnpm shots`).

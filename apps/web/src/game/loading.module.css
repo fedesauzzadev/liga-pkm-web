@@ -1,0 +1,76 @@
+/* pantalla-carga-tablero: overlay fijo a pantalla completa (AC-1/AC-2) que
+   cubre y bloquea el tablero/HUD mientras carga; fondo fullhd con
+   object-fit: cover, texto y spinner CSS puro (AC-6, sin dependencias). */
+
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--color-bg, #1b2a20);
+  opacity: 1;
+  transition: opacity 300ms ease;
+  pointer-events: auto;
+}
+
+/* AC-3: salida prolija — fundido corto (~300ms) hasta que PlayScreen desmonta. */
+.leaving {
+  opacity: 0;
+}
+
+/* AC-1: la imagen de fondo llena el viewport sin deformarse. */
+.bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+.center {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+/* AC-6: spinner CSS puro (borde + rotación), sin imágenes ni dependencias. */
+.spinner {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 5px solid rgba(245, 241, 224, 0.25);
+  border-top-color: #f5f1e0;
+  animation: loading-spin 0.9s linear infinite;
+}
+
+.text {
+  margin: 0;
+  font-family: var(--font-title, system-ui, sans-serif);
+  font-size: clamp(1.1rem, 4vw, 1.6rem);
+  letter-spacing: 0.08em;
+  color: #f5f1e0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* AC-3: con movimiento reducido no hay fade ni giro (además del corte por
+   settings.reducedMotion, que desmonta el overlay al instante). */
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    transition: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}

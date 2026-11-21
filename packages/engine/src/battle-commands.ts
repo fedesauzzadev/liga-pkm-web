@@ -18,10 +18,12 @@ import {
   endSideTurn,
   finalizeVictory,
   resolveAttack,
-  rivalAction,
+  runRivalTurn,
   startSideTurn,
   teamPkmOf,
 } from './battle.ts'
+import { nextCaptureUid, removeWildCopies } from './progression.ts'
+import type { Content } from '@liga/content'
 
 type Draft = WritableDraft<GameState>
 
@@ -58,62 +60,101 @@ export function fightEncounter(
     active: [pkm.value.uid, rivalUid],
     turnSide: rivalStarts ? 1 : 0,
     conditions: {},
+    trainerId: null,
     firstTurn: [pkm.value.uid],
     participants: [pkm.value.uid],
     won: false,
     noAttackThisTurn: false,
+    actedThisTurn: false, // retirada-solo-inicio-turno: el turno arranca limpio (D-32)
+    lostCount: 0, // D-22: escape por chances (PKM Sorpresa)
   }
   draft.pending = null
   draft.phase = 'battle'
+  const events: GameEvent[] = [
+    { type: 'BattleStarted', player: player.value.id, kind: 'wild', rival: pending.card, active: pkm.value.uid },
+  ]
+  // AGILIDAD (D-02): el turno inicial del rival corre en este mismo comando.
+  const rivalTurn = runRivalTurn(draft, ctx, events)
+  if (!rivalTurn.ok) return rivalTurn
+  return { ok: true, value: events }
+}
+
+/**
+ * `UsePotion` (AC-1, D-11): en combate cura al activo sin consumir el ataque;
+ * FUERA de combate (T-073, D-11) cualquier PKM del equipo en `organize`.
+ * T-049: la Poción cura hasta `ruleset.potionHeal` y vuelve al fondo del mazo
+ * Ítem; la Super Poción (Sorpresa) cura TODO el daño y vuelve al fondo del
+ * mazo Sorpresa (D-20).
+ */
+export function usePotion(
+  draft: Draft,
+  command: { readonly pkmUid: string; readonly target: string; readonly item?: 'potion' | 'super_potion' },
+): Result<readonly GameEvent[], EngineError> {
+  const player = activePlayer(draft)
+  if (!player.ok) return player
+  const ruleset = draft.ruleset
+  if (ruleset === null) return illegal('no hay partida iniciada (falta ruleset)')
+  const item = command.item ?? 'potion'
+  const owned = item === 'potion' ? player.value.items.potion : player.value.items.super_potion
+  if (owned <= 0) {
+    return illegal(item === 'potion' ? 'no quedan pociones' : 'no quedan Super Pociones')
+  }
+  const pkm = teamPkmOf(player.value, command.target)
+  if (!pkm.ok) return pkm
+  if (draft.battle === null) {
+    // D-11 (T-073): fuera de combate, en Organize y sobre cualquier PKM del equipo.
+    if (draft.phase !== 'organize') return illegal('fuera de combate las pociones se usan en la fase Organize (D-11)')
+  } else {
+    const b = draft.battle
+    if (b.won) return illegal('la batalla ya terminó')
+    if (b.turnSide !== 0) return illegal('las pociones se usan en tu turno')
+    const uid = b.active[0]!
+    if (command.pkmUid !== uid || command.target !== uid) {
+      return illegal('en combate la poción solo se usa sobre el PKM activo (D-11)')
+    }
+  }
+  if (pkm.value.fainted) return illegal('no se puede curar un PKM derrotado')
+  if (pkm.value.damage <= 0) return illegal('no tiene daño que curar')
+  const healed = item === 'potion' ? Math.min(ruleset.potionHeal, pkm.value.damage) : pkm.value.damage
+  pkm.value.damage -= healed
+  if (draft.battle !== null) {
+    // retirada-solo-inicio-turno (D-32): la poción en combate consume la
+    // ventana de retiro de este turno (no el ataque, D-11 sigue intacto).
+    draft.battle.actedThisTurn = true
+  }
+  if (item === 'potion') {
+    player.value.items = { ...player.value.items, potion: player.value.items.potion - 1 }
+    draft.decks.item = pushToBottom(draft.decks.item, parseCardId('potion'))
+  } else {
+    player.value.items = { ...player.value.items, super_potion: player.value.items.super_potion - 1 }
+    draft.decks.sorpresa = pushToBottom(draft.decks.sorpresa, parseCardId('super_potion'))
+  }
+  const toBottom: GameEvent = {
+    type: 'CardToBottom',
+    player: player.value.id,
+    deck: item === 'potion' ? 'item' : 'sorpresa',
+    card: item,
+  }
   return {
     ok: true,
-    value: [
-      { type: 'BattleStarted', player: player.value.id, kind: 'wild', rival: pending.card, active: pkm.value.uid },
-    ],
+    value: [{ type: 'Healed', pkmUid: command.target, amount: healed, cause: 'potion' }, toBottom],
   }
 }
 
-/** `UsePotion`: cura al activo hasta `ruleset.potionHeal`; no consume el ataque (AC-1, D-11). */
-export function usePotion(
+/** `Retire`: cambia al activo, limpia estados (salvo disabledAttackId) y pierde el
+ * ataque (AC-6); el turno del rival corre en el mismo comando (turno-automatico-rival). */
+export function retire(
   draft: Draft,
-  command: { readonly pkmUid: string; readonly target: string },
+  ctx: Ctx,
+  command: { readonly to: string },
 ): Result<readonly GameEvent[], EngineError> {
   const b = battleOf(draft)
   if (!b.ok) return b
   if (b.value.won) return illegal('la batalla ya terminó')
-  if (b.value.turnSide !== 0) return illegal('las pociones se usan en tu turno')
-  const player = activePlayer(draft)
-  if (!player.ok) return player
-  const uid = b.value.active[0]!
-  if (command.pkmUid !== uid || command.target !== uid) {
-    return illegal('en combate la poción solo se usa sobre el PKM activo (D-11)')
-  }
-  const pkm = teamPkmOf(player.value, uid)
-  if (!pkm.ok) return pkm
-  if (pkm.value.fainted) return illegal('el PKM activo está derrotado')
-  if (player.value.items.potion <= 0) return illegal('no quedan pociones')
-  if (pkm.value.damage <= 0) return illegal('no tiene daño que curar')
-  const ruleset = draft.ruleset
-  if (ruleset === null) return illegal('no hay partida iniciada (falta ruleset)')
-  const healed = Math.min(ruleset.potionHeal, pkm.value.damage)
-  pkm.value.damage -= healed
-  player.value.items = { ...player.value.items, potion: player.value.items.potion - 1 }
-  draft.decks.item = pushToBottom(draft.decks.item, parseCardId('potion'))
-  return {
-    ok: true,
-    value: [
-      { type: 'Healed', pkmUid: uid, amount: healed, cause: 'potion' },
-      { type: 'CardToBottom', player: player.value.id, deck: 'item', card: 'potion' },
-    ],
-  }
-}
-
-/** `Retire`: cambia al activo, limpia estados (salvo disabledAttackId) y pierde el ataque (AC-6). */
-export function retire(draft: Draft, command: { readonly to: string }): Result<readonly GameEvent[], EngineError> {
-  const b = battleOf(draft)
-  if (!b.ok) return b
-  if (b.value.won) return illegal('la batalla ya terminó')
   if (b.value.turnSide !== 0) return illegal('solo se retira en tu turno')
+  if (b.value.actedThisTurn) {
+    return illegal('ya usaste una acción este turno: retirar es solo al inicio (D-32)')
+  }
   const player = activePlayer(draft)
   if (!player.ok) return player
   const from = b.value.active[0]!
@@ -129,7 +170,10 @@ export function retire(draft: Draft, command: { readonly to: string }): Result<r
   }
   b.value.turnSide = 1 // pierde el ataque: el turno pasa al rival
   b.value.noAttackThisTurn = false
-  return { ok: true, value: [{ type: 'PkmRetired', player: player.value.id, from, to: to.value.uid }] }
+  const events: GameEvent[] = [{ type: 'PkmRetired', player: player.value.id, from, to: to.value.uid }]
+  const rivalTurn = runRivalTurn(draft, ctx, events)
+  if (!rivalTurn.ok) return rivalTurn
+  return { ok: true, value: events }
 }
 
 /** `Attack`: valida contra legalAttacks (AC-5) y resuelve; luego pasa el turno. */
@@ -163,8 +207,12 @@ export function attackCommand(
   const resolved = resolveAttack(draft, ctx, 0, attack, events)
   if (!resolved.ok) return resolved
   if (draft.battle !== null && draft.pending === null && !draft.battle.won) {
-    endSideTurn(draft, 0)
+    endSideTurn(draft, 0, events)
     draft.battle.turnSide = 1
+    // turno-automatico-rival: el rival actúa en este mismo comando (AC-1);
+    // con `pending` o fin de batalla el flujo vigente no cambia (AC-5).
+    const rivalTurn = runRivalTurn(draft, ctx, events)
+    if (!rivalTurn.ok) return rivalTurn
   }
   return { ok: true, value: events }
 }
@@ -196,17 +244,80 @@ export function sendOut(
   draft.pending = null
   const events: GameEvent[] = [{ type: 'PkmSentOut', player: player.value.id, pkmUid: pkm.value.uid }]
   if (battle.won) {
-    finalizeVictory(draft, events)
+    finalizeVictory(draft, ctx.content, events)
     return { ok: true, value: events }
   }
   battle.turnSide = 0
+  battle.actedThisTurn = false // retirada-solo-inicio-turno: reponer tras desmayo arranca turno limpio (D-32)
   const started = startSideTurn(draft, ctx, 0, events)
   if (!started.ok) return started
   return { ok: true, value: events }
 }
 
 /**
- * `Advance` en batalla: procesa hasta la próxima decisión del jugador — el turno
+ * `ThrowBall` (T-049, AC-5, D-12/D-19): Ultra/Master Ball en TU turno contra un
+ * PKM sin dueño (batalla wild). Ultra exige `hp − daño ≤ maxRemainingHp` (40);
+ * Master captura siempre. Captura al instante, SIN XP (D-19); la bola se consume
+ * y vuelve al FONDO del mazo Sorpresa; el turno termina.
+ */
+export function throwBall(
+  draft: Draft,
+  content: Content,
+  command: { readonly ball: 'ultraball' | 'masterball' },
+): Result<readonly GameEvent[], EngineError> {
+  const b = battleOf(draft)
+  if (!b.ok) return b
+  const battle = b.value
+  if (battle.won) return illegal('la batalla ya terminó')
+  if (battle.turnSide !== 0) return illegal('las bolas se tiran en tu turno')
+  if (battle.kind !== 'wild') return illegal('las bolas no capturan PKM de gimnasio ni Liga (D-12)')
+  const playerResult = activePlayer(draft)
+  if (!playerResult.ok) return playerResult
+  const player = playerResult.value
+  const ruleset = draft.ruleset
+  if (ruleset === null) return illegal('no hay partida iniciada (falta ruleset)')
+  if (player.items[command.ball] <= 0) {
+    return illegal(command.ball === 'masterball' ? 'no queda ninguna Master Ball' : 'no queda ninguna Ultra Ball')
+  }
+  const rule = ruleset.capture[command.ball]
+  if (rule.timing !== 'duringBattle') {
+    return illegal(`el ruleset no permite capturar con ${command.ball} durante la batalla`)
+  }
+  const rival = battle.rival[0]!
+  const card = cardOf(content, battle.card)
+  if (!card.ok) return card
+  const remaining = card.value.hp - rival.damage
+  if (rule.maxRemainingHp !== undefined && remaining > rule.maxRemainingHp) {
+    return illegal(
+      `a ${card.value.name} le quedan ${remaining} de vida y ${command.ball === 'masterball' ? 'Master' : 'Ultra'} Ball captura hasta ${rule.maxRemainingHp} (D-12)`,
+    )
+  }
+  // Captura instantánea: la bola al fondo del mazo Sorpresa, el PKM al equipo/oakPile.
+  player.items = { ...player.items, [command.ball]: player.items[command.ball] - 1 }
+  draft.decks.sorpresa = pushToBottom(draft.decks.sorpresa, parseCardId(command.ball))
+  removeWildCopies(draft, battle.card) // registrar-captura/AC-2: ninguna copia queda en los mazos
+  const pkmUid = nextCaptureUid(player)
+  const destination: 'team' | 'oakPile' = player.team.length < ruleset.teamLimit ? 'team' : 'oakPile'
+  const captured = { uid: pkmUid, cardId: battle.card, damage: 0, xp: 0, equipped: [], multicolor: [], fainted: false }
+  if (destination === 'team') player.team.push(captured)
+  else player.oakPile.push(captured)
+  draft.battle = null
+  draft.pending = null
+  draft.turn += 1
+  draft.phase = 'organize'
+  const ballName = command.ball
+  return {
+    ok: true,
+    value: [
+      { type: 'BattleEnded', player: player.id, result: 'won' }, // sin XpGained: D-19
+      { type: 'PokemonCaptured', player: player.id, card: battle.card, pkmUid, destination },
+      { type: 'CardToBottom', player: player.id, deck: 'sorpresa', card: ballName },
+      { type: 'TurnAdvanced', turn: draft.turn },
+    ],
+  }
+}
+
+/** `Advance` en batalla: procesa hasta la próxima decisión del jugador — el turno
  * completo del rival (inicio → acción → fin) y el inicio del turno propio. Si ya
  * era el turno del jugador, se interpreta como pasar sin atacar.
  */
@@ -217,24 +328,10 @@ export function advanceBattle(draft: Draft, ctx: Ctx): Result<readonly GameEvent
   if (b.value.won) return illegal('la batalla ya terminó')
   const events: GameEvent[] = []
   if (b.value.turnSide === 0) {
-    endSideTurn(draft, 0) // pasar sin atacar
+    endSideTurn(draft, 0, events) // pasar sin atacar
     if (draft.battle !== null) draft.battle.turnSide = 1
   }
-  if (draft.battle !== null && draft.battle.turnSide === 1) {
-    const started = startSideTurn(draft, ctx, 1, events)
-    if (!started.ok) return started
-    if (draft.battle !== null && !draft.battle.won && draft.pending === null) {
-      const acted = rivalAction(draft, ctx, events)
-      if (!acted.ok) return acted
-    }
-    if (draft.battle !== null && !draft.battle.won && draft.pending === null) {
-      endSideTurn(draft, 1)
-    }
-  }
-  if (draft.battle !== null && !draft.battle.won && draft.pending === null) {
-    draft.battle.turnSide = 0
-    const started = startSideTurn(draft, ctx, 0, events)
-    if (!started.ok) return started
-  }
+  const rivalTurn = runRivalTurn(draft, ctx, events)
+  if (!rivalTurn.ok) return rivalTurn
   return { ok: true, value: events }
 }

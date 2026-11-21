@@ -1,0 +1,39 @@
+{
+ "_status": "Ubicación de los edificios 3D, DIBUJADA POR EL DUEÑO sobre una captura (Tablero.jpg) y traducida por Claude. Nodos y caminos NO cambian. Los ángulos están en coordenadas del TABLERO (px de kanto.json, orientación de la foto original): 0° = +x (derecha en la foto), 90° = +y (abajo en la foto), 180° = −x, 270° = −y. La captura del dueño estaba girada 90° respecto de la foto del tablero; no usar lados de pantalla. sideDeg = dirección del nodo hacia el centro del edificio. confidence: high/medium/low = cuán seguro es el dato leído del dibujo; auto = elegir por reglas.",
+ "models": {
+  "sourceDir": "assets-src/new",
+  "files": { "gym": "gim", "pokecenter": "pokecenter", "market": "pokemart", "league": "league", "lab": "oak" },
+  "_nota": "Los archivos se llaman gim, pokecenter, pokemart, league y oak (la extensión puede ser .glb/.gltf/.obj/.fbx; detectarla). gym se reutiliza en las 8 ciudades-gimnasio; pokecenter en los 4 Centros; market en los 5 Mercados; league en la Liga; oak en los 2 laboratorios (kind lab, SPEC-P/T-099).",
+  "yawOffsetDeg": { "gym": 0, "pokecenter": 0, "market": -45, "league": 0 },
+  "_yawNota": "Giro para que la puerta mire al camino. Se ajusta en /dev/models viendo el modelo; si el frente real no es +Z, corregir acá."
+ },
+ "footprints": { "gym": 1.38, "pokecenter": 1.25, "market": 1.06, "league": 4.03, "house": 0.88, "lab": 1.5 },
+ "heights": { "gym": 1.38, "pokecenter": 1.13, "market": 0.9, "league": 4.03, "house": 0.81, "lab": 1.38 },
+ "minGaps": { "buildingToNodeCircle": 0.25, "buildingToEdge": 0.2, "buildingToBuilding": 0.2, "buildingToPedestal": 0.3 },
+ "search": { "distStart": 0.75, "distStep": 0.1, "distMax": 2.6, "rotateStepsDeg": [15, -15, 30, -30, 45, -45, 60, -60, 90, -90], "scaleFloor": 0.7 },
+ "removeStacks": ["item", "sorpresa"],
+ "proceduralBuildings": false,
+ "nodes": {
+  "canela":    { "kind": "gym",        "sideDeg": 165, "confidence": "high",   "note": "afuera del borde oeste del tablero" },
+  "centro_l":  { "kind": "pokecenter", "sideDeg": 200, "confidence": "medium", "note": "afuera, borde oeste" },
+  "mercado_l": { "kind": "market",     "sideDeg": null, "confidence": "auto",   "note": "preferir afuera (180°)" },
+  "plateada":  { "kind": "gym",        "sideDeg": 192, "confidence": "high",   "note": "afuera, borde oeste" },
+  "celeste":   { "kind": "gym",        "sideDeg": 250, "confidence": "medium", "note": "hacia el norte del tablero (−y)" },
+  "carmin":    { "kind": "gym",        "sideDeg": 252, "confidence": "high",   "note": "afuera, borde norte" },
+  "centro_t":  { "kind": "pokecenter", "sideDeg": 92,  "confidence": "low",    "note": "el dibujo lo pasa al lado sur (adentro); dato poco claro" },
+  "oak_t":     { "kind": "lab",        "sideDeg": 254, "confidence": "medium", "note": "norte, afuera" },
+  "azafran":   { "kind": "gym",        "sideDeg": 270, "confidence": "medium", "note": "norte, afuera" },
+  "mercado_t": { "kind": "market",     "sideDeg": 253, "confidence": "medium", "note": "norte, afuera" },
+  "mercado_2": { "kind": "market",     "sideDeg": null, "confidence": "auto" },
+  "centro_b":  { "kind": "pokecenter", "sideDeg": 110, "confidence": "high",   "note": "sur, afuera" },
+  "verde":     { "kind": "gym",        "sideDeg": 105, "confidence": "high",   "note": "sur, afuera" },
+  "oak_b":     { "kind": "lab",        "sideDeg": 90,  "confidence": "medium", "note": "sur, afuera" },
+  "mercado_b": { "kind": "market",     "sideDeg": 240, "confidence": "low",    "note": "queda hacia adentro (norte); dato poco claro" },
+  "azulona":   { "kind": "gym",        "sideDeg": 330, "confidence": "high",   "note": "este, afuera" },
+  "mercado_r": { "kind": "market",     "sideDeg": null, "confidence": "auto",   "note": "preferir afuera (0°)" },
+   "centro_r":  { "kind": "pokecenter", "sideDeg": 0,   "confidence": "medium", "note": "este del nodo (el pedestal Isla bloquea el oeste; mejora-pantano)" },
+   "fucsia":    { "kind": "gym",        "sideDeg": 180, "confidence": "medium", "note": "oeste del nodo (el pedestal Pantano bloquea el este; mejora-pantano)" },
+  "paleta":    { "kind": "house",      "sideDeg": 0,   "confidence": "high",   "note": "casa azul al este, afuera; la segunda casa (techo rojo) por reglas a ±30° del mismo lado" },
+  "liga":      { "kind": "league",     "sideDeg": 11,  "confidence": "high",   "distHint": 1.3, "note": "SE MUEVE: queda al este del nodo de la Liga (donde el dueño dibujó la L), fuera del camino" }
+ }
+}

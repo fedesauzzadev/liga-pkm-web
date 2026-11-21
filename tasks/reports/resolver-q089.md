@@ -1,0 +1,21 @@
+# Reporte resolver-q089 — verify verde (3 fallos preexistentes de Q-089)
+- Estado: REVIEW | Rama/commit: main (sin commit; working tree)
+- Resumen (≤ 5 líneas):
+  - (a) Nota "Aspecto congelado (SPEC-O/T-098/AC-3)… cambio visual posterior = tarea nueva" restaurada en `tasks/BACKLOG.md` (Notas de orden) ⇒ `t098-close` AC-3 vuelve a 7/7.
+  - (b) `tools/merge-backlog.mjs` endurecido: fusiona la sección "Notas de orden:" del viejo al nuevo (preserva notas vivas ausentes; Q-077 raíz causa). Verificado con copias en `%TEMP%` (viejo con nota + nuevo sin nota ⇒ la nota sobrevive el merge); NUNCA sobre los reales.
+  - (c) `lighting.test.ts` AC-4/AC-5 reescritos: maquinaria de contornos (`buildOutlines` con `onlyKinds`/`maxMeshes`/color/BackSide) verificada con style sintético `enabled:true`; el contenido real mantiene `lighting.outlines.enabled:false` (decisión del dueño 2026-10-23: contornos quedan apagados; NO se restaura `outlines.enabled:true`).
+- Archivos clave tocados (rutas):
+  - `tasks/BACKLOG.md` (nota de congelado restaurada en Notas de orden).
+  - `tools/merge-backlog.mjs` (extractNotes + fusión de notas al merge).
+  - `apps/web/src/board3d/lighting.test.ts` (AC-4/AC-5 reescritos).
+  - `docs/OPEN-QUESTIONS.md` (Q-071 y Q-089 cerradas con decisión del dueño).
+- AC cubiertos → test (plan `.opencode/plan/resolver-q089.md` → archivo:test):
+  - AC-1 → t098-close:AC-3 (nota presente, 7/7). AC-2 → merge verificado con copias %TEMP% (nota sobrevive, 1 sola vez).
+  - AC-3 → lighting:AC-4 (style sintético habilitado + real apagado). AC-4 → lighting:AC-5 (low sin sombras/contornos dpr[1,1]; real invisible en high; forzado `enabled:true` ⇒ high visible).
+  - AC-5 → `pnpm verify` completo.
+- `pnpm verify`: OK — 155 archivos / 905 tests (0 fallos); typecheck+lint+content:validate+build+depcruise+size-limit+bench en verde.
+- Decisiones tomadas / defaults aplicados:
+  - Contornos apagados = decisión del dueño (question tool 2026-10-23); el código data-driven (`outlines.ts`/`scene.ts`) se conserva intacto (sin tocar `content/board/style.json` ni `board3d/{outlines,scene,lighting}.ts`).
+  - Texto de la nota de congelado reconstruido según reportes T-098/T-099 + test AC-3 (el `.bak` actual ya no la tenía).
+- Dudas nuevas (→ OPEN-QUESTIONS.md) y ER solicitados (→ effect-requests/): ninguna nueva. Q-071 y Q-089 marcadas resueltas por dueño.
+- Riesgos / deuda: la fusión de notas en `merge-backlog.mjs` usa igualdad exacta de línea; si un merge futuro reescribe el texto de una nota viva, puede duplicarse en lugar de pisarse (benigno, visible en el test de t098). `BACKLOG.new.md` quedó sin la nota (por diseño del script: el viejo manda en notas); no hace falta regenerarlo.

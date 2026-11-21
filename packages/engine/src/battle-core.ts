@@ -2,13 +2,13 @@
 // y resolución de derrotas. Extraído de battle.ts en T-021 para que battle.ts
 // (máquina de turnos) y battle-effects.ts (primitivas) compartan base sin ciclos.
 import type { WritableDraft } from 'immer'
-import type { CardId, Content, DeckKey, Element, GymPrize, PokemonCard, PkmUid } from '@liga/content'
-import { parseCardId, parsePkmUid } from '@liga/content'
+import type { CardId, Content, Element, PokemonCard } from '@liga/content'
 import { EngineError } from './errors.ts'
 import type { Result } from './errors.ts'
-import type { DiePurpose, DieRolled, GameEvent } from './events.ts'
+import type { DiePurpose, DieRolled, GameEvent, TrainerAppeared } from './events.ts'
 import type { Ctx } from './engine.ts'
-import { elementOfCardId, nextElementInstanceId, pushToBottom } from './tiles.ts'
+import { pushToBottom } from './tiles.ts'
+import { applyGymPrize } from './prizes.ts'
 import type { BattleState, GameState, PkmConditions, PkmInstance, PlayerState, RivalPkm } from './state.ts'
 
 export type Draft = WritableDraft<GameState>
@@ -181,13 +181,15 @@ export function cleanConditions(draft: Draft, uid: string, keepDisabled: boolean
   if (keepDisabled && disabled !== undefined) b.conditions[uid] = { disabledAttackId: disabled }
 }
 
-// ── Derrotas y fin de batalla (AC-7/AC-8 de T-020; las primitivas las disparan). ──
-
 /** Gimnasio: si el líder derrota 2 de tus PKM, gana el duelo (RULES §4 p.43). */
 export const GYM_DEFEATS_TO_LOSE = 2
 
 /** Consecuencias de cualquier caída: victoria, reemplazo o derrota. */
-export function afterFaints(draft: Draft, events: GameEvent[]): Result<null, EngineError> {
+export function afterFaints(
+  draft: Draft,
+  content: Content,
+  events: GameEvent[],
+): Result<null, EngineError> {
   if (draft.battle === null) return { ok: true, value: null }
   const battle = draft.battle
   const player = activePlayer(draft)
@@ -207,7 +209,7 @@ export function afterFaints(draft: Draft, events: GameEvent[]): Result<null, Eng
       draft.pending = { type: 'ChooseReplacement', options: healthyBench }
       return { ok: true, value: null }
     }
-    finalizeVictory(draft, events)
+    finalizeVictory(draft, content, events)
     return { ok: true, value: null }
   }
   // Gimnasio 2v2 (T-023): el activo del líder cayó y le queda banco ⇒ repone y
@@ -222,6 +224,17 @@ export function afterFaints(draft: Draft, events: GameEvent[]): Result<null, Eng
   }
   if (ownDown) {
     if (battle.kind === 'gym') battle.lostCount += 1
+    // T-049 (D-22): PKM Sorpresa "Oportunidad: n" escapa al derrotar n PKM tuyos,
+    // aunque quede banca sana; vuelve al fondo del mazo Sorpresa (finalizeLoss).
+    if (battle.kind === 'wild') {
+      battle.lostCount += 1
+      const wildCard = cardOf(content, battle.card)
+      if (!wildCard.ok) return wildCard
+      if (wildCard.value.chances !== undefined && battle.lostCount >= wildCard.value.chances) {
+        finalizeLoss(draft, events)
+        return { ok: true, value: null }
+      }
+    }
     // 2 propios caídos: el líder gana aunque queden sanos en la banca (AC-2).
     if (battle.kind === 'gym' && battle.lostCount >= GYM_DEFEATS_TO_LOSE) {
       finalizeLoss(draft, events)
@@ -251,15 +264,15 @@ export function grantXpToParticipants(draft: Draft, events: GameEvent[]): void {
 }
 
 /**
- * Victoria: +1 XP por combate ganado a los participantes (T-022/AC-1) y, según
- * el kind, captura pendiente (salvaje) o medalla + premio (gimnasio, T-023).
+ * Victoria: +1 XP por combate ganado a los participantes (T-022/AC-1); según el
+ * kind: captura pendiente (salvaje) o medalla + premio (gimnasio, T-023).
  */
-export function finalizeVictory(draft: Draft, events: GameEvent[]): void {
+export function finalizeVictory(draft: Draft, content: Content, events: GameEvent[]): void {
   const battle = draft.battle
   if (battle === null) return
   grantXpToParticipants(draft, events)
   if (battle.kind === 'gym') {
-    awardGymVictory(draft, events)
+    awardGymVictory(draft, content, events)
     return
   }
   draft.pending = {
@@ -296,7 +309,7 @@ export function finalizeLoss(draft: Draft, events: GameEvent[]): void {
  * Sin captura; queda en `tileResolution` para evolucionar (D-06) y cierra con
  * Advance. Medallas completas ⇒ GameWon y fase `finished` (fin).
  */
-function awardGymVictory(draft: Draft, events: GameEvent[]): void {
+function awardGymVictory(draft: Draft, content: Content, events: GameEvent[]): void {
   const battle = draft.battle
   if (battle === null || battle.kind !== 'gym') return
   const player = draft.players.find((p) => p.id === draft.activePlayerId)
@@ -308,7 +321,7 @@ function awardGymVictory(draft: Draft, events: GameEvent[]): void {
   }
   player.medals = [...player.medals, battle.gym]
   events.push({ type: 'MedalWon', player: player.id, gym: battle.gym, medal: battle.medal })
-  applyGymPrize(draft, player, battle.prize, events)
+  applyGymPrize(draft, content, player, battle.prize, events)
   if (draft.ruleset !== null && player.medals.length >= draft.ruleset.medalsToWin) {
     draft.phase = 'finished'
     events.push({ type: 'GameWon', player: player.id })
@@ -317,72 +330,7 @@ function awardGymVictory(draft: Draft, events: GameEvent[]): void {
   draft.phase = 'tileResolution'
 }
 
-/** Premio del líder (p.50): robo de mazo, ítems a la bolsa o un PKM sin Pokebola. */
-function applyGymPrize(
-  draft: Draft,
-  player: WritableDraft<PlayerState>,
-  prize: GymPrize,
-  events: GameEvent[],
-): void {
-  if (prize.kind === 'pkm') {
-    givePrizePkm(draft, player, parseCardId(prize.card), events)
-    return
-  }
-  const deck: DeckKey = prize.kind === 'deck' ? prize.deck : 'item'
-  for (let i = 0; i < prize.count; i++) {
-    const top = draft.decks[deck][0]
-    if (top === undefined) {
-      events.push({ type: 'DeckEmpty', player: player.id, deck }) // D-10
-      return
-    }
-    draft.decks[deck] = draft.decks[deck].slice(1)
-    events.push({ type: 'CardDrawn', player: player.id, deck, card: top })
-    const element = elementOfCardId(top)
-    if (element !== null) {
-      player.elements.push({ id: nextElementInstanceId(player, element), element })
-      continue
-    }
-    const raw: string = top // CardId → string: ensanchamiento para poder acotar por literal
-    if (deck === 'item') {
-      if (raw !== 'pokeball' && raw !== 'potion') {
-        throw new EngineError('INVALID_CONTENT', `ítem "${raw}" del mazo Ítem no entra en la bolsa`)
-      }
-      player.items = { ...player.items, [raw]: player.items[raw] + 1 }
-    } else {
-      givePrizePkm(draft, player, top, events) // PKM robado como premio (p.50)
-    }
-  }
-}
-
-/** Id de instancia único para premios (`p1-gift-N`): máximo existente + 1. */
-function nextGiftUid(player: PlayerState): PkmUid {
-  const prefix = `${player.id}-gift-`
-  let max = 0
-  for (const pkm of [...player.team, ...player.oakPile]) {
-    if (!pkm.uid.startsWith(prefix)) continue
-    const n = Number.parseInt(pkm.uid.slice(prefix.length), 10)
-    if (Number.isInteger(n) && n > max) max = n
-  }
-  return parsePkmUid(`${prefix}${max + 1}`)
-}
-
-/** Premio PKM (AC-3): sano, sin gastar Pokebola; equipo lleno ⇒ pila de Oak. */
-function givePrizePkm(
-  draft: Draft,
-  player: WritableDraft<PlayerState>,
-  cardId: CardId,
-  events: GameEvent[],
-): void {
-  const pkmUid = nextGiftUid(player)
-  const destination: 'team' | 'oakPile' =
-    draft.ruleset !== null && player.team.length < draft.ruleset.teamLimit ? 'team' : 'oakPile'
-  const catchInto = (pile: WritableDraft<PkmInstance[]>): void => {
-    pile.push({ uid: pkmUid, cardId, damage: 0, xp: 0, equipped: [], wildcards: [], fainted: false })
-  }
-  if (destination === 'team') catchInto(player.team)
-  else catchInto(player.oakPile)
-  events.push({ type: 'PrizePkmWon', player: player.id, card: cardId, pkmUid, destination })
-}
+/** Premio del líder, premios PKM y uids de regalo viven en prizes.ts (T-049). */
 
 /** Escribe/crea las condiciones de `uid` sin pisar los demás slots (EFFECTS §2.6). */
 export function setCondition(
@@ -406,4 +354,9 @@ export function markMax(draft: Draft, uid: string, key: string): boolean {
     conditions.usedMax = [...used, key]
   })
   return true
+}
+
+/** TrainerAppeared notifica al UI que el líder gimnasio apareció (final de vista). */
+export function emitTrainerAppeared(trainerId: string): TrainerAppeared {
+  return { type: 'TrainerAppeared', trainerId }
 }

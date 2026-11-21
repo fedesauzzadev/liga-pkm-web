@@ -1,0 +1,63 @@
+{
+ "_status": "Parámetros del look del mundo (SPEC-J). Precedencia: si un valor existe acá y en decor.json (world, ambient, zones.*.ground), manda ESTE archivo; T-079 migra y borra los duplicados de decor.json. Unidades de mundo (1 px del tablero = 0,01).",
+  "world": { "size": [36, 36], "segments": 120, "seed": 2026, "noiseAmplitude": 0.35, "hills": { "startRadius": 9.0, "maxHeight": 1.4, "seed": 3 }, "flatten": { "aroundNodes": 0.35, "aroundEdges": 0.35, "smooth": 0.3 } },
+ "biomes": {
+  "baseGrass": "#8DBF6A", "radius": 3.4, "blend": 1.6, "lightnessNoise": 0.06, "maxShare": 0.25,
+   "colors": { "bosque": "#5FA85F", "montana": "#B59A7E", "isla": "#8FC6E8", "llanura": "#CFC48F", "pantano": "#6B7A45" },
+  "_nota": "Antes los biomas eran alfombras enormes y saturadas (rojo en Montaña). Ahora cada color solo domina cerca del centro de su zona y se funde con el pasto base. El rojo queda solo para lava."
+ },
+ "lighting": {
+  "hemisphere": { "sky": "#CFE8FF", "ground": "#8DBF6A", "intensity": 0.9 },
+  "directional": { "color": "#FFF3D6", "intensity": 1.0, "from": [-6, 10, 4], "shadowMapSize": 2048, "shadowRadiusAroundTarget": 10 },
+  "toon": { "steps": 3 },
+  "toneMapping": "ACESFilmic", "exposure": 1.0,
+  "outlines": { "enabled": false, "thickness": 0.02, "color": "#2B2B2B", "maxMeshes": 40, "onlyKinds": ["house", "pokecenter", "market", "lab", "gym"] },
+  "contactShadows": { "radius": 0.5, "opacity": 0.28 }
+ },
+ "fog": { "color": "#CFE6F7", "near": 30, "far": 80 },
+  "sky": { "top": "#8EC5F5", "horizon": "#EAF6FF", "sunDisk": true, "clouds": { "count": 5, "height": 7.0, "speed": 0.15, "seed": 7, "_nota": "Migrado de decor.ambient.clouds (T-079/AC-1)." } },
+  "distantMountains": { "rings": [ { "count": 12, "radius": 22, "height": [2.5, 4.0], "color": "#7F93A8", "snow": true }, { "count": 14, "radius": 30, "height": [3.5, 6.0], "color": "#A9B8C8", "snow": true } ], "seed": 5 },
+  "treeRing": { "innerRadius": 10.4, "outerRadius": 17.2, "count": 240, "seed": 79, "_nota": "Anillo de arbolado denso e instanciado entre el borde del tablero y las colinas (T-079/AC-5)." },
+ "labels": {
+  "fontPx": 13, "outlinePx": 3, "fadeMs": 150, "collision": true, "throttleHz": 10,
+  "alwaysShow": ["gym"], "showWithinTokenDistance": 6.0, "showOnlyIfCameraDistanceBelow": 9.0,
+  "priority": ["gym", "centro", "oak", "mercado", "start", "deck", "other"], "screenSpaceSize": true
+ },
+ "edgeProps": {
+  "spacing": 0.35, "jitter": 0.15, "offsetFromEdge": [0.28, 0.55],
+  "byZone": {
+   "bosque":  ["grassTuft", "bush", "mushroom", "fern"],
+   "montana": ["rock", "pebble", "dryGrass"],
+   "isla":    ["reeds", "pebble", "grassTuft"],
+   "llanura": ["grassTuft", "flowerPatch", "flowerPatch"],
+    "pantano": ["reeds", "reeds", "mushroom", "mushroom", "deadBush", "mist"]
+  },
+  "lamps": { "everyUnits": 2.0, "onlyNear": ["gym", "centro", "mercado", "oak", "start"] }
+ },
+ "life": {
+  "_nota": "Pokémon salvajes decorativos (billboards con sprites de sprites.json, movimiento procedural). No interactivos.",
+  "maxTotal": 20,
+  "pauseBeyondDistance": 14.0,
+  "zones": {
+   "bosque":  [ { "dex": 16, "motion": "flyCircle", "count": 2 }, { "dex": 10, "motion": "wander", "count": 2 }, { "dex": 43, "motion": "wander", "count": 2 } ],
+   "montana": [ { "dex": 50, "motion": "popUp", "count": 3 }, { "dex": 58, "motion": "wander", "count": 1 } ],
+   "isla":    [ { "dex": 129, "motion": "jumpInWater", "count": 3 }, { "dex": 118, "motion": "jumpInWater", "count": 2 }, { "dex": 120, "motion": "bob", "count": 1 } ],
+   "llanura": [ { "dex": 19, "motion": "wander", "count": 2 }, { "dex": 133, "motion": "wander", "count": 1 }, { "dex": 39, "motion": "hop", "count": 1 } ],
+   "pantano": [ { "dex": 41, "motion": "flyCircle", "count": 2 }, { "dex": 109, "motion": "bob", "count": 2 } ]
+  }
+ },
+ "ambientFx": {
+  "butterflies": { "count": 6, "zones": ["bosque", "llanura"] },
+  "birds": { "everySeconds": [20, 40], "height": 6.0 },
+  "chimneySmoke": { "puffs": 3, "riseSeconds": 3.0, "onKinds": ["house"] },
+  "pondRipples": { "ringsPerPond": 3 },
+  "embers": { "count": 10, "zones": ["montana"] },
+   "swampBubbles": { "count": 12, "zones": ["pantano"] },
+  "fallingLeaves": { "count": 12, "zones": ["bosque"] },
+  "treeSway": { "amplitude": 0.03, "speed": 0.8 }
+ },
+ "profiles": {
+  "high": { "dpr": [1, 1.5], "shadows": true, "outlines": true, "life": 1.0, "ambientFx": 1.0, "propDensity": 1.0, "maxDrawCalls": 160, "maxTriangles": 250000 },
+  "low":  { "dpr": [1, 1], "shadows": false, "outlines": false, "life": 0.3, "ambientFx": 0.3, "propDensity": 0.5, "maxDrawCalls": 100, "maxTriangles": 120000 }
+ }
+}

@@ -73,7 +73,7 @@ const oakPkm = {
   damage: 0,
   xp: 0,
   equipped: [],
-  wildcards: [],
+  multicolor: [],
   fainted: false,
 }
 
@@ -122,8 +122,9 @@ test('AC-2 mercado roba del mazo ítem, centro cura a todos y oak intercambia cu
   const mercado = run(mercadoGame.state, { type: 'Advance' }, mercadoGame.ctx)
   expect(mercado.ok).toBe(true)
   if (!mercado.ok) throw new Error(mercado.error.message)
-  expect(mercadoGame.state.players[0]!.items).toEqual({ pokeball: 5, potion: 0 })
-  expect(mercado.value.state.players[0]!.items).toEqual({ pokeball: 5, potion: 1 })
+  const emptyBag = { pokeball: 5, potion: 0, oportunidad: 0, super_potion: 0, ultraball: 0, masterball: 0 }
+  expect(mercadoGame.state.players[0]!.items).toEqual(emptyBag)
+  expect(mercado.value.state.players[0]!.items).toEqual({ ...emptyBag, potion: 1 })
   expect(mercado.value.state.decks.item).toEqual([parseCardId('pokeball')])
   expect(mercado.value.events).toContainEqual({ type: 'CardDrawn', player: 'p1', deck: 'item', card: 'potion' })
 
@@ -137,9 +138,9 @@ test('AC-2 mercado roba del mazo ítem, centro cura a todos y oak intercambia cu
   expect(centro.ok).toBe(true)
   if (!centro.ok) throw new Error(centro.error.message)
   expect(centro.value.state.players[0]!.team).toEqual([
-    { uid: 'p1-starter', cardId: 'charmander', damage: 0, xp: 0, equipped: [{ id: 'element_fire#1', element: 'fire' }], wildcards: [], fainted: false },
+    { uid: 'p1-starter', cardId: 'charmander', damage: 0, xp: 0, equipped: [{ id: 'element_fire#1', element: 'fire' }], multicolor: [], fainted: false },
   ])
-  expect(centro.value.events).toContainEqual({ type: 'TeamHealed', player: 'p1' })
+  expect(centro.value.events).toContainEqual({ type: 'PartyHealed', player: 'p1', count: 1 })
 
   // Prof. Oak: intercambio 1 a 1 equipo ↔ pila; el que pasa a la pila se cura; respeta el límite.
   const oakGame = atTile({
@@ -151,19 +152,25 @@ test('AC-2 mercado roba del mazo ítem, centro cura a todos y oak intercambia cu
       oakPile: [oakPkm],
     }),
   })
-  expect(legalCommands(oakGame.state, oakGame.ctx)).toContainEqual({
+  // T-061: el casillero deja pending=OakSwap (decisión opcional) al resolverse.
+  const atOak = run(oakGame.state, { type: 'Advance' }, oakGame.ctx)
+  expect(atOak.ok).toBe(true)
+  if (!atOak.ok) throw new Error(atOak.error.message)
+  expect(atOak.value.state.pending).toEqual({ type: 'OakSwap' })
+  expect(atOak.value.state.turn).toBe(oakGame.state.turn) // el turno espera la decisión
+  expect(legalCommands(atOak.value.state, oakGame.ctx)).toContainEqual({
     type: 'SwapWithOak',
     teamUid: 'p1-starter',
     pileUid: 'p1-oak-1',
   })
-  const swapped = run(oakGame.state, { type: 'SwapWithOak', teamUid: 'p1-starter', pileUid: 'p1-oak-1' }, oakGame.ctx)
+  const swapped = run(atOak.value.state, { type: 'SwapWithOak', teamUid: 'p1-starter', pileUid: 'p1-oak-1' }, oakGame.ctx)
   expect(swapped.ok).toBe(true)
   if (!swapped.ok) throw new Error(swapped.error.message)
   const after = swapped.value.state.players[0]!
   expect(after.team).toHaveLength(1) // 1 a 1 ⇒ el equipo nunca supera el límite de 6
   expect(after.team[0]!.uid).toBe('p1-oak-1')
   expect(after.oakPile).toEqual([
-    { uid: 'p1-starter', cardId: 'charmander', damage: 0, xp: 0, equipped: [{ id: 'element_fire#1', element: 'fire' }], wildcards: [], fainted: false }, // se cura al pasar
+    { uid: 'p1-starter', cardId: 'charmander', damage: 0, xp: 0, equipped: [{ id: 'element_fire#1', element: 'fire' }], multicolor: [], fainted: false }, // se cura al pasar
   ])
   expect(swapped.value.events).toContainEqual({ type: 'OakSwapped', player: 'p1', teamUid: 'p1-starter', pileUid: 'p1-oak-1' })
   expect(swapped.value.state.phase).toBe('tileResolution') // puede seguir intercambiando o terminar
@@ -197,7 +204,7 @@ test('AC-3 dejar ir devuelve la carta al fondo del mazo; mazo vacío emite DeckE
 
 // AC: SPEC-B/T-012/AC-4 — duelo/sorpresa/liga deshabilitados se comportan como vacíos.
 test('AC-4 duelo, sorpresa y liga deshabilitados por el ruleset se comportan como vacíos', () => {
-  expect(content.ruleset.features).toEqual({ sorpresa: false, liga: false, pokedexChart: false, duelo: false })
+  expect(content.ruleset.features).toEqual({ sorpresa: false, sorpresaDeck: true, liga: false, pokedexChart: false, duelo: false, houseEdits: true })
   for (const node of ['du1', 'so1', 'li1'] as const) {
     const game = atTile({ board: deshabilitados, at: node })
     const before = game.state.decks
@@ -206,7 +213,11 @@ test('AC-4 duelo, sorpresa y liga deshabilitados por el ruleset se comportan com
     if (!result.ok) throw new Error(result.error.message)
     expect(result.value.state.phase, node).toBe('organize')
     expect(result.value.state.decks, node).toEqual(before) // no roba nada
-    expect(result.value.events, node).toEqual([{ type: 'TurnAdvanced', turn: result.value.state.turn }])
+    // T-061: avisa por qué no pasó nada (TileResolved{disabledByRuleset}) y cierra el turno.
+    expect(result.value.events, node).toEqual([
+      { type: 'TileResolved', player: 'p1', info: 'disabledByRuleset' },
+      { type: 'TurnAdvanced', turn: result.value.state.turn },
+    ])
   }
 })
 
@@ -249,14 +260,17 @@ test('guardas: ReleaseWild sin encuentro, SwapWithOak fuera de oak o con uid ine
   expect(colado.ok).toBe(false)
   if (!colado.ok) expect(colado.error.code).toBe('PENDING_DECISION')
 
-  // SwapWithOak fuera del casillero de Oak o con uids que no están.
+  // SwapWithOak fuera del casillero de Oak o con uids que no están (T-061: con pending).
   const fueraDeOak = run(centroGame.state, { type: 'SwapWithOak', teamUid: 'p1-starter', pileUid: 'p1-oak-1' }, centroGame.ctx)
   expect(fueraDeOak.ok).toBe(false)
   if (!fueraDeOak.ok) expect(fueraDeOak.error.code).toBe('ILLEGAL_COMMAND')
 
   const oakGame = atTile({ board: oakTile, at: 'oak1', player: (p) => ({ ...p, oakPile: [oakPkm] }) })
+  const atOak = run(oakGame.state, { type: 'Advance' }, oakGame.ctx)
+  expect(atOak.ok).toBe(true)
+  if (!atOak.ok) throw new Error(atOak.error.message)
   const uidInexistente = run(
-    oakGame.state,
+    atOak.value.state,
     { type: 'SwapWithOak', teamUid: 'p1-starter', pileUid: 'no-esta' },
     oakGame.ctx,
   )

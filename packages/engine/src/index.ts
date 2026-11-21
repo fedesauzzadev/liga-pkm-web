@@ -23,21 +23,28 @@ export {
   type BattleStarted,
   type CardDrawn,
   type CardToBottom,
+  type ConditionApplied,
+  type ConditionCleared,
+  type ConditionName,
   type DamageTaken,
   type DeckEmpty,
   type ElementEquipped,
   type ElementUnequipped,
+  type EnergyGained,
   type GameEvent,
   type GameStarted,
   type GameWon,
+  type GymAlreadyWon,
   type GymLocked,
   type Healed,
   type Landed,
   type MedalWon,
   type MoveStep,
   type NoAttack,
+  type NoAttackCause,
   type NoAttackReason,
   type OakSwapped,
+  type PartyHealed,
   type PkmEvolved,
   type PkmRetired,
   type PkmSentOut,
@@ -45,19 +52,24 @@ export {
   type PokemonFainted,
   type PrizePkmWon,
   type RivalSentOut,
-  type TeamHealed,
+  type SelfHit,
+  type TileInfo,
+  type TileResolved,
   type UnsupportedEffect,
-  type WildcardAssigned,
+  type MulticolorAssigned,
+  type MulticolorUnassigned,
+  type TeamReordered,
+  type TrainerAppeared,
   type WokeUp,
   type XpGained,
 } from './events.ts'
-export { type Command } from './commands.ts'
+export { type Command, resolvesPending } from './commands.ts'
 export {
   elementOfCardId,
   ELEMENT_CARD_PREFIX,
   pushToBottom,
 } from './tiles.ts'
-export { canAssignWildcard, canUse, legalAttacks } from './equipment.ts'
+export { canAssignMulticolor, canUse, legalAttacks } from './equipment.ts'
 export { computeDamage, flatReductionFor, type DamageInput } from './battle.ts'
 export {
   registerCustomEffectHandler,
@@ -65,7 +77,9 @@ export {
   type CustomEffectInput,
 } from './battle.ts'
 export {
+  BAG_ITEMS,
   createInitialState,
+  type BagItem,
   type BattleState,
   type Decision,
   type DeckStacks,
@@ -80,7 +94,7 @@ export {
   type RivalPkm,
   type WildBattle,
 } from './state.ts'
-export { newGame, type NewGameOptions } from './setup.ts'
+export { newGame, STARTER_BY_DECK, type NewGameOptions } from './setup.ts'
 export { legalCommands } from './legal.ts'
 export { GYM_DEFEATS_TO_LOSE } from './battle.ts'
 export {

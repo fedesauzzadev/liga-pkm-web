@@ -54,7 +54,7 @@ export const fxPkm = (cardId: string, damage = 0): PkmInstance => ({
   damage,
   xp: 0,
   equipped: [],
-  wildcards: [],
+  multicolor: [],
   fainted: false,
 })
 

@@ -5,7 +5,7 @@
 import type { Attack, Face, Faces, PokemonCard } from '@liga/content'
 import { EngineError } from './errors.ts'
 import type { Result } from './errors.ts'
-import type { GameEvent } from './events.ts'
+import type { GameEvent, NoAttackCause } from './events.ts'
 import type { Ctx } from './engine.ts'
 import {
   afterFaints,
@@ -29,6 +29,8 @@ export type GateOutcome = 'pass' | 'noAttack' | 'selfHit'
 interface GateSource {
   readonly faces: Faces
   readonly outcome: 'noAttack' | 'selfHit'
+  /** 'condition': estado del atacante (rollGate); 'specialty': pasiva del defensor. */
+  readonly origin: 'condition' | 'specialty'
 }
 
 function gateSources(draft: Draft, side: 0 | 1, defenderCard: PokemonCard): readonly GateSource[] {
@@ -37,14 +39,28 @@ function gateSources(draft: Draft, side: 0 | 1, defenderCard: PokemonCard): read
   const slot = battle.conditions[battle.active[side]!]?.rollGate
   const sources: GateSource[] = []
   if (slot !== undefined) {
-    sources.push({ faces: slot.failFaces, outcome: slot.outcome })
+    sources.push({ faces: slot.failFaces, outcome: slot.outcome, origin: 'condition' })
   }
   for (const specialty of defenderCard.specialties) {
     if (specialty.op === 'defendGate') {
-      sources.push({ faces: specialty.failFaces, outcome: specialty.outcome })
+      sources.push({ faces: specialty.failFaces, outcome: specialty.outcome, origin: 'specialty' })
     }
   }
   return sources
+}
+
+/** Resultado del gate para el evento NoAttack (AC-3): origen del bloqueo. */
+const gateCause = (sources: readonly GateSource[], value: Face): NoAttackCause =>
+  sources.some((source) => source.origin === 'condition' && source.faces.includes(value))
+    ? 'paralized'
+    : 'defended'
+
+export interface GateCheck {
+  readonly outcome: GateOutcome
+  /** Cara tirada (presente salvo que no hubiera gate que tirar). */
+  readonly value: Face | undefined
+  /** Solo con outcome 'noAttack': quién bloqueó el ataque. */
+  readonly cause: NoAttackCause | undefined
 }
 
 function awaitGate(
@@ -53,18 +69,20 @@ function awaitGate(
   side: 0 | 1,
   defenderCard: PokemonCard,
   events: GameEvent[],
-): Result<GateOutcome, EngineError> {
+): Result<GateCheck, EngineError> {
   const sources = gateSources(draft, side, defenderCard)
-  if (sources.length === 0) return { ok: true, value: 'pass' }
+  if (sources.length === 0) {
+    return { ok: true, value: { outcome: 'pass', value: undefined, cause: undefined } }
+  }
   const value = rollDie(draft, ctx, 'gate', events)
   // D-03: si una cara cae en noAttack y selfHit, gana selfHit.
   if (sources.some((source) => source.outcome === 'selfHit' && source.faces.includes(value))) {
-    return { ok: true, value: 'selfHit' }
+    return { ok: true, value: { outcome: 'selfHit', value, cause: undefined } }
   }
   if (sources.some((source) => source.faces.includes(value))) {
-    return { ok: true, value: 'noAttack' }
+    return { ok: true, value: { outcome: 'noAttack', value, cause: gateCause(sources, value) } }
   }
-  return { ok: true, value: 'pass' }
+  return { ok: true, value: { outcome: 'pass', value, cause: undefined } }
 }
 
 // ── Paso 3: dodge — condición (Minimizar, prevalece lo más reciente) o especialidad. ──
@@ -117,9 +135,11 @@ function needsEffectDie(attack: Attack, attackerDamage: number): boolean {
       case 'dodge':
       case 'drainEachTurn':
       case 'drainNow':
+      case 'fixedRolls': // tira con purpose:'bonus' propio (EFFECTS §2.4)
       case 'flatReduction':
       case 'healSelf':
       case 'modifyRivalDamage':
+      case 'nextAttackBonus': // sin dado
       case 'poison':
       case 'rest':
       case 'rollGate':
@@ -250,12 +270,19 @@ export function resolveAttack(
     // Paso 2: gate (tirada única; D-03).
     const gate = awaitGate(draft, ctx, side, defenderCard.value, events)
     if (!gate.ok) return gate
-    if (gate.value === 'noAttack') {
-      events.push({ type: 'NoAttack', attacker: attackerUid, reason: 'gate' })
+    if (gate.value.outcome === 'noAttack') {
+      events.push({
+        type: 'NoAttack',
+        attacker: attackerUid,
+        reason: 'gate',
+        ...(gate.value.cause !== undefined ? { cause: gate.value.cause } : {}),
+        ...(gate.value.value !== undefined ? { value: gate.value.value } : {}),
+      })
       return { ok: true, value: null }
     }
-    if (gate.value === 'selfHit') {
+    if (gate.value.outcome === 'selfHit' && gate.value.value !== undefined) {
       // p.71-72: el ataque se aplica al propio atacante, con sus efectos, sin habilidades.
+      events.push({ type: 'SelfHit', attacker: attackerUid, value: gate.value.value })
       return resolveBody(draft, ctx, side, attack, events, {
         victimUid: attackerUid,
         useAttackerMods: false, // selfBoost/rivalDamageMod hablan del rival: no aplican acá
@@ -334,5 +361,5 @@ function resolveBody(
   }
 
   // Paso 8: FaintCheck y consecuencias.
-  return afterFaints(draft, events)
+  return afterFaints(draft, ctx.content, events)
 }

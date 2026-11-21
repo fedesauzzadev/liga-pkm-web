@@ -1,0 +1,42 @@
+{
+  "_status": "Patrones texto→efecto (SPEC-S/T-102d). Se evalúan por prioridad (menor número primero) sobre el texto del ataque normalizado (minúsculas, sin tildes, espacios simples, guiones cortos, sin el prefijo 'caras_ nombre:'). {self} = nombre del Pokémon de la carta (token ignorable si sobra). F = caras de dado (\\d(?:-\\d)*), NAME = nombre. Un efecto por patrón; un texto puede encajar en varios (se emiten todos en orden de aparición, sin repetir el fragmento ya consumido). Emit vacío = patrón de solo flags. Lo que no encaja: {op:'custom', handler:'TODO', rawText} + needsReview. Basado en docs/EFFECTS.md §4.",
+  "_placeholders": { "$faces:N": "grupo N → array de caras ('4-5-6' → [4,5,6])", "$int:N": "grupo N → entero", "$neg:N": "grupo N → entero negativo", "$optFaces:N": "grupo N → array o ausente", "$self": "id del ataque" },
+  "_vars": { "F": "\\d(?:-\\d)*", "NAME": ".+?" },
+  "patterns": [
+    { "id": "rivalSleep",         "priority": 10, "regex": "^(?:(F)\\s+)?(?:tu rival\\s+)?no atacar[aá] hasta sacar (F)", "emit": { "op": "rivalSleep", "faces": "$optFaces:1", "wakeFaces": "$faces:2" } },
+    { "id": "rivalSkipsAttack",   "priority": 11, "regex": "^(?:(F)\\s+)?tu rival no atacar[aá]\\.?", "emit": { "op": "rivalSkipsAttack", "faces": "$optFaces:1" } },
+    { "id": "drainEachTurn",      "priority": 20, "regex": "cada turno (?:tu rival|tu pkm) se hace \\((\\d+)\\) y .+? se cura \\((\\d+)\\)", "emit": { "op": "drainEachTurn", "amount": "$int:1" } },
+    { "id": "drainNow",           "priority": 21, "regex": "(?:tu rival|tu pkm) se hace \\((\\d+)\\) y .+? se cura \\((\\d+)\\)", "emit": { "op": "drainNow", "amount": "$int:1" } },
+    { "id": "poison",             "priority": 22, "regex": "(?:tu rival|tu pkm) se hace \\((\\d+)\\) por turno", "emit": { "op": "poison", "amount": "$int:1" } },
+    { "id": "rollGateNoAtkCombat",  "priority": 30, "regex": "^(?:(F)\\s+)?cada turno si (?:tu rival saca|sac[aá]s) (F) (?:tu pkm\\s+)?no ataca(?:r[aá])?", "emit": { "op": "rollGate", "failFaces": "$faces:2", "outcome": "noAttack", "duration": "combat", "onRoll": "$optFaces:1" } },
+    { "id": "rollGateSelfHitCombat","priority": 32, "regex": "^(?:(F)\\s+)?cada turno si (?:tu rival saca|sac[aá]s) (F) (?:tu pkm\\s+)?se auto-?ataca(?:r[aá])?", "emit": { "op": "rollGate", "failFaces": "$faces:2", "outcome": "selfHit", "duration": "combat", "onRoll": "$optFaces:1" } },
+    { "id": "rollGateNoAtkNext",    "priority": 33, "regex": "^(?:(F)\\s+)?(?:(?:si tu rival saca|si sac[aá]s)\\s+)?(F)\\s+(?:tu pkm\\s+)?no ataca(?:r[aá])?", "emit": { "op": "rollGate", "failFaces": "$faces:2", "outcome": "noAttack", "duration": "nextTurn", "onRoll": "$optFaces:1" } },
+    { "id": "rollGateSelfHitNext",  "priority": 34, "regex": "^(?:(F)\\s+)?(?:(?:si tu rival saca|si sac[aá]s)\\s+)?(F)\\s+(?:tu pkm\\s+)?se auto-?ataca(?:r[aá])?", "emit": { "op": "rollGate", "failFaces": "$faces:2", "outcome": "selfHit", "duration": "nextTurn", "onRoll": "$optFaces:1" } },
+    { "id": "modifyRivalDamageCombat", "priority": 40, "regex": "los ataques de tu (?:rival|pkm) hacen \\(-(\\d+)\\)\\.? ?max 1", "emit": { "op": "modifyRivalDamage", "amount": "$neg:1", "duration": "combat", "max": 1 } },
+    { "id": "modifyRivalDamage",  "priority": 41, "regex": "el ataque de tu (?:rival|pkm) har[aá] \\(-(\\d+)\\)", "emit": { "op": "modifyRivalDamage", "amount": "$neg:1", "duration": "nextTurn" } },
+    { "id": "flatReductionSpecial", "priority": 42, "regex": "los (?:at\\.|ataques) especiales le hacen \\(-(\\d+)\\)", "emit": { "op": "flatReduction", "amount": "$int:1", "versus": "special", "target": "self", "duration": "combat" } },
+    { "id": "flatReductionMax1",  "priority": 43, "regex": "los ataques le hacen \\(-(\\d+)\\)(?: a .+?)?\\.? ?max 1", "emit": { "op": "flatReduction", "amount": "$int:1", "max": 1, "target": "self", "duration": "combat" } },
+    { "id": "flatReduction",      "priority": 44, "regex": "los ataques le hacen \\(-(\\d+)\\)(?: a .+?)?\\.?$", "emit": { "op": "flatReduction", "amount": "$int:1", "target": "self", "duration": "combat" } },
+    { "id": "selfBoostMax1",      "priority": 45, "regex": "(?:los|tus) ataques (?:de .+? )?hacen \\(\\+(\\d+)\\)\\.? ?max 1", "emit": { "op": "selfBoost", "amount": "$int:1", "max": 1 } },
+    { "id": "selfBoost",          "priority": 46, "regex": "(?:los|tus) ataques (?:de .+? )?hacen \\(\\+(\\d+)\\)", "emit": { "op": "selfBoost", "amount": "$int:1" } },
+    { "id": "fixedRolls",         "priority": 49, "regex": "tir[aá] el dado (\\d) veces[.,;]? ?hac[eé] \\(\\+(\\d+)\\) por cada (F)", "emit": { "op": "fixedRolls", "rolls": "$int:1", "amount": "$int:2", "faces": "$faces:3" }, "alsoSets": { "damage.base": 0 } },
+    { "id": "bonusPerRoll",       "priority": 50, "regex": "(?:hac[eé]s? )?\\(\\+(\\d+)\\) por cada (F)", "emit": { "op": "bonusPerRoll", "faces": "$faces:2", "amount": "$int:1" } },
+    { "id": "nextAttackBonus",    "priority": 51, "regex": "el pr[oó]ximo (?:ataque|at\\.)(?: de .+?)? har[aá] \\(\\+(\\d+)\\)", "emit": { "op": "nextAttackBonus", "amount": "$int:1" } },
+    { "id": "attackAgain",        "priority": 52, "regex": "(F) atac[aá] de nuevo", "emit": { "op": "attackAgain", "faces": "$faces:1" } },
+    { "id": "startsFirst",        "priority": 53, "regex": "empieza atacando cada combate", "emit": { "op": "startsFirst" } },
+    { "id": "dodge",              "priority": 54, "regex": "cuando (?:un rival|tu rival) ataque a .+?,? si sac[aá]s (F) su (?:at\\.|ataque) no hace da[ñn]o ni efecto", "emit": { "op": "dodge", "faces": "$faces:1" } },
+    { "id": "dodgeGym",           "priority": 55, "regex": "cuando ataques a .+?,? tir[aá] el dado\\.? si sac[aá]s (F) (?:el|tu) ataque no hace da[ñn]o ni efecto", "emit": { "op": "dodge", "faces": "$faces:1" } },
+    { "id": "defendGateNoAtk",    "priority": 56, "regex": "cuando (?:ataques|ataque) a .+?,? tir[aá] el dado\\.? si sac[aá]s (F) tu pkm no ataca(?:r[aá])?", "emit": { "op": "defendGate", "failFaces": "$faces:1", "outcome": "noAttack" } },
+    { "id": "defendGateSelfHit",  "priority": 57, "regex": "cuando ataques a .+?,? tir[aá] el dado\\.? si sac[aá]s (F) (?:tu pkm )?se auto-?ataca(?:r[aá])?", "emit": { "op": "defendGate", "failFaces": "$faces:1", "outcome": "selfHit" } },
+    { "id": "quickAttack",        "priority": 58, "regex": "ataque r[aá]pido: si .+? est[aá] da[ñn]ado,? puede hacer este (?:at\\.|ataque) despu[eé]s de atacar con (F)", "emit": { "op": "quickAttack", "faces": "$faces:1", "attackId": "$self", "requires": "damaged" } },
+    { "id": "healSelf",           "priority": 60, "regex": "(.+?) se cura \\((\\d+)\\) da[ñn]os", "emit": { "op": "healSelf", "amount": "$int:2" } },
+    { "id": "explosion",          "priority": 61, "regex": "(?:tu rival|tu pkm) se hace \\((\\d+)\\)(?: da[ñn]os)?\\.? .+? se hace \\((\\d+)\\)", "emit": { "op": "selfDamage", "amount": "$int:2" }, "alsoSets": { "damage.base": "$int:1" } },
+    { "id": "canOpen",            "priority": 70, "regex": "pod[eé]s empezar con este ataque", "emit": {}, "setsFlag": { "canOpen": true } }
+  ],
+  "caveats": [
+    "El texto de la carta puede traer errores de OCR (tildes, 'ataca' por 'atacá', guion largo). Normalizar antes de aplicar patrones.",
+    "Duración: sin 'cada turno' = nextTurn; con 'cada turno' o 'MAX 1' = combat (ver docs/EFFECTS.md y RULES D-15).",
+    "Si ningún patrón encaja, o encaja solo parte del texto, queda {op:'custom'} con el texto restante y needsReview:true. Nunca inventar primitivas (docs/effect-requests/): los textos sin patrón se listan agrupados en el reporte y el dueño/jefe agrega patrones o aprueba un ER.",
+    "Sin patrón todavía (texto real desconocido): rest (Snorlax), transform (Ditto), disableRandomAttack (Jigglypuff) y bonusPerSelfDamage (Ira). Cuando aparezcan en escaneos, quedan custom y se agregan acá."
+  ]
+}

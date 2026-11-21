@@ -1,0 +1,24 @@
+# Reporte fix-sprites-lideres-gimnasio — Fix sprites de líderes de gimnasio
+- Estado: REVIEW | Spec: `.opencode/plan/fix-sprites-lideres-gimnasio.md`
+- Resumen (≤ 5 líneas): arregla la feature T-112 rota — build (TS2304 `trainers`), líder solapado
+  con el pokémon rival, 4 líderes sin sprite y mensaje " aparece." con nombre vacío.
+- Archivos clave tocados (rutas):
+  - `apps/web/src/battle/ChoreographedBattle.tsx` (prop `spritesOverride` = shape de BattleScene `{sprites,trainers}`; passthrough directo; sin `trainers` fantasma)
+  - `apps/web/src/battle/BattleScene.tsx` + `BattleScene.module.css` (SpriteSlot `side='trainer'` con `data-side="trainer"` propio; clase `.trainer` right 52 % vs `.rival` right 8 %)
+  - `apps/web/src/battle/choreo/stage.ts` (`BattleChoreoDeps.leaderNameOf?` opcional), `choreo/registry.ts` (`playTrainerAppeared` usa `leaderNameOf ?? id` (nunca vacío); `playRivalSentOut` limpia `trainerAppeared`)
+  - `apps/web/src/popup/BattlePopup.tsx` (provee `leaderNameOf` desde `gameContent.gyms`)
+  - `tools/assets.config.json` (+surge/erika/sabrina/blaine; Surge = "Lt. Surge"→`ltsurge`, sdId `surge`), `apps/web/src/battle/demo.ts` (export `demoPlayerUid`), `docs/ASSETS.md` (fila trainers)
+- AC cubiertos → test (fix-sprites-lideres-gimnasio/AC-n → archivo:test):
+  - AC-1 → `apps/web/src/battle/ChoreographedBattle.sprites.test.tsx` (override completo llega a la escena)
+  - AC-2 → `BattleScene.test.tsx` (slots distintos, clases distintas) + `trainer-sprites.test.ts` (posiciones .trainer 52 % ≠ .rival 8 %)
+  - AC-3 → `choreo/trainer-appeared.test.ts` (RivalSentOut ⇒ `trainerAppeared` null)
+  - AC-4 → `trainer-sprites.test.ts` (config cubre los 8 líderes de gyms.json); `pnpm assets` 323/323, `trainers.json` con 8 fronts
+  - AC-5 → `choreo/trainer-appeared.test.ts` ('Misty aparece.', nunca ' aparece.')
+- `pnpm verify`: OK (typecheck + lint + 176 archivos/1088 tests + content:validate + build + depcruise 459 módulos + size-limit + 3 benches)
+- Decisiones tomadas / defaults aplicados:
+  - `leaderNameOf` opcional con fallback al id del líder (nunca vacío) para no romper deps existentes (demo/testkit/tests).
+  - Limpieza del líder en `RivalSentOut` (el plan lo indica); `BattleStarted` NO limpia (líder y pokémon se ven simultáneos).
+  - Surge: el sprite de Showdown es `ltsurge.png` (verificado HTTP 200; `surge.png` da 404) → name "Lt. Surge", sdId `surge` (= key de gyms.json).
+  - Test de posiciones en archivo node-env (jsdom no permite `readFileSync(new URL(import.meta.url))`; `?raw` lo transformó a objeto).
+- Dudas nuevas (→ OPEN-QUESTIONS.md) y ER solicitados: ninguna.
+- Riesgos / deuda: ajuste fino visual de `.trainer` (top 6 %, right 52 %, ancho 20 %) pendiente de revisión en browser/e2e; `BattleScene.tsx`/`registry.ts` ya superaban 400 líneas antes de este fix.

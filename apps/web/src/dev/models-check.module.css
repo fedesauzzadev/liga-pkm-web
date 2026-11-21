@@ -1,0 +1,29 @@
+/* Chequeo de modelos /dev/models-check (T-086): una sola escena WebGL con el
+   canvas centrado; los resultados los imprime el driver de Playwright. */
+.page {
+  min-height: 100vh;
+  padding: 16px 20px 40px;
+  color: var(--text, #21301f);
+  background: var(--bg, #f2f0e6);
+}
+
+.hint {
+  margin: 0 0 8px;
+  opacity: 0.75;
+  max-width: 70ch;
+}
+
+.thresholds {
+  margin: 0 0 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+
+.stage {
+  border: 1px solid rgba(33, 48, 31, 0.25);
+  background: #808080;
+}
+
+.canvas {
+  display: block;
+}

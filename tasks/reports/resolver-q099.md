@@ -1,0 +1,19 @@
+# Reporte resolver-q099 — la velocidad del combate ya no la pisa `reducedMotion`
+- Estado: REVIEW | Rama/commit: main (sin commit; working tree)
+- Resumen (≤ 5 líneas):
+  - `Timing` guardaba solo el factor calculado, así que `BattleChoreographer.setReducedMotion` (que llamaba `setOptions('1x', reduced)`) pisaba la velocidad elegida por el efecto de `ChoreographedBattle` (`setSpeed` + `setReducedMotion`) ⇒ la coreografía del componente corría SIEMPRE a 1x (T-032d/AC-2 "skip ⇒ instantáneo" no se cumplía; medido ~1900 ms).
+  - Fix: `Timing` guarda `speed` + `reducedMotion` y expone `setSpeed`/`setReducedMotion`; cada setter conserva el otro eje y recomponga el factor (`skip`/reduced ⇒ 0, `2x` ⇒ 0.5, `1x` ⇒ 1). `BattleChoreographer` delega en esos dos setters. `setOptions` se eliminó (sin usos).
+  - El efecto de `ChoreographedBattle.tsx` no cambia; el comportamiento de `reducedMotion` solo (factor 0) queda igual que antes.
+- Archivos clave tocados (rutas):
+  - `apps/web/src/battle/choreo/timing.ts` (estado de los dos ejes + setters; se quitó `setOptions`).
+  - `apps/web/src/battle/choreo/BattleChoreographer.ts` (`setSpeed`/`setReducedMotion` delegan en `Timing`).
+  - `apps/web/src/battle/choreo/timing.test.ts` (nuevo, 5 tests) · `apps/web/src/battle/ChoreographedBattle.speed.test.tsx` (nuevo, jsdom).
+  - `apps/web/src/popup/BattlePopup.test.tsx` (solo el comentario de `popupLive`, que citaba Q-099 como abierta).
+  - `docs/OPEN-QUESTIONS.md` (Q-099 → resuelta).
+- AC cubiertos → test (SPEC-D/T-032d/AC-2 → archivo:test):
+  - AC-2 → `choreo/timing.test.ts`: setReducedMotion no pisa la velocidad · setSpeed no pisa reducedMotion · reduced=false + 2x ⇒ 0.5 · reduced=true ⇒ 0 con cualquier velocidad · `BattleChoreographer` conserva ambos ejes en cualquier orden.
+  - AC-2 (nivel componente, el bug reportado) → `ChoreographedBattle.speed.test.tsx`: con `speed="skip"` y `reducedMotion={false}` el guion termina en < 1.5 s (timeout del test; antes ~1900 ms). TDD: los 6 tests fallaban antes del fix y pasan después.
+- `pnpm verify`: OK — 171 archivos / 1069 tests (0 fallos); typecheck + lint + content:validate + build + depcruise + size-limit (33,73 kB / 200 kB) + bench (79-89 ms / 300 ms) en verde.
+- Decisiones tomadas / defaults aplicados: exactamente el "fix propuesto" de Q-099 (aprobado por el jefe al asignar la tarea); sin cambios en `ChoreographedBattle.tsx`, en la UI ni en el motor. El test de componente usa reloj real con timeout de 1500 ms (separa el bug ≈1900 ms de la corrida sana ≈0 ms).
+- Dudas nuevas (→ OPEN-QUESTIONS.md) y ER solicitados (→ effect-requests/): ninguno. No se pidieron primitivas de efectos nuevas.
+- Riesgos / deuda: no hay fila de `tasks/BACKLOG.md` para Q-099 (no es una tarea T-xxx); queda como reporte `resolver-q099` igual que `resolver-q089`/`resolver-q091`. El test de componente mide tiempo de pared: si un runner muy cargado superara 1500 ms podría flashear (margen de 400 ms sobre el peor caso post-fix, medido < 200 ms).

@@ -1,8 +1,8 @@
 // Eventos que el motor emite y la UI reproduce en orden (animación ≠ lógica).
-import type { DeckId, DeckKey, Face } from '@liga/content'
+import type { DeckId, DeckKey, Element, Face } from '@liga/content'
 
 /** Propósito de cada tirada (SDD §3): alimenta el log de dados y el replay. */
-export type DiePurpose = 'move' | 'attackSelect' | 'gate' | 'effect' | 'wake' | 'dodge' | 'bonus'
+export type DiePurpose = 'move' | 'attackSelect' | 'gate' | 'effect' | 'wake' | 'dodge' | 'bonus' | 'oportunidad'
 
 export type DieRolled = {
   readonly type: 'DieRolled'
@@ -48,10 +48,26 @@ export type DeckEmpty = {
   readonly deck: DeckKey
 }
 
-/** Centro PKM: todo el equipo queda sin daño y sin derrotas (T-012). */
-export type TeamHealed = {
-  readonly type: 'TeamHealed'
+/** Una carta de elemento robada entró al inventario (T-061/AC-1). */
+export type EnergyGained = {
+  readonly type: 'EnergyGained'
   readonly player: string
+  readonly element: Element
+}
+
+/** El casillero se resolvió sin decisión: qué pasó (T-061/AC-2). */
+export type TileInfo = 'none' | 'oak' | 'disabledByRuleset'
+export type TileResolved = {
+  readonly type: 'TileResolved'
+  readonly player: string
+  readonly info: TileInfo
+}
+
+/** Centro PKM: todo el equipo queda sin daño y sin derrotas (T-012; T-061 agrega count). */
+export type PartyHealed = {
+  readonly type: 'PartyHealed'
+  readonly player: string
+  readonly count: number
 }
 
 /** La carta vuelve al FONDO del mazo: "dejar ir" (D-09) o ítem usado (AC-5). */
@@ -86,15 +102,31 @@ export type ElementUnequipped = {
   readonly elementId: string
 }
 
-/** Un comodín quedó asignado a un PKM como `element` (reasignable en Organize, T-013). */
-export type WildcardAssigned = {
-  readonly type: 'WildcardAssigned'
+/** Una carta Multicolor quedó asignada a un PKM como `element` (reasignable en Organize, T-013; D-23). */
+export type MulticolorAssigned = {
+  readonly type: 'MulticolorAssigned'
   readonly player: string
   readonly pkmUid: string
   readonly element: string
 }
 
+/** La carta Multicolor asignada al PKM volvió a los libres del jugador (T-104; D-30). */
+export type MulticolorUnassigned = {
+  readonly type: 'MulticolorUnassigned'
+  readonly player: string
+  readonly pkmUid: string
+}
+
+/** Un PKM del equipo cambió de posición (reordenar en Organize, T-074/SPEC-I). */
+export type TeamReordered = {
+  readonly type: 'TeamReordered'
+  readonly player: string
+  readonly uid: string
+  readonly to: number
+}
+
 // ── Eventos de batalla (SPEC-C/T-020). `pkmUid` del lado jugador = uid del equipo. ──
+
 
 /** La batalla arrancó: `rival` es la carta del encuentro y `active` el PKM del jugador. */
 export type BattleStarted = {
@@ -115,10 +147,15 @@ export type AttackUsed = {
 
 /** El lado no atacó: attackSelect, dormido, skip o gate fallido (AC-3). */
 export type NoAttackReason = 'attackSelect' | 'asleep' | 'skip' | 'gate'
+/** Gate fallido: qué lo bloqueó — estado propio del atacante o gate del defensor (AC-3). */
+export type NoAttackCause = 'paralized' | 'defended'
 export type NoAttack = {
   readonly type: 'NoAttack'
   readonly attacker: string
   readonly reason: NoAttackReason
+  /** Solo con `reason:'gate'`: origen del bloqueo y cara del dado de gate. */
+  readonly cause?: NoAttackCause
+  readonly value?: Face
 }
 
 /** Esquive (p.78-80): el ataque no hace daño ni efecto (T-021). */
@@ -154,6 +191,42 @@ export type Healed = {
 /** Tirada de despertar exitosa (RULES §4 ①). */
 export type WokeUp = { readonly type: 'WokeUp'; readonly pkmUid: string }
 
+/** Estado de combate aplicado por un ataque (T-072: log del historial; la
+ * visibilidad completa agrega los slots que antes se seteaban en silencio). */
+export type ConditionName =
+  | 'asleep'
+  | 'poison'
+  | 'confused' // rollGate selfHit (Confusión/Hipno-rayo)
+  | 'noAttackGate' // rollGate noAttack (Impact-trueno/Polvo de esporas)
+  | 'skip' // skipNextAttack (Lianas)
+  | 'drain' // drainEachTurn (Drenadoras)
+  | 'shield' // damageModCombat (flatReduction: Dureza/Refugio/Barrera)
+  | 'selfBoost' // selfBoost (Enfoque de energía)
+  | 'weakened' // rivalDamageMod/combatDamageMod (Burbujas/Gruñido)
+  | 'dodge' // dodge (Minimizar)
+export type ConditionApplied = {
+  readonly type: 'ConditionApplied'
+  readonly pkmUid: string
+  readonly condition: ConditionName
+  /** Caras que activan el gate ('confused'/'noAttackGate'): para el chat. */
+  readonly faces?: Face[]
+}
+
+/** Gate fallido con auto-ataque (Confusión): se emite antes del AttackUsed. */
+export type SelfHit = {
+  readonly type: 'SelfHit'
+  readonly attacker: string
+  /** Cara del dado de gate que disparó el auto-ataque. */
+  readonly value: Face
+}
+
+/** Condición de duración nextTurn consumida al fin del turno (rollGate/skip/weakened). */
+export type ConditionCleared = {
+  readonly type: 'ConditionCleared'
+  readonly pkmUid: string
+  readonly condition: ConditionName
+}
+
 /** `damage ≥ hp` ⇒ derrotado (AC-7). */
 export type PokemonFainted = { readonly type: 'PokemonFainted'; readonly pkmUid: string }
 
@@ -177,6 +250,12 @@ export type BattleEnded = {
 
 /** +1 XP por combate ganado a cada PKM propio que participó (T-022/AC-1, RULES §4 p.47-49). */
 export type XpGained = { readonly type: 'XpGained'; readonly pkmUid: string; readonly amount: number }
+
+/** TrainerAppeared: el líder gimnasio apareció (final de vista, ER-001). */
+export type TrainerAppeared = {
+  readonly type: 'TrainerAppeared'
+  readonly trainerId: string
+}
 
 /** Evolución: la carta se reemplaza; XP=0 (D-04) y el daño se conserva (D-05, T-022/AC-2). */
 export type PkmEvolved = {
@@ -220,6 +299,13 @@ export type MedalWon = {
   readonly medal: string
 }
 
+/** Aterrizó en un gimnasio cuya medalla ya tiene (medalla-gimnasio/AC-2). */
+export type GymAlreadyWon = {
+  readonly type: 'GymAlreadyWon'
+  readonly player: string
+  readonly gym: string
+}
+
 /** Premio PKM del líder (p.50): se conserva sin gastar Pokebola (AC-3). */
 export type PrizePkmWon = {
   readonly type: 'PrizePkmWon'
@@ -240,12 +326,16 @@ export type GameEvent =
   | Landed
   | CardDrawn
   | DeckEmpty
-  | TeamHealed
+  | EnergyGained
+  | TileResolved
+  | PartyHealed
   | CardToBottom
   | OakSwapped
   | ElementEquipped
   | ElementUnequipped
-  | WildcardAssigned
+  | MulticolorAssigned
+  | MulticolorUnassigned
+  | TeamReordered
   | BattleStarted
   | AttackUsed
   | NoAttack
@@ -254,14 +344,19 @@ export type GameEvent =
   | DamageTaken
   | Healed
   | WokeUp
+  | ConditionApplied
+  | ConditionCleared
+  | SelfHit
   | PokemonFainted
   | PkmRetired
   | PkmSentOut
+  | TrainerAppeared
   | BattleEnded
   | XpGained
   | PkmEvolved
   | PokemonCaptured
   | GymLocked
+  | GymAlreadyWon
   | RivalSentOut
   | MedalWon
   | PrizePkmWon

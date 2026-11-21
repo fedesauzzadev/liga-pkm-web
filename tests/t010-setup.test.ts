@@ -18,7 +18,7 @@ const setup = (
 }
 
 // AC: SPEC-B/T-010/AC-1 — newGame crea 1 jugador en paleta con el inicial equipado.
-test('AC-1 newGame({seed,starterDeck,ruleset}) crea 1 jugador en paleta con inicial+elemento, 2 comodines, 5 pokebolas, 0 medallas', () => {
+test('AC-1 newGame({seed,starterDeck,ruleset}) crea 1 jugador en paleta con inicial+elemento, 2 cartas Multicolor, 5 pokebolas, 0 medallas', () => {
   const result = setup(42, 'isla')
   expect(result.ok).toBe(true)
   if (!result.ok) throw new Error('inalcanzable')
@@ -28,8 +28,8 @@ test('AC-1 newGame({seed,starterDeck,ruleset}) crea 1 jugador en paleta con inic
   const player = state.players[0]!
   expect(player.position).toBe('paleta')
   expect(player.cameFrom).toBeNull()
-  expect(player.wildcards).toBe(2)
-  expect(player.items).toEqual({ pokeball: 5, potion: 0 })
+  expect(player.multicolor).toBe(2)
+  expect(player.items).toEqual({ pokeball: 5, potion: 0, oportunidad: 0, super_potion: 0, ultraball: 0, masterball: 0 })
   expect(player.medals).toEqual([])
   expect(player.oakPile).toEqual([])
   expect(player.elements).toEqual([])
@@ -45,7 +45,8 @@ test('AC-1 newGame({seed,starterDeck,ruleset}) crea 1 jugador en paleta con inic
     { id: 'element_water#1', element: 'water' },
   ])
 
-  // montana → charmander + fuego (bulbasaur/machop/abra aún no están en el contenido: AC-2).
+  // montana → charmander + fuego (bulbasaur/machop aún no están en el contenido: AC-2;
+  // abra sí está desde el plan probar-encuentro-abra).
   const mountain = setup(42, 'montana')
   expect(mountain.ok).toBe(true)
   if (mountain.ok) {
@@ -66,10 +67,10 @@ test('AC-1 newGame({seed,starterDeck,ruleset}) crea 1 jugador en paleta con inic
 
 // AC: SPEC-B/T-010/AC-2 — inicial inexistente ⇒ error claro (INVALID_SETUP), sin crash.
 test('AC-2 si la carta del inicial no existe en el contenido, error claro y no crash', () => {
+  // abra ya existe (plan probar-encuentro-abra): pantano arranca; los otros dos siguen faltando.
   const faltantes = [
     { deck: 'bosque', carta: 'bulbasaur' },
     { deck: 'llanura', carta: 'machop' },
-    { deck: 'pantano', carta: 'abra' },
   ] as const
   for (const { deck, carta } of faltantes) {
     const result = setup(1, deck)

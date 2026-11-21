@@ -80,7 +80,7 @@ test('AC-4 flatReductionFor suma condición + especialidades; versus special sol
 // Integración: bonusPerRoll tira dados propios (purpose 'bonus') y corta al primer fallo.
 test('AC-4 doble bofeton: dados [5,4,2] con faces [4,5,6] ⇒ +20 y exactamente 3 tiradas bonus', () => {
   const game = toBattle({
-    rng: rngOf(5, 4, 2),
+    rng: rngOf(5, 4, 2, 6), // 3 tiradas bonus + attackSelect del rival (6 ⇒ no ataca)
     active: 'p1-poli',
     player: (p) => ({
       ...p,
@@ -91,7 +91,7 @@ test('AC-4 doble bofeton: dados [5,4,2] con faces [4,5,6] ⇒ +20 y exactamente 
           damage: 0,
           xp: 0,
           equipped: [{ id: parseCardId('element_water#9'), element: 'water' }],
-          wildcards: [],
+          multicolor: [],
           fainted: false,
         },
       ],
@@ -111,14 +111,14 @@ test('AC-4 doble bofeton: dados [5,4,2] con faces [4,5,6] ⇒ +20 y exactamente 
 
 // Integración: el dado de efecto elige entre base y ifRoll (purpose 'effect', siempre último).
 test('AC-4 rasgunos: efecto 6 ⇒ 20; efecto 3 ⇒ 10 (base)', () => {
-  const high = toBattle({ rng: rngOf(6) })
+  const high = toBattle({ rng: rngOf(6, 6) })
   const hit = run(high.state, { type: 'Attack', attackId: 'rasgunos' }, high.ctx)
   expect(hit.ok).toBe(true)
   if (!hit.ok) throw new Error(hit.error.message)
   expect(hit.value.events).toContainEqual({ type: 'DieRolled', purpose: 'effect', value: 6 })
   expect(hit.value.events).toContainEqual({ type: 'DamageTaken', pkmUid: 'rival-1', amount: 20, cause: 'attack' })
 
-  const low = toBattle({ rng: rngOf(3) })
+  const low = toBattle({ rng: rngOf(3, 6) })
   const miss = run(low.state, { type: 'Attack', attackId: 'rasgunos' }, low.ctx)
   expect(miss.ok).toBe(true)
   if (!miss.ok) throw new Error(miss.error.message)
@@ -128,7 +128,7 @@ test('AC-4 rasgunos: efecto 6 ⇒ 20; efecto 3 ⇒ 10 (base)', () => {
 
 // Integración: la reducción del defensor atraviesa el pipeline completo y tiene piso 0.
 test('AC-4 integración: flatReduction del defensor reduce y nunca baja de 0', () => {
-  const game = toBattle({ rng: rngOf(3) }) // rasguños sin acierto ⇒ base 10
+  const game = toBattle({ rng: rngOf(3, 6) }) // rasguños sin acierto ⇒ base 10 · rival 6 ⇒ no ataca
   const seeded = {
     ...game.state,
     battle: {

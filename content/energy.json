@@ -1,0 +1,21 @@
+{
+ "_comment": "Tipos de energía. 'normal' y 'dragon' NO tienen cartas de energía: normal = casillero gris 'cualquier energía' en los costos; dragon solo existe como elemento de PKM. 'multicolor' es una carta de ítem que cuenta como 1 energía de cualquier tipo.",
+ "types": [
+  { "id": "grass",    "es": "Planta",    "color": "#3FA34D", "icon": "grass.svg",    "energyCard": true },
+  { "id": "bug",      "es": "Insecto",   "color": "#8FAA23", "icon": "bug.svg",      "energyCard": true },
+  { "id": "flying",   "es": "Volador",   "color": "#6C93D6", "icon": "flying.svg",   "energyCard": true },
+  { "id": "fire",     "es": "Fuego",     "color": "#E8483B", "icon": "fire.svg",     "energyCard": true },
+  { "id": "electric", "es": "Eléctrica", "color": "#F4C430", "icon": "electric.svg", "energyCard": true },
+  { "id": "ground",   "es": "Tierra",    "color": "#9A7440", "icon": "ground.svg",   "energyCard": true },
+  { "id": "water",    "es": "Agua",      "color": "#3B8FE0", "icon": "water.svg",    "energyCard": true },
+  { "id": "rock",     "es": "Roca",      "color": "#7B746A", "icon": "rock.svg",     "energyCard": true },
+  { "id": "ice",      "es": "Hielo",     "color": "#7ED6E8", "icon": "ice.svg",      "energyCard": true },
+  { "id": "fighting", "es": "Lucha",     "color": "#B5532A", "icon": "fighting.svg", "energyCard": true },
+  { "id": "ghost",    "es": "Fantasma",  "color": "#5C4E8C", "icon": "ghost.svg",    "energyCard": true },
+  { "id": "poison",   "es": "Veneno",    "color": "#7A3FA0", "icon": "poison.svg",   "energyCard": true },
+  { "id": "psychic",  "es": "Psíquica",  "color": "#A24BC4", "icon": "psychic.svg",  "energyCard": true },
+  { "id": "normal",   "es": "Normal",    "color": "#C9C9C9", "icon": "normal.svg",   "energyCard": false },
+  { "id": "dragon",   "es": "Dragón",    "color": "#4F5BD5", "icon": "dragon.svg",   "energyCard": false }
+ ],
+ "multicolor": { "id": "multicolor", "es": "Multicolor", "icon": "multicolor.svg" }
+}

@@ -1,0 +1,287 @@
+/* Vista de equipo (SPEC-D/T-033): variables de global.css, táctil ≥ 44 px. */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(100%, 560px);
+  padding: 12px;
+  background: #f6f8f1;
+  color: var(--color-ink);
+  border: 3px solid var(--color-border);
+  border-radius: 14px;
+}
+
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.statusBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statusTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+}
+
+.medals {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+}
+
+.medalSlot {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  background: #e6e9e2;
+  color: var(--color-muted);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.medalSlot[data-filled='true'] {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.itemCount {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.team {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.slot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 44px; /* táctil ≥ 44 px (SDD §2) */
+  padding: 6px 8px;
+  font: inherit;
+  text-align: left;
+  background: #fff;
+  color: var(--color-ink);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.slot[data-empty='true'] {
+  border-style: dashed;
+  color: var(--color-muted);
+  background: transparent;
+  cursor: default;
+}
+
+.slot[data-active='true'] {
+  outline: 3px solid #f7d65a;
+  background: #fffbe4;
+}
+
+.slotName {
+  font-weight: 700;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  flex: 1;
+}
+
+.hp {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+.xp {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.fainted {
+  font-size: 11px;
+  font-weight: 800;
+  color: #8a2f2f;
+}
+
+.oak {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  background: #eef2e8;
+  border: 2px dashed var(--color-border);
+  border-radius: 8px;
+}
+
+.chipList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+.chipButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px; /* táctil ≥ 44 px (AC-2: accesible por teclado/touch) */
+  padding: 4px 10px;
+  font: inherit;
+  font-weight: 700;
+  background: #fff;
+  color: var(--color-ink);
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.chipButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: #e6e9e2;
+}
+
+.chipButton[data-active='true'] {
+  outline: 3px solid #f7d65a;
+  background: #fffbe4;
+}
+
+.multicolorBadge {
+  margin: 4px 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background: #fff;
+  border: 3px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.sheetHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sheetName {
+  margin: 0;
+  font-size: 16px;
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.attackList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.attackItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  background: #f6f8f1;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.attackRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.faces {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.attackName {
+  font-weight: 700;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ability {
+  font-style: italic;
+}
+
+.damage {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+.rawText {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+}
+
+.hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-muted);
+}

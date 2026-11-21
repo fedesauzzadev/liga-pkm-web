@@ -1,0 +1,617 @@
+/* SPEC-E/T-040 — estilos de /admin/cards (dev). Variables de global.css. */
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.title {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--color-accent);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: var(--font-title);
+  font-size: 0.7rem;
+  margin: 0 0 0.5rem;
+}
+
+.hint {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+/* Plan explicar-campos-admin: ayuda breve bajo cada etiqueta (siempre visible). */
+.fieldHint {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--color-muted);
+  font-size: 0.68rem;
+  line-height: 1.25;
+}
+
+/* Descripción de la op de efecto elegida: ocupa el resto de la fila. */
+.effectHelp {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.7rem;
+  line-height: 1.25;
+}
+
+.hintWarn {
+  color: #8a6d00;
+}
+
+/* Bloque de ayuda a lo ancho dentro de una fila flex (.attackRow). */
+.helpBlock {
+  flex-basis: 100%;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  min-height: 32px;
+  font: inherit;
+  font-size: 0.85rem;
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+  background: #fff;
+  cursor: pointer;
+  padding: 0 0.75rem;
+}
+
+.chipOn {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.status {
+  margin-left: auto;
+  color: var(--color-accent);
+  font-size: 0.85rem;
+  min-width: 6rem;
+  text-align: right;
+}
+
+/* Carga manual: Agregar/Eliminar + selector de archivo destino. */
+.manualBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.6rem;
+}
+
+.actionDanger {
+  background: #ffd9d9;
+}
+
+.action:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.targetSelect {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.8rem;
+}
+
+.targetSelect select,
+.targetSelect input {
+  font: inherit;
+  min-height: 32px;
+  min-width: 15rem;
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  background: #fff;
+  padding: 0 0.3rem;
+}
+
+/* Picker de foto junto al input manual (fallback) de source.photo. */
+.photoRow {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.photoRow select {
+  max-width: 15rem;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) minmax(220px, 320px) 1fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 70vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.item {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font: inherit;
+  font-size: 0.85rem;
+  text-align: left;
+  padding: 0.3rem 0.5rem;
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.itemOn {
+  background: #dcedc8;
+  outline: 2px solid var(--color-accent);
+}
+
+.itemName {
+  font-weight: 600;
+}
+
+.flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.flag,
+.flagWarn,
+.flagBad {
+  font-size: 0.7rem;
+  border-radius: 4px;
+  padding: 0 0.3rem;
+  border: 1px solid var(--color-border);
+  background: #f2f2f2;
+}
+
+.flagWarn {
+  background: #fff3c4;
+}
+
+.flagBad {
+  background: #ffd9d9;
+}
+
+.photoPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.photoWrap {
+  border: 3px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  max-height: 60vh;
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  transform-origin: 0 0;
+  transition: transform 0.15s ease-out;
+}
+
+.zoomRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Carta generada (PkmCard) bajo la foto: comparar transcripción vs juego. */
+.cardWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.cardCaption {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+.editor {
+  min-width: 0;
+}
+
+.checks {
+  border: 2px dashed var(--color-border);
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.checkList {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  max-height: 12vh;
+  overflow-y: auto;
+}
+
+.checkList li {
+  margin-bottom: 0.2rem;
+}
+
+/* T-048 — panel de ediciones de la casa: toggle por archivo + diff lado a lado. */
+.editFiles {
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+}
+
+.editFiles li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.editDiff {
+  margin-top: 0.75rem;
+}
+
+.editHead {
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+}
+
+.diffColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.diffColumns pre {
+  margin: 0;
+  padding: 0.4rem;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: #fff;
+  overflow-x: auto;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.cardEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.editorHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filePath {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.badgeOk,
+.badgeBad {
+  font-size: 0.75rem;
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--color-border);
+}
+
+.badgeOk {
+  background: #dcedc8;
+}
+
+.badgeBad {
+  background: #ffd9d9;
+}
+
+.action {
+  min-height: 44px;
+  font: inherit;
+  font-weight: 600;
+  padding: 0 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.actionVerify {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.errorList {
+  margin: 0;
+  padding: 0.4rem 0.75rem 0.4rem 1.6rem;
+  font-size: 0.8rem;
+  background: #fff2f2;
+  border-radius: 6px;
+}
+
+.attackRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.field {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.8rem;
+}
+
+.fieldLabel {
+  color: var(--color-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.field input,
+.field select,
+.field textarea,
+.fieldBlock input,
+.fieldBlock select,
+.fieldBlock textarea {
+  font: inherit;
+  min-height: 32px;
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  background: #fff;
+  padding: 0 0.3rem;
+}
+
+.field textarea {
+  min-width: 260px;
+}
+
+.fieldBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-top: 1px solid #c9d4c0;
+  padding-top: 0.5rem;
+}
+
+.iconSelect {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.costEditor {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.mini {
+  min-height: 28px;
+  min-width: 28px;
+  font: inherit;
+  font-size: 0.8rem;
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  padding: 0 0.35rem;
+}
+
+.attackBox {
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: #ffffffc8;
+}
+
+.effects {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.effectList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.effectRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  border: 1px solid #c9d4c0;
+  border-radius: 6px;
+  padding: 0.25rem 0.4rem;
+}
+
+.effectBad {
+  border-color: #b33;
+  background: #fff4f4;
+}
+
+.effectRow select {
+  min-height: 32px;
+  font: inherit;
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  background: #fff;
+}
+
+.faces {
+  display: inline-flex;
+  gap: 0.15rem;
+}
+
+.face {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0 0.25rem;
+  background: #fff;
+}
+
+.errorText {
+  color: #b33;
+  font-size: 0.75rem;
+}
+
+.previewBtn {
+  min-height: 36px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 2px solid var(--color-accent);
+  border-radius: 6px;
+  background: #dcedc8;
+  cursor: pointer;
+  padding: 0 0.6rem;
+}
+
+.smallNum {
+  width: 4.5rem;
+  min-height: 28px;
+}
+
+.fxPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  border: 3px solid var(--color-border);
+  border-radius: 8px;
+  padding: 0.5rem;
+  background: linear-gradient(180deg, #cfe7f5 0%, #dff0d8 70%);
+}
+
+.fxViewport {
+  width: 320px;
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+}
+
+.fxStage {
+  width: 640px;
+  height: 360px;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  position: relative;
+}
+
+.fxSprite {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+
+.fxDef {
+  left: 150px;
+  top: 60px;
+}
+
+.fxImg {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.fxCard {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8rem;
+  border: 2px dashed var(--color-muted);
+  border-radius: 8px;
+  background: #ffffffd0;
+}
+
+.fxLayer {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.fxNote {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 900px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+
+  .list {
+    max-height: 30vh;
+  }
+}

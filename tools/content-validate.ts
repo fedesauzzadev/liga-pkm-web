@@ -21,9 +21,18 @@ const boardInfo =
     ? `, tablero ${s.board.nodes} nodos/${s.board.edges} aristas` +
       ` (${s.board.connected ? 'conexo' : 'NO conexo'}, ${s.board.status})`
     : ''
+// SPEC-F/T-002b AC-4: totales por mazo (energías + PKM cargados).
+if (s.decks !== undefined) {
+  for (const t of s.decks) {
+    console.log(
+      `  mazo ${t.deck.padEnd(8)} ${String(t.energy).padStart(2)} energía + ${String(t.pkm).padStart(2)} PKM = ${String(t.total).padStart(2)}/${t.expected}`,
+    )
+  }
+}
+const itemDeck = s.decks !== undefined ? ' e ítems = 60' : ''
 console.log(
   `content:validate OK — ${s.files} archivo(s), ${s.cards} carta(s) ` +
     `(${s.verifiedCards} verificadas, ${s.unverifiedCards} sin verificar)${boardInfo}, ` +
     `${s.customEffects} efecto(s) custom (docs/effect-requests/), ` +
-    `${report.warnings.length} warning(s)`,
+    `${report.warnings.length} warning(s)${itemDeck}`,
 )

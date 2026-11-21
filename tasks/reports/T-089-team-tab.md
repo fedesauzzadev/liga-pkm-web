@@ -1,0 +1,33 @@
+# Reporte T-089 — Pestaña para ocultar/mostrar el equipo (`btn-team-tab`, colapso del panel-team)
+- Estado: REVIEW | Rama/commit: main (sin commitear, como el resto de la fase)
+- Resumen (≤ 5 líneas):
+  - `teamTab` entra en `content/ui/layout.json` (x 0.17, y 0.7266, w 0.655, h 0.0734, minH 44; bottom 0,80 exacto sobre `team`), en `UI_PANEL_KEYS` (9 → 10 paneles) y en `FOCUS_ORDER` (Tab: turno → equipo → pestaña → …).
+  - El shell renderiza `btn-team-tab` como botón (misma rama/estilo que Oak/Menú) con `aria-expanded`, `aria-controls="panel-team"` e i18n `teamCollapse`/`teamExpand`; el estado vive en `PlayScreen` (`teamCollapsed`, `useState`, default false ⇒ arranca visible).
+  - Colapsar saca `panel-team` del DOM (la pestaña queda fija en su caja); ningún otro panel cambia de caja. Expandir devuelve el strip con sus 6 slots intactos.
+  - `MenuPopover` (+ `ShellMenu`) se extrajo a su propio archivo para que `GameShell.tsx` quede en 329 líneas (con el cambio habría quedado en 410, sobre el tope de 400).
+- Archivos clave tocados (rutas):
+  - content/ui/layout.json · packages/content/src/ui.ts (`UI_PANEL_KEYS` + `boxesOverlap` con eps 1e-6 px)
+  - apps/web/src/shell/{layout.ts, GameShell.tsx, MenuPopover.tsx (nuevo)} · apps/web/src/game/PlayScreen.tsx · apps/web/src/i18n/es.ts
+  - tests: apps/web/src/shell/{layout.test.ts, GameShell.test.tsx} · apps/web/src/game/PlayScreen.test.tsx · e2e/t089-team-tab.mjs (nuevo)
+  - e2e/t071-shell.mjs (teamTab en cajas + orden Tab; sonda "clic vacío" 0,75 → 0,40) · e2e/t082-hud.mjs (+ btn-team-tab) · package.json (cadena e2e) · tasks/BACKLOG.md · docs/OPEN-QUESTIONS.md (Q-054..Q-056)
+- AC cubiertos → test (SPEC-N/AC-n → archivo:test):
+  - AC-1 → apps/web/src/shell/layout.test.ts (caja exacta, minH 44 a 1024×600, `UI_PANEL_KEYS`/`FOCUS_ORDER`, `crossCheckLayout` verde; conteo de paneles 9 → 10)
+  - AC-2 → apps/web/src/shell/GameShell.test.tsx (btn-team-tab, `aria-expanded` true/false, `aria-controls`, textos teamCollapse/teamExpand, `id="panel-team"`)
+  - AC-3 → GameShell.test.tsx (con `teamCollapsed`: panel-team fuera del DOM y estilo idéntico del resto de los paneles) + e2e/t089-team-tab.mjs (click ⇒ panel-team fuera, pestaña en el mismo lugar, otros paneles sin mover ±1 px, mundo visible)
+  - AC-4 → apps/web/src/game/PlayScreen.test.tsx (arranca visible: panel-team + 6 slots + expanded=true) + e2e/t089-team-tab.mjs (roundtrip click → click: 6 slots y aria/textos de vuelta)
+  - AC-5 → e2e/t089-team-tab.mjs a 1024×600: alto 44,04 px (≥ 44 ±2), caja dentro de ±2 % de layout.json, sin solapes con panel-team / btn-oak / btn-menu
+  - AC-6 → layout.test.ts (FOCUS_ORDER) + e2e/t071-shell.mjs (orden de Tab con btn-team-tab) + e2e/t082-hud.mjs (btn-team-tab en PANEL_TESTIDS: letra ≥ 13 px, sin cortes ni solapes)
+  - AC-7 → todos los anteriores (un test por AC con `// AC: SPEC-N/AC-n`; SSR sin jsdom) + e2e nuevo `e2e/t089-team-tab.mjs` en puerto libre 4176, agregado a `pnpm e2e`
+- `pnpm verify`: OK — typecheck+lint OK · 121 archivos / 657 tests · content:validate OK · build OK · deps 0 violaciones · size 23.39 kB / 406.64 kB · bench 57.0 / 0.3 / 2.3 ms.
+- `pnpm e2e`: 5 de 6 suites verdes (t061, t064, t071, t073, t089). t082 falla SOLO en 1920×1080 por una expectativa preexistente y ajena a esta tarea (espera "Recentrar"; el botón actual es "Centrar en mí", Q-055); sus corridas 1280×720 y 1366×768 quedan verdes y cubren el `btn-team-tab` nuevo.
+- Decisiones tomadas / defaults aplicados:
+  - `boxesOverlap` con `OVERLAP_EPS_PX = 1e-6` px: dos cajas que se tocan no se solapan y el ruido de flotantes de 0,7266 + 0,0734 = 0,80 no dispara el cross-check (Q-054); solapes reales siguen detectados.
+  - `aria-controls="panel-team"` apunta a un id real: los paneles del shell ahora llevan `id={testid}` (antes solo `data-testid`).
+  - El equipo arranca siempre visible (sin localStorage ni settings) y la pestaña es fija en ambos estados; no se mueve ni se redimensiona ningún panel existente.
+  - e2e t071: la sonda "clic en zona vacía llega al mundo" pasó de 50 %×75 % a 50 %×40 % porque la pestaña ocupa el punto viejo (misma intención del AC-2 de T-071).
+  - `MenuPopover` extraído de `GameShell.tsx` (410 → 329 líneas) para no crear una nueva violación del tope de 400 (Q-056).
+- Dudas nuevas (→ OPEN-QUESTIONS.md) y ER solicitados: Q-054 (eps de `boxesOverlap`), Q-055 (expectativa vieja 'Recentrar' en e2e/t082-hud.mjs), Q-056 (deuda >400 líneas en PlayScreen.tsx/es.ts). Sin ER.
+- Riesgos / deuda:
+  - `PlayScreen.tsx` (474) y `es.ts` (608) siguen sobre el tope de 400 líneas (deuda preexistente: Q-036 y Q-056).
+  - Al colapsar, `TeamStrip` se desmonta: cualquier estado efímero de UI se resetea; el equipo vuelve desde el estado del motor (6 slots intactos).
+  - Mientras está colapsado, `aria-controls` apunta a un id inexistente (comportamiento esperable de un disclosure; no rompe nada).

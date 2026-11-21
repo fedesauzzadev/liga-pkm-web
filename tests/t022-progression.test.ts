@@ -2,14 +2,24 @@
 import { expect, test } from 'vitest'
 import { parseCardId, parsePkmUid } from '../packages/content/src/ids.ts'
 import type { PokemonCard } from '../packages/content/src/index.ts'
-import { run, rngOf, secondPkm, toBattle } from './t020-helpers.ts'
+import { content, run, rngOf, secondPkm, toBattle } from './t020-helpers.ts'
 import {
+  applyCommand,
   legalCommands,
+  type Command,
   type Ctx,
   type GameState,
   type PkmInstance,
   type PlayerState,
+  type Result,
 } from '../packages/engine/src/index.ts'
+import {
+  applyToSession,
+  restoreSession,
+  saveFromSession,
+  startSession,
+  type GameSession,
+} from '../apps/web/src/game/session.ts'
 
 /** Línea sintética caterpie → metapod (xp 1): evolución en contenido controlado. */
 const caterpie: PokemonCard = {
@@ -66,7 +76,7 @@ const synthPkm = (cardId: string, uid: string, overrides: Partial<PkmInstance> =
   damage: 0,
   xp: 0,
   equipped: [],
-  wildcards: [],
+  multicolor: [],
   fainted: false,
   ...overrides,
 })
@@ -121,14 +131,13 @@ test('AC-1 la victoria da 1 XP a los participantes (incluido un retirado) y a na
   // El starter retira (participó), el segundo mata al rival; un tercero nunca entró.
   const third = synthPkm('squirtle', 'p1-third')
   const seeded = seededBattle({
-    rngFaces: [6], // attackSelect del salvaje ⇒ 6 no ataca
+    rngFaces: [6, 6], // attackSelect del salvaje en la retirada y en el ataque (6 ⇒ no ataca)
     player: (p) => ({ ...p, team: [p.team[0]!, secondPkm(), third] }),
   })
   const retired = run(seeded.state, { type: 'Retire', to: 'p1-second' }, seeded.ctx)
   if (!retired.ok) throw new Error(retired.error.message)
-  const advanced = run(retired.value.state, { type: 'Advance' }, seeded.ctx) // turno del rival
-  if (!advanced.ok) throw new Error(advanced.error.message)
-  const killed = run(advanced.value.state, { type: 'Attack', attackId: 'cabezazo' }, seeded.ctx)
+  // El turno del rival ya corrió dentro del Retire (turno-automatico-rival).
+  const killed = run(retired.value.state, { type: 'Attack', attackId: 'cabezazo' }, seeded.ctx)
   if (!killed.ok) throw new Error(killed.error.message)
   expect(killed.value.events).toContainEqual({ type: 'BattleEnded', player: 'p1', result: 'won' })
   expect(killed.value.events).toContainEqual({ type: 'XpGained', pkmUid: 'p1-starter', amount: 1 })
@@ -211,7 +220,12 @@ test('AC-3 Capture gasta la pokebola y la devuelve al fondo del mazo Ítem; sin 
   expect(captured.value.events.at(-1)).toEqual({ type: 'TurnAdvanced', turn: captured.value.state.turn })
 
   // Sin pokebola: Capture es ilegal y el menú solo ofrece Release.
-  const dry = wonBattle({ player: (p) => ({ ...p, items: { pokeball: 0, potion: 0 } }) })
+  const dry = wonBattle({
+    player: (p) => ({
+      ...p,
+      items: { pokeball: 0, potion: 0, oportunidad: 0, super_potion: 0, ultraball: 0, masterball: 0 },
+    }),
+  })
   expect(legalCommands(dry.state, dry.ctx)).toEqual([{ type: 'Release' }])
   const refused = run(dry.state, { type: 'Capture' }, dry.ctx)
   expect(refused.ok).toBe(false)
@@ -235,7 +249,112 @@ test('AC-4 con equipo completo el PKM capturado va a oakPile y el equipo queda e
   })
   const player = captured.value.state.players[0]!
   expect(player.team).toHaveLength(6) // equipo lleno: no entra
-  expect(player.oakPile).toEqual([{ uid: 'p1-catch-1', cardId: 'poliwag', damage: 0, xp: 0, equipped: [], wildcards: [], fainted: false }])
+  expect(player.oakPile).toEqual([{ uid: 'p1-catch-1', cardId: 'poliwag', damage: 0, xp: 0, equipped: [], multicolor: [], fainted: false }])
+})
+
+// ── registrar-captura (.opencode/plan/registrar-captura.md): capturar REGISTRA la carta ──
+
+function must<T>(result: Result<T, { readonly message: string }>): T {
+  if (!result.ok) throw new Error(result.error.message)
+  return result.value
+}
+
+/** Sesión real Montaña/semilla 1 → DebugEncounter(abra) → pelear → victoria
+ * (dados de la semilla; el mazo pantano conserva 1 abra tras el robo). */
+const abraWonSession = (): GameSession => {
+  let session = must(startSession({ seed: 1, starterDeck: 'montana' }, content))
+  session = must(
+    applyToSession(session, { type: 'DebugEncounter', deck: 'pantano', card: parseCardId('abra') }, content),
+  ).session
+  session = must(applyToSession(session, { type: 'FightEncounter', pkmUid: 'p1-starter' }, content)).session
+  let guard = 0
+  while (session.state.battle !== null && guard < 60) {
+    guard += 1
+    const command: Command =
+      session.state.pending?.type === 'ChooseReplacement'
+        ? { type: 'SendOut', pkmUid: session.state.pending.options[0]! }
+        : session.state.battle.turnSide === 0
+          ? { type: 'Attack', attackId: 'rasgunos' }
+          : { type: 'Advance' }
+    session = must(applyToSession(session, command, content)).session
+  }
+  expect(session.state.pending).toEqual({
+    type: 'CaptureOrRelease',
+    card: 'abra',
+    deck: 'pantano',
+    participants: ['p1-starter'],
+  })
+  return session
+}
+
+// AC: registrar-captura/AC-1 — Capture remueve TODAS las copias de la carta
+// capturada de los mazos que sirven salvajes (5 de terreno + sorpresa), sin
+// refresco; el resto del comportamiento queda intacto.
+test('AC-1 registrar-captura: Capture deja los mazos de terreno y sorpresa sin la carta', () => {
+  const won = wonBattle()
+  const withCopies: GameState = {
+    ...won.state,
+    decks: {
+      ...won.state.decks,
+      pantano: [parseCardId('poliwag')],
+      sorpresa: [parseCardId('poliwag'), parseCardId('masterball')],
+    },
+  }
+  const captured = run(withCopies, { type: 'Capture' }, won.ctx)
+  if (!captured.ok) throw new Error(captured.error.message)
+  expect(captured.value.state.decks.pantano).toEqual([]) // copia restante fuera
+  expect(captured.value.state.decks.sorpresa).toEqual(['masterball']) // solo queda la bola
+  expect(captured.value.state.players[0]!.team.at(-1)?.cardId).toBe('poliwag')
+  expect(captured.value.state.players[0]!.items.pokeball).toBe(4)
+})
+
+// AC: registrar-captura/AC-3 — solo la captura registra: tras Capture el
+// DebugEncounter de la misma carta es rechazado; Release y la derrota (el
+// salvaje escapa al fondo) NO remueven las copias restantes.
+test('AC-3 registrar-captura: DebugEncounter rechazado tras Capture; Release y derrota no registran', () => {
+  // (a) Capture: sin refresco, el botón dev ya no puede volver a sacar abra.
+  const session = abraWonSession()
+  const captured = must(applyToSession(session, { type: 'Capture' }, content))
+  expect(captured.session.state.decks.pantano.filter((card) => card === 'abra')).toEqual([])
+  const again = applyCommand(
+    captured.session.state,
+    { type: 'DebugEncounter', deck: 'pantano', card: parseCardId('abra') },
+    { content, rng: rngOf() },
+  )
+  expect(again.ok).toBe(false)
+  if (!again.ok) {
+    expect(again.error.code).toBe('ILLEGAL_COMMAND')
+    expect(again.error.message).toContain('no está en el mazo')
+  }
+
+  // (b) Release: la carta vuelve al fondo y la copia restante sigue en el mazo.
+  const won = wonBattle()
+  const withCopy: GameState = { ...won.state, decks: { ...won.state.decks, pantano: [parseCardId('poliwag')] } }
+  const released = run(withCopy, { type: 'Release' }, won.ctx)
+  if (!released.ok) throw new Error(released.error.message)
+  expect(released.value.state.decks.pantano).toEqual(['poliwag', 'poliwag']) // restante + liberada al fondo
+
+  // (c) Derrota: el salvaje escapa al fondo y la copia restante sigue.
+  const doomed = toBattle({
+    rng: rngOf(3), // attackSelect 3 ⇒ Embestida (20) KO del starter con 40 de daño
+    player: (p) => ({ ...p, team: [synthPkm('charmander', 'p1-starter', { damage: 40 })] }),
+  })
+  const lost = run(
+    { ...doomed.state, decks: { ...doomed.state.decks, pantano: [parseCardId('poliwag')] } },
+    { type: 'Advance' },
+    doomed.ctx,
+  )
+  if (!lost.ok) throw new Error(lost.error.message)
+  expect(lost.value.events).toContainEqual({ type: 'BattleEnded', player: 'p1', result: 'lost' })
+  expect(lost.value.state.decks.pantano).toEqual(['poliwag', 'poliwag']) // restante + escape al fondo
+})
+
+// AC: registrar-captura/AC-4 — replay: reaplicar el commandLog de una partida
+// con captura (camino de restoreSession) termina con el MISMO state.decks.
+test('AC-4 registrar-captura: el replay del commandLog reproduce el mazo sin la capturada', () => {
+  const session = must(applyToSession(abraWonSession(), { type: 'Capture' }, content)).session
+  const restored = must(restoreSession(saveFromSession(session), content))
+  expect(restored.session.state.decks).toEqual(session.state.decks) // sin la carta capturada
 })
 
 // AC: SPEC-C/T-022/AC-5 — la carta capturada sale del mazo; la liberada vuelve al fondo.

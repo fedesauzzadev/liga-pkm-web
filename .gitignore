@@ -1,16 +1,26 @@
 node_modules
 dist
+shots
+assets-src
+apps/web/public/models/hgss
+apps/web/public/models/new
 .DS_Store
 docs/reference/*.pdf
 docs/reference/*.jpg
 docs/reference/*.png
 apps/web/public/sprites
 apps/web/public/fx
+apps/web/public/badges
 content/reference
 content/pokemon/_staging
+content/pokemon/_pilot
 content/photos
 .env
 .env.*
 *.local
 
 docs/reference/*.jpeg
+tools/cards-scan/fixtures/
+tools/cards-scan/.cache/
+
+graphify-out/

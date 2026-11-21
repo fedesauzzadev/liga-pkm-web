@@ -13,7 +13,7 @@ export const EXPECTED_CLASSIC_COUNTS: Readonly<Record<string, number>> = {
   oak: 2,
   mercado: 5,
   duelo: 4,
-  deck: 15,
+  deck: 20,
   start: 1,
   sorpresa: 1,
   liga: 1,
@@ -102,14 +102,15 @@ export function crossCheckBoard(board: BoardGraph, file: string): BoardCheckResu
   if (Object.keys(facts.deckCounts).length === DECK_IDS.length) {
     for (const deck of DECK_IDS) {
       const actual = facts.deckCounts[deck] ?? 0
-      if (actual !== 3) {
-        errors.push(`${file}: el mazo "${deck}" tiene ${actual} nodo(s), se esperaban 3`)
+      if (actual !== 4) {
+        errors.push(`${file}: el mazo "${deck}" tiene ${actual} nodo(s), se esperaban 4`)
       }
     }
   }
 
   // Estado: el dueño verifica con el overlay y el worker lo marca VERIFIED (AC-4).
-  if (board.meta.status !== 'VERIFIED') {
+  // Se aceptan sufijos de transformación (ej: VERIFIED+deck4) sin volver a advertir.
+  if (!board.meta.status.startsWith('VERIFIED')) {
     warnings.push(`${file}: estado ${board.meta.status} — falta verificación con overlay (T-003/AC-4)`)
   }
   return { errors, warnings }

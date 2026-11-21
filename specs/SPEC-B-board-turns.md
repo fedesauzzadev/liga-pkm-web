@@ -2,7 +2,7 @@
 Reglas: `docs/RULES.md` §1-2, §5 (D-01, D-09…D-13).
 
 ## T-010 Estado inicial y Setup
-- AC-1 `newGame({seed, starterDeck, ruleset})` crea 1 jugador en `paleta` con el inicial correspondiente (Bulbasaur/Charmander/Squirtle/Machop/Abra) + 1 elemento de su tipo equipado, 2 comodines, 5 pokebolas, 0 medallas, `cameFrom=null`.
+- AC-1 `newGame({seed, starterDeck, ruleset})` crea 1 jugador en `paleta` con el inicial correspondiente (Bulbasaur/Charmander/Squirtle/Machop/Abra) + 1 elemento de su tipo equipado, 2 cartas Multicolor, 5 pokebolas, 0 medallas, `cameFrom=null`.
 - AC-2 Si la carta del inicial no existe en el contenido, error claro (no crash).
 - AC-3 Los mazos se barajan con el RNG (misma semilla ⇒ mismo orden); el inicial se saca del mazo.
 - AC-4 `GameState` es serializable (`JSON.parse(JSON.stringify(s))` ≡ `s`).
@@ -26,8 +26,8 @@ Comandos: `RollMove`, `ChoosePath{to}`, `StopHere`, `ContinueMoving`.
 - AC-5 Ítems usados vuelven al fondo del mazo ítem; los elementos nunca vuelven.
 
 ## T-013 Equipamiento y costos
-Comandos: `Equip{pkmUid, elementId}`, `Unequip`, `AssignWildcard{pkmUid, element}`.
-- AC-1 `canUse(pkm, attack)` cumple RULES §3: por cada elemento específico, #equipados (+comodines asignados) ≥ requeridos del mismo; total equipado ≥ `cost.length`; cada ataque se evalúa solo (Krabby con 2 Agua usa sus 3 ataques).
-- AC-2 Un comodín cuenta como 1 elemento, el que se le asignó.
+Comandos: `Equip{pkmUid, elementId}`, `Unequip`, `AssignMulticolor{pkmUid, element}`.
+- AC-1 `canUse(pkm, attack)` cumple RULES §3: por cada elemento específico, #equipados (+Multicolor asignados) ≥ requeridos del mismo; total equipado ≥ `cost.length`; cada ataque se evalúa solo (Krabby con 2 Agua usa sus 3 ataques).
+- AC-2 Una carta Multicolor cuenta como 1 energía, la del tipo que se le asignó (un solo tipo a la vez).
 - AC-3 Solo se puede equipar/reasignar en `Organize` (no en combate).
 - AC-4 `legalAttacks(pkm, isFirstTurn)` aplica la regla de "primer ataque" (RULES §4) y devuelve los permitidos.

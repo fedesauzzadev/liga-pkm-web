@@ -1,0 +1,10 @@
+{
+  "_status": "BORRADOR a ojo de la foto del tablero físico (1176x1600 px, mismas coordenadas que kanto.json). Cada panel del tablero tiene un mazo. Ajustar con tools/board-overlay.html si hace falta. T-090: los pedestales Ítem/Sorpresa se quitaron (placements.removeStacks); esas cartas se roban desde el nodo.",
+  "stacks": {
+    "llanura": { "x": 302, "y": 370,  "w": 270, "h": 350, "label": "Llanura", "symbol": "sun" },
+    "pantano": { "x": 957, "y": 568,  "w": 265, "h": 375, "label": "Pantano", "symbol": "skull" },
+    "isla":    { "x": 555, "y": 785,  "w": 270, "h": 385, "label": "Isla",    "symbol": "drop" },
+    "bosque":  { "x": 875, "y": 1125, "w": 270, "h": 380, "label": "Bosque",  "symbol": "tree" },
+    "montana": { "x": 338, "y": 1215, "w": 285, "h": 370, "label": "Montaña", "symbol": "flame" }
+  }
+}

@@ -1,0 +1,35 @@
+{
+ "_status": "Generado por `pnpm models:use-new` (SPEC-O/T-094/AC-1).",
+ "models": {
+  "gym": {
+   "file": "gim.glb",
+   "format": "glb",
+   "yawOffsetDeg": 0,
+   "status": "proposed"
+  },
+  "pokecenter": {
+   "file": "pokecenter.glb",
+   "format": "glb",
+   "yawOffsetDeg": 0,
+   "status": "proposed"
+  },
+  "market": {
+   "file": "pokemart.glb",
+   "format": "glb",
+   "yawOffsetDeg": -45,
+   "status": "proposed"
+  },
+  "league": {
+   "file": "league.glb",
+   "format": "glb",
+   "yawOffsetDeg": 0,
+   "status": "proposed"
+  },
+  "lab": {
+   "file": "oak.glb",
+   "format": "glb",
+   "yawOffsetDeg": 0,
+   "status": "proposed"
+  }
+ }
+}

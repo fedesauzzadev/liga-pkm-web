@@ -3,7 +3,7 @@ Reglas: `docs/RULES.md` §4, `docs/EFFECTS.md` completo. **Estas tareas requiere
 
 ## T-020 Núcleo de batalla
 Estado `BattleState{kind:'wild'|'gym', sides:[A,B], active, turnSide, conditions{...}, firstTurnFlags}`.
-Comandos: `FightEncounter`, `Retire{to}`, `UsePotion{pkmUid,target}`, `Attack{attackId}`, `Advance`.
+Comandos: `FightEncounter`, `Retire{to}`, `UsePotion{pkmUid,target}`, `Attack{attackId}`, `Advance` (pasar).
 - AC-1 Orden del turno de combate: poison/drain → wake → pociones → retirar | atacar (RULES §4). Un test por paso verifica el orden de eventos.
 - AC-2 Quién actúa primero: retador; tras una derrota actúa el lado que repone; `startsFirst` adelanta (D-02).
 - AC-3 Salvaje/gimnasio: `attackSelect` por `rollFaces`; sin coincidencia ⇒ evento `NoAttack`.
@@ -12,6 +12,7 @@ Comandos: `FightEncounter`, `Retire{to}`, `UsePotion{pkmUid,target}`, `Attack{at
 - AC-6 Retirar: limpia estados del PKM retirado (salvo daño y `disabledAttackId`), pierde el ataque del turno.
 - AC-7 Derrota: `damage ≥ hp` ⇒ `PokemonFainted`; sin PKM sanos ⇒ fin de batalla (derrota: el salvaje escapa).
 - AC-8 Explosión: si caen ambos, termina el turno del atacante y pasa al rival (p.68).
+- AC-9 (turno-automatico-rival) El turno del rival corre DENTRO del comando que cede el turno: `Attack`, `Retire` y el arranque por AGILIDAD (`FightEncounter`/`AcceptGymChallenge`, dado `attackSelect` incluido) devuelven también el turno completo del rival y el inicio del turno propio; `Advance` en tu turno mantiene el comportamiento (pasar). Con `pending` (p. ej. `ChooseReplacement`) o fin de batalla el rival NO actúa en ese comando. Invariante: fase `battle` con batalla abierta (`!won`) y sin `pending` ⇒ `turnSide === 0`.
 
 ## T-021 Primitivas (set 1)
 Implementar todas las de EFFECTS §1 excepto `transform`, `disableRandomAttack`, `rest` (set 2, post-MVP salvo que una carta del MVP las use).
@@ -25,7 +26,7 @@ Implementar todas las de EFFECTS §1 excepto `transform`, `disableRandomAttack`,
 ## T-022 XP, evolución, captura
 - AC-1 Al derrotar un PKM rival, todos los PKM tuyos que estuvieron en juego en ese combate ganan 1 XP; los que no, no.
 - AC-2 `Evolve{pkmUid, toId}` solo si `xp ≥ requerido`; reemplaza carta, XP=0, conserva daño (D-04/05); múltiples opciones ⇒ elige el jugador; Eevee tras 2 victorias.
-- AC-3 Captura tras ganar: `CaptureOrRelease`; requiere Pokebola (cualquiera); la pokebola vuelve al fondo del mazo ítem; si no hay, solo `Release`.
+- AC-3 Captura tras ganar: `CaptureOrRelease`; requiere Pokebola; la pokebola vuelve al fondo del mazo ítem; si no hay, solo `Release`. (Ultra Ball y Master Ball: SPEC-F/T-049.)
 - AC-4 Equipo lleno (6) ⇒ el capturado va a `oakPile`.
 - AC-5 La carta capturada sale del mazo; la liberada vuelve al fondo.
 

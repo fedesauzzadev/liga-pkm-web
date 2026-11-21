@@ -1,0 +1,233 @@
+{
+ "_status": "Configuración del lector de cartas escaneadas (SPEC-S/T-102). Las regiones son SUGERENCIAS en fracciones de la imagen para el diseño 'terrain' (medidas sobre el escaneo de ejemplo de ~698×1056 px); la segmentación real debe detectar líneas, no depender de coordenadas fijas.",
+ "normalize": {
+  "width": 700,
+  "height": 1060,
+  "tolerateAspectDiff": 0.04,
+  "autoDeskew": true
+ },
+ "profiles": {
+  "terrain": {
+   "appliesTo": [
+    "terrain",
+    "evolution",
+    "sorpresa"
+   ],
+   "hasCost": true,
+   "footer": [
+    "stage",
+    "deckIcon",
+    "evolution|chances"
+   ]
+  },
+  "gym": {
+   "appliesTo": [
+    "gym"
+   ],
+   "hasCost": false,
+   "header": "#<n> <name> de <leader>",
+   "footer": [
+    "Gimnasio",
+    "city"
+   ]
+  },
+  "league": {
+   "appliesTo": [
+    "league"
+   ],
+   "hasCost": false,
+   "header": "#<n> <name> de <trainer>",
+   "footer": [
+    "trainer",
+    "LIGA POKEMON"
+   ]
+  }
+ },
+ "regionHints": {
+  "terrain": {
+   "name": {
+    "x": [
+     0.07,
+     0.75
+    ],
+    "y": [
+     0.015,
+     0.085
+    ]
+   },
+   "hpCircle": {
+    "x": [
+     0.77,
+     0.87
+    ],
+    "y": [
+     0.04,
+     0.1
+    ]
+   },
+   "elementIcon": {
+    "x": [
+     0.87,
+     0.99
+    ],
+    "y": [
+     0.035,
+     0.105
+    ]
+   },
+   "art": {
+    "y": [
+     0.07,
+     0.45
+    ]
+   },
+   "attackArea": {
+    "y": [
+     0.455,
+     0.89
+    ]
+   },
+   "separators": "líneas horizontales rojo-oscuro entre bloques; línea negra gruesa antes del pie",
+   "attackBlock": {
+    "textX": [
+     0.06,
+     0.74
+    ],
+    "damageX": [
+     0.74,
+     0.88
+    ],
+    "costIconsX": [
+     0.84,
+     0.99
+    ]
+   },
+   "footer": {
+    "y": [
+     0.895,
+     0.955
+    ],
+    "stageX": [
+     0.06,
+     0.45
+    ],
+    "deckIconX": [
+     0.39,
+     0.52
+    ],
+    "evolutionX": [
+     0.53,
+     0.97
+    ]
+   }
+  }
+ },
+ "ocr": {
+  "engine": "tesseract",
+  "lang": "spa",
+  "cacheDir": "tools/cards-scan/.cache",
+  "digitsWhitelist": "0123456789",
+  "psm": {
+   "line": 7,
+   "block": 6
+  }
+ },
+ "validation": {
+  "hp": {
+   "min": 20,
+   "max": 150,
+   "multipleOf": 10
+  },
+  "damage": {
+   "min": 0,
+   "max": 200,
+   "multipleOf": 10
+  },
+  "faces": {
+   "digits": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "ascending": true
+  },
+  "attacksPerCard": {
+   "min": 1,
+   "max": 4
+  },
+  "snapNameToPokeapi": {
+   "enabled": true,
+   "maxEditDistance": 2
+  }
+ },
+ "confidence": {
+  "needsReviewBelow": 0.8,
+  "fieldsAlwaysReviewed": [
+   "effects.custom",
+   "kind:ability"
+  ]
+ },
+ "icons": {
+  "_nota": "T-102c: extracción por componentes conectados y aprendizaje por agrupación. Medido sobre escaneos reales: mismo ícono 0.01-0.073 (drift), íconos parecidos distintos (poison/psychic, amarillo/tan) desde 0.07-0.085. groupThreshold BAJO a propósito: un mismo tipo puede partirse en varios grupos (se etiquetan todos con el mismo nombre, es benigno) pero dos tipos distintos nunca se funden. maxDistance corta la clasificación (unknown ⇒ revisar). Ajustar con evidencia del lote completo.",
+  "minArea": 50,
+  "minSize": 12,
+  "maxSize": 95,
+  "groupThreshold": 0.05,
+  "maxDistance": 0.07
+ },
+ "iconClasses": {
+  "element": [
+   "normal",
+   "fire",
+   "water",
+   "grass",
+   "electric",
+   "psychic",
+   "fighting",
+   "poison",
+   "ground",
+   "flying",
+   "bug",
+   "ghost",
+   "ice",
+   "rock",
+   "dragon"
+  ],
+  "costSlot": [
+   "any",
+   "fire",
+   "water",
+   "grass",
+   "electric",
+   "psychic",
+   "fighting",
+   "poison",
+   "ground",
+   "flying",
+   "bug",
+   "ghost",
+   "ice",
+   "rock"
+  ],
+  "deck": [
+   "bosque",
+   "montana",
+   "isla",
+   "llanura",
+   "pantano",
+   "evolucion",
+   "sorpresa"
+  ],
+  "_notaDeck": "Los íconos de pie de las cartas de evolución/sorpresa etiquetan 'evolucion'/'sorpresa' (deck del SDD); los 5 de terreno solo para scans/terrain.",
+  "_nota": "Los íconos se aprenden de los propios escaneos: se agrupan por parecido y el dueño les pone nombre UNA sola vez (T-102c). 'any' es el círculo gris vacío."
+ },
+ "output": {
+  "stagingDir": "content/pokemon/_staging",
+  "reportDir": "content/photos/scan-reports",
+  "idFrom": "slug(name)",
+  "variantsLater": true
+ }
+}

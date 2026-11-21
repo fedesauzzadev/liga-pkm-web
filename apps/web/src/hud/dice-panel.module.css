@@ -1,0 +1,70 @@
+/* Panel del dado (SPEC-N/T-092): dado CSS a la izquierda + quién/propósito/
+   valor/historial a la derecha. --die-size achica el cubo de T-032b para
+   entrar en el panel (h 0,14 ⇒ ~84 px a 1024×600). */
+
+.root {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* SPEC-R/T-103/AC-19: 40 px deja ~64 px de texto: el rótulo cabe en 2-3
+     líneas completas (el wrapper del dado suma +30 px propios). */
+  --die-size: 40px;
+}
+
+.meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* dado-clicable: reset del botón que envuelve al dado — sin borde/fondo del
+   UA, cursor pointer y el mismo layout del dado (ítem flex de .root). */
+.roll {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.who {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  /* SPEC-R/T-103/AC-19: el rótulo ("Tirá el dado para moverte.") se muestra
+     completo, en dos líneas si hace falta — sin overflow:hidden ni ellipsis. */
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.purpose {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.value {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.history {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

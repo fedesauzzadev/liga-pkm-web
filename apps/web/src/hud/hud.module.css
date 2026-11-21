@@ -1,0 +1,527 @@
+/* HUD (SPEC-I/T-074): contenido de los paneles de vidrio del shell. Los paneles
+   (posición, vidrio, pointer-events) los pone GameShell; acá solo el interior:
+   tira de equipo, jugadores, turno y reserva de Oak. Compacto: el alto de los
+   paneles es ~19 % de la ventana. */
+
+/* ── panel-team: tira de 6 mini-cartas ── */
+
+.strip {
+  display: flex;
+  gap: 0.5%;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slot {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  background: rgba(253, 246, 227, 0.55);
+  overflow: hidden;
+}
+
+.slot[data-draggable='true'] {
+  cursor: grab;
+}
+
+.slotActive {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(64, 96, 48, 0.35);
+}
+
+.slotFainted {
+  filter: grayscale(1);
+  opacity: 0.65;
+}
+
+.slotEmpty {
+  border-style: dashed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--color-muted);
+  background: transparent;
+}
+
+.slotButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.sprite {
+  width: 100%;
+  max-height: 45%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.spriteFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.2em;
+  color: var(--color-muted);
+}
+
+.slotName {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.hpBar {
+  display: block;
+  width: 88%;
+  height: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.hpFill {
+  display: block;
+  height: 100%;
+  background: var(--color-accent);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1px;
+  font-size: 13px;
+}
+
+.chipExtra {
+  align-self: center;
+  color: var(--color-muted);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+}
+
+.badge {
+  padding: 0 3px;
+  font-size: 13px;
+  line-height: 1.2;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: rgba(232, 240, 224, 0.8);
+}
+
+/* ── panel-players ── */
+
+.players {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 100%;
+  font-size: 13px;
+  overflow: hidden auto;
+}
+
+.playerList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.playerRow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
+  min-height: 26px;
+  padding: 0 0.35rem;
+  font: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.playerActive {
+  border-color: var(--color-accent);
+  font-weight: 700;
+}
+
+.playerRow[data-viewed='true'] {
+  background: rgba(64, 96, 48, 0.12);
+}
+
+.token {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+}
+
+.medalsLine {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin: 2px 0 0;
+  color: var(--color-muted);
+}
+
+.medalDot {
+  color: #c9a227;
+  font-size: 13px;
+}
+
+.medalEmpty {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--color-muted);
+  border-radius: 50%;
+}
+
+/* ── panel-turn ── */
+
+/* T-082/AC-1: panel bajo (h 0.125) ⇒ líneas compactas; el botón de tirada es
+   intocable (≥ 44 px). La nota/meta se ocultan por container query cuando el
+   panel no da para más (nunca se recorta el contenido: scrollHeight == alto). */
+.turn {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 100%;
+  font-size: 13px;
+  line-height: 1.05;
+}
+
+.turnTitle {
+  margin: 0;
+  font-weight: 700;
+}
+
+.turnMeta {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.rollButton {
+  min-height: 44px;
+  padding: 0 0.5rem;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-accent);
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.actionButton {
+  min-height: 28px;
+  padding: 0 0.5rem;
+  font: inherit;
+  font-size: 13px;
+  background: rgba(232, 240, 224, 0.9);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.turnNote {
+  margin: auto 0 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+/* Panel corto: primero se sacrifica la nota y después la meta; el título y el
+   botón (lo importante) quedan siempre enteros. */
+@container (max-height: 108px) {
+  .turnNote {
+    display: none;
+  }
+}
+
+@container (max-height: 84px) {
+  .turnMeta {
+    display: none;
+  }
+}
+
+/* ── Reserva de Oak (popup) ── */
+
+.oak {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  height: 100%;
+  padding: 0.5rem;
+  overflow: hidden auto;
+  font-size: 13px;
+}
+
+.oakHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.oakTitle {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.oakHint {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.oakList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.oakRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.35rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: rgba(232, 240, 224, 0.6);
+}
+
+.oakName {
+  font-weight: 700;
+}
+
+/* SPEC-R/T-103: nombre de la pila clicable (abre la ventana de carta). */
+.oakNameButton {
+  font: inherit;
+  font-weight: 700;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.oakSwaps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+/* ── panel-backpack (SPEC-I/T-073): destinos de drop en panel-team ── */
+
+/* AC-1: con una carta en mano, el destino válido resalta y el inválido se atenúa. */
+.slot[data-drop-state='valid'] {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(64, 96, 48, 0.45);
+}
+
+.slot[data-drop-state='invalid'] {
+  opacity: 0.45;
+  filter: grayscale(0.6);
+}
+
+/* AC-5: ficha de energía equipada arrastrable de vuelta a la mochila. */
+.chipDraggable {
+  display: inline-flex;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.chipDraggable:active {
+  cursor: grabbing;
+}
+
+/* ── Ajustes del menú ── */
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.4rem 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.settingsLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.settingsRow {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.settingsButton {
+  min-height: 30px;
+  padding: 0 0.5rem;
+  font: inherit;
+  font-size: 13px;
+  background: rgba(232, 240, 224, 0.9);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.settingsButton[aria-pressed='true'] {
+  background: var(--color-accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── panel-history (SPEC-I/T-072) ── */
+
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  height: 100%;
+  min-height: 0;
+  font-size: 13px;
+  overflow: hidden;
+}
+
+.historyFilters {
+  display: flex;
+  gap: 3px;
+  flex: none;
+}
+
+.historyFilterButton {
+  flex: 1;
+  min-height: 22px;
+  padding: 0 0.35rem;
+  font: inherit;
+  font-size: 13px;
+  background: rgba(232, 240, 224, 0.9);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.historyFilterButton[aria-pressed='true'] {
+  background: var(--color-accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.historyList {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0 0 2px;
+  list-style: none;
+  overflow: hidden auto;
+}
+
+.historyEntry {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  gap: 0 4px;
+  padding: 2px 2px 2px 0;
+  border-bottom: 1px solid rgba(64, 96, 48, 0.15);
+}
+
+.historyIcon {
+  width: 8px;
+  height: 8px;
+  margin-top: 3px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-muted);
+}
+
+.historyText {
+  grid-column: 2;
+  overflow-wrap: anywhere;
+}
+
+.historyMeta {
+  grid-column: 2;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.historyEmpty {
+  padding: 4px 2px;
+  color: var(--color-muted);
+}
+
+.historyGroup {
+  margin: 2px 0;
+}
+
+.historyGroupButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  width: 100%;
+  min-height: 22px;
+  padding: 0 4px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  background: rgba(232, 240, 224, 0.9);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.historyGroupArrow {
+  color: var(--color-muted);
+}
+
+/* Ícono por categoría: un color por kind (AC-1). */
+.historyEntry[data-kind='dice'] .historyIcon { background: #8e44ad; }
+.historyEntry[data-kind='move'] .historyIcon { background: #2d6ee4; }
+.historyEntry[data-kind='card'] .historyIcon { background: #c9a227; }
+.historyEntry[data-kind='energy'] .historyIcon { background: #2fa85c; }
+.historyEntry[data-kind='heal'] .historyIcon { background: #58b368; }
+.historyEntry[data-kind='battle'] .historyIcon { background: #d94f2b; }
+.historyEntry[data-kind='damage'] .historyIcon { background: #b03a2e; }
+.historyEntry[data-kind='status'] .historyIcon { background: #0e8a8a; }
+.historyEntry[data-kind='xp'] .historyIcon { background: #e08a1e; }
+.historyEntry[data-kind='medal'] .historyIcon { background: #d4af37; }
+.historyEntry[data-kind='item'] .historyIcon { background: #7d5ba6; }
+.historyEntry[data-kind='turn'] .historyIcon { background: #6b7280; }
+.historyEntry[data-kind='system'] .historyIcon { background: #9aa49e; }

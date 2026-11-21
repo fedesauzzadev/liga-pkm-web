@@ -1,0 +1,18 @@
+{
+  "_comment": "Parámetros por archivo para tools/crop_cards.py (T-042a AC-5). Clave: nombre normalizado (minúsculas, sin acentos, espacios→guiones). rows: cartas por fila de arriba abajo (grillas del manifiesto: las cartas se tocan y el contorno no alcanza); frame: [x0,y0,x1,y1] en fracciones 0..1 si el bloque no llena la foto; grid: FILASxCOLUMNAS uniforme; threshBias: ajusta el umbral de Otsu.",
+  "iniciales.jpg": { "rows": [3] },
+  "pokemon_mazo_montana.jpg": { "rows": [5, 5, 5, 5] },
+  "pokemon_mazo_bosque.jpg": { "rows": [5, 5, 5, 5] },
+  "pokemon_mazo_lago.jpg": { "rows": [5, 5, 5, 5] },
+  "pokemon_mazo_llanura.jpg": { "rows": [5, 5, 5, 5, 2] },
+  "pokemon_mazo_pantano.jpg": { "rows": [5, 5, 5, 4] },
+  "evolucion4.jpg": { "rows": [4, 4, 4, 2] },
+  "evoluciones3.jpg": { "rows": [5, 5, 5, 5] },
+  "evoluciones1.jpg": { "rows": [5, 5, 5, 5, 5] },
+  "evolucion_2.jpg": { "rows": [5, 5, 5, 5, 5] },
+  "mazo_sorpresa.jpg": { "rows": [6, 6, 6, 6, 4] },
+  "gimnasios1.jpg": { "rows": [3, 3, 3, 3] },
+  "gimnasios_2.jpg": { "rows": [3, 3, 3, 4] },
+  "liga_pokemon.jpg": { "rows": [4, 4, 4, 4] },
+  "ash.jpg": { "rows": [1, 4, 4] }
+}

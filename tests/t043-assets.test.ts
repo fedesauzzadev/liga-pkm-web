@@ -7,8 +7,10 @@ import { existsSync, readFileSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { expect, test } from 'vitest'
 import {
+  buildBadgeManifest,
   buildFxManifest,
   buildSpritesManifest,
+  buildTrainerManifest,
   buildSummary,
   parseConfig,
   syncAssets,
@@ -29,7 +31,9 @@ const miniConfig: AssetsConfig = {
     aniBack: 'https://example.com/ani-back/{id}.gif',
     staticFront: 'https://example.com/static/{dex}.png',
     staticBack: 'https://example.com/static/back/{dex}.png',
+    trainerFront: 'https://example.com/trainers/{id}.png',
     fx: 'https://example.com/fx/{file}',
+    badges: 'https://example.com/badges/{file}',
   },
   retries: 2,
   species: [
@@ -37,10 +41,12 @@ const miniConfig: AssetsConfig = {
     { dex: 150, name: 'Mewtwo' },
     { dex: 151, name: 'Mew' },
   ],
+  trainers: [],
   fx: [
     { key: 'fireball', file: 'fireball.png' },
     { key: 'wisp', file: 'wisp.png' },
   ],
+  badges: [{ medal: 'Roca', file: 'boulder.png' }],
 }
 
 // Fetcher falso: 404 definitivo para mewtwo y wisp; mew sin ani (fallback estático);
@@ -79,6 +85,8 @@ test('AC: SPEC-E/T-043/AC-1 descarga con fallback + manifests + reintentos + fal
   expect(existsSync(join(outRoot, 'sprites', '150.png'))).toBe(false)
   expect(existsSync(join(outRoot, 'fx', 'fireball.png'))).toBe(true)
   expect(existsSync(join(outRoot, 'fx', 'wisp.png'))).toBe(false)
+  // medalla-gimnasio/AC-3: insignia a public/badges/ + manifest badges.json.
+  expect(existsSync(join(outRoot, 'badges', 'boulder.png'))).toBe(true)
 
   // Manifest sprites.json: {dex:{front,back}}, faltante = null.
   const sprites = JSON.parse(readFileSync(join(outRoot, 'sprites', 'sprites.json'), 'utf8'))
@@ -91,6 +99,10 @@ test('AC: SPEC-E/T-043/AC-1 descarga con fallback + manifests + reintentos + fal
   // Manifest fx.json: solo lo descargado.
   expect(run.fx).toEqual({ fireball: '/fx/fireball.png' })
   expect(JSON.parse(readFileSync(join(outRoot, 'fx', 'fx.json'), 'utf8'))).toEqual(run.fx)
+
+  // medalla-gimnasio/AC-3: manifest badges.json ({medal → ruta}).
+  expect(run.badges).toEqual({ Roca: '/badges/boulder.png' })
+  expect(JSON.parse(readFileSync(join(outRoot, 'badges', 'badges.json'), 'utf8'))).toEqual(run.badges)
 
   // Reintentos: 500 reintenta y logra bajar (2 intentos); 404 es definitivo (1 intento).
   const rep = byId(run.report)
@@ -130,10 +142,36 @@ test('AC: SPEC-E/T-043/AC-1 config validada y fuente configurable; id Showdown d
     '151': { front: null, back: null },
   })
   expect(buildFxManifest(miniConfig, rep)).toEqual({ fireball: '/fx/fireball.png' })
+  expect(buildBadgeManifest(miniConfig, rep)).toEqual({})
+  expect(buildBadgeManifest(miniConfig, [
+    ...rep,
+    { id: 'b:Roca', label: 'badge Roca', status: 'ok', url: 'u3', destRel: 'badges/boulder.png', reason: null, attempts: 1 },
+  ])).toEqual({ Roca: '/badges/boulder.png' })
+})
+
+// AC: arreglar-sprites-showdown/AC-5 — sprites.json solo tiene claves dex: una
+// clave "trainers" anidada invalidaba isSpritesManifest en la UI (toda entrada
+// debe ser {front,back} string|null) y dejaba los 151 sprites en null (causa
+// raíz de los sprites invisibles). Los líderes van en trainers.json.
+test('AC: arreglar-sprites-showdown/AC-5 sprites.json sin claves ajenas; trainers va aparte', () => {
+  const cfg: AssetsConfig = { ...miniConfig, trainers: [{ name: 'Brock', sdId: 'brock' }] }
+  const rep: TaskReport[] = [
+    {
+      id: 'tr:brock', label: 'trainer Brock', status: 'ok', url: 'u',
+      destRel: 'sprites/brock-front.gif', reason: null, attempts: 1,
+    },
+  ]
+  const sprites = buildSpritesManifest(cfg, rep)
+  expect(Object.keys(sprites)).toEqual(['1', '150', '151'])
+  for (const entry of Object.values(sprites)) {
+    expect(entry.front === null || typeof entry.front === 'string').toBe(true)
+    expect(entry.back === null || typeof entry.back === 'string').toBe(true)
+  }
+  expect(buildTrainerManifest(cfg, rep)).toEqual({ brock: { front: '/sprites/brock-front.gif' } })
 })
 
 test('AC: SPEC-E/T-043/AC-2 nada descargado entra a git', () => {
-  const paths = ['apps/web/public/sprites', 'apps/web/public/fx', 'content/reference']
+  const paths = ['apps/web/public/sprites', 'apps/web/public/fx', 'apps/web/public/badges', 'content/reference']
   const res = spawnSync('git', ['ls-files', '--', ...paths], { cwd: root, encoding: 'utf8' })
   if (res.status === 0 && res.stdout !== undefined) {
     expect(res.stdout.trim(), 'assets commiteados:').toBe('')

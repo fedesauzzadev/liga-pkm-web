@@ -27,13 +27,13 @@ const manualPkm = (uid: string, cardId: string, damage = 0) => ({
   damage,
   xp: 0,
   equipped: [],
-  wildcards: [],
+  multicolor: [],
   fainted: false,
 })
 
 test('GOLD-01 Poliwag: Doble bofetón p.41 reproduce 30 de daño', () => {
   const playerCard = manualCard('manual-poliwag', 'Poliwag', manualDobleBofeton(10), 41)
-  const game = fxBattle({ playerCard, rng: rngOf(5, 4, 2) })
+  const game = fxBattle({ playerCard, rng: rngOf(5, 4, 2, 6) })
 
   const used = ok(run(game.state, { type: 'Attack', attackId: 'doble_bofeton' }, game.ctx))
   expect(used.value.events).toContainEqual({ type: 'DamageTaken', pkmUid: 'rival-1', amount: 30, cause: 'attack' })
@@ -66,40 +66,35 @@ test('GOLD-02 Clefairy vs Tangela (p.45-49) se reproduce en la secuencia del man
     rng: rngOf(5, 6, 2, 6, 6, 3, 2, 1, 4, 6),
   })
 
+  // Cada ataque del jugador arrastra el turno del rival (dado incluido) dentro
+  // del mismo comando (turno-automatico-rival): la secuencia de dados del
+  // manual se consume en el mismo orden que con los Advance intermedios.
   const first = ok(run(game.state, { type: 'Attack', attackId: 'doble_bofeton' }, game.ctx))
   expect(first.value.events).toContainEqual({ type: 'DamageTaken', pkmUid: 'rival-1', amount: 40, cause: 'attack' })
+  expect(first.value.events).toContainEqual({ type: 'NoAttack', attacker: 'rival-1', reason: 'attackSelect' })
 
-  const rivalNoAttack = ok(run(first.value.state, { type: 'Advance' }, game.ctx))
-  expect(rivalNoAttack.value.events).toContainEqual({ type: 'NoAttack', attacker: 'rival-1', reason: 'attackSelect' })
-
-  const second = ok(run(rivalNoAttack.value.state, { type: 'Attack', attackId: 'doble_bofeton' }, game.ctx))
+  const second = ok(run(first.value.state, { type: 'Attack', attackId: 'doble_bofeton' }, game.ctx))
   expect(second.value.events).toContainEqual({ type: 'DamageTaken', pkmUid: 'rival-1', amount: 30, cause: 'attack' })
+  expect(second.value.events).toContainEqual({ type: 'DamageTaken', pkmUid: 'p1-clefairy', amount: 20, cause: 'drainNow' })
+  expect(second.value.events).toContainEqual({ type: 'Healed', pkmUid: 'rival-1', amount: 20, cause: 'drainNow' })
 
-  const absorb = ok(run(second.value.state, { type: 'Advance' }, game.ctx))
-  expect(absorb.value.events).toContainEqual({ type: 'DamageTaken', pkmUid: 'p1-clefairy', amount: 20, cause: 'drainNow' })
-  expect(absorb.value.events).toContainEqual({ type: 'Healed', pkmUid: 'rival-1', amount: 20, cause: 'drainNow' })
-
-  const third = ok(run(absorb.value.state, { type: 'Attack', attackId: 'doble_bofeton' }, game.ctx))
+  const third = ok(run(second.value.state, { type: 'Attack', attackId: 'doble_bofeton' }, game.ctx))
   expect(third.value.events).toContainEqual({ type: 'DamageTaken', pkmUid: 'rival-1', amount: 20, cause: 'attack' })
-
-  const spore = ok(run(third.value.state, { type: 'Advance' }, game.ctx))
-  expect(spore.value.events).toContainEqual({
+  expect(third.value.events).toContainEqual({
     type: 'AttackUsed',
     attacker: 'rival-1',
     attackId: 'polvo_esporas',
     target: 'p1-clefairy',
   })
-  expect(spore.value.state.battle?.conditions['p1-clefairy']?.rollGate).toEqual({
+  expect(third.value.state.battle?.conditions['p1-clefairy']?.rollGate).toEqual({
     failFaces: [1, 2, 3],
     outcome: 'noAttack',
     duration: 'combat',
   })
 
-  const retire = ok(run(spore.value.state, { type: 'Retire', to: 'p1-bulbasaur' }, game.ctx))
+  const retire = ok(run(third.value.state, { type: 'Retire', to: 'p1-bulbasaur' }, game.ctx))
   expect(retire.value.events).toContainEqual({ type: 'PkmRetired', player: 'p1', from: 'p1-clefairy', to: 'p1-bulbasaur' })
-
-  const finalNoAttack = ok(run(retire.value.state, { type: 'Advance' }, game.ctx))
-  expect(finalNoAttack.value.events).toContainEqual({ type: 'NoAttack', attacker: 'rival-1', reason: 'attackSelect' })
+  expect(retire.value.events).toContainEqual({ type: 'NoAttack', attacker: 'rival-1', reason: 'attackSelect' })
 })
 
 test('GOLD-03 gate superpuesto en la tirada final del manual: un gate combinado bloquea la acción', () => {
@@ -119,7 +114,7 @@ test('GOLD-03 gate superpuesto en la tirada final del manual: un gate combinado 
     playerCard,
     wildCard: 'manual-raichu',
     extraWildCards: [raichu],
-    rng: rngOf(4),
+    rng: rngOf(4, 6),
   })
   const seeded: GameState = {
     ...game.state,
@@ -130,7 +125,9 @@ test('GOLD-03 gate superpuesto en la tirada final del manual: un gate combinado 
   }
 
   const blocked = ok(run(seeded, { type: 'Attack', attackId: 'golpe' }, game.ctx))
-  expect(blocked.value.events).toContainEqual({ type: 'NoAttack', attacker: 'p1-fx', reason: 'gate' })
+  expect(blocked.value.events).toContainEqual({
+    type: 'NoAttack', attacker: 'p1-fx', reason: 'gate', cause: 'defended', value: 4,
+  })
   const gateRolls = blocked.value.events.filter(
     (event: GameEvent) => event.type === 'DieRolled' && event.purpose === 'gate',
   )

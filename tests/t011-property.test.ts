@@ -76,6 +76,12 @@ test(
             if (!released.ok) throw new Error(released.error.message)
             state = released.value.state
           }
+          // T-061: decisiones opcionales de casillero; el driver las saltea.
+          if (state.pending?.type === 'OakSwap' || state.pending?.type === 'ChallengeGym') {
+            const skipped = applyCommand(state, { type: 'Advance' }, ctx)
+            if (!skipped.ok) throw new Error(skipped.error.message)
+            state = skipped.value.state
+          }
           if (state.phase !== 'organize') throw new Error(`tras Advance: ${state.phase}`)
         }
       }),

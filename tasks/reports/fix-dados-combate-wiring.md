@@ -1,0 +1,29 @@
+# Reporte fix-dados-combate-wiring — Los dados no giraban (dos causas en la cadena)
+- Estado: REVIEW | Plan: sin fila en BACKLOG (fix del reclamo del dueño 2026-10-28 "los 2 dados de combate NO GIRAN, están en 1", patrón de fix ad-hoc) | Rama/commit: `main` @ `f7fdf03` + WIP ajeno en el árbol compartido.
+- Resumen (≤ 5 líneas):
+  - Causa 1: `ChoreographedBattle` descartaba `onCommand` (`onCommand: _onCommand`, edición concurrente 28/10 10:48): "Aceptar" no despachaba NINGÚN comando (0 eventos, 0 historial, sin error visible). Sin eventos no había `DieRolled` que animar.
+  - Causa 2 (apagada la 1): `visualsOf(stage).die` se calculaba y se descartaba — `BattleScene` leía el prop suelto `die` (nadie lo pasa en prod, default `null`) ⇒ la coreografía anunciaba la tirada ("Abra tira el dado…") pero el dado quedaba en `value=1` sin girar.
+  - Fixes: forward de `onCommand` al `BattleScene` (spread condicional por `exactOptionalPropertyTypes`) + `dieView = visuals?.die ?? die` en los dos `DieSlot`.
+  - Evidencia end-to-end (1×/sin reducedMotion, lo que ve el dueño): antes `v=1 roll=0 spinning=false purpose=` fijo 50 s; ahora `spinning=true purpose=attackSelect` → asentado `v=5 roll=2`.
+  - Motor intacto: los cambios son solo `apps/web/src/battle/`.
+- Archivos clave tocados (rutas):
+  - `apps/web/src/battle/ChoreographedBattle.tsx` (destructure `onCommand` + `{...(onCommand !== undefined ? { onCommand } : {})}` hacia `BattleScene`).
+  - `apps/web/src/battle/BattleScene.tsx` (`const dieView = visuals?.die ?? die`; ambos `DieSlot` lo usan; el prop `die` queda como entrada directa para tests/SSR).
+  - `apps/web/src/battle/ChoreographedBattle.wiring.test.tsx` (nuevo, jsdom, `vi.mock('./BattleScene')`).
+  - `apps/web/src/battle/ChoreographedBattle.die.test.tsx` (nuevo, jsdom, render completo con timers fake).
+- AC cubiertos → test (fix-dados-combate-wiring/AC-n → archivo:test):
+  - AC-1 → `ChoreographedBattle.wiring.test.tsx` "el onCommand del popup llega a BattleScene": monta con `demoBattleScript`, avanza los timers de BattleStarted, clickea el mock y aserta que el spy del popup recibe `{type:'Attack', attackId:'cabezazo'}`. **Verificado rojo sin el fix.**
+  - AC-2 → `ChoreographedBattle.die.test.tsx` "DieRolled(attackSelect) pinta el dado del rival": escena real, aserta `data-purpose="attackSelect"` + `data-value="4"` en el dado enemigo y `data-purpose=""` en el propio. **Verificado rojo sin el fix.**
+  - AC-3 → sin test unitario (no tiene objeto): observación de navegador con `observe-die.mjs` (settings default) + e2e `node e2e/rediseno-combate-max.mjs` (4 viewports + flujos con dado rival: OK).
+- `pnpm verify`: todo verde salvo un bloqueo AJENO y registrado:
+  - `pnpm typecheck` falla SOLO por `apps/web/src/battle/ChoreographedBattle.tsx(291) Cannot find name 'trainers'`: edición a medias de la T-110 (DOING, del dueño, 28/10 10:48). Decisión del dueño en esta sesión: **queda a su cargo** (cierra verify al terminar T-110). No se tocó.
+  - Verde: lint 0 · tests **173 archivos / 1082** · content:validate (39 archivos) · build 20,4 s · deps:check (456 módulos) · size 432,96/450 kB · bench (combate:turno 1,7 ms/10 ms) · `tsc -p apps/web` sin otros errores.
+- Decisiones tomadas / defaults aplicados:
+  - Preferir `visuals.die` sobre el prop `die` (produce el de coreografía; el prop queda como fallback para tests que lo pasan directo, sin romper nada).
+  - `onCommand` opcional → spread condicional `{...(onCommand !== undefined ? { onCommand } : {})}` (patrón del archivo, `exactOptionalPropertyTypes: true`).
+  - Tests con `vi.importActual('react')` en el factory de `vi.mock` (sin JSX en el factory, sin riesgo de hoisting).
+- Dudas nuevas (→ OPEN-QUESTIONS.md) y ER solicitados (→ effect-requests/):
+  - Sin ER. Sin dudas de producto; deuda de ingeniería anotada abajo.
+- Riesgos / deuda:
+  - `e2e/rediseno-combate-max.mjs` AC del dado es débil: `data-value ∈ '123456'` pasa con el dado trabado en 1 y "re-habilitación de tab-attack" pasa si el bloqueo no existe — no volvió a cazar estas dos regresiones; endurecerlo queda fuera de alcance.
+  - Árbol compartido con sesiones concurrentes: typecheck en rojo por T-110 (del dueño) hasta que cierre esa tarea.

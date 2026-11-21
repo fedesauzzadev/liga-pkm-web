@@ -3,8 +3,8 @@
 // despachan. Reglas: RULES §3 (etapa/evolución p.25-26), §4 (captura p.38-42,
 // experiencia p.47-49) y D-04..D-09, D-12. Sin azar, sin DOM (ADR-1).
 import type { WritableDraft } from 'immer'
-import type { CardId, Content, PkmUid, PokemonCard } from '@liga/content'
-import { parseCardId, parsePkmUid } from '@liga/content'
+import type { CardId, Content, DeckKey, PkmUid, PokemonCard } from '@liga/content'
+import { DECK_IDS, parseCardId, parsePkmUid } from '@liga/content'
 import { activePlayer, cardOf, illegal, teamPkmOf } from './battle-core.ts'
 import type { Result } from './errors.ts'
 import { EngineError } from './errors.ts'
@@ -40,8 +40,9 @@ function endTileTurn(draft: Draft): void {
   draft.phase = 'organize'
 }
 
-/** Id de instancia único para capturas (`p1-catch-N`): máximo existente + 1. */
-function nextCaptureUid(player: PlayerState): PkmUid {
+/** Id de instancia único para capturas (`p1-catch-N`): máximo existente + 1.
+ * T-049: también lo usa ThrowBall (captura con Ultra/Master Ball). */
+export function nextCaptureUid(player: PlayerState): PkmUid {
   const prefix = `${player.id}-catch-`
   let max = 0
   for (const pkm of [...player.team, ...player.oakPile]) {
@@ -50,6 +51,24 @@ function nextCaptureUid(player: PlayerState): PkmUid {
     if (Number.isInteger(n) && n > max) max = n
   }
   return parsePkmUid(`${prefix}${max + 1}`)
+}
+
+/** Mazos que pueden servir PKM salvajes (registrar-captura/AC-1). */
+const WILD_DECKS: readonly DeckKey[] = [...DECK_IDS, 'sorpresa']
+
+/**
+ * registrar-captura (AC-1/AC-2): capturar REGISTRA la carta — ninguna copia
+ * queda en los mazos de robo salvajes, así no vuelve a salir (ni por casillero
+ * ni por el botón dev). Solo la captura registra (AC-3): Release y la derrota
+ * devuelven la carta al fondo de su mazo.
+ */
+export function removeWildCopies(draft: Draft, cardId: CardId): void {
+  for (const deck of WILD_DECKS) {
+    const stack = draft.decks[deck]
+    if (stack.includes(cardId)) {
+      draft.decks[deck] = stack.filter((card) => card !== cardId)
+    }
+  }
 }
 
 /**
@@ -68,10 +87,11 @@ export function captureWild(draft: Draft, content: Content): Result<readonly Gam
   if (ruleset === null) return illegal('no hay partida iniciada (falta ruleset)')
   player.items = { ...player.items, pokeball: player.items.pokeball - 1 }
   draft.decks.item = pushToBottom(draft.decks.item, parseCardId('pokeball'))
+  removeWildCopies(draft, parseCardId(pending.card))
   const pkmUid = nextCaptureUid(player)
   const destination: 'team' | 'oakPile' = player.team.length < ruleset.teamLimit ? 'team' : 'oakPile'
   const catchInto = (pile: WritableDraft<PkmInstance[]>): void => {
-    pile.push({ uid: pkmUid, cardId: parseCardId(pending.card), damage: 0, xp: 0, equipped: [], wildcards: [], fainted: false })
+    pile.push({ uid: pkmUid, cardId: parseCardId(pending.card), damage: 0, xp: 0, equipped: [], multicolor: [], fainted: false })
   }
   if (destination === 'team') catchInto(player.team)
   else catchInto(player.oakPile)
