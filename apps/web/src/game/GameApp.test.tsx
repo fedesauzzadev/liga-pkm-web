@@ -1,5 +1,6 @@
 // AC: SPEC-D/T-034/AC-1/AC-2 — GameApp: título por defecto, Continuar según
 // save y aviso de versión desconocida. Proxy SSR con storage inyectado.
+import { readFileSync } from 'node:fs'
 import { renderToString } from 'react-dom/server'
 import { expect, test } from 'vitest'
 import { es } from '../i18n/es'
@@ -48,4 +49,14 @@ test('AC: SPEC-F/T-048/AC-6 - contentHash distinto: aviso al continuar', () => {
   expect(html).toContain('data-action="continue"')
   const at = html.indexOf('data-action="continue"')
   expect(html.slice(at, at + 40)).not.toContain('disabled')
+})
+
+// AC: N-0006/AC-3 — el demo "Combate" del título se monta en una capa a
+// pantalla completa (el escenario mide 100% de su contenedor; sin capa da 0×0).
+// Proxy de fuente/CSS (el SSR no hace layout); la medida real va por captura.
+test('AC: N-0006/AC-3 - demo de combate dentro de una capa fija con tamaño', () => {
+  const source = readFileSync(new URL('./GameApp.tsx', import.meta.url), 'utf8')
+  expect(source).toMatch(/className=\{styles\.demoOverlay\}[\s\S]*<BattleDemo/)
+  const css = readFileSync(new URL('./game.module.css', import.meta.url), 'utf8')
+  expect(css).toMatch(/\.demoOverlay\s*\{[^}]*position:\s*fixed;[^}]*inset:\s*0;[^}]*display:\s*grid/s)
 })

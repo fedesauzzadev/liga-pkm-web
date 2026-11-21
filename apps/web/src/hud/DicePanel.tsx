@@ -103,7 +103,8 @@ export function DicePanel({
       )}
       <div className={styles.meta}>
         <p className={styles.who} data-testid="dice-who">
-          {current === null ? es.hudDiceIdle : current.playerLabel}
+          {/* N-0006/AC-2: la invitación a tirar solo cuando se puede tirar. */}
+          {current !== null ? current.playerLabel : canRoll ? es.hudDiceIdle : es.hudDiceWait}
         </p>
         <p className={styles.purpose} data-testid="dice-purpose">
           {current === null ? '' : diePurposeLabel(current.purpose)}
