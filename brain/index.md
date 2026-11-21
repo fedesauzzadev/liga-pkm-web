@@ -7,7 +7,7 @@ Orquestador: sesión principal. Una sesión limpia por nodo, en su worktree/rama
 | N-0003 | Ficha distinguible | 1 | — | verified |
 | N-0005 | Combate ampliado + tip F11 | 1 | — | verified |
 | N-0006 | Bugs chicos HUD/título | 1 | — | verified |
-| N-0002 | Oclusión de edificios | 2 | N-0001 | verified |
+| N-0002 | Oclusión de edificios | 2b | N-0001, N-0008 | verified |
 | N-0004 | Vista general | 2 | N-0001 | verified |
 | N-0007 | Animación de ataque + dado | 2 | N-0005 | verified |
 | N-0008 | Textura del inicial en la ficha | 2 | — | planned |
