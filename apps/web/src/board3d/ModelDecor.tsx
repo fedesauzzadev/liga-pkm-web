@@ -23,6 +23,7 @@ import {
   ModelDecorLayer, type LandmarkModelSpec, type ModelLoaders, type ScatterModelSpec,
 } from './models/layer'
 import type { ModelTuneOptions } from './models/normalize'
+import { activeTokenTarget, applyOcclusion } from './models/occlusion'
 
 /** URL del archivo hermano (mtllib) de un modelo: directorio clásico si la URL
  *  es path-style (`/dev-models/file/hgss/bld/x.obj`), o el mismo query-param si
@@ -215,6 +216,7 @@ export function ModelDecor(props: {
 }): ReactNode {
   const { boardScene } = props
   const camera = useThree((state) => state.camera)
+  const scene = useThree((state) => state.scene)
   const layer = useMemo(() => {
     const input = buildWorldInput(props.board, props.stacks, props.decor)
     const specs = modelDecorSpecs(props.board, props.decor, input, props.stacks)
@@ -241,6 +243,14 @@ export function ModelDecor(props: {
 
   useFrame(() => {
     layer.update(camera.position.x, camera.position.z)
+    // N-0002: lo que tapa la ficha activa se vuelve translúcido.
+    const tokens = scene.getObjectByName('tokens')
+    applyOcclusion(
+      boardScene.landmarks,
+      boardScene.outlines,
+      camera.position,
+      tokens === undefined ? null : activeTokenTarget(tokens),
+    )
   })
   return null
 }

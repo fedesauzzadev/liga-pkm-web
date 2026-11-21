@@ -39,3 +39,8 @@ export const neutralModelColor = (kind: DecorKind | null | undefined): string =>
 /** ¿Es negro puro (#000000)? Lo que nunca debe quedar sin textura (AC-5). */
 export const isPureBlackColor = (hex: string): boolean =>
   /^#0{3}$|^#0{6}$/i.test(hex.trim())
+
+/** N-0002: edificios que tapan la ficha activa. `opacity` del edificio que
+ *  cruza la línea cámara→ficha; `tokenLift` sube el punto a despejar al centro
+ *  de la ficha; `margin` engorda las cajas (medio ancho de la ficha). */
+export const MODEL_OCCLUSION = { opacity: 0.3, tokenLift: 0.4, margin: 0.25 } as const
