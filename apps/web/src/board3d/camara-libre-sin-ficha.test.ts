@@ -76,7 +76,9 @@ test('AC: camara-libre-sin-ficha/AC-3 - Center on me: mi ficha + ángulos del mo
   // T-085/AC-3: los ángulos son los del modo explore; el zoom queda.
   expect(cam.exploreState.azimuthDeg).toBeCloseTo(0, 6)
   expect(cam.exploreState.elevationDeg).toBeCloseTo(cameraPresets.explore.elevationDeg, 6)
-  expect(cam.exploreState.distance).toBeCloseTo(dragged.distance, 6)
+  // N-0001: el zoom vuelve a la distancia de encuadre.
+  expect(dragged.distance).not.toBeCloseTo(BOARD3D.camera.centerOnMeDistance, 1)
+  expect(cam.exploreState.distance).toBeCloseTo(BOARD3D.camera.centerOnMeDistance, 6)
   expect(cam.exploreState.offsetX).toBeCloseTo(MY_TOKEN.x, 6)
   expect(cam.exploreState.offsetZ).toBeCloseTo(MY_TOKEN.z, 6)
 

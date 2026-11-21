@@ -343,7 +343,48 @@ test('AC: SPEC-J/T-077/AC-3 - Centrar en mí → explore en mi ficha; Vista gene
   )
   expect(res.mode).toBe('explore')
   expect(res.pose.target.x).toBeCloseTo(FOCUS.tokenX, 1)
-  expect(res.pose.position.distanceTo(token3D(FOCUS))).toBeCloseTo(cameraPresets.explore.distance, 1)
+  // N-0001: el centrado vuelve a la distancia de encuadre (no conserva zoom).
+  expect(res.pose.position.distanceTo(token3D(FOCUS))).toBeCloseTo(BOARD3D.camera.centerOnMeDistance, 1)
+})
+
+// AC: N-0001/AC-1..AC-3 — arranque y "Centrar en mí" con la ficha en el BORDE
+// del tablero (Pueblo Paleta): la cámara queda a la distancia de encuadre (el
+// clamp de borde no la acerca), la ficha en el centro del safeArea y los 3
+// nodos más cercanos dentro del frustum.
+test('AC: N-0001/AC-1 - ficha en el borde: distancia de encuadre, centrada y con el camino a la vista', () => {
+  const imageSize = gameContent.board.meta.imageSize
+  const worlds = gameContent.board.nodes.map((node) => nodeWorldPos(node, imageSize))
+  const edge = worlds.reduce((a, b) => (b.z > a.z ? b : a))
+  const token = new THREE.Vector3(edge.x, BOARD3D.token.lift, edge.z)
+  const focus: RigFocus = { tokenX: edge.x, tokenZ: edge.z, nextX: edge.x, nextZ: edge.z }
+  const cam = new ImmersiveCamera({ halfWidth: halfW, halfDepth: halfD, initialTarget: edge })
+
+  const check = (pose: CameraPose): void => {
+    expect(pose.position.distanceTo(token)).toBeCloseTo(BOARD3D.camera.centerOnMeDistance, 1)
+    const camera = poseCamera(pose)
+    applyCenteredOffset(camera, safeArea, 1440, 810, null, 1)
+    const ndc = token.clone().project(camera)
+    // AC-1: dentro del 30 % central del área útil (±15 % de su ancho/alto).
+    expect(Math.abs((ndc.x + 1) / 2 - (safeArea.x + safeArea.w / 2))).toBeLessThanOrEqual(0.15 * safeArea.w)
+    expect(Math.abs((1 - ndc.y) / 2 - (safeArea.y + safeArea.h / 2))).toBeLessThanOrEqual(0.15 * safeArea.h)
+    // AC-2: los 3 casilleros más cercanos (sin contar el propio) en pantalla.
+    const next = worlds
+      .filter((world) => world !== edge)
+      .sort((a, b) => Math.hypot(a.x - edge.x, a.z - edge.z) - Math.hypot(b.x - edge.x, b.z - edge.z))
+      .slice(0, 3)
+    for (const world of next) {
+      const p = new THREE.Vector3(world.x, 0, world.z).project(camera)
+      expect(Math.abs(p.x)).toBeLessThanOrEqual(1)
+      expect(Math.abs(p.y)).toBeLessThanOrEqual(1)
+    }
+  }
+
+  check(cam.tick(0, focus, 1440 / 810, '1x', false).pose)
+  // Zoom + giro del usuario y después "Centrar en mí": mismo encuadre.
+  cam.dispatch({ type: 'EXPLORE_WHEEL', deltaY: -600 }, 0)
+  cam.dispatch({ type: 'EXPLORE_DRAG', dxPx: 200, dyPx: 100 }, 0)
+  expect(cam.dispatch({ type: 'CENTER_ON_ME', x: edge.x, z: edge.z }, 0)).toBe(true)
+  check(cam.tick(16, focus, 1440 / 810, 'skip', false).pose)
 })
 
 // AC: SPEC-J/T-077/AC-5 — ficha proyectada dentro del safeArea (±5 %) y los 3

@@ -237,6 +237,10 @@ export class ImmersiveCamera {
   mode: CameraMode = 'explore'
   readonly heading = new THREE.Vector2(0, -1)
   readonly panBounds: PanBounds
+  /** N-0001: límites de la POSICIÓN del explore = panBounds + zoom máximo. El
+   * clamp contra panBounds acercaba la cámara al objetivo en los bordes del
+   * tablero (arranque en Pueblo Paleta: distancia 3,6 en vez de la pedida). */
+  readonly cameraBounds: PanBounds
   /** T-077: órbita del usuario (azimut/inclinación/distancia/paneo). */
   exploreState: ExploreState = initialExploreState()
   private readonly exploreTarget = new THREE.Vector3(0, 0, 0)
@@ -260,6 +264,13 @@ export class ImmersiveCamera {
       minZ: -options.halfDepth * limit,
       maxZ: options.halfDepth * limit,
     }
+    const reach = cameraPresets.explore.distanceRange[1]
+    this.cameraBounds = {
+      minX: this.panBounds.minX - reach,
+      maxX: this.panBounds.maxX + reach,
+      minZ: this.panBounds.minZ - reach,
+      maxZ: this.panBounds.maxZ + reach,
+    }
     if (options.initialTarget !== null && options.initialTarget !== undefined) {
       const clamped = clampTarget(
         new THREE.Vector3(options.initialTarget.x, 0, options.initialTarget.z),
@@ -267,12 +278,14 @@ export class ImmersiveCamera {
       )
       this.exploreState = clampExploreState({
         ...this.exploreState,
+        distance: BOARD3D.camera.centerOnMeDistance,
         offsetX: clamped.x,
         offsetZ: clamped.z,
       })
+      this.appliedDistance = this.exploreState.distance
       this.exploreTarget.copy(clamped)
     }
-    this.pose = explorePose(this.exploreState, this.exploreTarget.x, this.exploreTarget.z, this.panBounds)
+    this.pose = explorePose(this.exploreState, this.exploreTarget.x, this.exploreTarget.z, this.cameraBounds)
   }
 
   overviewPosition(aspect: number): THREE.Vector3 {
@@ -323,12 +336,14 @@ export class ImmersiveCamera {
     if (event.type === 'CENTER_ON_ME') {
       // SPEC-M/T-085/AC-3: el centrado aplica los ÁNGULOS del modo destino
       // (picada por defecto del explore y azimut frontal); no conserva la
-      // picada anterior. El zoom (distancia) sí se conserva.
+      // picada anterior. N-0001: tampoco el zoom — vuelve a la distancia de
+      // encuadre de la ficha.
       const anchor = this.exploreAnchor()
       this.exploreState = clampExploreState({
         ...this.exploreState,
         azimuthDeg: 0,
         elevationDeg: cameraPresets.explore.elevationDeg,
+        distance: BOARD3D.camera.centerOnMeDistance,
         offsetX: event.x - anchor.x,
         offsetZ: event.z - anchor.z,
       })
@@ -407,7 +422,7 @@ export class ImmersiveCamera {
             ? followPose('follow', activeFocus, this.heading, this.panBounds)
             : destination === 'overview'
               ? overviewPose(this.options.halfWidth, this.options.halfDepth, aspect)
-              : explorePose(this.exploreState, desiredTarget.x, desiredTarget.z, this.panBounds)
+              : explorePose(this.exploreState, desiredTarget.x, desiredTarget.z, this.cameraBounds)
         this.pose = samplePose(trans.from, to, t01)
         if (t01 >= 1) {
           if (this.mode === 'transitionOut') {
@@ -461,7 +476,7 @@ export class ImmersiveCamera {
         { ...this.exploreState, distance: this.appliedDistance },
         this.exploreTarget.x,
         this.exploreTarget.z,
-        this.panBounds,
+        this.cameraBounds,
       )
       // camara-libre-total/AC-1: frustum centrado en el safeArea (safeMix 1).
       this.safeMixState = 1

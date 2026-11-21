@@ -300,7 +300,8 @@ test('AC: camara-libre-3d/AC-7 - V resetea al overview; C aplica los ángulos de
   expect(cam.dispatch({ type: 'CENTER_ON_ME', x: 4, z: -2 }, cameraPresets.transitions.followToOverviewMs)).toBe(true)
   expect(cam.exploreState.azimuthDeg).toBeCloseTo(0, 6)
   expect(cam.exploreState.elevationDeg).toBeCloseTo(cameraPresets.explore.elevationDeg, 6)
-  expect(cam.exploreState.distance).toBeCloseTo(free.distance, 6)
+  // N-0001: el zoom vuelve a la distancia de encuadre.
+  expect(cam.exploreState.distance).toBeCloseTo(BOARD3D.camera.centerOnMeDistance, 6)
   const res = cam.tick(
     cameraPresets.transitions.followToOverviewMs * 2,
     FOCUS,

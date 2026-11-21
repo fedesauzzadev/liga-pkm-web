@@ -136,7 +136,9 @@ test('AC: SPEC-M/AC-3 - Centrar en mí y Vista general aplican los ángulos de s
   expect(cam.dispatch({ type: 'CENTER_ON_ME', x: 4, z: -2 }, 0)).toBe(true)
   expect(cam.exploreState.elevationDeg).toBeCloseTo(cameraPresets.explore.elevationDeg, 6)
   expect(cam.exploreState.azimuthDeg).toBeCloseTo(0, 6)
-  expect(cam.exploreState.distance).toBeCloseTo(zoomed, 6)
+  // N-0001: el zoom vuelve a la distancia de encuadre.
+  expect(zoomed).not.toBeCloseTo(BOARD3D.camera.centerOnMeDistance, 1)
+  expect(cam.exploreState.distance).toBeCloseTo(BOARD3D.camera.centerOnMeDistance, 6)
   expect(cam.exploreState.offsetX).toBeCloseTo(4, 6)
   expect(cam.exploreState.offsetZ).toBeCloseTo(-2, 6)
 

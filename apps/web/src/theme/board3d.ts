@@ -64,6 +64,10 @@ export const BOARD3D = {
     // transiciones. Acá solo lo que three pide siempre.
     near: 0.1,
     far: 200,
+    /** N-0001: distancia del encuadre del arranque y de "Centrar en mí": la
+     *  ficha queda en ~11 % del alto (bbox de sceneDump, 1440×810). Antes el
+     *  clamp de borde la dejaba a 3,6 = pegada a los techos. */
+    centerOnMeDistance: 15,
   },
   blob: {
     /** Sombras "blob": círculos translúcidos, sin mapas de sombra. */
