@@ -330,7 +330,8 @@ export function GameShell({
           onClose={() => setMenuOpen(false)}
         />
       ) : null}
-      {tipOpen && !hudHiddenState ? (
+      {/* N-0005: con un combate abierto el tip no se muestra (tapaba los ataques). */}
+      {tipOpen && !hudHiddenState && (battlePopup ?? null) === null ? (
         <div className={styles.tip} data-testid="tip-f11" role="status">
           <span>{es.shellTipF11}</span>
           <button

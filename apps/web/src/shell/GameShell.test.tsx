@@ -53,6 +53,12 @@ test('AC: SPEC-I/T-071/AC-7 - el DOM recorre los paneles en orden lógico (Tab)'
   expect(positions).toEqual([...positions].sort((a, b) => a - b))
 })
 
+// AC: N-0005/AC-2 — con un combate abierto el tip de F11 no existe (no puede interceptar clics).
+test('AC: N-0005/AC-2 - el tip de F11 no se muestra con un combate abierto', () => {
+  const doc = renderToString(<GameShell world={<p>world</p>} battlePopup={<p>combate</p>} />)
+  expect(doc).not.toContain('data-testid="tip-f11"')
+})
+
 test('AC: SPEC-I/T-071/AC-5 - tip de F11 inicial; menú cerrado de entrada', () => {
   const doc = html()
   expect(doc).toContain('data-testid="tip-f11"')
