@@ -297,7 +297,7 @@ test('AC: camara-libre-3d/AC-7 - V resetea al overview; C aplica los ángulos de
   expect(done.pose.position.distanceTo(cam.overviewPosition(ASPECT))).toBeLessThanOrEqual(0.05)
 
   // C: vuelve a explore centrado en mi ficha (4, −2) con los ángulos del modo.
-  expect(cam.dispatch({ type: 'CENTER_ON_ME', x: 4, z: -2 }, cameraPresets.transitions.followToOverviewMs)).toBe(true)
+  expect(cam.dispatch({ type: 'CENTER_ON_ME', x: 1, z: -2 }, cameraPresets.transitions.followToOverviewMs)).toBe(true)
   expect(cam.exploreState.azimuthDeg).toBeCloseTo(0, 6)
   expect(cam.exploreState.elevationDeg).toBeCloseTo(cameraPresets.explore.elevationDeg, 6)
   // N-0001: el zoom vuelve a la distancia de encuadre.
@@ -310,6 +310,6 @@ test('AC: camara-libre-3d/AC-7 - V resetea al overview; C aplica los ángulos de
     false,
   )
   expect(res.mode).toBe('explore')
-  expect(res.pose.target.x).toBeCloseTo(4, 1)
+  expect(res.pose.target.x).toBeCloseTo(1, 1)
   expect(res.pose.target.z).toBeCloseTo(-2, 1)
 })

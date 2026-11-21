@@ -18,7 +18,8 @@ const FOCUS: RigFocus = { tokenX: 0, tokenZ: 0, nextX: 1, nextZ: 0 }
 /** Ficha propia o ajena que se mueve por el tablero (turno cualquiera). */
 const MOVED: RigFocus = { tokenX: 5, tokenZ: -3, nextX: 6, nextZ: -3 }
 /** Mi ficha (jugador LOCAL, no la activa). */
-const MY_TOKEN = { x: 4, z: -2 } as const
+// N-0004: ficha interior (fuera de centerOnMeInset el encuadre se corre al tablero).
+const MY_TOKEN = { x: 1, z: -2 } as const
 
 const newRig = (initialTarget?: { readonly x: number; readonly z: number }): ImmersiveCamera =>
   new ImmersiveCamera({ halfWidth: halfW, halfDepth: halfD, initialTarget })

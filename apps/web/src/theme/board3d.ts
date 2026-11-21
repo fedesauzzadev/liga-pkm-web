@@ -68,6 +68,10 @@ export const BOARD3D = {
      *  ficha queda en ~11 % del alto (bbox de sceneDump, 1440×810). Antes el
      *  clamp de borde la dejaba a 3,6 = pegada a los techos. */
     centerOnMeDistance: 15,
+    /** N-0004: "Centrar en mí" no acerca el objetivo a menos de [x, z] del
+     *  borde del tablero (ficha en Pueblo Paleta ⇒ mitad inferior, sin media
+     *  pantalla de pasto al sur). */
+    centerOnMeInset: [4.5, 5] as const,
   },
   blob: {
     /** Sombras "blob": círculos translúcidos, sin mapas de sombra. */
@@ -97,6 +101,9 @@ export const BOARD3D = {
       stretch: 1.9,
       squash: 0.55,
       color: '#ffffff',
+      /** N-0004: las nubes van al norte del tablero (a `clearDepth` del borde):
+       *  a 7 de alto quedaban entre la cámara y los casilleros. */
+      clearDepth: 2,
     },
     lake: {
       /** Lago de la Isla (AC-3): cuenca en el terreno + disco de agua. */
@@ -128,6 +135,9 @@ export const BOARD3D = {
     tickMs: 33,
     /** T-088/AC-3: ruido de luminosidad suave (interpolado, sin bloques). */
     lightnessFreq: 0.5,
+    /** N-0004: piso de luminancia del suelo relativo al pasto base (los
+     *  biomas oscuros no tapan casilleros ni caminos). */
+    groundMinLuma: 0.85,
     /**
      * T-096/AC-2: el tinte de zona es una textura de bioma (≥ 1024², filtro
      * lineal, desenfoque gaussiano) en vez de color por vértice a paso 0,3

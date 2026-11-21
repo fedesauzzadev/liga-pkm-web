@@ -360,13 +360,22 @@ test('AC: N-0001/AC-1 - ficha en el borde: distancia de encuadre, centrada y con
   const cam = new ImmersiveCamera({ halfWidth: halfW, halfDepth: halfD, initialTarget: edge })
 
   const check = (pose: CameraPose): void => {
-    expect(pose.position.distanceTo(token)).toBeCloseTo(BOARD3D.camera.centerOnMeDistance, 1)
+    expect(pose.position.distanceTo(pose.target)).toBeCloseTo(BOARD3D.camera.centerOnMeDistance, 1)
     const camera = poseCamera(pose)
     applyCenteredOffset(camera, safeArea, 1440, 810, null, 1)
     const ndc = token.clone().project(camera)
-    // AC-1: dentro del 30 % central del área útil (±15 % de su ancho/alto).
-    expect(Math.abs((ndc.x + 1) / 2 - (safeArea.x + safeArea.w / 2))).toBeLessThanOrEqual(0.15 * safeArea.w)
-    expect(Math.abs((1 - ndc.y) / 2 - (safeArea.y + safeArea.h / 2))).toBeLessThanOrEqual(0.15 * safeArea.h)
+    // AC: N-0004/AC-4 (reemplaza el "30 % central" de N-0001/AC-1): en el borde
+    // sur el encuadre se corre al tablero ⇒ ficha en la mitad inferior del área
+    // útil, dentro de ella, y el centro del tablero (0,0) también a la vista.
+    const fx = (ndc.x + 1) / 2
+    const fy = (1 - ndc.y) / 2
+    expect(fx).toBeGreaterThan(safeArea.x)
+    expect(fx).toBeLessThan(safeArea.x + safeArea.w)
+    expect(fy).toBeGreaterThan(safeArea.y + safeArea.h / 2)
+    expect(fy).toBeLessThan(safeArea.y + safeArea.h)
+    const origin = new THREE.Vector3(0, 0, 0).project(camera)
+    expect(Math.abs(origin.x)).toBeLessThanOrEqual(1)
+    expect((1 - origin.y) / 2).toBeLessThan(fy)
     // AC-2: los 3 casilleros más cercanos (sin contar el propio) en pantalla.
     const next = worlds
       .filter((world) => world !== edge)
