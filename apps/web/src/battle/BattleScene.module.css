@@ -391,10 +391,12 @@
 /* Números flotantes: daño (rojo), curación (verde), XP (azul). */
 .floater {
   position: absolute;
-  font-size: 22px;
+  font-size: 44px;
   font-weight: 900;
-  text-shadow: 0 2px 0 rgba(30, 34, 28, 0.6);
-  animation: floaterRise 700ms ease-out forwards;
+  -webkit-text-stroke: 2px #fff;
+  paint-order: stroke fill;
+  text-shadow: 0 3px 0 rgba(30, 34, 28, 0.6);
+  animation: floaterRise 800ms ease-out forwards;
 }
 
 .floater[data-side='rival'] {
@@ -421,13 +423,23 @@
 
 @keyframes floaterRise {
   from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.6);
+  }
+
+  15% {
     opacity: 1;
-    transform: translateY(6px);
+    transform: translateY(0) scale(1.2);
+  }
+
+  75% {
+    opacity: 1;
+    transform: translateY(-22px) scale(1);
   }
 
   to {
     opacity: 0;
-    transform: translateY(-26px);
+    transform: translateY(-34px) scale(1);
   }
 }
 

@@ -43,15 +43,21 @@ export function getPoint(node: FxDomNode, layer: FxDomNode): { x: number; y: num
   }
 }
 
-export async function flashTarget(ctx: { defender: FxDomNode; layer: FxDomNode }, color: string, radius = 54): Promise<void> {
+/** N-0007: los radios de los arquetipos se pensaron para una escena chica; en
+ * la escena real (635×421, sprites ~190 px) quedaban de 5-80 px y casi
+ * transparentes. Un solo factor acá los vuelve legibles sin tocar cada arquetipo. */
+const FX_SCALE = 2
+
+export async function flashTarget(ctx: { defender: FxDomNode; layer: FxDomNode }, color: string, baseRadius = 54): Promise<void> {
   if (typeof document === 'undefined') return
+  const radius = baseRadius * FX_SCALE
   const blast = document.createElement('div')
   blast.style.position = 'absolute'
   blast.style.pointerEvents = 'none'
   blast.style.width = `${radius * 2}px`
   blast.style.height = `${radius * 2}px`
   blast.style.borderRadius = '50%'
-  blast.style.background = `radial-gradient(circle, ${color} 0%, rgba(255,255,255,0.08) 42%, transparent 72%)`
+  blast.style.background = `radial-gradient(circle, #ffffff 0%, #ffffff 16%, ${color} 38%, ${color} 54%, rgba(255,255,255,0.55) 62%, transparent 72%)`
   blast.style.transform = 'translate(-50%, -50%) scale(0.3)'
   blast.style.opacity = '0'
   blast.style.zIndex = '2'
@@ -62,9 +68,10 @@ export async function flashTarget(ctx: { defender: FxDomNode; layer: FxDomNode }
   const frames = [
     { opacity: '0', transform: 'translate(-50%, -50%) scale(0.25)' },
     { opacity: '1', transform: 'translate(-50%, -50%) scale(1)' },
-    { opacity: '0', transform: 'translate(-50%, -50%) scale(1.2)' },
+    { opacity: '1', transform: 'translate(-50%, -50%) scale(1.08)' },
+    { opacity: '0', transform: 'translate(-50%, -50%) scale(1.3)' },
   ]
-  await ensureFrame(blast, frames, 380)
+  await ensureFrame(blast, frames, 450)
   blast.remove()
 }
 
@@ -74,7 +81,7 @@ export async function strikeTrail(
   options?: { seed?: number; radius?: number; lines?: number },
 ): Promise<void> {
   if (typeof document === 'undefined') return
-  const radius = options?.radius ?? 18
+  const radius = (options?.radius ?? 18) * FX_SCALE
   const count = options?.lines ?? 6
   const from = getPoint(ctx.attacker, ctx.layer)
   const to = getPoint(ctx.defender, ctx.layer)
@@ -89,7 +96,7 @@ export async function strikeTrail(
     bit.style.width = `${radius * 2}px`
     bit.style.height = `${radius * 2}px`
     bit.style.borderRadius = '50%'
-    bit.style.background = `radial-gradient(circle, ${color} 0%, rgba(255,255,255,0.25) 45%, transparent 72%)`
+    bit.style.background = `radial-gradient(circle, #ffffff 0%, ${color} 34%, ${color} 56%, transparent 72%)`
     bit.style.left = `${from.x}px`
     bit.style.top = `${from.y}px`
     bit.style.transform = 'translate(-50%, -50%) scale(0.2)'
@@ -98,11 +105,12 @@ export async function strikeTrail(
     ctx.layer.appendChild(bit)
     // Solo transform/opacity: la posición base queda fija en el estilo del nodo.
     const frames = [
-      { opacity: '0', transform: 'translate(-50%, -50%) scale(0.2)' },
-      { opacity: '0.9', transform: `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(0.8)` },
+      { opacity: '0.6', transform: 'translate(-50%, -50%) scale(0.5)' },
+      { opacity: '1', transform: `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(1)` },
       {
-        opacity: '0',
-        transform: `translate(calc(-50% + ${to.x - from.x}px), calc(-50% + ${to.y - from.y}px)) scale(0.4)`,
+        // Llega opaco al rival: el destello de impacto toma la posta.
+        opacity: '1',
+        transform: `translate(calc(-50% + ${to.x - from.x}px), calc(-50% + ${to.y - from.y}px)) scale(0.8)`,
       },
     ]
     const keyframes = frames.map((frame) => ({ ...frame }))
