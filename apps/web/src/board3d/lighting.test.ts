@@ -11,7 +11,7 @@ import * as THREE from 'three'
 import kantoJson from '../../../../content/board/kanto.json'
 import { estimateDrawCalls, estimateTriangles } from './budget'
 import { boardDecor } from './decor'
-import { applyShadowFlags, buildLights, sceneSunTo, toneMappingOf } from './lighting'
+import { applyShadowFlags, buildLights, sceneSunTo, shadowSignature, toneMappingOf } from './lighting'
 import { buildOutlines } from './outlines'
 import { applySceneProfile, buildBoardScene } from './scene'
 import { boardStyle } from './style'
@@ -187,4 +187,23 @@ test('AC: N-0010/AC-1+AC-4 - sombras: volúmenes proyectan, suelo solo recibe, t
   expect([water.castShadow, water.receiveShadow]).toEqual([false, true])
   expect([mist.castShadow, mist.receiveShadow]).toEqual([false, false])
   expect([glyph.castShadow, glyph.receiveShadow]).toEqual([false, false])
+})
+
+test('AC: N-0013/AC-1 - el mapa de sombras solo se recalcula si llega un modelo o se mueve una ficha', () => {
+  const landmarks = new THREE.Group()
+  const tokens = new THREE.Group()
+  const token = new THREE.Group()
+  tokens.add(token)
+  const idle = shadowSignature([landmarks, tokens], tokens)
+  // Vaivén de reposo (±0,03): misma firma ⇒ sin recálculo.
+  token.position.y = 0.03
+  expect(shadowSignature([landmarks, tokens], tokens)).toEqual(idle)
+  // La ficha camina ⇒ cambia `moving`, no `structure`.
+  token.position.x = 0.5
+  const walked = shadowSignature([landmarks, tokens], tokens)
+  expect(walked.moving).not.toBe(idle.moving)
+  expect(walked.structure).toBe(idle.structure)
+  // Llega un modelo ⇒ cambia `structure`.
+  landmarks.add(new THREE.Group())
+  expect(shadowSignature([landmarks, tokens], tokens).structure).not.toBe(idle.structure)
 })

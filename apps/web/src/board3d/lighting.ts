@@ -148,3 +148,21 @@ export function applyShadowFlags(root: THREE.Object3D): number {
   })
   return meshes
 }
+
+/**
+ * N-0013: firma barata de lo que cambia las sombras. `structure` = cantidad de
+ * hijos (llegó un modelo ⇒ re-marcar flags); `moving` = posición de las fichas
+ * cuantizada (el vaivén de reposo de ±0,03 no dispara un recálculo).
+ */
+export function shadowSignature(
+  groups: readonly THREE.Object3D[],
+  tokens: THREE.Object3D,
+): { readonly structure: string; readonly moving: string } {
+  const count = (group: THREE.Object3D): number =>
+    group.children.reduce((sum, child) => sum + 1 + child.children.length, 0)
+  const structure = groups.map(count).join('/')
+  const moving = tokens.children
+    .map((token) => `${token.position.x.toFixed(2)},${String(Math.floor(token.position.y * 5))},${token.position.z.toFixed(2)},${token.visible ? 1 : 0}`)
+    .join('|')
+  return { structure, moving }
+}
