@@ -16,6 +16,19 @@ export interface BiomeTextureInput {
   readonly sampleAt: (x: number, z: number, out: THREE.Color) => void
 }
 
+const luma = (c: THREE.Color): number => 0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b
+
+/**
+ * N-0004: piso de luminancia del suelo — un bioma más oscuro que
+ * `groundMinLuma` × pasto base se aclara hacia el pasto (muta `color`), así
+ * las manchas de zona no tapan casilleros ni caminos.
+ */
+export function liftDarkGround(color: THREE.Color, base: THREE.Color): THREE.Color {
+  const floor = luma(base) * BOARD3D.world.groundMinLuma
+  const l = luma(color)
+  return l < floor ? color.lerp(base, (floor - l) / (luma(base) - l)) : color
+}
+
 /** Muestrea el campo a field² con la convención de UV del plano rotado. */
 const sampleField = (
   input: BiomeTextureInput,

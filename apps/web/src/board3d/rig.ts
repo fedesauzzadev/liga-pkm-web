@@ -11,6 +11,7 @@ import type { PlaybackSpeed } from '../events/anim.config'
 import * as THREE from 'three'
 import { BOARD3D } from '../theme/board3d'
 import { cameraPresets, clampTarget, planOverview, type PanBounds } from './camera'
+import { centerFrameTarget } from './center-frame'
 import {
   clampExploreState,
   dampExploreTarget,
@@ -272,10 +273,8 @@ export class ImmersiveCamera {
       maxZ: this.panBounds.maxZ + reach,
     }
     if (options.initialTarget !== null && options.initialTarget !== undefined) {
-      const clamped = clampTarget(
-        new THREE.Vector3(options.initialTarget.x, 0, options.initialTarget.z),
-        this.panBounds,
-      )
+      // N-0004: ficha en el borde ⇒ el encuadre se corre hacia el tablero.
+      const clamped = centerFrameTarget(options.initialTarget.x, options.initialTarget.z, options)
       this.exploreState = clampExploreState({
         ...this.exploreState,
         distance: BOARD3D.camera.centerOnMeDistance,
@@ -339,13 +338,14 @@ export class ImmersiveCamera {
       // picada anterior. N-0001: tampoco el zoom — vuelve a la distancia de
       // encuadre de la ficha.
       const anchor = this.exploreAnchor()
+      const framed = centerFrameTarget(event.x, event.z, this.options)
       this.exploreState = clampExploreState({
         ...this.exploreState,
         azimuthDeg: 0,
         elevationDeg: cameraPresets.explore.elevationDeg,
         distance: BOARD3D.camera.centerOnMeDistance,
-        offsetX: event.x - anchor.x,
-        offsetZ: event.z - anchor.z,
+        offsetX: framed.x - anchor.x,
+        offsetZ: framed.z - anchor.z,
       })
     }
     if (event.type === 'EXPLORE_KEY') {
@@ -433,8 +433,7 @@ export class ImmersiveCamera {
           this.outDestination = null
           this.mode = this.mode === 'transitionIn' ? 'follow' : destination
         }
-        const inTransition =
-          this.mode === 'transitionIn' || this.mode === 'transitionOut'
+        const inTransition = this.mode === 'transitionIn' || this.mode === 'transitionOut'
         // camara-libre-total/AC-3: el safeMix interpola del valor de origen al
         // del destino (follow 0 / explore+overview 1): sin snap en ningún
         // extremo de la transición.

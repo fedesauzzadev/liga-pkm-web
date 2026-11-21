@@ -15,6 +15,7 @@ import { buildWorldInput } from './scene'
 import { boardStyle } from './style'
 import { deckStacks } from './stacks'
 import { buildScatter } from './scatter'
+import { liftDarkGround } from './biome-texture'
 import { buildWorld, distToSegment, lightnessAt, terrainColorAt } from './world'
 
 const board: BoardGraph = BoardGraphSchema.parse(kantoJson)
@@ -87,6 +88,8 @@ test('AC: SPEC-O/T-096/AC-2 - cada zona se tiñe con su color en el texel de su 
     // Esperado: color de bioma × luz, tal como antes lo pintaba el terreno
     // por vértice, codificado a sRGB (bytes) igual que la textura.
     terrainColorAt(biome.center.x, biome.center.z, input, color)
+    // N-0004/AC-2: piso de luminancia (el pantano ya no es una mancha oscura).
+    liftDarkGround(color, new THREE.Color(boardStyle.biomes.baseGrass))
     const lightness = 1 + lightnessAt(biome.center.x, biome.center.z, boardStyle)
     color.setRGB(
       Math.min(1, color.r * lightness),

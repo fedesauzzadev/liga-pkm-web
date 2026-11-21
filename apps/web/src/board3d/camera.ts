@@ -58,9 +58,11 @@ export function planPolarRange(
 }
 
 /**
- * T-076/AC-1: overview encuadra TODO el tablero dentro del cono del safeArea
- * con `margin` de holgura. La distancia la manda el semiángulo más chico
- * entre vertical y horizontal (recortados por la fracción del safeArea).
+ * T-076/AC-1: overview encuadra TODO el tablero dentro del safeArea con
+ * `margin` de holgura. N-0004: ajuste exacto del rectángulo (antes esfera
+ * envolvente ⇒ tablero al 35 % del ancho). El objetivo se corre al sur
+ * (`targetZ`) para que el borde cercano y el lejano toquen abajo y arriba a la
+ * vez; la distancia es la mayor entre la que pide el alto y la del ancho.
  */
 export function planOverview(halfWidth: number, halfDepth: number, aspect: number): CameraPlan {
   const presets = cameraPresets.overview
@@ -69,15 +71,17 @@ export function planOverview(halfWidth: number, halfDepth: number, aspect: numbe
   const halfHfov = Math.atan(Math.tan(halfVfov) * aspect)
   const vTan = Math.tan(halfVfov) * Math.min(1, safeArea.h)
   const hTan = Math.tan(halfHfov) * Math.min(1, safeArea.w)
-  const halfFov = Math.atan(Math.min(vTan, hTan))
-  const radius = Math.hypot(halfWidth, halfDepth) * (1 + presets.margin)
-  const distance = radius / Math.sin(halfFov)
-
   const elevation = presets.elevationDeg * deg
+  const cos = Math.cos(elevation)
+  // Punto a z del objetivo: profundidad d − z·cos, altura en cámara −z·sen.
+  const k = Math.sin(elevation) / vTan
+  const near = (halfDepth * (k - cos)) / k
+  const targetZ = halfDepth - near
+  const distance = Math.max(near * (k + cos), near * cos + halfWidth / hTan) * (1 + presets.margin)
   const position: readonly [number, number, number] = [
     0,
     distance * Math.sin(elevation),
-    distance * Math.cos(elevation),
+    targetZ + distance * cos,
   ]
   const [zoomMin, zoomMax] = presets.zoomRange
   const [azMin, azMax] = presets.azimuthDegRange
@@ -88,7 +92,7 @@ export function planOverview(halfWidth: number, halfDepth: number, aspect: numbe
     near: BOARD3D.camera.near,
     far: BOARD3D.camera.far,
     position,
-    target: [0, 0, 0],
+    target: [0, 0, targetZ],
     distance,
     controls: {
       minDistance: distance * zoomMin,

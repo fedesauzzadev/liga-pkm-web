@@ -42,8 +42,11 @@ test('AC: SPEC-I/T-076/AC-1 - picada overview 50° (presets) mirando al centro',
   for (const aspect of [1, 1440 / 900]) {
     const { plan, camera } = overviewCamera(aspect)
     expect(plan.fovDeg).toBe(cameraPresets.overview.fov)
-    expect(plan.target).toEqual([0, 0, 0])
-    const horizontal = Math.hypot(camera.position.x, camera.position.z)
+    // N-0004: el objetivo se corre al sur (z > 0) para llenar el alto útil.
+    expect(plan.target[0]).toBe(0)
+    expect(plan.target[2]).toBeGreaterThan(0)
+    expect(plan.target[2]).toBeLessThan(halfD)
+    const horizontal = Math.hypot(camera.position.x, camera.position.z - plan.target[2])
     const elevation = Math.atan2(camera.position.y, horizontal) * (180 / Math.PI)
     expect(elevation).toBeCloseTo(cameraPresets.overview.elevationDeg, 6)
   }
@@ -66,14 +69,18 @@ test('AC: SPEC-I/T-076/AC-1 - el tablero entero cae dentro del safeArea con marg
         for (const z of [-halfD, halfD]) {
           const ndc = new THREE.Vector3(x, y, z).project(camera)
           expect(ndc.z, 'la esquina queda detrás de la cámara').toBeGreaterThan(0)
-          maxFx = Math.max(maxFx, Math.abs((ndc.x + 1) / 2 - 0.5))
-          maxFy = Math.max(maxFy, Math.abs((1 - ndc.y) / 2 - 0.5))
+          maxFx = Math.max(maxFx, Math.abs((ndc.x + 1) / 2 - (safe.x + safe.w / 2)))
+          maxFy = Math.max(maxFy, Math.abs((1 - ndc.y) / 2 - (safe.y + safe.h / 2)))
         }
       }
     }
     // Dentro del safeArea (± un pelosito numérico): |f − 0,5| ≤ safe/2.
     expect(maxFx).toBeLessThanOrEqual(safe.w / 2 + 1e-6)
     expect(maxFy).toBeLessThanOrEqual(safe.h / 2 + 1e-6)
+    // AC: N-0004/AC-1 — el borde cercano del tablero ocupa ≥ 60 % del ancho útil
+    // y el encuadre llena el alto (antes: esfera envolvente, ~35 %).
+    expect((2 * maxFx) / safe.w).toBeGreaterThanOrEqual(0.6)
+    expect((2 * maxFy) / safe.h).toBeGreaterThanOrEqual(0.9)
   }
 })
 

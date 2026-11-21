@@ -7,7 +7,7 @@
 import type { BoardStyle, Decor } from '@liga/content'
 import * as THREE from 'three'
 import { BOARD3D } from '../theme/board3d'
-import { buildBiomeTexture } from './biome-texture'
+import { buildBiomeTexture, liftDarkGround } from './biome-texture'
 import { buildDistantMountains, buildTreeRing } from './horizon'
 import { smoothstep } from './smooth'
 import type { WorldPos } from './scene'
@@ -219,8 +219,9 @@ export function lightnessAt(x: number, z: number, style: BoardStyle): number {
 }
 
 /** T-096: color de suelo (biomas × luz) que la textura de bioma muestrea. */
-const sampleGroundColor = (x: number, z: number, input: WorldInput, out: THREE.Color): void => {
+export const sampleGroundColor = (x: number, z: number, input: WorldInput, out: THREE.Color): void => {
   terrainColorAt(x, z, input, out)
+  liftDarkGround(out, new THREE.Color(input.style.biomes.baseGrass))
   const k = 1 + lightnessAt(x, z, input.style)
   out.setRGB(Math.min(1, out.r * k), Math.min(1, out.g * k), Math.min(1, out.b * k))
 }
@@ -334,7 +335,9 @@ function buildClouds(style: BoardStyle): THREE.Group {
     const rx = hash2(index, 11, seed)
     const rz = hash2(index, 12, seed)
     const ry = hash2(index, 13, seed)
-    cloud.position.set((rx * 2 - 1) * halfSpan, height + (ry - 0.5), (rz * 2 - 1) * halfSpan)
+    // N-0004: solo al norte del tablero (la deriva es en x): no tapan casilleros.
+    const north = BOARD3D.base.depth / 2 + BOARD3D.world.cloud.clearDepth
+    cloud.position.set((rx * 2 - 1) * halfSpan, height + (ry - 0.5), -(north + rz * (halfSpan - north)))
     cloud.userData.speedMul = 0.7 + 0.6 * hash2(index, 14, seed)
     cloud.userData.baseY = cloud.position.y
     group.add(cloud)
@@ -384,17 +387,6 @@ export function buildWorld(input: WorldInput): WorldScene {
   root.add(clouds)
 
   const fog = new THREE.Fog(input.style.fog.color, input.style.fog.near, input.style.fog.far)
-  return {
-    root,
-    terrain,
-    biomeTexture,
-    water,
-    sky,
-    sunDisk,
-    mountains,
-    treeRing,
-    clouds,
-    fog,
-    halfSpan: input.style.world.size[0] / 2 + 4,
-  }
+  const halfSpan = input.style.world.size[0] / 2 + 4
+  return { root, terrain, biomeTexture, water, sky, sunDisk, mountains, treeRing, clouds, fog, halfSpan }
 }

@@ -147,7 +147,18 @@ test('AC: SPEC-J/T-078/AC-2 - visibilidad por prioridad: always / near / hover /
   expect(byId.get('centro')).toMatchObject({ visible: true, reason: 'near' })
   expect(byId.get('hov')).toMatchObject({ visible: true, reason: 'hover' })
 
-  const overview = planLabels([gym, centro, duelo], ctxOf(overviewCamera()), style)
+  // N-0004: la vista general por defecto quedó más cerca que
+  // showOnlyIfCameraDistanceBelow; "lejos" = overview con el zoom al máximo.
+  const plan = planOverview(halfW, halfD, ASPECT)
+  const zoomOut = cameraPresets.overview.zoomRange[1]
+  const far = poseCamera(
+    [plan.position[0], plan.position[1] * zoomOut, plan.target[2] + (plan.position[2] - plan.target[2]) * zoomOut],
+    plan.target,
+    plan.fovDeg,
+  )
+  applySafeOffset(far, safeArea, WIDTH, HEIGHT)
+  expect(plan.distance * zoomOut).toBeGreaterThan(style.showOnlyIfCameraDistanceBelow)
+  const overview = planLabels([gym, centro, duelo], ctxOf(far), style)
   const byIdOverview = new Map(overview.map((p) => [p.nodeId, p]))
   expect(byIdOverview.get('gym-cerca')).toMatchObject({ visible: true, reason: 'always' })
   expect(byIdOverview.get('centro')).toMatchObject({ visible: false, reason: 'hidden' })
