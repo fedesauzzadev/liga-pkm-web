@@ -1,9 +1,9 @@
 {
  "_status": "Parámetros del look del mundo (SPEC-J). Precedencia: si un valor existe acá y en decor.json (world, ambient, zones.*.ground), manda ESTE archivo; T-079 migra y borra los duplicados de decor.json. Unidades de mundo (1 px del tablero = 0,01).",
-  "world": { "size": [36, 36], "segments": 120, "seed": 2026, "noiseAmplitude": 0.35, "hills": { "startRadius": 9.0, "maxHeight": 1.4, "seed": 3 }, "flatten": { "aroundNodes": 0.35, "aroundEdges": 0.35, "smooth": 0.3 } },
+  "world": { "size": [36, 36], "segments": 160, "seed": 2026, "noiseAmplitude": 0.35, "hills": { "startRadius": 9.0, "maxHeight": 1.4, "seed": 3 }, "flatten": { "aroundNodes": 0.35, "aroundEdges": 0.35, "smooth": 0.3 } },
  "biomes": {
-  "baseGrass": "#8DBF6A", "radius": 3.4, "blend": 1.6, "lightnessNoise": 0.06, "maxShare": 0.25,
-   "colors": { "bosque": "#5FA85F", "montana": "#B59A7E", "isla": "#8FC6E8", "llanura": "#CFC48F", "pantano": "#6B7A45" },
+  "baseGrass": "#7CC25A", "radius": 3.4, "blend": 1.6, "lightnessNoise": 0.06, "maxShare": 0.25,
+   "colors": { "bosque": "#3F8F52", "montana": "#B89E86", "isla": "#C9B77A", "llanura": "#E0CB6A", "pantano": "#5E6A4C" },
   "_nota": "Antes los biomas eran alfombras enormes y saturadas (rojo en Montaña). Ahora cada color solo domina cerca del centro de su zona y se funde con el pasto base. El rojo queda solo para lava."
  },
  "lighting": {

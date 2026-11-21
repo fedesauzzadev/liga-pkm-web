@@ -68,9 +68,10 @@ test('AC-2 - cero solapamientos y decor.collision cruzado limpio', () => {
 })
 
 // AC: SPEC-O/T-098/AC-2 — sin manchas translúcidas: opacidades del tema
-// ≤ 0,12 (agua) y ≤ 0,10 (mist), con tamaño contenido.
+// ≤ 0,10 (mist), con tamaño contenido. N-0011: el agua de las zonas es una
+// superficie OPACA recortada a la zona (sin clave de opacidad), no una mancha.
 test('AC-2 - sin manchas translúcidas (mist y agua dentro del tope)', () => {
-  expect(BOARD3D.world.lake.waterOpacity).toBeLessThanOrEqual(0.12)
+  for (const rule of Object.values(BOARD3D.world.zones.rules)) expect(rule).not.toHaveProperty('water.opacity')
   expect(BOARD3D.decor.mist.opacity).toBeLessThanOrEqual(0.1)
   expect(BOARD3D.decor.mist.radius).toBeLessThanOrEqual(1.2)
 })

@@ -175,8 +175,12 @@ export function buildWorldInput(
       const zone = Object.values(decor.zones).find((entry) => entry.panel === panel.key)
       if (zone === undefined) return []
       const center = pxToWorld(panel.x, panel.y, imageSize)
-      return [{ key: panel.key, center, ground: style.biomes.colors[panel.key] ?? style.biomes.baseGrass }]
+      const half = [(panel.w * BOARD3D.pxToUnits) / 2, (panel.h * BOARD3D.pxToUnits) / 2] as const
+      return [{ key: panel.key, center, ground: style.biomes.colors[panel.key] ?? style.biomes.baseGrass, half }]
     }),
+    // N-0011: las zonas (agua, relieve) no invaden la huella de los edificios.
+    obstacles: [...solveBuildings(board, stacks).values()].flatMap((building) =>
+      building.discarded ? [] : [{ x: building.x, z: building.z, radius: building.footprint * 0.75 }]),
   }
 }
 

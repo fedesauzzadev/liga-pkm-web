@@ -9,13 +9,17 @@ import * as THREE from 'three'
 import { BOARD3D } from '../theme/board3d'
 import { buildBiomeTexture, liftDarkGround } from './biome-texture'
 import { buildDistantMountains, buildTreeRing } from './horizon'
+import { fbm, hash2, valueNoise } from './noise'
 import { smoothstep } from './smooth'
+import { buildZoneWater, zoneGroundAt, zoneHeightAt } from './zones'
 import type { WorldPos } from './scene'
 
 export interface WorldBiome {
   readonly key: string
   readonly center: WorldPos
   readonly ground: string
+  /** N-0011: media extensión [x, z] del panel de la zona (forma de la celda). */
+  readonly half?: readonly [number, number]
 }
 
 export interface WorldNodePoint {
@@ -43,6 +47,8 @@ export interface WorldInput {
    * panel de la zona, radio de tema) para inputs armados a mano en tests.
    */
   readonly lake?: { readonly x: number; readonly z: number; readonly radius: number } | null
+  /** N-0011: huellas (edificios) que las zonas no pueden invadir. */
+  readonly obstacles?: readonly { readonly x: number; readonly z: number; readonly radius: number }[]
 }
 
 export interface WorldScene {
@@ -63,34 +69,9 @@ export interface WorldScene {
   readonly halfSpan: number
 }
 
-// ── Ruido determinista (hash entero + interpolación suave) ──────────────────
-
-const hash2 = (ix: number, iz: number, seed: number): number => {
-  let h = (Math.imul(ix, 374761393) + Math.imul(iz, 668265263) + Math.imul(seed, 2246822519)) | 0
-  h = Math.imul(h ^ (h >>> 13), 1274126177)
-  return ((h ^ (h >>> 16)) >>> 0) / 4294967295
-}
-
-const fade = (t: number): number => t * t * (3 - 2 * t)
-
-export function valueNoise(x: number, z: number, seed: number): number {
-  const ix = Math.floor(x)
-  const iz = Math.floor(z)
-  const fx = fade(x - ix)
-  const fz = fade(z - iz)
-  const a = hash2(ix, iz, seed)
-  const b = hash2(ix + 1, iz, seed)
-  const c = hash2(ix, iz + 1, seed)
-  const d = hash2(ix + 1, iz + 1, seed)
-  return (a * (1 - fx) + b * fx) * (1 - fz) + (c * (1 - fx) + d * fx) * fz
-}
-
-/** Dos octavas de baja frecuencia, centrado en 0 (ruido suave). */
-const fbm = (x: number, z: number, seed: number): number =>
-  0.65 * valueNoise(x * 0.16, z * 0.16, seed) +
-  0.35 * valueNoise(x * 0.37 + 19.3, z * 0.37 + 7.7, seed ^ 0x9e37) -
-  0.5
-
+export { valueNoise } from './noise'
+export { biomeWeightsAt, terrainColorAt } from './zones'
+export type { BiomeWeights } from './zones'
 export { smoothstep } from './smooth'
 
 export const distToSegment = (px: number, pz: number, a: WorldPos, b: WorldPos): number => {
@@ -99,11 +80,6 @@ export const distToSegment = (px: number, pz: number, a: WorldPos, b: WorldPos):
   const len2 = abx * abx + abz * abz
   const t = len2 === 0 ? 0 : Math.min(1, Math.max(0, ((px - a.x) * abx + (pz - a.z) * abz) / len2))
   return Math.hypot(px - (a.x + abx * t), pz - (a.z + abz * t))
-}
-
-const gaussian = (x: number, z: number, center: WorldPos, sigma: number): number => {
-  const d2 = (x - center.x) ** 2 + (z - center.z) ** 2
-  return Math.exp(-d2 / (2 * sigma * sigma))
 }
 
 /** 1 cerca de nodos/aristas/pedestales se aplana con smoothstep (AC-3). */
@@ -144,67 +120,11 @@ export function hillsHeightAt(x: number, z: number, style: BoardStyle): number {
 export function terrainHeightAt(x: number, z: number, input: WorldInput): number {
   const world = input.style.world
   let height = fbm(x, z, world.seed) * 2 * world.noiseAmplitude
-
-  const relief = input.biomes.find((biome) => biome.key === BOARD3D.world.relief.zone)
-  if (relief !== undefined) {
-    const g = gaussian(x, z, relief.center, input.style.biomes.radius)
-    height *= 1 + BOARD3D.world.relief.boost * g
-  }
-
-  const lake = input.biomes.find((biome) => biome.key === BOARD3D.world.lake.zone)
-  if (lake !== undefined) {
-    // T-095/AC-3: centro/radio del plan cuando existe; legacy si no hay plan.
-    const center = input.lake ?? lake.center
-    const radius = input.lake?.radius ?? BOARD3D.world.lake.radius
-    const d = Math.hypot(x - center.x, z - center.z)
-    const inner = radius * BOARD3D.world.lake.innerRatio
-    const outer = radius
-    height -= BOARD3D.world.lake.depth * (1 - smoothstep(inner, outer, d))
-  }
+  // N-0011: cuenca del lago, charcos y relieve salen de la forma de cada zona.
+  height += zoneHeightAt(x, z, input)
 
   // Dentro del tablero (r < startRadius) las colinas aportan 0.
   return height * flattenMask(x, z, input) + hillsHeightAt(x, z, input.style)
-}
-
-export interface BiomeWeights {
-  /** Peso (> 0) de cada bioma en (x, z); vacío ⇒ pasto base puro. */
-  readonly weights: readonly { readonly biome: WorldBiome; readonly weight: number }[]
-  /** Suma de pesos sin normalizar (0 ⇒ sin influencia de biomas). */
-  readonly total: number
-}
-
-/**
- * AC-2: peso de cada bioma — domina (1) a menos de biomes.radius del centro de
- * su zona y se funde con el pasto base en biomes.blend (0 en radius + blend).
- */
-export function biomeWeightsAt(x: number, z: number, input: WorldInput): BiomeWeights {
-  const { radius, blend } = input.style.biomes
-  const weights: { biome: WorldBiome; weight: number }[] = []
-  let total = 0
-  for (const biome of input.biomes) {
-    const d = Math.hypot(x - biome.center.x, z - biome.center.z)
-    const weight = 1 - smoothstep(radius, radius + blend, d)
-    if (weight <= 1e-4) continue
-    weights.push({ biome, weight })
-    total += weight
-  }
-  return { weights, total }
-}
-
-/** AC-2/T-096: color de suelo — biomas acotados sobre el pasto base (lo muestrea la textura). */
-export function terrainColorAt(x: number, z: number, input: WorldInput, out: THREE.Color): THREE.Color {
-  const base = new THREE.Color(input.style.biomes.baseGrass)
-  const { weights, total } = biomeWeightsAt(x, z, input)
-  const mix = new THREE.Color(0, 0, 0)
-  for (const entry of weights) {
-    const color = new THREE.Color(entry.biome.ground)
-    const share = entry.weight / total
-    mix.r += color.r * share
-    mix.g += color.g * share
-    mix.b += color.b * share
-  }
-  // La mezcla de biomas reemplaza al pasto base solo donde hay peso.
-  return out.copy(base).lerp(mix, Math.min(1, total))
 }
 
 /**
@@ -220,7 +140,7 @@ export function lightnessAt(x: number, z: number, style: BoardStyle): number {
 
 /** T-096: color de suelo (biomas × luz) que la textura de bioma muestrea. */
 export const sampleGroundColor = (x: number, z: number, input: WorldInput, out: THREE.Color): void => {
-  terrainColorAt(x, z, input, out)
+  zoneGroundAt(x, z, input, out)
   liftDarkGround(out, new THREE.Color(input.style.biomes.baseGrass))
   const k = 1 + lightnessAt(x, z, input.style)
   out.setRGB(Math.min(1, out.r * k), Math.min(1, out.g * k), Math.min(1, out.b * k))
@@ -243,29 +163,6 @@ function buildTerrainMesh(input: WorldInput, biomeTexture: THREE.Texture): THREE
   // T-096/AC-1: el tinte de zona es el suelo mismo (textura opaca, sin color por vértice).
   const mesh = new THREE.Mesh(geometry, standard('#ffffff', { map: biomeTexture }))
   mesh.name = 'terrain'
-  return mesh
-}
-
-function buildWaterMesh(
-  biome: WorldBiome,
-  decor: Decor,
-  lake: { readonly x: number; readonly z: number; readonly radius: number },
-): THREE.Mesh {
-  const theme = BOARD3D.world.lake
-  const radius = lake.radius * theme.waterRadiusRatio
-  const mesh = new THREE.Mesh(
-    new THREE.CircleGeometry(radius, 24),
-    new THREE.MeshStandardMaterial({
-      color: decor.palette.water ?? '#4F8FD6',
-      transparent: true,
-      opacity: theme.waterOpacity,
-      roughness: 0.3,
-      metalness: 0,
-    }),
-  )
-  mesh.name = `water:${biome.key}`
-  mesh.rotation.x = -Math.PI / 2
-  mesh.position.set(lake.x, theme.waterLift, lake.z)
   return mesh
 }
 
@@ -357,19 +254,10 @@ export function buildWorld(input: WorldInput): WorldScene {
   const terrain = buildTerrainMesh(input, biomeTexture)
   root.add(terrain)
 
-  const lakeBiome = input.biomes.find((biome) => biome.key === BOARD3D.world.lake.zone)
-  // T-095/AC-3: null ⇒ el estanque no entró en el panel ⇒ sin lago; undefined
-  // ⇒ legacy (centro del panel con radio de tema, tests sin plan).
-  const water = lakeBiome === undefined
-    ? null
-    : input.lake === null
-      ? null
-      : buildWaterMesh(lakeBiome, input.decor, input.lake ?? {
-        x: lakeBiome.center.x,
-        z: lakeBiome.center.z,
-        radius: BOARD3D.world.lake.radius,
-      })
-  if (water !== null) root.add(water)
+  // N-0011: un espejo de agua por zona con agua; `water` = el lago (lo mece Ambient).
+  const waters = buildZoneWater(input)
+  root.add(...waters)
+  const water = waters.find((mesh) => mesh.name === `water:${BOARD3D.world.lake.zone}`) ?? null
 
   const sky = buildSkyMesh(input.style, BOARD3D.world.sky.radius)
   root.add(sky)

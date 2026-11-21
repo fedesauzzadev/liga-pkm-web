@@ -106,20 +106,39 @@ export const BOARD3D = {
       clearDepth: 2,
     },
     lake: {
-      /** Lago de la Isla (AC-3): cuenca en el terreno + disco de agua. */
+      /** Zona cuyo espejo de agua mece Ambient (WorldScene.water). */
       zone: 'isla',
-      radius: 1.3,
-      innerRatio: 0.45,
-      depth: 0.22,
-      waterRadiusRatio: 0.75,
-      waterLift: -0.06,
-      /** T-088/AC-2: sin discos azules translúcidos grandes sobre el tablero. */
-      waterOpacity: 0.12,
     },
     relief: {
-      /** Relieve rocoso de la Montaña (AC-3): ruido × (1 + boost·gauss). */
+      /** Zona con relieve rocoso (tests de rugosidad). */
       zone: 'montana',
-      boost: 1.8,
+    },
+    /**
+     * N-0011: forma y reglas de las 5 zonas. Cada zona es la elipse de su
+     * panel × reach, con borde ondulado, recortada a `clear` de caminos,
+     * casilleros, mazos y edificios. Reglas: depth = cuenca, pools = umbral de
+     * ruido de los charcos, rise = relieve, shore = color de orilla, water =
+     * espejo de agua (el terreno lo recorta en la orilla).
+     */
+    zones: {
+      reach: 1.45,
+      blend: 0.3,
+      wobble: 0.22,
+      wobbleFreq: 0.8,
+      clear: 0.34,
+      clearSoft: 0.6,
+      clearWobble: 0.3,
+      beach: 0.5,
+      waterCells: 28,
+      pedestalRadius: 0.78,
+      defaultHalf: [1.35, 1.85] as const,
+      shoreBand: 0.12,
+      groundBand: 0.3,
+      rules: {
+        isla: { depth: 0.3, shore: '#EAD9A0', water: { color: '#3FB5D9', level: -0.1 } },
+        pantano: { depth: 0.2, pools: 0.38, shore: '#5A5240', water: { color: '#7A63B0', level: -0.07 } },
+        montana: { rise: 0.75 },
+      },
     },
     idle: {
       /** Idle de la ficha (AC-5): ±0,03 en 1,6 s. */
@@ -137,7 +156,7 @@ export const BOARD3D = {
     lightnessFreq: 0.5,
     /** N-0004: piso de luminancia del suelo relativo al pasto base (los
      *  biomas oscuros no tapan casilleros ni caminos). */
-    groundMinLuma: 0.85,
+    groundMinLuma: 0.55,
     /**
      * T-096/AC-2: el tinte de zona es una textura de bioma (≥ 1024², filtro
      * lineal, desenfoque gaussiano) en vez de color por vértice a paso 0,3

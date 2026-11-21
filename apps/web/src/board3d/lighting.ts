@@ -127,7 +127,7 @@ export function buildContactShadows(landmarks: THREE.Group, style: BoardStyle): 
 
 /** N-0010/AC-4: mallas que solo reciben (apoyadas en el suelo: proyectar les
  *  daría acné sin aportar volumen). */
-const RECEIVE_ONLY = /^(terrain|edge|edgesoft|pebbles)/
+const RECEIVE_ONLY = /^(terrain|edge|edgesoft|pebbles|water)/
 
 /**
  * N-0010/AC-1: marca quién proyecta y quién recibe sombra. Lo translúcido y lo

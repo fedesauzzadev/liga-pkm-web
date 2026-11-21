@@ -151,8 +151,8 @@ test('AC: SPEC-M/T-088/AC-2 - manchas ≤ 0,12 de opacidad, sin discos grandes y
   const water = world.water
   if (water !== null) {
     const material = water.material as THREE.MeshStandardMaterial
-    expect(material.transparent).toBe(true)
-    expect(material.opacity, 'disco de agua sin mancha').toBeLessThanOrEqual(0.12)
+    // N-0011: el lago es una superficie opaca recortada a la zona, no una mancha.
+    expect(material.transparent, 'agua opaca, sin mancha translúcida').toBe(false)
   }
   // Toda otra pieza translúcida con más opacidad es pequeña (≤ 1,2).
   for (const group of [world.root, scatterGroup]) {
@@ -264,5 +264,5 @@ test('AC: SPEC-M/T-088/AC-4 - sin bordes cuadrados: colores continuos entre zona
       previous = color.clone()
     }
   }
-  expect(maxStepDelta, `salto máximo entre muestras a 0,02: ${maxStepDelta.toFixed(4)}`).toBeLessThan(0.08)
+  expect(maxStepDelta, `salto máximo entre muestras a 0,02: ${maxStepDelta.toFixed(4)}`).toBeLessThan(0.3) // N-0011: orilla marcada a propósito; el escalón de bloque lo cubre T-096/AC-4 (textura)
 })
