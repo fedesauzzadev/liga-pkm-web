@@ -88,7 +88,9 @@ export function normalizeModel(
   return wrap
 }
 
-const isShadowMap = (name: string): boolean => /(_lm|kage)/i.test(name)
+// N-0008: `kage` (sombra) solo como palabra del nombre de archivo (h_kage.png);
+// suelto descartaba Hitokage_*.png, la textura de Charmander.
+const isShadowMap = (name: string): boolean => /(_lm|(^|[_/\\])kage)/i.test(name)
 
 /** T-070e/AC-2: texturas pixeladas de DS + transparencias recortables. */export function tuneHgssTexture(texture: THREE.Texture): void {
   texture.magFilter = THREE.NearestFilter

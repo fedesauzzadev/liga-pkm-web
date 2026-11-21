@@ -75,3 +75,18 @@ test('AC: fichas-modelo-3d-hgss/AC-7 - caché por especie (1 carga compartida) e
   expect(meshB.geometry).toBe(meshA.geometry)
   expect(meshB.material).toBe(meshA.material)
 })
+
+test('AC: N-0008/AC-2 - la textura del inicial (Hitokage_*.png) se conserva; los mapas de sombra (kage/_lm) no', async () => {
+  const textured = (name: string): THREE.Mesh => {
+    const map = new THREE.DataTexture(new Uint8Array([255, 128, 0, 255]), 1, 1)
+    map.name = name
+    return new THREE.Mesh(new THREE.BoxGeometry(1, 2, 1), new THREE.MeshPhongMaterial({ color: 0xcccccc, map }))
+  }
+  const names = ['/models/hgss/Charmander/Hitokage_bodyCl_ctr.png', '/models/hgss/x/h_kage.png', '/models/hgss/x/h_mado_lm1.png']
+  const cache = new StarterModelCache(loadersOf(async () => new THREE.Group().add(...names.map(textured))))
+  const template = await cache.templateFor('charmander')
+  const maps = (template?.parts ?? []).map((part) => (part.material as THREE.MeshToonMaterial).map)
+  expect(maps.map((map) => map?.name ?? null)).toEqual([names[0], null, null])
+  expect(maps[0]?.colorSpace).toBe(THREE.SRGBColorSpace)
+  expect(maps[0]?.magFilter).toBe(THREE.NearestFilter)
+})
