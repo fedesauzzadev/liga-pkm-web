@@ -181,10 +181,10 @@ export function GameApp({ storage }: GameAppProps) {
           onSettingsChange={changeSettings}
         />
       ) : null}
-      {screen === 'title' ? (
-        <section className={styles.screen}>
-          <p className={styles.note}>{es.titleDemoSection}</p>
-          <div className={styles.demos}>
+      {/* N-0020/AC-3: demos solo en dev, en una esquina (no compiten con el menú). */}
+      {screen === 'title' && import.meta.env.DEV ? (
+        <>
+          <div className={styles.demos} data-testid="dev-demos" aria-label={es.titleDemoSection}>
             <button
               type="button"
               className={styles.demosButton}
@@ -227,7 +227,7 @@ export function GameApp({ storage }: GameAppProps) {
               <TeamDemo />
             </Suspense>
           ) : null}
-        </section>
+        </>
       ) : null}
     </>
   )

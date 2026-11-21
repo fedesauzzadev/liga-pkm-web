@@ -1,6 +1,7 @@
 // AC: SPEC-D/T-034/AC-1 — setup: elegir 1 de 5 iniciales con carta y
 // descripción (elemento, PS, ataques) y semilla opcional.
 import { DECK_IDS, PokemonFileSchema } from '@liga/content'
+import { readFileSync } from 'node:fs'
 import { renderToString } from 'react-dom/server'
 import { expect, test } from 'vitest'
 import samples from '../../../../content/pokemon/_samples.json'
@@ -56,4 +57,35 @@ test('AC: SPEC-D/AC-3 - semilla opcional visible en el setup para repetir la par
   expect(html).toContain(es.setupSeedLabel)
   expect(html).toContain('data-setup="seed"')
   expect(html).toContain('value="4242"')
+})
+
+const css = readFileSync(new URL('./game.module.css', import.meta.url), 'utf8')
+const sprites = { [String(squirtle.dex)]: { front: '/sprites/7.gif', back: null } }
+
+// AC: N-0020/AC-1 — cada mazo disponible muestra el sprite de su inicial y la
+// grilla queda centrada (el SSR no hace layout ⇒ CSS fuente + captura mirada).
+test('AC: N-0020/AC-1 - sprite del inicial en cada mazo disponible y grilla centrada', () => {
+  const html = renderToString(<SetupScreen {...props} sprites={sprites} />)
+  expect(html.match(/<img[^>]*src="\/sprites\/7\.gif"/g)).toHaveLength(4)
+  expect(css).toMatch(/\.cards\s*\{[^}]*justify-content:\s*center/s)
+})
+
+// AC: N-0020/AC-2 — sin carta: deshabilitado (no clickeable), con etiqueta y
+// estilo propio; los disponibles tienen hover/foco visible.
+test('AC: N-0020/AC-2 - mazo sin carta deshabilitado y marcado; hover/foco en los disponibles', () => {
+  const html = renderToString(<SetupScreen {...props} sprites={sprites} />)
+  const at = html.indexOf('data-deck="llanura"')
+  const button = html.slice(at, html.indexOf('</button>', at))
+  expect(button).toContain('disabled=""')
+  expect(button).toContain(es.setupUnavailable)
+  expect(button).not.toContain('<img')
+  expect(css).toMatch(/\.card:disabled\s*\{[^}]*border-style:\s*dashed/s)
+  expect(css).toMatch(/\.card:not\(:disabled\):hover/)
+  expect(css).toMatch(/\.card:focus-visible/)
+})
+
+// AC: N-0020/AC-4 — el setup usa la marca del lobby ⇒ el shell no suma margen
+// (sin scroll de página); el resto se mira en capturas 1440×810 y 1024×768.
+test('AC: N-0020/AC-4 - setup marcado como pantalla de lobby (shell sin margen)', () => {
+  expect(renderToString(<SetupScreen {...props} />)).toContain('data-title-screen')
 })

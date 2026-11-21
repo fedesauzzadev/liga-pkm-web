@@ -180,6 +180,7 @@ export const es = {
   setupSeedLabel: 'Semilla (opcional, para repetir una partida)',
   setupSeedPlaceholder: 'Al azar',
   setupStartHint: 'Tocá una carta para empezar.',
+  setupUnavailable: 'No disponible',
   setupStarterMissing: 'Carta aún no cargada en el contenido',
   setupHp: 'PS',
   setupElement: 'Elemento',

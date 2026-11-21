@@ -2,7 +2,7 @@
 // save y aviso de versión desconocida. Proxy SSR con storage inyectado.
 import { readFileSync } from 'node:fs'
 import { renderToString } from 'react-dom/server'
-import { expect, test } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { es } from '../i18n/es'
 import { gameContent } from './content'
 import { SAVE_KEY, createMemoryStorage, writeSave } from './save'
@@ -59,4 +59,23 @@ test('AC: N-0006/AC-3 - demo de combate dentro de una capa fija con tamaño', ()
   expect(source).toMatch(/className=\{styles\.demoOverlay\}[\s\S]*<BattleDemo/)
   const css = readFileSync(new URL('./game.module.css', import.meta.url), 'utf8')
   expect(css).toMatch(/\.demoOverlay\s*\{[^}]*position:\s*fixed;[^}]*inset:\s*0;[^}]*display:\s*grid/s)
+})
+
+// AC: N-0020/AC-3 — los demos del título solo existen en dev y van en una
+// esquina fija, fuera del flujo del menú.
+test('AC: N-0020/AC-3 - demos solo en dev, en una esquina fija', () => {
+  const dev = renderToString(<GameApp storage={createMemoryStorage()} />)
+  expect(dev).toContain('data-testid="dev-demos"')
+  expect(dev).toContain(es.battleDemoToggle)
+  const css = readFileSync(new URL('./game.module.css', import.meta.url), 'utf8')
+  expect(css).toMatch(/\.demos\s*\{[^}]*position:\s*fixed/s)
+  vi.stubEnv('DEV', false)
+  try {
+    const prod = renderToString(<GameApp storage={createMemoryStorage()} />)
+    expect(prod).not.toContain('data-testid="dev-demos"')
+    expect(prod).not.toContain(es.teamDemoToggle)
+    expect(prod).toContain(es.titleNewGame)
+  } finally {
+    vi.unstubAllEnvs()
+  }
 })
