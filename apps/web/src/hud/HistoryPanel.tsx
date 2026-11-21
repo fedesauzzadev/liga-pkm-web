@@ -104,9 +104,14 @@ export function HistoryPanel({
                   {collapsed.includes(row.key) ? '▸' : '▾'}
                 </span>
               </button>
-              {collapsed.includes(row.key)
-                ? null
-                : row.entries.map((entry) => <Entry key={`e-${String(entry.id)}`} entry={entry} />)}
+              {collapsed.includes(row.key) ? null : (
+                // N-0006/AC-1: sub-lista propia (un <li> no puede colgar directo de otro <li>).
+                <ul className={styles.historyGroupList}>
+                  {row.entries.map((entry) => (
+                    <Entry key={`e-${String(entry.id)}`} entry={entry} />
+                  ))}
+                </ul>
+              )}
             </li>
           ),
         )}

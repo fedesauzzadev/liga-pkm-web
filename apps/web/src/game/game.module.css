@@ -73,6 +73,29 @@
   cursor: pointer;
 }
 
+/* N-0006: demo de combate del título a pantalla completa (grid ⇒ el hijo
+   se estira y el 100% del escenario tiene contra qué medirse). */
+.demoOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  background: var(--color-bg);
+}
+
+.demoClose {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  min-height: 44px;
+  padding: 0 0.85rem;
+  background: var(--color-surface-strong);
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
 .warning {
   margin: 0;
   padding: 0.5rem 0.75rem;

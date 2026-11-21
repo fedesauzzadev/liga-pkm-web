@@ -91,8 +91,12 @@ test('AC: SPEC-N/T-092/AC-5 - reducedMotion/skip muestran el valor directo', () 
 
 // Sin tiradas: estado inicial con el aviso y sin historial (AC-2/AC-4).
 test('AC: SPEC-N/T-092/AC-2 - sin tiradas muestra el aviso inicial', () => {
-  const html = renderToString(<DicePanel rolls={[]} />)
+  const html = renderToString(<DicePanel rolls={[]} canRoll />)
   expect(html).toContain(es.hudDiceIdle)
+  // AC: N-0006/AC-2 — fuera de la fase de tirada no invita a tirar.
+  const blocked = renderToString(<DicePanel rolls={[]} />)
+  expect(blocked).not.toContain(es.hudDiceIdle)
+  expect(blocked).toContain(es.hudDiceWait)
   expect(html).not.toContain('data-testid="dice-history"')
   expect(diceHistoryText([])).toBeNull()
   expect(diePurposeLabel('gate')).toBe(es.hudDiceGate)

@@ -259,6 +259,7 @@ export const es = {
   hudDiceBonus: 'Dado bonus',
   hudDiceOportunidad: 'Dado de Oportunidad',
   hudDiceIdle: 'Tirá el dado para moverte.',
+  hudDiceWait: 'Ahora no se tira el dado.',
   hudDiceHistory: 'Últimas: {values}',
   shellBtnOak: 'Prof. Oak',
   // SPEC-N/T-089: pestaña que oculta/muestra panel-team.

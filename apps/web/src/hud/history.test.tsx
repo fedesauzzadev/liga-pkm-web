@@ -176,6 +176,16 @@ test('AC-3 grupos: BattleStarted..BattleEnded bajo encabezado plegable Combate v
   expect(open).toContain('data-testid="history-group-toggle"')
   expect(open).toContain('aria-expanded="true"')
   expect(open).toContain('Squirtle usó Burbujas.')
+  // AC: N-0006/AC-1 — ningún <li> cuelga directo de otro <li> (va en su <ul>).
+  const liDepth = [...open.matchAll(/<(\/?)(li|ul)\b/g)].reduce<string[][]>(
+    (acc, [, close, tag]) => {
+      const stack = acc.at(-1)!
+      return [...acc, close === '/' ? stack.slice(0, -1) : [...stack, tag!]]
+    },
+    [[]],
+  )
+  expect(liDepth.some((stack) => stack.at(-1) === 'li' && stack.at(-2) === 'li')).toBe(false)
+  expect(open).toMatch(/<ul class="[^"]*historyGroupList/)
   const closed = panel({ entries, collapsed: [1] })
   expect(closed).toContain('aria-expanded="false"')
   expect(closed).not.toContain('Squirtle usó Burbujas.')

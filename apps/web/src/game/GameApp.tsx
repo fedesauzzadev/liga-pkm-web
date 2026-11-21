@@ -207,9 +207,20 @@ export function GameApp({ storage }: GameAppProps) {
             </button>
           </div>
           {battleDemo ? (
-            <Suspense fallback={<p className={styles.note}>{es.loading}</p>}>
-              <BattleDemo speed={speed} />
-            </Suspense>
+            // N-0006/AC-3: el escenario mide 100% de su contenedor ⇒ capa a pantalla completa.
+            <div className={styles.demoOverlay} data-testid="battle-demo-overlay">
+              <Suspense fallback={<p className={styles.note}>{es.loading}</p>}>
+                <BattleDemo speed={speed} />
+              </Suspense>
+              <button
+                type="button"
+                className={styles.demoClose}
+                data-testid="battle-demo-close"
+                onClick={() => setBattleDemo(false)}
+              >
+                {es.setupBack}
+              </button>
+            </div>
           ) : null}
           {teamDemo ? (
             <Suspense fallback={<p className={styles.note}>{es.loading}</p>}>
