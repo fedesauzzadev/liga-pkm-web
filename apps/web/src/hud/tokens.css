@@ -1,0 +1,9 @@
+/* N-0021: valores compartidos del HUD (tipografía, radios, fondos). Los
+   importan hud.module.css y GameShell.module.css; no repetir literales. */
+:root {
+  --hud-font-sm: 13px;
+  --hud-radius-sm: 8px;
+  --hud-radius-md: 10px;
+  --hud-chip-bg: rgba(232, 240, 224, 0.9);
+  --hud-edge: rgba(34, 48, 28, 0.9);
+}

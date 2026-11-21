@@ -25,9 +25,9 @@ test('AC: SPEC-N/AC-1 - teamTab en layout.json, UI_PANEL_KEYS y FOCUS_ORDER', ()
   const tab = shellPanels.teamTab
   const team = shellPanels.team
   expect(tab.testid).toBe('btn-team-tab')
-  expect(tab.x).toBeCloseTo(0.17, 6)
+  expect(tab.x).toBeCloseTo(team.x, 6)
   expect(tab.y).toBeCloseTo(0.7266, 6)
-  expect(tab.w).toBeCloseTo(0.655, 6)
+  expect(tab.w).toBeCloseTo(team.w, 6)
   expect(tab.h).toBeCloseTo(0.0734, 6)
   expect(tab.minH).toBe(44)
   expect(UI_PANEL_KEYS).toContain('teamTab')
@@ -133,7 +133,7 @@ test('AC: SPEC-I/T-071/AC-3 - panelCss: % de ventana + max(minPx, %) cuando hay 
   expect(turn.width).toContain('max(108px')
   const { minW: _mw, minH: _mh, ...plainTurn } = shellPanels.turn
   const plain = panelCss(plainTurn)
-  expect(plain.width).toBe('13.500%')
+  expect(plain.width).toBe('16.500%')
 })
 
 test('AC: SPEC-I/T-071/AC-4 - sin solapamiento entre paneles normales (popups exceptuados)', () => {
@@ -162,4 +162,24 @@ test('AC: SPEC-I/T-071/AC-5 - mínimo de viewport: 1024×600 horizontal', () => 
   expect(viewportFits(1024, 599)).toBe(false)
   expect(viewportFits(800, 1280)).toBe(false)
   expect(viewportFits(2560, 1080)).toBe(true)
+})
+
+// AC: N-0021/AC-1 — a 1440×810 cada panel del HUD queda a ≥ 8 px de los bordes
+// y de los demás (la pestaña del equipo va pegada a panel-team a propósito).
+test('AC: N-0021/AC-1 - separación ≥ 8 px entre paneles y contra los bordes a 1440×810', () => {
+  const [vw, vh, min] = [1440, 810, 8]
+  const boxes = FOCUS_ORDER.map((key) => [key, panelPx(shellPanels[key], vw, vh)] as const)
+  for (const [key, box] of boxes) {
+    expect(box.x, `${key} izq`).toBeGreaterThanOrEqual(min)
+    expect(box.y, `${key} arriba`).toBeGreaterThanOrEqual(min)
+    expect(vw - box.x - box.w, `${key} der`).toBeGreaterThanOrEqual(min)
+    expect(vh - box.y - box.h, `${key} abajo`).toBeGreaterThanOrEqual(min)
+  }
+  for (const [keyA, a] of boxes) {
+    for (const [keyB, b] of boxes) {
+      if (keyA >= keyB || (keyA === 'team' && keyB === 'teamTab')) continue
+      const gap = Math.max(a.x - b.x - b.w, b.x - a.x - a.w, a.y - b.y - b.h, b.y - a.y - a.h)
+      expect(gap, `${keyA} vs ${keyB}`).toBeGreaterThanOrEqual(min)
+    }
+  }
 })

@@ -1,3 +1,5 @@
+@import '../hud/tokens.css';
+
 /* HUD (SPEC-I/T-074): contenido de los paneles de vidrio del shell. Los paneles
    (posición, vidrio, pointer-events) los pone GameShell; acá solo el interior:
    tira de equipo, jugadores, turno y reserva de Oak. Compacto: el alto de los
@@ -20,7 +22,7 @@
   flex: 1 1 0;
   min-width: 0;
   border: 2px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: var(--hud-radius-md);
   background: rgba(253, 246, 227, 0.55);
   overflow: hidden;
 }
@@ -44,7 +46,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   color: var(--color-muted);
   background: transparent;
 }
@@ -58,7 +60,7 @@
   height: 100%;
   padding: 2px;
   font: inherit;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   line-height: 1.1;
   background: transparent;
   border: none;
@@ -109,7 +111,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 1px;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
 }
 
 .chipExtra {
@@ -126,7 +128,7 @@
 
 .badge {
   padding: 0 3px;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   line-height: 1.2;
   border: 1px solid var(--color-border);
   border-radius: 6px;
@@ -140,7 +142,7 @@
   flex-direction: column;
   gap: 2px;
   height: 100%;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   overflow: hidden auto;
 }
 
@@ -160,7 +162,7 @@
   font: inherit;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: var(--hud-radius-sm);
   cursor: pointer;
 }
 
@@ -192,7 +194,7 @@
 
 .medalDot {
   color: #c9a227;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
 }
 
 .medalEmpty {
@@ -212,7 +214,7 @@
   flex-direction: column;
   gap: 2px;
   height: 100%;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   line-height: 1.05;
 }
 
@@ -243,16 +245,16 @@
   min-height: 28px;
   padding: 0 0.5rem;
   font: inherit;
-  font-size: 13px;
-  background: rgba(232, 240, 224, 0.9);
+  font-size: var(--hud-font-sm);
+  background: var(--hud-chip-bg);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--hud-radius-sm);
   cursor: pointer;
 }
 
 .turnNote {
   margin: auto 0 0;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   color: var(--color-muted);
 }
 
@@ -279,7 +281,7 @@
   height: 100%;
   padding: 0.5rem;
   overflow: hidden auto;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
 }
 
 .oakHeader {
@@ -314,7 +316,7 @@
   gap: 0.25rem;
   padding: 0.35rem;
   border: 1px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: var(--hud-radius-md);
   background: rgba(232, 240, 224, 0.6);
 }
 
@@ -381,7 +383,7 @@
   align-items: center;
   gap: 0.35rem;
   margin: 0;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   color: var(--color-muted);
 }
 
@@ -394,10 +396,10 @@
   min-height: 30px;
   padding: 0 0.5rem;
   font: inherit;
-  font-size: 13px;
-  background: rgba(232, 240, 224, 0.9);
+  font-size: var(--hud-font-sm);
+  background: var(--hud-chip-bg);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--hud-radius-sm);
   cursor: pointer;
 }
 
@@ -415,7 +417,7 @@
   gap: 3px;
   height: 100%;
   min-height: 0;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   overflow: hidden;
 }
 
@@ -430,10 +432,10 @@
   min-height: 22px;
   padding: 0 0.35rem;
   font: inherit;
-  font-size: 13px;
-  background: rgba(232, 240, 224, 0.9);
+  font-size: var(--hud-font-sm);
+  background: var(--hud-chip-bg);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--hud-radius-sm);
   cursor: pointer;
 }
 
@@ -476,7 +478,7 @@
 
 .historyMeta {
   grid-column: 2;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   color: var(--color-muted);
 }
 
@@ -504,12 +506,12 @@
   min-height: 22px;
   padding: 0 4px;
   font: inherit;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   font-weight: 700;
   text-align: left;
-  background: rgba(232, 240, 224, 0.9);
+  background: var(--hud-chip-bg);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--hud-radius-sm);
   cursor: pointer;
 }
 

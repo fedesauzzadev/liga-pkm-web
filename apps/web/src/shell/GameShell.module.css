@@ -1,3 +1,5 @@
+@import '../hud/tokens.css';
+
 /* Shell de pantalla completa (SPEC-I/T-071). El tablero es la pantalla: el
    mundo (canvas) queda fijo detrás y el HUD son paneles de vidrio con
    pointer-events auto sobre una capa que no captura clics (AC-2). Las vars
@@ -17,6 +19,9 @@
   --blur: var(--hud-blur, 6px);
   --radius: var(--hud-radius, 16px);
   --border: var(--hud-border, 2px);
+  /* N-0021: fondos de vidrio compartidos (dependen de --panel-opacity). */
+  --hud-glass: rgba(232, 240, 224, var(--panel-opacity));
+  --hud-paper: rgba(253, 246, 227, var(--panel-opacity));
 }
 
 /* ── Mundo (z0): canvas 3D a pantalla completa (AC-2) ── */
@@ -103,9 +108,9 @@
 .panelButton {
   position: absolute;
   pointer-events: auto;
-  border: var(--border) solid rgba(34, 48, 28, 0.85);
+  border: var(--border) solid var(--hud-edge);
   border-radius: var(--radius);
-  background: rgba(232, 240, 224, var(--panel-opacity));
+  background: var(--hud-glass);
   backdrop-filter: blur(var(--blur));
   -webkit-backdrop-filter: blur(var(--blur));
   color: var(--color-ink);
@@ -127,6 +132,14 @@
 /* T-092: panel-dice (h 0.14) casi igual de bajo ⇒ padding mínimo también. */
 .panel[data-panel='dice'] {
   padding: 2px;
+}
+
+/* N-0021/AC-3: el historial mide lo que su contenido (tope inline = caja de
+   layout.json) ⇒ sin contención de alto; la lista scrollea al llegar al tope. */
+.panel[data-panel='history'] {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
 }
 
 .panel:focus-visible,
@@ -158,7 +171,7 @@
 
 .placeholder {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   color: var(--color-muted);
 }
 
@@ -174,9 +187,9 @@
 .popup {
   position: absolute;
   pointer-events: auto;
-  border: var(--border) solid rgba(34, 48, 28, 0.9);
+  border: var(--border) solid var(--hud-edge);
   border-radius: var(--radius);
-  background: rgba(253, 246, 227, var(--panel-opacity));
+  background: var(--hud-paper);
   backdrop-filter: blur(var(--blur));
   -webkit-backdrop-filter: blur(var(--blur));
 }
@@ -213,9 +226,9 @@
   max-height: 84vh;
   padding: 0.6rem 0.75rem;
   overflow: hidden auto;
-  border: var(--border) solid rgba(34, 48, 28, 0.9);
+  border: var(--border) solid var(--hud-edge);
   border-radius: var(--radius);
-  background: rgba(232, 240, 224, var(--panel-opacity));
+  background: var(--hud-glass);
   backdrop-filter: blur(var(--blur));
   -webkit-backdrop-filter: blur(var(--blur));
 }
@@ -228,33 +241,33 @@
   background: var(--color-accent);
   color: #fff;
   border: 2px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: var(--hud-radius-md);
   cursor: pointer;
 }
 
 .menuHint {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   color: var(--color-muted);
   text-align: center;
 }
 
 .tip {
   position: absolute;
+  /* N-0021/AC-2: `bottom` llega inline (encima de btn-team-tab, layout.json). */
   left: 50%;
-  bottom: 21%;
   transform: translateX(-50%);
   z-index: 40;
   display: flex;
   align-items: center;
   gap: 0.6rem;
   padding: 0.45rem 0.7rem;
-  border: var(--border) solid rgba(34, 48, 28, 0.9);
+  border: var(--border) solid var(--hud-edge);
   border-radius: var(--radius);
-  background: rgba(232, 240, 224, var(--panel-opacity));
+  background: var(--hud-glass);
   backdrop-filter: blur(var(--blur));
   -webkit-backdrop-filter: blur(var(--blur));
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   white-space: nowrap;
 }
 
@@ -262,7 +275,7 @@
   min-height: 34px;
   padding: 0 0.6rem;
   font: inherit;
-  font-size: 13px;
+  font-size: var(--hud-font-sm);
   background: transparent;
   border: 1px solid var(--color-border);
   border-radius: 999px;
@@ -304,7 +317,7 @@
   background: var(--color-accent);
   color: #fff;
   border: 2px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: var(--hud-radius-md);
   cursor: pointer;
 }
 
