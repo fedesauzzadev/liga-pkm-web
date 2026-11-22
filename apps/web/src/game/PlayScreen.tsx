@@ -5,80 +5,51 @@
 // T-074: los paneles del HUD (turno, equipo, jugadores, Reserva de Oak y menú)
 // llenan el shell; el overlay queda para el panel de casillero y la ficha.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { Command, DiePurpose, GameEvent, PkmInstance, PlayerState } from '@liga/engine'
+import type { Command, GameEvent, PlayerState } from '@liga/engine'
 import { legalCommands, createRng } from '@liga/engine'
-import { parseCardId, type DeckId, type DeckKey } from '@liga/content'
-import { BoardHost, type BoardMode } from '../board/BoardHost'
-import { drawFromEvents, movePathFromEvents, type BoardTokenSpec, type DrawSpec, type PendingDecision } from '../board/Board'
+import { parseCardId } from '@liga/content'
+import type { BoardMode } from '../board/BoardHost'
+import { drawFromEvents, movePathFromEvents, type BoardTokenSpec, type DrawSpec } from '../board/Board'
 import type { DieValue } from '../board/Die3D'
-import type { SpritesManifest } from '../battle/sprites'
-import { spriteUrl, useBadges, useSprites } from '../battle/sprites'
+
+import { useBadges, useSprites } from '../battle/sprites'
 import { recordCommand } from '../debug/session'
 import { MenuSettings } from '../hud/MenuSettings'
-import { OakReserve } from '../hud/OakReserve'
-import { PlayersPanel } from '../hud/PlayersPanel'
-import { TeamStrip } from '../hud/TeamStrip'
-import { TurnPanel } from '../hud/TurnPanel'
-import { HistoryPanel, type HistoryFilter } from '../hud/HistoryPanel'
+import { type HistoryFilter } from '../hud/HistoryPanel'
 import { appendHistory, historyLogI18n, type HistoryEntry } from '../hud/history'
-import { appendDiceRolls, DicePanel, type DiceRoll } from '../hud/DicePanel'
-import { BackpackHud } from '../hud/BackpackHud'
-import { resolveDrop } from '../hud/backpack'
-import { carryOf } from '../hud/carry'
-import { canAdvance, canReorder, canRoll, leaderUid, oakPairs, playerLabel, playersVm } from '../hud/model'
+import { appendDiceRolls, type DiceRoll } from '../hud/DicePanel'
 import { useGameStore } from '../events/store'
-import { EvolveOverlay, evolveShowFromEvent, type EvolveShow } from '../events/EvolveOverlay'
-import { es } from '../i18n/es'
-import { BattlePopup } from '../popup/BattlePopup'
-import { CardPopup } from '../popup/CardPopup'
-import { EncounterPopup, type EncounterFightOption } from '../popup/EncounterPopup'
-import { battlePopupKind, battleResultPending, battleScriptAfterCommand, battleScriptAfterContinue, battleShouldAutoClose, battleViewAfterCommand, battleViewAfterScriptDone } from '../popup/model'
-import { CardModal } from '../cardmodal/CardModal'
+import { evolveShowFromEvent, type EvolveShow } from '../events/EvolveOverlay'
+import { battlePopupKind, battleResultPending, battleScriptAfterCommand, battleViewAfterCommand } from '../popup/model'
+
 import { cardModalActions, cardModalSpec, type CardModalTarget } from '../cardmodal/model'
-import { shellPanels, uiLayout } from '../shell/layout'
+import { uiLayout } from '../shell/layout'
 import { GameShell } from '../shell/GameShell'
-import { CardSheet } from '../team/CardSheet'
-import { TeamPanel } from '../team/TeamPanel'
-import { freeMulticolor } from '../team/model'
-import { cardOf, contentHash, gameContent, starterTokenCard } from './content'
+import { cardOf, contentHash, gameContent } from './content'
 import { devRng, devToolsEnabled } from './devmode'
 import { LoadingScreen } from './LoadingScreen'
 import { DEFAULT_SETTINGS, type GameSettings } from './settings'
 import { saveFromSession, applyToSession, type GameSession } from './session'
-import { TilePanel, tileEventMessage, tileTitle, type TilePanelPlayer, type TilePending } from './TilePanel'
-import { writeSave, type StorageLike } from './save'
-import styles from './game.module.css'
 
-const isTileEvent = (event: GameEvent): boolean => tileEventMessage(event) !== null
+import { writeSave, type StorageLike } from './save'
+
+import { buildHud } from './play/hud'
+import { renderBattlePopup } from './play/battle'
+import { renderModal } from './play/modal'
+import { renderOverlay } from './play/overlay'
+import {
+  boardRollsFromEvents, deckCountsOf, encounterOptionsOf, isTileEvent, nextDrawSpec,
+  pendingDecisionOf, tilePendingOf, tilePlayerOf,
+} from './play/derive'
+import { gymLeaderOf, oakNamesOf, tileMessagesOf } from './play/derive'
+import { renderTeamDetail } from './play/detail'
+import { renderWorld } from './play/world'
+import { renderCardPopup, renderEncounterPopup } from './play/popups'
+
+import { boardTokenSpecs } from './play/derive'
+export { boardTokenSpecs, isBoardDiePurpose } from './play/derive'
 
 type EvolvedEvent = Extract<GameEvent, { readonly type: 'PkmEvolved' }>
-
-const clampDie = (value: number): DieValue => Math.min(6, Math.max(1, Math.round(value))) as DieValue
-
-/** dado-de-combate/AC-2: enruta tiradas — solo el dado de tablero (move y
- * oportunidad) alimenta panel-dice; los propósitos de combate los reproduce
- * el dado propio del popup de combate (battle-die). */
-export const isBoardDiePurpose = (purpose: DiePurpose): boolean =>
-  purpose === 'move' || purpose === 'oportunidad'
-
-/** ficha-inicial-fija: spec de ficha por jugador resuelto desde la carta inicial
- * BASE del mazo (session.starterDeck), no desde el equipo: el inicial puede
- * evolucionar (cardId cambia) o dejar de ser team[0] (reorden/intercambio con
- * Oak) y la ficha lo representa igual. Sin carta en el contenido ⇒ null/null
- * (peón de color). */
-export const boardTokenSpecs = (
-  players: readonly PlayerState[],
-  starterDeck: DeckId,
-  sprites: SpritesManifest | null,
-): readonly BoardTokenSpec[] => {
-  const card = starterTokenCard(starterDeck)
-  return players.map((p) => ({
-    id: p.id,
-    nodeId: p.position,
-    spriteUrl: card === null ? null : spriteUrl(sprites, card.dex, 'front'),
-    modelSpecies: card === null ? null : card.id,
-  }))
-}
 
 export interface PlayScreenProps {
   readonly session: GameSession
@@ -225,27 +196,10 @@ export function PlayScreen({
     for (const event of step.value.events) {
       enqueue({ ...event })
     }
-    // T-092: cada tirada de tablero alimenta el historial del panel (hasta 3);
-    // el que se reproduce en el dado es el último de la tanda. "Quién tiró" se
-    // infiere del jugador activo al emitirse el evento (el motor no lo trae, Q-057).
-    const rolls: DiceRoll[] = []
-    for (const event of step.value.events) {
-      if (event.type !== 'DieRolled') continue
-      // dado-de-combate/AC-2: las tiradas de combate las reproduce el popup.
-      if (!isBoardDiePurpose(event.purpose)) continue
-      dieNonceRef.current += 1
-      const rollerIndex = state.players.findIndex((p: PlayerState) => p.id === state.activePlayerId)
-      const value = clampDie(event.value)
-      rolls.push({
-        value,
-        purpose: event.purpose,
-        playerLabel:
-          rollerIndex < 0 ? (state.activePlayerId ?? es.hudDiceIdle) : playerLabel(rollerIndex),
-        nonce: dieNonceRef.current,
-      })
-      if (event.purpose === 'move') setMoveHint(value)
-    }
-    if (rolls.length > 0) setDiceRolls((prev) => appendDiceRolls(prev, rolls))
+    const board = boardRollsFromEvents(step.value.events, state, dieNonceRef.current)
+    dieNonceRef.current = board.nonce
+    if (board.moveHint !== null) setMoveHint(board.moveHint)
+    if (board.rolls.length > 0) setDiceRolls((prev) => appendDiceRolls(prev, [...board.rolls]))
     // T-063: camino del último movimiento, derivado de los MoveStep (AC-2).
     const path = movePathFromEvents(step.value.events, step.value.session.state.activePlayerId)
     if (path !== null) setMove((prev) => ({ path, nonce: (prev?.nonce ?? 0) + 1 }))
@@ -253,13 +207,7 @@ export function PlayScreen({
     // (la carta PKM queda en pantalla mientras dura la decisión).
     // T-090/AC-2: Ítem/Sorpresa (sin pedestal) parten del nodo donde se robó.
     const drawn = drawFromEvents(step.value.events)
-    setDraw((prev) => {
-      if (drawn === null) return null
-      const base = { deck: drawn.deck, card: drawn.card, nonce: (prev?.nonce ?? 0) + 1 }
-      if (drawn.deck !== 'item' && drawn.deck !== 'sorpresa') return base
-      const nodeId = step.value.session.state.players.find((p: PlayerState) => p.id === drawn.player)?.position
-      return nodeId === undefined ? base : { ...base, nodeId }
-    })
+    setDraw((prev) => nextDrawSpec(prev, drawn, step.value.session.state))
     // T-075/AC-6 + SPEC-S/T-102: cada robo nuevo abre la caja popup-card (la
     // carta robada le gana al detalle mientras es visible). Sin esto el popup
     // nunca montaba: su efecto de onOpenChange(true) requeriría estar montado.
@@ -326,23 +274,14 @@ export function PlayScreen({
     }
   }
 
-  const pending: PendingDecision =
-    state.pending?.type === 'ChoosePath'
-      ? { type: 'ChoosePath', options: state.pending.options }
-      : state.pending?.type === 'StopOrContinue'
-        ? { type: 'StopOrContinue' }
-        : null
+  const pending = pendingDecisionOf(state)
 
   // unificar-popup-encuentro/AC-1: el encuentro salvaje tiene SU popup; el
   // panel de casillero no lo duplica (ni mensajes de robo ni botones).
   // captura-en-popup-combate/AC-2: CaptureOrRelease tampoco vive acá (el pie
   // del popup de combate decide).
   const encounter = state.pending?.type === 'FightOrRelease' ? state.pending : null
-  const tilePending: TilePending = encounter
-    ? null
-    : state.pending?.type === 'ChallengeGym' || state.pending?.type === 'OakSwap'
-      ? { type: state.pending.type }
-      : null
+  const tilePending = tilePendingOf(state, encounter !== null)
 
   const node = player === undefined
     ? undefined
@@ -357,69 +296,20 @@ export function PlayScreen({
     [state.players, current.starterDeck, sprites.sprites],
   )
   // T-064/AC-3: cantidad real de cartas por mazo (altura de cada pila 3D).
-  const deckCounts = useMemo<Readonly<Record<string, number>>>(
-    () => Object.fromEntries(Object.entries(state.decks).map(([deck, stack]) => [deck, stack.length])),
-    [state.decks],
-  )
-  const gymLeader = node !== undefined && node.type === 'gym' && node.gym !== undefined
-    ? (gameContent.gyms.find((leader) => leader.id === node.gym)?.name ?? null)
-    : null
-  const tilePlayer: TilePanelPlayer | null = player === undefined
-    ? null
-    : {
-        healthy: player.team
-          .filter((pkm: PkmInstance) => !pkm.fainted)
-          .map((pkm: PkmInstance) => ({ uid: pkm.uid, name: cardOf(pkm.cardId)?.name ?? String(pkm.cardId) })),
-        swapPairs:
-          state.pending?.type === 'OakSwap'
-            ? player.team.flatMap((teamPkm: PkmInstance) =>
-                player.oakPile.map((pilePkm: PkmInstance) => ({
-                  teamUid: teamPkm.uid,
-                  pileUid: pilePkm.uid,
-                  teamName: cardOf(teamPkm.cardId)?.name ?? String(teamPkm.cardId),
-                  pileName: cardOf(pilePkm.cardId)?.name ?? String(pilePkm.cardId),
-                })),
-              )
-            : [],
-        }
-  const tileMessages = (encounter !== null ? [] : tileEvents)
-    .map((event) => tileEventMessage(event))
-    .filter((message): message is string => message !== null)
+  const deckCounts = useMemo(() => deckCountsOf(state), [state.decks])
+  const gymLeader = gymLeaderOf(node)
+  const tilePlayer = tilePlayerOf(player, state)
+  const tileMessages = tileMessagesOf(encounter !== null ? [] : tileEvents)
 
   // cerrar-popup-mensajes: el panel queda visible con mensajes sin descartar o
   // con decisión pendiente; al cerrar solo se ocultan los mensajes (AC-2).
   const tilePanelOpen = (!tileDismissed && tileMessages.length > 0) || tilePending !== null
 
-  // unificar-popup-encuentro/AC-4: PKM sanos del equipo (activo primero y
-  // resaltado) con su HP actual/máx para los botones de pelear.
-  const encounterOptions: readonly EncounterFightOption[] = encounter === null || player === undefined
-    ? []
-    : (() => {
-        const leader = leaderUid(player, state.battle)
-        const healthy = player.team
-          .filter((pkm: PkmInstance) => !pkm.fainted)
-          .map((pkm: PkmInstance) => {
-            const card = cardOf(pkm.cardId)
-            return {
-              uid: pkm.uid,
-              name: card?.name ?? String(pkm.cardId),
-              hpCur: Math.max(0, (card?.hp ?? 0) - pkm.damage),
-              hpMax: card?.hp ?? 0,
-              active: pkm.uid === leader,
-            }
-          })
-        return [
-          ...healthy.filter((option) => option.active),
-          ...healthy.filter((option) => !option.active),
-        ]
-      })()
+  const encounterOptions = encounterOptionsOf(player, state, encounter !== null)
 
   const teamSlots = uiLayout.panels.team?.slots ?? 6
   const activeIndex = state.players.findIndex((p) => p.id === state.activePlayerId)
-  const oakPileNames = (viewed?.oakPile ?? []).map((pkm) => ({
-    uid: pkm.uid,
-    name: cardOf(pkm.cardId)?.name ?? String(pkm.cardId),
-  }))
+  const oakPileNames = oakNamesOf(viewed)
   // SPEC-R/T-103: spec de la ventana de carta (null ⇒ cerrada o sin destino).
   const cardModalSpecValue =
     cardModal === null || viewed === undefined ? null : cardModalSpec(state, viewed, cardModal)
@@ -432,36 +322,7 @@ export function PlayScreen({
     if (cardModal !== null && cardModalSpecValue === null) setCardModal(null)
   }, [cardModal, cardModalSpecValue])
 
-  // T-074/AC-1: ficha de la carta (CardDetail). Del jugador propio se abre el
-  // panel completo (equipar/evolucionar); del resto, solo lectura (D-28).
-  const detail = (() => {
-    if (!showTeam || viewed === undefined) return null
-    if (viewingOwn) {
-      return (
-        <TeamPanel
-          player={viewed}
-          cardOf={cardOf}
-          teamLimit={state.ruleset?.teamLimit ?? 6}
-          canEdit={state.phase === 'organize'}
-          onCommand={send}
-        />
-      )
-    }
-    const target = viewed.team[0]
-    const card = target === undefined ? undefined : cardOf(target.cardId)
-    if (target === undefined || card === undefined) return null
-    return (
-      <CardSheet
-        card={card}
-        pkm={target}
-        editable={false}
-        equipOptions={[]}
-        multicolorOptions={[]}
-        evolveOptions={[]}
-        onCommand={() => undefined}
-      />
-    )
-  })()
+  const detail = renderTeamDetail(showTeam, viewed, viewingOwn, state, send)
 
   // T-082/AC-2: el overlay del shell solo existe si hay algo que mostrar (sin
   // panel vacío de inventario); el detalle de equipo se abre tocando un slot.
@@ -478,114 +339,15 @@ export function PlayScreen({
           queda inert (bloquea puntero y teclado); se libera al terminar el fade. */}
       <div inert={loadPhase !== 'done'}>
         <GameShell
-          world={
-            player === undefined ? null : (
-              <BoardHost
-                boardMode={boardMode}
-                position={player.position}
-                cameFrom={player.cameFrom}
-                pending={pending}
-                tokens={tokens}
-                activeTokenId={state.activePlayerId}
-                myTokenId={state.players[0]?.id ?? null}
-                movePath={move?.path ?? null}
-                moveNonce={move?.nonce ?? 0}
-                onMoveDone={() => setMove(null)}
-                speed={speed}
-                reducedMotion={reducedMotion}
-                draw={draw}
-                deckCounts={deckCounts}
-                onChoosePath={(to) => send({ type: 'ChoosePath', to })}
-                onStopHere={() => send({ type: 'StopHere' })}
-                onContinueMoving={() => send({ type: 'ContinueMoving' })}
-                // T-092: el dado vive en panel-dice; el tablero solo el aviso de movimiento.
-                moveHintValue={moveHint}
-                turnEndNonce={turnEnd}
-                battleActive={state.battle !== null}
-                onReady={revealBoard}
-              />
-            )
-          }
-      hud={{
-        // T-092/AC-2: panel-dice con dado + quién + propósito + valor + historial.
-        // dado-clicable/AC-1,AC-3: el dado también tira (mismo send que btn-roll).
-        dice: (
-          <DicePanel
-            rolls={diceRolls}
-            speed={speed}
-            reducedMotion={reducedMotion}
-            canRoll={canRoll(state)}
-            onRoll={() => send({ type: 'RollMove' })}
-          />
-        ),
-        turn: (
-          <TurnPanel
-            turn={state.turn}
-            playerLabel={playerLabel(activeIndex)}
-            phaseLabel={es.phaseNames[state.phase]}
-            canRoll={canRoll(state)}
-            canAdvance={canAdvance(state)}
-            onRoll={() => send({ type: 'RollMove' })}
-            onAdvance={() => send({ type: 'Advance' })}
-          />
-        ),
-        team:
-          viewed === undefined ? null : (
-            <TeamStrip
-              player={viewed}
-              cardOf={cardOf}
-              sprites={sprites.sprites ?? null}
-              battle={state.battle}
-              slots={teamSlots}
-              reorderable={canReorder(state, viewed.id)}
-              chipDraggable={canReorder(state, viewed.id)}
-              resolveCarry={(payload, target) => resolveDrop(payload, target, state, cardOf).ok}
-              onSelect={(uid) => {
-                // T-073/AC-4: con una carta seleccionada, tocar el slot la aplica.
-                const { carried, tapTarget } = carryOf()
-                if (carried !== null) {
-                  tapTarget({ kind: 'pkm', uid })
-                  return
-                }
-                // SPEC-R/T-103: el slot abre la ventana de carta grande.
-                setCardModal({ source: 'team', uid })
-              }}
-              onReorder={(uid, to) => send({ type: 'ReorderTeam', uid, to })}
-            />
-          ),
-        players: (
-          <PlayersPanel
-            players={playersVm(state)}
-            viewedId={viewed?.id ?? ''}
-            onView={setViewPlayerId}
-          />
-        ),
-        history: (
-          <HistoryPanel
-            entries={history}
-            myPlayerId={state.players[0]?.id ?? null}
-            filter={historyFilter}
-            onFilterChange={setHistoryFilter}
-            collapsed={historyCollapsed}
-            onToggleGroup={(key) =>
-              setHistoryCollapsed((prev) =>
-                prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key],
-              )
-            }
-          />
-        ),
-        // T-073: mochila del jugador propio (la ajena queda oculta, D-28).
-        backpack:
-          player === undefined ? null : (
-            <BackpackHud
-              player={player}
-              state={state}
-              cardOf={cardOf}
-              viewingOwn={viewingOwn}
-              send={send}
-            />
-          ),
-      }}
+          world={renderWorld({
+            boardMode, player, state, pending, tokens, move, speed, reducedMotion, draw, deckCounts,
+            moveHint, turnEnd, send, setMove, revealBoard,
+          })}
+          hud={buildHud({
+            state, player, viewed, viewingOwn, diceRolls, speed, reducedMotion, sprites, teamSlots,
+            activeIndex, history, historyFilter, historyCollapsed, send, setCardModal,
+            setViewPlayerId, setHistoryFilter, setHistoryCollapsed,
+          })}
       oakOpen={oakOpen}
       onOakToggle={() => setOakOpen((open) => !open)}
       teamCollapsed={teamCollapsed}
@@ -606,152 +368,23 @@ export function PlayScreen({
             <MenuSettings settings={settings} onChange={onSettingsChange} />
           ),
       }}
-      cardPopup={
-        draw !== null && cardPopupOpen && encounter === null ? (
-          <CardPopup
-            draw={draw}
-            autoDismissMs={shellPanels.cardPopup.autoDismissMs ?? 2500}
-            onOpenChange={setCardPopupOpen}
-          />
-        ) : null
-      }
-      encounterPopup={
-        encounter !== null && player !== undefined && cardOf(encounter.card) !== undefined ? (
-          <EncounterPopup
-            card={cardOf(encounter.card)!}
-            deckName={es.tileDeckNames[encounter.deck as DeckKey]}
-            options={encounterOptions}
-            artUrl={spriteUrl(sprites?.sprites ?? null, cardOf(encounter.card)!.dex, 'front')}
-            onCommand={send}
-          />
-        ) : null
-      }
-      modal={
-        <>
-          {evolveShow !== null ? (
-            <EvolveOverlay
-              key={evolveShow.nonce}
-              fromUrl={evolveShow.fromUrl}
-              fromName={evolveShow.fromName}
-              toUrl={evolveShow.toUrl}
-              toName={evolveShow.toName}
-              speed={speed}
-              reducedMotion={reducedMotion}
-              onDone={() => setEvolveShow(null)}
-            />
-          ) : null}
-          {cardModalSpecValue !== null && cardModalActionsValue !== null ? (
-            <CardModal
-              spec={cardModalSpecValue}
-              actions={cardModalActionsValue}
-              artUrl={spriteUrl(sprites.sprites ?? null, cardModalSpecValue.card.dex, 'front')}
-              itemCounts={{
-                potion: viewed?.items.potion ?? 0,
-                super_potion: viewed?.items.super_potion ?? 0,
-              }}
-              multicolorFree={viewed === undefined ? 0 : freeMulticolor(viewed)}
-              onCommand={send}
-              onClose={() => setCardModal(null)}
-            />
-          ) : null}
-        </>
-      }
-      battlePopup={
-        battleKind === 'oak' && player !== undefined ? (
-          <OakReserve
-            pile={oakPileNames}
-            team={player.team.map((pkm: PkmInstance) => ({
-              uid: pkm.uid,
-              name: cardOf(pkm.cardId)?.name ?? String(pkm.cardId),
-            }))}
-            canSwap={state.pending?.type === 'OakSwap'}
-            pairs={oakPairs(player.team, player.oakPile)}
-            onInspect={(uid) => setCardModal({ source: 'oak', uid })}
-            onCommand={send}
-            onClose={() => setOakOpen(false)}
-          />
-        ) : battleKind === 'battle' ? (
-          <BattlePopup
-            state={state}
-            legal={legal}
-            script={battleScript}
-            viewState={battleView === null ? null : battleView.state}
-            speed={speed}
-            reducedMotion={reducedMotion}
-            viewingOwn={viewingOwn}
-            expanded={battleExpanded}
-            onExpandToggle={() => setBattleExpanded((open) => !open)}
-            badges={badges}
-            onInspectRival={() => setCardModal({ source: 'rival' })}
-            onCommand={send}
-            resultDismissed={battleResultDismissed}
-            onContinue={() => {
-              // fin-de-combate/AC-4: con captura pendiente el guion sobrevive:
-              // la escena queda congelada y la decisión vive en el pie del
-              // popup (captura-en-popup-combate). Sin captura pendiente se
-              // limpia como en T-108.
-              if (battleScriptAfterContinue(state.pending) === 'keep') {
-                setBattleResultDismissed(true)
-                return
-              }
-              setBattleScript([])
-              setBattleResultDismissed(false)
-              // sync-estado-combate: sin guion no hay prefijo que retener.
-              setBattleView(null)
-            }}
-            onScriptDone={() => {
-              // sync-estado-combate/AC-3: el guion terminó de reproducirse ⇒
-              // la presentación pasa al estado final del motor (sin drift).
-              const view = battleViewAfterScriptDone(battleScript.length > 0, sessionRef.current.state)
-              setBattleView(view === null ? null : { ...sessionRef.current, state: view })
-              // fin-de-combate/AC-5: la coreografía de captura terminó (cola
-              // reproducida) y el motor ya resolvió ⇒ auto-cierre, sin clic extra.
-              if (battleShouldAutoClose(state, battleResultDismissed, battleScript.length > 0)) {
-                setBattleScript([])
-                setBattleResultDismissed(false)
-                setBattleView(null)
-              }
-            }}
-          />
-        ) : null
-      }
-      battlePopupExpanded={battleExpanded}
-      overlay={hasOverlay ? (
-        <div className={styles.legacy}>
-          <section className={styles.screen} aria-label={es.playTurn}>
-            {saveNote ? <span className={styles.note} data-testid="save-note">{es.shellMenuSave}</span> : null}
-            {detail !== null ? (
-              <div className={styles.detailBar}>
-                <button
-                  type="button"
-                  className={styles.detailClose}
-                  data-testid="btn-team-close"
-                  onClick={() => setShowTeam(false)}
-                >
-                  {es.shellTipClose}
-                </button>
-                {detail}
-              </div>
-            ) : null}
-            {tilePanelOpen ? (
-              <TilePanel
-                title={tileTitle(node, gymLeader)}
-                messages={tileDismissed ? [] : tileMessages}
-                pending={tilePending}
-                player={tilePlayer}
-                onCommand={send}
-                onClose={() => setTileDismissed(true)}
-              />
-            ) : null}
-            {error !== null ? (
-              <p className={styles.error} role="alert">
-                {error}
-              </p>
-            ) : null}
-            {isPlaying ? <p className={styles.note}>{es.playReproducing}</p> : null}
-          </section>
-        </div>
-      ) : null}
+      cardPopup={renderCardPopup(draw, cardPopupOpen, encounter, setCardPopupOpen)}
+      encounterPopup={renderEncounterPopup(encounter, player, encounterOptions, sprites, send)}
+          modal={renderModal({
+            evolveShow, speed, reducedMotion, cardModalSpecValue, cardModalActionsValue, sprites,
+            viewed, send, setEvolveShow, setCardModal,
+          })}
+          battlePopup={renderBattlePopup({
+            battleKind, player, oakPileNames, state, legal, battleScript, battleView, speed,
+            reducedMotion, viewingOwn, battleExpanded, badges, battleResultDismissed, sessionRef,
+            send, setCardModal, setOakOpen, setBattleExpanded, setBattleScript, setBattleView,
+            setBattleResultDismissed,
+          })}
+          battlePopupExpanded={battleExpanded}
+          overlay={hasOverlay ? renderOverlay({
+            saveNote, detail, tilePanelOpen, node, gymLeader, tileDismissed, tileMessages,
+            tilePending, tilePlayer, error, isPlaying, send, setShowTeam, setTileDismissed,
+          }) : null}
         />
       </div>
       {loadPhase !== 'done' ? <LoadingScreen leaving={loadPhase === 'leaving'} /> : null}
