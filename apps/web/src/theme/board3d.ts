@@ -100,7 +100,11 @@ export const BOARD3D = {
       radius: 60,
       widthSegments: 24,
       heightSegments: 12,
+      /** N-0015: curva del degradado horizonte → cenit (<1 sube el azul rápido). */
+      gradientPower: 0.6,
     },
+    /** N-0015: perspectiva aérea de las montañas (mezcla con el color de niebla). */
+    haze: { ring: [0.45, 0.72], base: 0.55, snowTint: 0.25 },
     cloud: {
       /** Nube low-poly (AC-4): icosaedro detail 0 estirado y achatado. */
       size: 1.5,

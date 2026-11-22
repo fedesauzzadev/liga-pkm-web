@@ -179,7 +179,8 @@ function buildSkyMesh(style: BoardStyle, radius: number): THREE.Mesh {
   const top = new THREE.Color(style.sky.top)
   const color = new THREE.Color()
   for (let index = 0; index < position.count; index += 1) {
-    const t = Math.min(1, Math.max(0, position.getY(index) / radius / 2 + 0.5))
+    // N-0015: 0 en el horizonte → 1 en el cenit (antes el degradado usaba solo media esfera).
+    const t = Math.min(1, Math.max(0, position.getY(index) / radius)) ** BOARD3D.world.sky.gradientPower
     color.copy(bottom).lerp(top, t)
     colors[index * 3] = color.r
     colors[index * 3 + 1] = color.g
@@ -234,7 +235,9 @@ function buildClouds(style: BoardStyle): THREE.Group {
     const ry = hash2(index, 13, seed)
     // N-0004: solo al norte del tablero (la deriva es en x): no tapan casilleros.
     const north = BOARD3D.base.depth / 2 + BOARD3D.world.cloud.clearDepth
-    cloud.position.set((rx * 2 - 1) * halfSpan, height + (ry - 0.5), -(north + rz * (halfSpan - north)))
+    // N-0015: 1 de cada 3 va al sur (lejos del borde) para que el cielo no quede vacío al mirar al sur/este.
+    const side = hash2(index, 15, seed) < 0.34 ? 1 : -1
+    cloud.position.set((rx * 2 - 1) * halfSpan, height + (ry - 0.5), side * (north + rz * (halfSpan - north)))
     cloud.userData.speedMul = 0.7 + 0.6 * hash2(index, 14, seed)
     cloud.userData.baseY = cloud.position.y
     group.add(cloud)
