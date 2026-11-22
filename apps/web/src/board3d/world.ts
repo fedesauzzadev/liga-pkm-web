@@ -9,6 +9,7 @@ import * as THREE from 'three'
 import { BOARD3D } from '../theme/board3d'
 import { buildBiomeTexture, liftDarkGround } from './biome-texture'
 import { buildButterflies } from './butterflies'
+import { cameraPresets } from './camera'
 import { buildDistantMountains, buildTreeRing } from './horizon'
 import { fbm, hash2, valueNoise } from './noise'
 import { smoothstep } from './smooth'
@@ -227,7 +228,20 @@ function buildClouds(style: BoardStyle): THREE.Group {
   group.name = 'clouds'
   const { count, height, seed } = style.sky.clouds
   const material = standard(BOARD3D.world.cloud.color, { roughness: 1 })
+  // Tan lejos la niebla las borraría contra el cielo; desde abajo se les ve
+  // la panza en sombra (gris): el emisivo las mantiene blancas.
+  material.fog = false
+  material.emissive.set(BOARD3D.world.cloud.color)
+  material.emissiveIntensity = BOARD3D.world.cloud.glow
   const halfSpan = style.world.size[0] / 2 - 4
+  // N-0030: al norte, más allá de donde llega la cámara de explore (paneo +
+  // zoom máximo a picada mínima); la deriva es en x ⇒ nunca entre cámara y
+  // tablero (la overview alejada les pasa por encima).
+  const { explore, overview } = cameraPresets
+  const north =
+    (BOARD3D.base.depth / 2) * (1 + overview.panLimit) +
+    explore.distanceRange[1] * Math.cos((explore.pitchDegRange[0] * Math.PI) / 180) +
+    BOARD3D.world.cloud.size + BOARD3D.world.cloud.clearDepth
   for (let index = 0; index < count; index += 1) {
     const cloud = new THREE.Group()
     cloud.name = `cloud:${index}`
@@ -238,10 +252,7 @@ function buildClouds(style: BoardStyle): THREE.Group {
     const rx = hash2(index, 11, seed)
     const rz = hash2(index, 12, seed)
     const ry = hash2(index, 13, seed)
-    // N-0004: solo al norte del tablero (la deriva es en x): no tapan casilleros.
-    const north = BOARD3D.base.depth / 2 + BOARD3D.world.cloud.clearDepth
-    // Nunca al sur: la cámara por defecto está ahí a ~9 de alto y una nube le pasa por delante.
-    cloud.position.set((rx * 2 - 1) * halfSpan, height + (ry - 0.5), -(north + rz * (halfSpan - north)))
+    cloud.position.set((rx * 2 - 1) * halfSpan, height + (ry - 0.5), -(north + rz * 2 * BOARD3D.world.cloud.clearDepth))
     cloud.userData.speedMul = 0.7 + 0.6 * hash2(index, 14, seed)
     cloud.userData.baseY = cloud.position.y
     group.add(cloud)

@@ -100,3 +100,83 @@ export function applyOcclusion(
   }
   return count
 }
+
+// N-0030: el scatter instanciado (árboles, rocas) no tiene opacidad por
+// instancia ⇒ lo que cruza cámara→ficha se oculta (escala 0) y vuelve al dejar
+// de cruzar. Solo toca instanceMatrix: no dispara el mapa de sombras estático.
+interface ScatterState {
+  readonly boxes: readonly THREE.Box3[]
+  readonly solid: Float32Array
+  readonly hidden: Uint8Array
+}
+interface ScatterPass {
+  readonly camera: THREE.Vector3
+  readonly target: THREE.Vector3 | null
+  readonly children: number
+  readonly count: number
+}
+const scatterStates = new WeakMap<THREE.InstancedMesh, ScatterState>()
+const lastPass = new WeakMap<THREE.Object3D, ScatterPass>()
+const collapsed = new THREE.Matrix4().makeScale(0, 0, 0)
+const instance = new THREE.Matrix4()
+
+const sameSpots = (a: THREE.InstancedMesh, b: THREE.Object3D): b is THREE.InstancedMesh =>
+  b instanceof THREE.InstancedMesh &&
+  b.instanceMatrix.count === a.instanceMatrix.count &&
+  [12, 13, 14].every((i) => b.instanceMatrix.array[i] === a.instanceMatrix.array[i])
+
+function scatterState(mesh: THREE.InstancedMesh): ScatterState {
+  let state = scatterStates.get(mesh)
+  if (state !== undefined) return state
+  // Las partes hermanas (tronco + copa) comparten posiciones: una caja por
+  // pieza entera, así el árbol se oculta completo y no queda la copa flotando.
+  const local = new THREE.Box3()
+  for (const part of mesh.parent?.children.filter((child) => sameSpots(mesh, child)) ?? [mesh]) {
+    if (part.geometry.boundingBox === null) part.geometry.computeBoundingBox()
+    if (part.geometry.boundingBox !== null) local.union(part.geometry.boundingBox)
+  }
+  const boxes: THREE.Box3[] = []
+  for (let index = 0; index < mesh.instanceMatrix.count; index += 1) {
+    mesh.getMatrixAt(index, instance)
+    boxes.push(local.clone().applyMatrix4(instance.premultiply(mesh.matrixWorld)))
+  }
+  state = { boxes, solid: Float32Array.from(mesh.instanceMatrix.array), hidden: new Uint8Array(boxes.length) }
+  scatterStates.set(mesh, state)
+  return state
+}
+
+/** AC: N-0030/AC-3 — oculta las instancias del scatter que cruzan cámara→ficha
+ *  y restaura el resto (también con `target` null). Devuelve cuántas oculta. */
+export function applyScatterOcclusion(
+  scatter: THREE.Object3D,
+  camera: THREE.Vector3,
+  target: THREE.Vector3 | null,
+): number {
+  const last = lastPass.get(scatter)
+  // Cámara y ficha quietas (lo normal) ⇒ nada que recalcular.
+  if (
+    last !== undefined && last.children === scatter.children.length && last.camera.equals(camera) &&
+    (target === null ? last.target === null : last.target?.equals(target) === true)
+  ) {
+    return last.count
+  }
+  let count = 0
+  scatter.traverseVisible((object) => {
+    if (!(object instanceof THREE.InstancedMesh)) return
+    const state = scatterState(object)
+    let dirty = false
+    state.boxes.forEach((box, index) => {
+      // Lo que no llega a la altura de la ficha (pasto, piedritas) no la tapa.
+      const hide =
+        target !== null && box.max.y > target.y && segmentHitsBox(camera, target, box, MODEL_OCCLUSION.margin)
+      if (hide) count += 1
+      if ((state.hidden[index] === 1) === hide) return
+      state.hidden[index] = hide ? 1 : 0
+      object.setMatrixAt(index, hide ? collapsed : instance.fromArray(state.solid, index * 16))
+      dirty = true
+    })
+    if (dirty) object.instanceMatrix.needsUpdate = true
+  })
+  lastPass.set(scatter, { camera: camera.clone(), target: target?.clone() ?? null, children: scatter.children.length, count })
+  return count
+}

@@ -15,7 +15,7 @@
   "contactShadows": { "radius": 0.5, "opacity": 0.28 }
  },
  "fog": { "color": "#CFEBFF", "near": 14, "far": 48 },
-  "sky": { "top": "#4FA8F0", "horizon": "#CFEBFF", "sunDisk": true, "clouds": { "count": 5, "height": 7.0, "speed": 0.15, "seed": 7, "_nota": "Migrado de decor.ambient.clouds (T-079/AC-1)." } },
+  "sky": { "top": "#4FA8F0", "horizon": "#CFEBFF", "sunDisk": true, "clouds": { "count": 5, "height": 3.5, "speed": 0.15, "seed": 7, "_nota": "Migrado de decor.ambient.clouds (T-079/AC-1). N-0030: bajas (3,5) y lejos al norte: se ven entre los picos a picada mínima y ninguna cámara las cruza." } },
   "distantMountains": { "rings": [ { "count": 12, "radius": 22, "height": [2.5, 4.0], "color": "#7F93A8", "snow": true }, { "count": 14, "radius": 30, "height": [3.5, 6.0], "color": "#A9B8C8", "snow": true } ], "seed": 5 },
   "treeRing": { "innerRadius": 10.4, "outerRadius": 17.2, "count": 240, "seed": 79, "_nota": "Anillo de arbolado denso e instanciado entre el borde del tablero y las colinas (T-079/AC-5)." },
  "labels": {

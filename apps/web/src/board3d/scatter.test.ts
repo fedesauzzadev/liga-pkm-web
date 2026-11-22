@@ -11,6 +11,7 @@ import { boardDecor } from './decor'
 import { boardCollision } from './decor/plan'
 import { estimateDrawCalls, estimateTriangles } from './budget'
 import { buildBoardScene, buildWorldInput } from './scene'
+import { applyScatterOcclusion } from './models/occlusion'
 import { applyFillScale } from './scatter'
 import { fillScaleFor } from './perf-profile'
 import { boardStyle } from './style'
@@ -125,4 +126,19 @@ test('AC: SPEC-H/T-069/AC-6 - perfil bajo reduce el relleno a la mitad (fillScal
     expect(after[index]).toBe(Math.round(count * 0.5))
   })
   applyFillScale(scene.scatter, fillScaleFor(false))
+})
+
+// AC: N-0030/AC-3 - sobre el scatter real: un arbol entre la camara y la ficha
+// se oculta y la matriz vuelve intacta al correr la camara.
+test('AC: N-0030/AC-3 - el arbol del scatter que tapa la ficha se oculta y vuelve', () => {
+  const fresh = scene.scatter
+  const tree = fresh.children.find((child) => child.userData.kind === 'tree') as THREE.InstancedMesh
+  const before = Float32Array.from(tree.instanceMatrix.array)
+  const [x, y, z] = [before[12]!, before[13]!, before[14]!]
+  const token = new THREE.Vector3(x, y + 0.4, z - 1.5)
+  const camera = new THREE.Vector3(x, y + 3.4, z + 3)
+  expect(applyScatterOcclusion(fresh, camera, token)).toBeGreaterThanOrEqual(1)
+  expect(tree.instanceMatrix.array[0]).toBe(0)
+  expect(applyScatterOcclusion(fresh, new THREE.Vector3(x + 30, y + 3, z), token.setX(x + 25))).toBe(0)
+  expect(Array.from(tree.instanceMatrix.array)).toEqual(Array.from(before))
 })

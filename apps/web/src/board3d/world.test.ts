@@ -8,6 +8,9 @@ import * as THREE from 'three'
 import kantoJson from '../../../../content/board/kanto.json'
 import { BOARD3D } from '../theme/board3d'
 import { boardDecor } from './decor'
+import { aimCameraPose, cameraPresets, planOverview } from './camera'
+import { explorePose, initialExploreState } from './explore'
+import { segmentHitsBox } from './models/occlusion'
 import { buildWorldInput } from './scene'
 import { boardStyle } from './style'
 import { deckStacks } from './stacks'
@@ -240,8 +243,73 @@ test('AC: SPEC-J/T-079/AC-1 - cielo con degradado sky.top/horizon y nubes desde 
   expect(clouds.length).toBe(boardStyle.sky.clouds.count)
   for (const cloud of clouds) {
     expect(Math.abs(cloud.position.y - boardStyle.sky.clouds.height)).toBeLessThanOrEqual(0.5)
-    // AC: N-0004/AC-2 — nubes al norte del tablero: no tapan casilleros.
-    // Solo al norte (z negativo): al sur quedan entre la cámara por defecto y el tablero.
-    expect(cloud.position.z).toBeLessThanOrEqual(-(BOARD3D.base.depth / 2 + BOARD3D.world.cloud.clearDepth))
   }
+})
+
+// AC: N-0030/AC-1 — ninguna nube entre la cámara y el tablero. Poses de
+// explore y overview (libre) en todo el rango de camera.json; la nube cuenta
+// con su deriva completa en x (wrap en ±halfSpan).
+test('AC: N-0030/AC-1 - el segmento cámara→casillero no cruza ninguna nube', () => {
+  // Una sola losa: la caja de todas las nubes, estirada a toda la deriva en x.
+  const slab = new THREE.Box3().setFromObject(world.clouds)
+  slab.min.x = -world.halfSpan - BOARD3D.world.cloud.size * BOARD3D.world.cloud.stretch
+  slab.max.x = -slab.min.x
+  const tiles = input.nodes.map((node) => new THREE.Vector3(node.x, terrainHeightAt(node.x, node.z, input), node.z))
+  const halfW = BOARD3D.base.width / 2
+  const halfD = BOARD3D.base.depth / 2
+  const cameras: THREE.Vector3[] = []
+  for (const aspect of [16 / 9, 4 / 3]) {
+    const plan = planOverview(halfW, halfD, aspect)
+    const pan = plan.panBounds
+    const reach = cameraPresets.explore.distanceRange[1]
+    const cameraBounds = { minX: pan.minX - reach, maxX: pan.maxX + reach, minZ: pan.minZ - reach, maxZ: pan.maxZ + reach }
+    const [dMin, dMax] = cameraPresets.explore.distanceRange
+    const [pMin, pMax] = cameraPresets.explore.pitchDegRange
+    const [oMin, oMax] = cameraPresets.overview.pitchDegRange
+    for (const tx of [pan.minX, 0, pan.maxX]) {
+      for (const tz of [pan.minZ, 0, pan.maxZ]) {
+        for (let azimuthDeg = -180; azimuthDeg < 180; azimuthDeg += 30) {
+          for (let step = 0; step <= 4; step += 1) {
+            const k = step / 4
+            for (const elevationDeg of [pMin, (pMin + pMax) / 2, pMax]) {
+              const state = { azimuthDeg, elevationDeg, distance: dMin + (dMax - dMin) * k, offsetX: 0, offsetZ: 0 }
+              cameras.push(explorePose(state, tx, tz, cameraBounds).position)
+            }
+            for (const elevationDeg of [oMin, (oMin + oMax) / 2, oMax]) {
+              const distance = plan.controls.minDistance + (plan.controls.maxDistance - plan.controls.minDistance) * k
+              cameras.push(aimCameraPose({ x: tx, z: tz, azimuthDeg, elevationDeg, distance }).position)
+            }
+          }
+        }
+      }
+    }
+  }
+  let crossings = 0
+  for (const camera of cameras) {
+    if (slab.containsPoint(camera)) crossings += 1
+    else for (const tile of tiles) if (segmentHitsBox(camera, tile, slab)) crossings += 1
+  }
+  expect(cameras.length).toBeGreaterThan(5000)
+  expect(crossings).toBe(0)
+}, 30_000)
+
+// AC: N-0030/AC-2 — siguen en el cielo: dentro de la mitad de arriba del
+// cuadro de la cámara por defecto a picada mínima.
+test('AC: N-0030/AC-2 - las nubes se ven con cámara baja mirando al norte', () => {
+  const [pMin] = cameraPresets.explore.pitchDegRange
+  const state = { ...initialExploreState(), elevationDeg: pMin }
+  const pose = explorePose(state, 0, 0, { minX: -99, maxX: 99, minZ: -99, maxZ: 99 })
+  const topEdgeDeg = cameraPresets.explore.fov / 2 - pMin
+  for (const cloud of world.clouds.children) {
+    const rise = cloud.position.y - pose.position.y
+    const run = pose.position.z - cloud.position.z
+    const elevationDeg = (Math.atan2(rise, run) * 180) / Math.PI
+    // Mitad de arriba del cuadro: entre el eje de mirada y el borde superior.
+    expect(elevationDeg).toBeGreaterThan(-pMin)
+    expect(elevationDeg).toBeLessThan(topEdgeDeg)
+  }
+  // Lejos la niebla las borraría; el emisivo evita la panza gris desde abajo.
+  const material = (world.clouds.children[0]!.children[0] as THREE.Mesh).material as THREE.MeshStandardMaterial
+  expect(material.fog).toBe(false)
+  expect(material.emissiveIntensity).toBe(BOARD3D.world.cloud.glow)
 })

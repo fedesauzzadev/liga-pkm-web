@@ -111,9 +111,11 @@ export const BOARD3D = {
       stretch: 1.9,
       squash: 0.55,
       color: '#ffffff',
-      /** N-0004: las nubes van al norte del tablero (a `clearDepth` del borde):
-       *  a 7 de alto quedaban entre la cámara y los casilleros. */
+      /** N-0030: holgura entre el alcance máximo de la cámara de explore y la
+       *  franja de nubes (al norte); la franja mide 2 × clearDepth de fondo. */
       clearDepth: 2,
+      /** N-0030: emisivo de la nube (su panza en sombra se veía gris). */
+      glow: 0.5,
     },
     lake: {
       /** Zona cuyo espejo de agua mece Ambient (WorldScene.water). */

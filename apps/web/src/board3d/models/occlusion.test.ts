@@ -2,7 +2,43 @@
 import { expect, test } from 'vitest'
 import * as THREE from 'three'
 import { MODEL_OCCLUSION } from '../../theme/models'
-import { activeTokenTarget, applyOcclusion, segmentHitsBox } from './occlusion'
+import { activeTokenTarget, applyOcclusion, applyScatterOcclusion, segmentHitsBox } from './occlusion'
+
+// AC: N-0030/AC-3 — scatter instanciado: la instancia que cruza cámara→ficha
+// se oculta entera (tronco + copa) y vuelve al dejar de cruzar.
+test('applyScatterOcclusion: oculta la instancia que tapa y la restaura', () => {
+  const at = (x: number, y: number, z: number): THREE.Vector3 => new THREE.Vector3(x, y, z)
+  const scatter = new THREE.Group()
+  const part = (geometry: THREE.BufferGeometry, spots: readonly THREE.Vector3[]): THREE.InstancedMesh => {
+    const mesh = new THREE.InstancedMesh(geometry, new THREE.MeshBasicMaterial(), spots.length)
+    spots.forEach((spot, index) => mesh.setMatrixAt(index, new THREE.Matrix4().setPosition(spot)))
+    scatter.add(mesh)
+    return mesh
+  }
+  // Tronco bajo (el rayo lo sobrevuela) + copa alta (sí cruza): misma pieza.
+  const trees = [at(0, 0, 5), at(4, 0, 5)]
+  const trunk = part(new THREE.BoxGeometry(0.2, 0.6, 0.2).translate(0, 0.3, 0), trees)
+  const crown = part(new THREE.BoxGeometry(1, 1.4, 1).translate(0, 1.3, 0), trees)
+  // Pasto sobre la línea pero más bajo que la ficha: nunca se oculta.
+  const grass = part(new THREE.BoxGeometry(0.4, 0.2, 0.4).translate(0, 0.1, 0), [at(0, 0, 1)])
+  const scaleX = (mesh: THREE.InstancedMesh, index: number): number => mesh.instanceMatrix.array[index * 16]!
+  const token = at(0, 0.4, 0)
+
+  expect(applyScatterOcclusion(scatter, at(0, 2, 10), token)).toBe(2)
+  expect([scaleX(trunk, 0), scaleX(crown, 0)]).toEqual([0, 0])
+  expect([scaleX(trunk, 1), scaleX(crown, 1), scaleX(grass, 0)]).toEqual([1, 1, 1])
+  // Misma cámara y ficha: no recalcula ni vuelve a subir la matriz a la GPU.
+  const uploads = crown.instanceMatrix.version
+  expect(applyScatterOcclusion(scatter, at(0, 2, 10), token)).toBe(2)
+  expect(crown.instanceMatrix.version).toBe(uploads)
+
+  // La cámara se corre: vuelve la matriz original. Sin ficha: todo visible.
+  expect(applyScatterOcclusion(scatter, at(-8, 2, 10), token)).toBe(0)
+  expect([scaleX(trunk, 0), scaleX(crown, 0), crown.instanceMatrix.array[14]]).toEqual([1, 1, 5])
+  applyScatterOcclusion(scatter, at(0, 2, 10), token)
+  expect(applyScatterOcclusion(scatter, at(0, 2, 10), null)).toBe(0)
+  expect(scaleX(crown, 0)).toBe(1)
+})
 
 const v = (x: number, y: number, z: number): THREE.Vector3 => new THREE.Vector3(x, y, z)
 
