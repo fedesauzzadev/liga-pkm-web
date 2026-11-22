@@ -1,6 +1,6 @@
 {
   "_status": "Decoración del mundo continuo (ADR-9): piezas y paleta. El look del terreno/biomas/horizonte/cielo/niebla migró a content/board/style.json (SPEC-J/T-079). Unidades de MUNDO 3D (1 px del tablero = 0,01). offset = [x, z] relativo al centro del nodo (x derecha, z hacia abajo del tablero). rotY en radianes. Los 'kind' son piezas del catálogo de SPEC-H/T-068. T-088: el pond de la Isla (disco azul translúcido de r 1,3 sobre el tablero) se elimina; el lago diseñado de T-069 queda como única agua.",
- "palette": { "wall": "#EADBB8", "roofRed": "#C84B3A", "roofBlue": "#3B6FB6", "wood": "#7A5230", "leafGreen": "#4E9D5B", "leafDark": "#2F7A45", "rock": "#8C8577", "water": "#4F8FD6", "snow": "#F4F7FA", "deadWood": "#4A3B33", "baseGrass": "#8DBF6A" },
+ "palette": { "wall": "#EADBB8", "roofRed": "#C84B3A", "roofBlue": "#3B6FB6", "wood": "#7A5230", "leafGreen": "#4E9D5B", "leafDark": "#2F7A45", "rock": "#8C8577", "water": "#4F8FD6", "snow": "#F4F7FA", "deadWood": "#8B6B52", "baseGrass": "#8DBF6A" },
  "landmarks": {
   "byNodeId": {
     "paleta": [
@@ -22,11 +22,11 @@
   }
  },
   "zones": {
-   "bosque":  { "panel": "bosque",  "margin": 0.5, "scatter": [ { "kind": "tree", "variant": "pine", "count": 22, "seed": 11 }, { "kind": "tree", "variant": "round", "count": 10, "seed": 12 }, { "kind": "bush", "count": 14, "seed": 13 } ] },
-   "montana": { "panel": "montana", "margin": 0.5, "scatter": [ { "kind": "mountain", "count": 5, "seed": 21 }, { "kind": "rock", "count": 16, "seed": 22 }, { "kind": "lavaPool", "count": 2, "seed": 23 } ] },
-   "isla":    { "panel": "isla",    "margin": 0.5, "scatter": [ { "kind": "rock", "count": 8, "seed": 32 }, { "kind": "reeds", "count": 12, "seed": 33 } ] },
-   "llanura": { "panel": "llanura", "margin": 0.5, "scatter": [ { "kind": "grassTuft", "count": 40, "seed": 41 }, { "kind": "flowerPatch", "count": 14, "seed": 42 }, { "kind": "tree", "variant": "round", "count": 5, "seed": 43 } ] },
-    "pantano": { "panel": "pantano", "margin": 0.5, "scatter": [ { "kind": "deadTree", "count": 16, "seed": 51 }, { "kind": "mist", "count": 10, "seed": 52 }, { "kind": "rock", "count": 8, "seed": 53 }, { "kind": "reeds", "count": 10, "seed": 54 } ] }
+   "bosque":  { "panel": "bosque",  "margin": 0.5, "scatter": [ { "kind": "tree", "variant": "pine", "count": 38, "seed": 11 }, { "kind": "tree", "variant": "round", "count": 18, "seed": 12 }, { "kind": "bush", "count": 22, "seed": 13 } ] },
+   "montana": { "panel": "montana", "margin": 0.5, "scatter": [ { "kind": "mountain", "count": 5, "seed": 21 }, { "kind": "rock", "count": 18, "seed": 22 }, { "kind": "deadTree", "count": 3, "seed": 24 }, { "kind": "lavaPool", "count": 2, "seed": 23 } ] },
+   "isla":    { "panel": "isla",    "margin": 0.5, "scatter": [ { "kind": "rock", "count": 8, "seed": 32 }, { "kind": "reeds", "count": 12, "seed": 33 }, { "kind": "flowerPatch", "count": 5, "seed": 34 }, { "kind": "grassTuft", "count": 4, "seed": 35 } ] },
+   "llanura": { "panel": "llanura", "margin": 0.5, "scatter": [ { "kind": "grassTuft", "count": 40, "seed": 41 }, { "kind": "flowerPatch", "count": 24, "seed": 42 }, { "kind": "tree", "variant": "round", "count": 9, "seed": 43 } ] },
+    "pantano": { "panel": "pantano", "margin": 0.5, "scatter": [ { "kind": "deadTree", "count": 12, "seed": 51 }, { "kind": "mist", "count": 10, "seed": 52 }, { "kind": "rock", "count": 8, "seed": 53 }, { "kind": "reeds", "count": 10, "seed": 54 }, { "kind": "grassTuft", "count": 3, "seed": 56 } ] }
   },
     "budgets": { "maxDrawCalls": 120, "maxTriangles": 150000, "maxModelsMB": 36 },
  "clearance": { "fromNodeCenter": 0.45, "fromEdge": 0.3 }

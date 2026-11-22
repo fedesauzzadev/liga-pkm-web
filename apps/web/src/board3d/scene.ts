@@ -110,7 +110,9 @@ const buildStack = (key: string, world: WorldPos, baseY: number): THREE.Group =>
   )
   blob.name = 'blob'
   blob.rotation.x = -Math.PI / 2
-  blob.position.y = BOARD3D.world.pedestal.height + 0.004
+  // N-0012: sobre la piedra del mazo, bajo las cartas (a +pedestal.height
+  // quedaba ENCIMA de la carta superior y el mazo se veía gris).
+  blob.position.y = 0.004
   group.add(blob)
   return group
 }
@@ -124,7 +126,7 @@ const buildPedestal = (key: string, world: WorldPos, color: string): THREE.Group
 
   const stone = new THREE.Mesh(
     new THREE.CylinderGeometry(spec.radius, spec.radius * 1.08, spec.height, 8),
-    standard(spec.color),
+    standard(color),
   )
   stone.name = 'stone'
   stone.position.y = spec.height / 2
@@ -132,7 +134,7 @@ const buildPedestal = (key: string, world: WorldPos, color: string): THREE.Group
 
   const ring = new THREE.Mesh(
     new THREE.CylinderGeometry(spec.radius - spec.ringInset, spec.radius - spec.ringInset, spec.ringHeight, 8),
-    standard(color),
+    standard(spec.ringColor),
   )
   ring.name = 'ring'
   ring.position.y = spec.height + spec.ringHeight / 2
@@ -175,8 +177,12 @@ export function buildWorldInput(
       const zone = Object.values(decor.zones).find((entry) => entry.panel === panel.key)
       if (zone === undefined) return []
       const center = pxToWorld(panel.x, panel.y, imageSize)
-      return [{ key: panel.key, center, ground: style.biomes.colors[panel.key] ?? style.biomes.baseGrass }]
+      const half = [(panel.w * BOARD3D.pxToUnits) / 2, (panel.h * BOARD3D.pxToUnits) / 2] as const
+      return [{ key: panel.key, center, ground: style.biomes.colors[panel.key] ?? style.biomes.baseGrass, half }]
     }),
+    // N-0011: las zonas (agua, relieve) no invaden la huella de los edificios.
+    obstacles: [...solveBuildings(board, stacks).values()].flatMap((building) =>
+      building.discarded ? [] : [{ x: building.x, z: building.z, radius: building.footprint * 0.75 }]),
   }
 }
 

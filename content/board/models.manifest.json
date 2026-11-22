@@ -1386,7 +1386,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1398,7 +1398,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1410,7 +1410,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1422,7 +1422,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1434,7 +1434,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1446,7 +1446,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1458,7 +1458,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1470,7 +1470,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1482,7 +1482,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1494,7 +1494,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1506,7 +1506,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1518,7 +1518,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1530,7 +1530,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1542,7 +1542,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1554,7 +1554,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1566,7 +1566,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1578,7 +1578,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1590,7 +1590,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1602,7 +1602,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1614,7 +1614,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1626,7 +1626,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1638,7 +1638,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1650,7 +1650,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1662,7 +1662,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1674,7 +1674,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1686,7 +1686,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1698,7 +1698,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1710,7 +1710,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1722,7 +1722,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -1734,7 +1734,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2191,7 +2191,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2203,7 +2203,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2215,7 +2215,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2227,7 +2227,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2239,7 +2239,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2251,7 +2251,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2263,7 +2263,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2275,7 +2275,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2287,7 +2287,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2299,7 +2299,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2311,7 +2311,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2323,7 +2323,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2335,7 +2335,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2347,7 +2347,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2359,7 +2359,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2371,7 +2371,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2383,7 +2383,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2395,7 +2395,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2407,7 +2407,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2419,7 +2419,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2431,7 +2431,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2443,7 +2443,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "proposed",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2455,7 +2455,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2467,7 +2467,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false
@@ -2479,7 +2479,7 @@
      "weight": 1,
      "targetHeight": 1.1,
      "rotY": 0,
-     "status": "approved",
+     "status": "rejected",
      "options": {
       "ignoreTextures": false,
       "keepOriginalMaterial": false

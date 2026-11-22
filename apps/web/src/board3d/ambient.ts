@@ -13,6 +13,24 @@ export const idleBob = (tMs: number): number =>
 export const waterBob = (tMs: number): number =>
   BOARD3D.world.water.bob * Math.sin((2 * Math.PI * tMs) / BOARD3D.world.water.periodMs)
 
+/**
+ * N-0016: mece cada espejo de agua con fase propia y un brillo lento del color
+ * (uniform, sin recompilar ni tocar la geometría). `tMs` 0 = reposo.
+ */
+export function applyWaters(waters: readonly THREE.Mesh[], tMs: number): void {
+  const { shimmer, shimmerPeriodMs } = BOARD3D.world.water
+  waters.forEach((mesh, index) => {
+    const material = mesh.material as THREE.MeshStandardMaterial
+    const base = (mesh.userData.baseY ??= mesh.position.y) as number
+    const baseColor = (mesh.userData.baseColor ??= material.color.clone()) as THREE.Color
+    const phase = index * 1.7
+    mesh.position.y = base + (tMs === 0 ? 0 : waterBob(tMs + phase * 500))
+    const k = tMs === 0 ? 0 : shimmer * (0.5 + 0.5 * Math.sin((2 * Math.PI * tMs) / shimmerPeriodMs + phase))
+    material.color.copy(baseColor).lerp(SHIMMER_TINT, k)
+  })
+}
+const SHIMMER_TINT = new THREE.Color('#FFFFFF')
+
 /** Deriva de nubes con wrap en ±halfSpan (AC-4/AC-5); cada una a su ritmo. */
 export function stepClouds(clouds: THREE.Group, dtSec: number, speed: number, halfSpan: number): void {
   for (const cloud of clouds.children) {

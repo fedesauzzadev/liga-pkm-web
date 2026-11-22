@@ -63,19 +63,19 @@ export function buildNodeStone(
   world: WorldPos,
   glyphMaterial?: THREE.Material,
 ): THREE.Group {
-  const { height, radius, stoneColor } = BOARD3D.node
+  const { height, radius, rimColor } = BOARD3D.node
   const pivot = new THREE.Group()
   pivot.name = `node:${node.id}`
   pivot.position.set(world.x, 0, world.z)
   pivot.userData = { kind: 'node', nodeId: node.id, clickable: false }
 
-  const stone = new THREE.Mesh(stoneGeometry(node.shape === 'square' ? 'square' : 'round'), standard(stoneColor))
+  const stone = new THREE.Mesh(stoneGeometry(node.shape === 'square' ? 'square' : 'round'), standard(nodeColor(node)))
   stone.name = 'stone'
   pivot.add(stone)
 
   const topring = new THREE.Mesh(
     new THREE.RingGeometry(radius * 0.72, radius * 0.94, 32),
-    new THREE.MeshBasicMaterial({ color: nodeColor(node), side: THREE.DoubleSide }),
+    new THREE.MeshBasicMaterial({ color: rimColor, side: THREE.DoubleSide }),
   )
   topring.name = 'topring'
   topring.rotation.x = -Math.PI / 2

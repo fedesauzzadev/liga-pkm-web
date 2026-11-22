@@ -110,13 +110,13 @@ test('AC: SPEC-O/T-094/AC-2 - el scatter no puede comerse la reserva de draw cal
   const scatterSpec = (seed: number): {
     zone: string
     kind: 'tree'
-    variant: 'pine'
+    variant: 'round'
     seed: number
     spots: { x: number; y: number; z: number; scale: number; rotY: number }[]
   } => ({
     zone: 'llanura',
     kind: 'tree',
-    variant: 'pine',
+    variant: 'round', // N-0014: los pinos Kenney (turquesa) quedaron rechazados
     seed,
     spots: [{ x: 0, y: 0, z: 0, scale: 1, rotY: 0 }],
   })

@@ -18,6 +18,8 @@ export const BOARD3D = {
     /** Bisel de la piedra; el color del tipo/mazo vive en el aro superior. */
     bevel: 0.03,
     stoneColor: '#b3aca1',
+    /** N-0012: la piedra entera lleva el color del tipo; el aro superior es crema. */
+    rimColor: '#FFF6E0',
     segments: 24,
   },
   glyph: {
@@ -29,20 +31,22 @@ export const BOARD3D = {
   },
   edge: {
     /** Camino de tierra (AC-3): cinta 0,16 #C9A877 + falda suave por seed. */
-    width: 0.16,
+    width: 0.22,
     height: 0.02,
-    color: '#C9A877',
+    color: '#E6C98F',
+    /** N-0012: borde más oscuro que marca el recorrido sobre cualquier bioma. */
+    softColor: '#A9824F',
     /** Falda: ancho extra con opacidad baja (borde suave determinista). */
-    soft: 0.05,
-    softOpacity: 0.35,
+    soft: 0.06,
+    softOpacity: 0.75,
     seed: 20261012,
   },
   pebbles: {
     /** Guijarros instanciados a los lados del camino (AC-3). */
-    size: 0.045,
-    spacing: 0.42,
-    sideMin: 0.11,
-    sideMax: 0.2,
+    size: 0.04,
+    spacing: 0.95,
+    sideMin: 0.17,
+    sideMax: 0.26,
     seed: 20261013,
   },
   card: {
@@ -86,6 +90,8 @@ export const BOARD3D = {
       radius: 0.72,
       height: 0.12,
       color: '#9a938a',
+      /** N-0012: aro crema; la piedra del mazo lleva el color del mazo. */
+      ringColor: '#FFF6E0',
       ringHeight: 0.025,
       ringInset: 0.06,
     },
@@ -94,7 +100,11 @@ export const BOARD3D = {
       radius: 60,
       widthSegments: 24,
       heightSegments: 12,
+      /** N-0015: curva del degradado horizonte → cenit (<1 sube el azul rápido). */
+      gradientPower: 0.6,
     },
+    /** N-0015: perspectiva aérea de las montañas (mezcla con el color de niebla). */
+    haze: { ring: [0.45, 0.72], base: 0.55, snowTint: 0.25 },
     cloud: {
       /** Nube low-poly (AC-4): icosaedro detail 0 estirado y achatado. */
       size: 1.5,
@@ -106,20 +116,39 @@ export const BOARD3D = {
       clearDepth: 2,
     },
     lake: {
-      /** Lago de la Isla (AC-3): cuenca en el terreno + disco de agua. */
+      /** Zona cuyo espejo de agua mece Ambient (WorldScene.water). */
       zone: 'isla',
-      radius: 1.3,
-      innerRatio: 0.45,
-      depth: 0.22,
-      waterRadiusRatio: 0.75,
-      waterLift: -0.06,
-      /** T-088/AC-2: sin discos azules translúcidos grandes sobre el tablero. */
-      waterOpacity: 0.12,
     },
     relief: {
-      /** Relieve rocoso de la Montaña (AC-3): ruido × (1 + boost·gauss). */
+      /** Zona con relieve rocoso (tests de rugosidad). */
       zone: 'montana',
-      boost: 1.8,
+    },
+    /**
+     * N-0011: forma y reglas de las 5 zonas. Cada zona es la elipse de su
+     * panel × reach, con borde ondulado, recortada a `clear` de caminos,
+     * casilleros, mazos y edificios. Reglas: depth = cuenca, pools = umbral de
+     * ruido de los charcos, rise = relieve, shore = color de orilla, water =
+     * espejo de agua (el terreno lo recorta en la orilla).
+     */
+    zones: {
+      reach: 1.45,
+      blend: 0.3,
+      wobble: 0.22,
+      wobbleFreq: 0.8,
+      clear: 0.34,
+      clearSoft: 0.6,
+      clearWobble: 0.3,
+      beach: 0.5,
+      waterCells: 28,
+      pedestalRadius: 0.78,
+      defaultHalf: [1.35, 1.85] as const,
+      shoreBand: 0.12,
+      groundBand: 0.3,
+      rules: {
+        isla: { depth: 0.3, shore: '#EAD9A0', water: { color: '#3FB5D9', level: -0.1 } },
+        pantano: { depth: 0.2, pools: 0.38, shore: '#5A5240', water: { color: '#7A63B0', level: -0.07 } },
+        montana: { rise: 0.75 },
+      },
     },
     idle: {
       /** Idle de la ficha (AC-5): ±0,03 en 1,6 s. */
@@ -128,16 +157,21 @@ export const BOARD3D = {
     },
     water: {
       /** Vaivén del agua (AC-5). */
-      bob: 0.012,
+      bob: 0.03,
       periodMs: 2400,
+      /** N-0016: brillo lento del agua (mezcla hacia blanco) y su período. */
+      shimmer: 0.22,
+      shimmerPeriodMs: 3200,
     },
+    /** N-0016: mariposas (espejo de style.ambientFx.butterflies, que el esquema aún no parsea). */
+    butterfly: { count: 6, zones: ['bosque', 'llanura'], size: 0.16, radius: [0.4, 0.9], height: [0.45, 0.9], flapHz: 3, colors: ['#FFE066', '#FFFFFF', '#FF9EC4', '#FFB347'] },
     /** Bucle ambiental (AC-5): 33 ms ⇒ 30 fps máx con frameloop demand. */
     tickMs: 33,
     /** T-088/AC-3: ruido de luminosidad suave (interpolado, sin bloques). */
     lightnessFreq: 0.5,
     /** N-0004: piso de luminancia del suelo relativo al pasto base (los
      *  biomas oscuros no tapan casilleros ni caminos). */
-    groundMinLuma: 0.85,
+    groundMinLuma: 0.55,
     /**
      * T-096/AC-2: el tinte de zona es una textura de bioma (≥ 1024², filtro
      * lineal, desenfoque gaussiano) en vez de color por vértice a paso 0,3
@@ -211,7 +245,7 @@ export const BOARD3D = {
       /** Clearance alrededor del pedestal del mazo (AC-3). */
       pedestalClearance: 0.85,
       /** Intentos de rechazo por pieza antes de omitirla. */
-      maxTries: 40,
+      maxTries: 160,
       /** Levanta la pieza del terreno (evita z-fighting en pendientes). */
       lift: 0.02,
       /** Escala determinista por pieza. */
@@ -301,24 +335,24 @@ export const BOARD3D = {
   },
   /** Color de cada mazo de terreno (paneles y nodos `deck`). */
   deckColors: {
-    llanura: '#E8DCC8',
-    pantano: '#5C6B3C',
-    isla: '#4F8FD6',
-    montana: '#D2574B',
-    bosque: '#4E9D5B',
+    llanura: '#F2D36B',
+    pantano: '#8A63C8',
+    isla: '#3F9BE0',
+    montana: '#E0553F',
+    bosque: '#3FA85A',
   } as const,
   /** Color por tipo de casillero (spec AC-2; deck usa el color del mazo). */
   nodeColors: {
-    start: '#dfe7b7',
-    mercado: '#f2d778',
-    centro: '#f5a3c8',
-    oak: '#b78bff',
-    gym: '#7ac74f',
-    duelo: '#ff9a3c',
-    sorpresa: '#e34fd0',
-    liga: '#4fd8e3',
-    empty: '#d3d8d3',
-    junction: '#f0d7bb',
+    start: '#F4F1E4',
+    mercado: '#4F8FE8',
+    centro: '#F2718F',
+    oak: '#B78BFF',
+    gym: '#F2A93B',
+    duelo: '#FF7A3C',
+    sorpresa: '#E34FD0',
+    liga: '#35C9D8',
+    empty: '#E9E4D8',
+    junction: '#F0D7BB',
     deck: '#b7d5a7',
   } as const,
 } as const

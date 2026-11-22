@@ -70,13 +70,13 @@ test('AC: SPEC-J/T-079/AC-4 - cimas nevadas y alturas escalonadas (par bajo, imp
       expect(
         Math.abs(apexColor.r - snow.r) + Math.abs(apexColor.g - snow.g) + Math.abs(apexColor.b - snow.b),
         `${cone.name} cima nevada`,
-      ).toBeLessThan(0.1)
+      ).toBeLessThan(0.45) // N-0015: la nieve lleva velo de perspectiva aérea
       const baseColor = new THREE.Color(attr.getX(baseIdx), attr.getY(baseIdx), attr.getZ(baseIdx))
       ringBody.set(ring.color)
       expect(
         Math.abs(baseColor.r - ringBody.r) + Math.abs(baseColor.g - ringBody.g),
         `${cone.name} cuerpo del anillo`,
-      ).toBeLessThan(0.35)
+      ).toBeLessThan(0.9) // N-0015: la base se funde con el horizonte
     }
     // Escalonado: hay montañas en las dos mitades del rango (no todas iguales).
     expect(lows, `ring ${String(ringIndex)} banda baja`).toBeGreaterThan(0)

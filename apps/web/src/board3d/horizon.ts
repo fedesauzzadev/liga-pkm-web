@@ -30,6 +30,8 @@ function mountainCone(
   body: THREE.Color,
   snowColor: THREE.Color,
   snow: boolean,
+  haze: THREE.Color,
+  hazeRing: number,
 ): THREE.Mesh {
   const geometry = new THREE.ConeGeometry(h * 0.85, h, 7)
   const position = geometry.attributes.position as THREE.BufferAttribute
@@ -37,8 +39,11 @@ function mountainCone(
   const color = new THREE.Color()
   for (let index = 0; index < position.count; index += 1) {
     const t = Math.min(1, Math.max(0, (position.getY(index) + h / 2) / h))
-    const snowMix = snow ? smoothstep(0.62, 0.78, t) : 0
+    const snowMix = snow ? smoothstep(0.48, 0.6, t) : 0
     color.copy(body).lerp(snowColor, snowMix)
+    // N-0015: perspectiva aérea — más velo cuanto más lejos el anillo y más abajo el vértice.
+    const veil = hazeRing + (BOARD3D.world.haze.base * (1 - t) * (1 - hazeRing))
+    color.lerp(haze, Math.min(1, veil))
     colors[index * 3] = color.r
     colors[index * 3 + 1] = color.g
     colors[index * 3 + 2] = color.b
@@ -60,6 +65,7 @@ export function buildDistantMountains(style: BoardStyle, palette: Readonly<Recor
   root.name = 'mountains'
   const snowColor = new THREE.Color(palette.snow ?? '#F4F7FA')
   const { rings, seed } = style.distantMountains
+  const haze = new THREE.Color(style.fog.color)
   rings.forEach((ring, ringIndex) => {
     const group = new THREE.Group()
     group.name = `mountainRing:${String(ringIndex)}`
@@ -73,7 +79,7 @@ export function buildDistantMountains(style: BoardStyle, palette: Readonly<Recor
       const band = index % 2 === 0 ? 0.15 + 0.25 * rHeight : 0.6 + 0.25 * rHeight
       const h = ring.height[0] + (ring.height[1] - ring.height[0]) * band
       const body = new THREE.Color(ring.color).multiplyScalar(0.86 + 0.22 * rShade)
-      const cone = mountainCone(h, body, snowColor, ring.snow)
+      const cone = mountainCone(h, body, snowColor, ring.snow, haze, BOARD3D.world.haze.ring[Math.min(ringIndex, 1)] ?? 0.5)
       cone.name = `mountain:${ringIndex}:${String(index)}`
       const dist = ring.radius * (0.94 + 0.12 * rDist)
       cone.position.set(Math.cos(angle) * dist, h / 2 - 0.3, Math.sin(angle) * dist)

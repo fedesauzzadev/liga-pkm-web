@@ -11,7 +11,7 @@ import * as THREE from 'three'
 import kantoJson from '../../../../content/board/kanto.json'
 import { estimateDrawCalls, estimateTriangles } from './budget'
 import { boardDecor } from './decor'
-import { buildLights, sceneSunTo, toneMappingOf } from './lighting'
+import { applyShadowFlags, buildLights, sceneSunTo, shadowSignature, toneMappingOf } from './lighting'
 import { buildOutlines } from './outlines'
 import { applySceneProfile, buildBoardScene } from './scene'
 import { boardStyle } from './style'
@@ -72,7 +72,7 @@ test('AC: SPEC-J/T-080/AC-2 - hemi + sol del style, sombra que sigue a la ficha 
   expect(rig.sun.position.z).toBeCloseTo(-4 + from[2], 6)
 
   expect(toneMappingOf('ACESFilmic')).toBe(THREE.ACESFilmicToneMapping)
-  expect(toneMappingOf(boardStyle.lighting.toneMapping)).toBe(THREE.ACESFilmicToneMapping)
+  expect(toneMappingOf(boardStyle.lighting.toneMapping)).toBe(THREE.NeutralToneMapping) // N-0010/AC-3
   expect(scene.contacts.count).toBeGreaterThan(0)
   const contactMaterial = scene.contacts.material as THREE.MeshBasicMaterial
   expect(contactMaterial.opacity).toBeCloseTo(boardStyle.lighting.contactShadows.opacity, 5)
@@ -164,4 +164,46 @@ test('AC: SPEC-J/T-080/AC-6 - draw calls y triángulos del decor dentro de profi
   expect(lowTriangles).toBeLessThanOrEqual(boardStyle.profiles.low.maxTriangles)
   applyFillScale(scene.scatter, 1)
   applySceneProfile(scene, false)
+})
+
+test('AC: N-0010/AC-1+AC-4 - sombras: volúmenes proyectan, suelo solo recibe, translúcido/básico afuera', () => {
+  const root = new THREE.Group()
+  const mesh = (name: string, material: THREE.Material): THREE.Mesh => {
+    const item = new THREE.Mesh(new THREE.BoxGeometry(), material)
+    item.name = name
+    root.add(item)
+    return item
+  }
+  const house = mesh('model:house', new THREE.MeshToonMaterial())
+  const terrain = mesh('terrain', new THREE.MeshStandardMaterial())
+  const edge = mesh('edge:a-b', new THREE.MeshStandardMaterial())
+  const water = mesh('water:isla', new THREE.MeshStandardMaterial())
+  const mist = mesh('mist', new THREE.MeshStandardMaterial({ transparent: true }))
+  const glyph = mesh('glyph', new THREE.MeshBasicMaterial())
+  expect(applyShadowFlags(root)).toBe(6)
+  expect([house.castShadow, house.receiveShadow]).toEqual([true, true])
+  expect([terrain.castShadow, terrain.receiveShadow]).toEqual([false, true])
+  expect([edge.castShadow, edge.receiveShadow]).toEqual([false, true])
+  expect([water.castShadow, water.receiveShadow]).toEqual([false, true])
+  expect([mist.castShadow, mist.receiveShadow]).toEqual([false, false])
+  expect([glyph.castShadow, glyph.receiveShadow]).toEqual([false, false])
+})
+
+test('AC: N-0013/AC-1 - el mapa de sombras solo se recalcula si llega un modelo o se mueve una ficha', () => {
+  const landmarks = new THREE.Group()
+  const tokens = new THREE.Group()
+  const token = new THREE.Group()
+  tokens.add(token)
+  const idle = shadowSignature([landmarks, tokens], tokens)
+  // Vaivén de reposo (±0,03): misma firma ⇒ sin recálculo.
+  token.position.y = 0.03
+  expect(shadowSignature([landmarks, tokens], tokens)).toEqual(idle)
+  // La ficha camina ⇒ cambia `moving`, no `structure`.
+  token.position.x = 0.5
+  const walked = shadowSignature([landmarks, tokens], tokens)
+  expect(walked.moving).not.toBe(idle.moving)
+  expect(walked.structure).toBe(idle.structure)
+  // Llega un modelo ⇒ cambia `structure`.
+  landmarks.add(new THREE.Group())
+  expect(shadowSignature([landmarks, tokens], tokens).structure).not.toBe(idle.structure)
 })

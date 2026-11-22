@@ -7,7 +7,7 @@
   "water":    { "priority": 2, "radiusFrom": "decor.json", "margin": 0.35 },
   "mountain": { "priority": 3, "radius": 0.7 },
   "landmarkProp": { "priority": 3, "radius": 0.18, "kinds": ["lamp", "fence", "sign"] },
-  "tree":     { "priority": 4, "radius": 0.35 },
+  "tree":     { "priority": 4, "radius": 0.24 },
   "rock":     { "priority": 4, "radius": 0.30 },
   "bush":     { "priority": 5, "radius": 0.20 },
   "flora":    { "priority": 6, "radius": 0.10, "kinds": ["grassTuft", "flowerPatch", "mushroom", "pebble", "fern", "dryGrass", "reeds", "deadBush"] },
@@ -15,8 +15,8 @@
  },
  "allowOverlap": [ ["flora", "tree"], ["flora", "bush"], ["flora", "rock"], ["flora", "flora"], ["flora", "patch"], ["patch", "flora"] ],
   "waterRules": { "zones": ["isla"], "keepFree": ["tree", "rock", "bush", "mountain", "building", "pedestal", "landmarkProp", "patch"], "shoreBand": 0.25, "shoreAllows": ["reeds", "pebble"], "minRadius": 0.75, "preferredRadius": 1.3, "roadGap": { "node": 0.25, "edge": 0.15 }, "underRoads": true, "_nota": "roadGap: el agua no traga la piedra del nodo (r 0,2) ni la cinta del camino, pero sí puede tocar la orilla de un camino (el margin NO aplica a caminos). Q-068: underRoads=true permite agua por debajo de aristas (cinta como puente decorativo); nodos siguen intocables. minRadius bajó de 0.8 a 0.75 para que entre el lago con underRoads." },
- "zones": { "assign": "nearestPanelCenter", "inset": 0.3, "note": "Cada objeto pertenece a UNA sola zona y solo se coloca dentro de ella (rectángulo del panel menos los buffers de arriba). Una roca de Montaña no puede caer dentro del lago de Isla." },
- "sampling": { "method": "poisson-disk", "triesPerPoint": 30, "seedFromZone": true, "scale": [0.8, 1.25], "order": ["water", "mountain", "landmarkProp", "tree", "rock", "bush", "flora", "patch"] },
+ "zones": { "assign": "nearestPanelCenter", "inset": 0, "note": "Cada objeto pertenece a UNA sola zona y solo se coloca dentro de ella (rectángulo del panel menos los buffers de arriba). Una roca de Montaña no puede caer dentro del lago de Isla." },
+ "sampling": { "method": "poisson-disk", "triesPerPoint": 80, "seedFromZone": true, "scale": [0.8, 1.25], "order": ["water", "mountain", "landmarkProp", "tree", "rock", "bush", "flora", "patch"] },
  "colorSanity": { "tree": { "hue": [75, 170] }, "bush": { "hue": [75, 170] }, "rock": { "maxSaturation": 0.35 }, "water": { "hue": [190, 230] } },
  "report": { "svg": "shots/decor-overlaps.svg", "json": "shots/decor-overlaps.report.json" }
 }

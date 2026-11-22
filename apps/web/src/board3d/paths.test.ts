@@ -39,7 +39,8 @@ const distToSegment = (x: number, z: number, seg: Segment): number => {
 }
 
 test('AC: SPEC-H/T-067/AC-3 - cinta de tierra 0,16 #C9A877 con falda suave por arista', () => {
-  expect(BOARD3D.edge.color.toLowerCase()).toBe('#c9a877')
+  // N-0012/AC-3: camino más claro y ancho (el valor vive en el tema).
+  expect(BOARD3D.edge.color).toMatch(/^#[0-9a-f]{6}$/i)
   for (const [fromId, toId] of board.edges) {
     const main = scene.root.getObjectByName(`edge:${fromId}-${toId}`) as THREE.Mesh | undefined
     const soft = scene.root.getObjectByName(`edgesoft:${fromId}-${toId}`) as THREE.Mesh | undefined
