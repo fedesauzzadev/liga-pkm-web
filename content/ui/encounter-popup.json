@@ -7,7 +7,7 @@
   "padPx": 12,
   "aspect": 0.63,
   "gapPx": 24,
-  "buttons": { "minPx": 280, "maxPx": 340, "minHeightPx": 44, "gapPx": 8 },
+  "buttons": { "minPx": 280, "maxPx": 300, "minHeightPx": 44, "gapPx": 8 },
   "backdropOpacity": 0.3,
   "animMs": 180,
   "transitionMs": 150,

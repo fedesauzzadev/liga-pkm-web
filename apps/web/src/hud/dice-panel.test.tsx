@@ -52,7 +52,10 @@ test('AC: SPEC-N/T-092/AC-3 - dados oficiales: panel-dice (tablero) y BattleDie 
     .filter((file) => file.endsWith('.tsx') && !file.endsWith('.test.tsx'))
     .filter((file) => /<Die3D[\s/>]/.test(readFileSync(new URL(file, src), 'utf8')))
   expect(renderers).toEqual(['hud/DicePanel.tsx'])
-  const play = readFileSync(new URL('../game/PlayScreen.tsx', import.meta.url), 'utf8')
+  // N-0022: la derivación de tiradas se movió de PlayScreen.tsx a play/derive.ts.
+  const play = ['../game/PlayScreen.tsx', '../game/play/derive.ts']
+    .map((file) => readFileSync(new URL(file, import.meta.url), 'utf8'))
+    .join('')
   expect(play).toContain("event.type !== 'DieRolled'")
   expect(play).toContain('isBoardDiePurpose')
   expect(play).toContain('appendDiceRolls')
