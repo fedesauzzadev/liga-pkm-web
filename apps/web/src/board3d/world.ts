@@ -240,9 +240,8 @@ function buildClouds(style: BoardStyle): THREE.Group {
     const ry = hash2(index, 13, seed)
     // N-0004: solo al norte del tablero (la deriva es en x): no tapan casilleros.
     const north = BOARD3D.base.depth / 2 + BOARD3D.world.cloud.clearDepth
-    // N-0015: 1 de cada 3 va al sur (lejos del borde) para que el cielo no quede vacío al mirar al sur/este.
-    const side = hash2(index, 15, seed) < 0.34 ? 1 : -1
-    cloud.position.set((rx * 2 - 1) * halfSpan, height + (ry - 0.5), side * (north + rz * (halfSpan - north)))
+    // Nunca al sur: la cámara por defecto está ahí a ~9 de alto y una nube le pasa por delante.
+    cloud.position.set((rx * 2 - 1) * halfSpan, height + (ry - 0.5), -(north + rz * (halfSpan - north)))
     cloud.userData.speedMul = 0.7 + 0.6 * hash2(index, 14, seed)
     cloud.userData.baseY = cloud.position.y
     group.add(cloud)

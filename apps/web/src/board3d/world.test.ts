@@ -241,6 +241,7 @@ test('AC: SPEC-J/T-079/AC-1 - cielo con degradado sky.top/horizon y nubes desde 
   for (const cloud of clouds) {
     expect(Math.abs(cloud.position.y - boardStyle.sky.clouds.height)).toBeLessThanOrEqual(0.5)
     // AC: N-0004/AC-2 — nubes al norte del tablero: no tapan casilleros.
-    expect(Math.abs(cloud.position.z)).toBeGreaterThanOrEqual(BOARD3D.base.depth / 2 + BOARD3D.world.cloud.clearDepth) // N-0015: norte o sur, nunca sobre el tablero
+    // Solo al norte (z negativo): al sur quedan entre la cámara por defecto y el tablero.
+    expect(cloud.position.z).toBeLessThanOrEqual(-(BOARD3D.base.depth / 2 + BOARD3D.world.cloud.clearDepth))
   }
 })

@@ -22,7 +22,7 @@ Orquestador: sesión principal. Una sesión limpia por nodo, en su worktree/rama
 | N-0022 | Partir PlayScreen.tsx y rig.ts | 3 | — | verified |
 
 N-0010 a N-0019: reservados para la sesión de arte del tablero (rama claude/tablero-arte-54a1d7).
-Después (sin nodo todavía): oclusión del scatter instanciado (árboles/rocas); conectar las animaciones de Showdown a BattleScene (grande, dividir); cierre de tareas REVIEW del backlog mirándolas; T-113 split de archivos > 400 líneas.
+Después (sin nodo todavía): subir las nubes por encima de la cámara (hoy 7 vs 9: pueden cruzarse mirando desde el norte); oclusión del scatter instanciado (árboles/rocas); conectar las animaciones de Showdown a BattleScene (grande, dividir); cierre de tareas REVIEW del backlog mirándolas; T-113 split de archivos > 400 líneas.
 Paralelo = mismo número de tanda (archivos `owns` disjuntos). Secuencial = `depends_on`.
 | N-0015 | Cielo, horizonte y niebla: montañas nevadas con velo | arte | N-0014 | verified |
 | N-0016 | Vida: agua que se mece (lago+pantano), mariposas, relleno | arte | N-0015 | verified |
