@@ -236,7 +236,7 @@ export const BOARD3D = {
       /** Clearance alrededor del pedestal del mazo (AC-3). */
       pedestalClearance: 0.85,
       /** Intentos de rechazo por pieza antes de omitirla. */
-      maxTries: 40,
+      maxTries: 160,
       /** Levanta la pieza del terreno (evita z-fighting en pendientes). */
       lift: 0.02,
       /** Escala determinista por pieza. */
