@@ -422,7 +422,7 @@ export function BattleScene({
               />
             </div>
             {/* Capa de FX: overlay sin clicks (ADR-6); coreografía (T-032d) + playMoveFx. */}
-            <div className={styles.fx} data-layer="fx" style={{ pointerEvents: 'none' }}>
+            <div className={styles.fx} data-layer="fx" data-fx-stage="showdown" style={{ pointerEvents: 'none' }}>
               {visuals?.sweep === true ? <div className={styles.sweep} data-sweep="true" /> : null}
               {visuals?.flash != null && visuals.flash.length > 0 ? (
                 <div className={styles.flashOverlay} data-flash={visuals.flash} />

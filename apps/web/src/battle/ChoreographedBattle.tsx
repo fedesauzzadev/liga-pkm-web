@@ -15,6 +15,7 @@ import type { BattleChoreoDeps, BattleStage } from './choreo/stage'
 import { BattleScene, type BattleDieView, type BattleVisuals } from './BattleScene'
 import type { SpritesManifest, TrainersManifest } from './sprites'
 import type { BagContext, TeamPkmView } from './controls'
+import { useBattleShowdownFx } from './showdownBattle'
 
 export interface ChoreographedBattleProps {
   readonly deps: BattleChoreoDeps
@@ -172,6 +173,7 @@ export function ChoreographedBattle({
   onRivalCardClick,
 }: ChoreographedBattleProps) {
   const prefersReduced = usePrefersReducedMotion()
+  useBattleShowdownFx()
   const reduced = prefersReduced || reducedMotion
   const hostRef = useRef<HTMLDivElement | null>(null)
   const speedRef = useRef(speed)
