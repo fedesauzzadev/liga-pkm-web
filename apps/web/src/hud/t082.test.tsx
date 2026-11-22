@@ -31,10 +31,10 @@ function must<T>(result: Result<T, { readonly message: string }>): T {
 }
 
 // AC-1: layout.json manda — panel-turn sube y agranda; players queda abajo.
-test('AC: SPEC-J/T-082/AC-1 - panel-turn en y 0.655 / h 0.125 sin solapamientos', () => {
+test('AC: SPEC-J/T-082/AC-1 - panel-turn en y 0.65 / h 0.14 (N-0021) sin solapamientos', () => {
   const turn = shellPanels.turn
-  expect(turn.y).toBeCloseTo(0.655, 5)
-  expect(turn.h).toBeCloseTo(0.125, 5)
+  expect(turn.y).toBeCloseTo(0.65, 5)
+  expect(turn.h).toBeCloseTo(0.14, 5)
   expect(shellPanels.players.y).toBeCloseTo(0.8, 5)
   // El botón de tirada mide ≥ 44 px (min-height del CSS del panel).
   const rollButton = /\.rollButton\{[^}]*\}/.exec(hudCss.replace(/\s/g, ''))?.[0] ?? ''

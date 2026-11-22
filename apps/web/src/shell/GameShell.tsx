@@ -70,6 +70,11 @@ export interface GameShellProps {
   readonly layoutDebug?: boolean
 }
 
+/** N-0021/AC-2: el tip flota 8 px por encima de la pestaña del equipo (no la tapa). */
+const TIP_STYLE: CSSProperties = {
+  bottom: `calc(${((1 - shellPanels.teamTab.y) * 100).toFixed(3)}% + 8px)`,
+}
+
 const isEditableTarget = (target: EventTarget | null): boolean => {
   if (typeof HTMLElement === 'undefined' || target === null) return false
   const element = target as HTMLElement
@@ -285,11 +290,13 @@ export function GameShell({
               }
               // T-089/SPEC-N: al colapsar, panel-team sale del DOM (la pestaña queda).
               if (key === 'team' && teamCollapsed) return null
+              const box = panelCss(panel)
               return (
                 <section
                   key={key}
                   className={styles.panel}
-                  style={panelCss(panel)}
+                  // N-0021/AC-3: el historial se achica a su contenido y crece hasta su caja.
+                  style={key === 'history' ? { ...box, height: 'auto', maxHeight: box.height } : box}
                   data-testid={panel.testid}
                   id={panel.testid}
                   data-panel={key}
@@ -332,7 +339,7 @@ export function GameShell({
       ) : null}
       {/* N-0005: con un combate abierto el tip no se muestra (tapaba los ataques). */}
       {tipOpen && !hudHiddenState && (battlePopup ?? null) === null ? (
-        <div className={styles.tip} data-testid="tip-f11" role="status">
+        <div className={styles.tip} style={TIP_STYLE} data-testid="tip-f11" role="status">
           <span>{es.shellTipF11}</span>
           <button
             type="button"
