@@ -23,10 +23,10 @@
  },
   "zones": {
    "bosque":  { "panel": "bosque",  "margin": 0.5, "scatter": [ { "kind": "tree", "variant": "pine", "count": 38, "seed": 11 }, { "kind": "tree", "variant": "round", "count": 18, "seed": 12 }, { "kind": "bush", "count": 22, "seed": 13 } ] },
-   "montana": { "panel": "montana", "margin": 0.5, "scatter": [ { "kind": "mountain", "count": 5, "seed": 21 }, { "kind": "rock", "count": 16, "seed": 22 }, { "kind": "lavaPool", "count": 2, "seed": 23 } ] },
-   "isla":    { "panel": "isla",    "margin": 0.5, "scatter": [ { "kind": "rock", "count": 8, "seed": 32 }, { "kind": "reeds", "count": 12, "seed": 33 } ] },
+   "montana": { "panel": "montana", "margin": 0.5, "scatter": [ { "kind": "mountain", "count": 5, "seed": 21 }, { "kind": "rock", "count": 18, "seed": 22 }, { "kind": "deadTree", "count": 3, "seed": 24 }, { "kind": "lavaPool", "count": 2, "seed": 23 } ] },
+   "isla":    { "panel": "isla",    "margin": 0.5, "scatter": [ { "kind": "rock", "count": 8, "seed": 32 }, { "kind": "reeds", "count": 12, "seed": 33 }, { "kind": "flowerPatch", "count": 5, "seed": 34 }, { "kind": "grassTuft", "count": 4, "seed": 35 } ] },
    "llanura": { "panel": "llanura", "margin": 0.5, "scatter": [ { "kind": "grassTuft", "count": 40, "seed": 41 }, { "kind": "flowerPatch", "count": 24, "seed": 42 }, { "kind": "tree", "variant": "round", "count": 9, "seed": 43 } ] },
-    "pantano": { "panel": "pantano", "margin": 0.5, "scatter": [ { "kind": "deadTree", "count": 12, "seed": 51 }, { "kind": "mist", "count": 10, "seed": 52 }, { "kind": "rock", "count": 8, "seed": 53 }, { "kind": "reeds", "count": 10, "seed": 54 } ] }
+    "pantano": { "panel": "pantano", "margin": 0.5, "scatter": [ { "kind": "deadTree", "count": 12, "seed": 51 }, { "kind": "mist", "count": 10, "seed": 52 }, { "kind": "rock", "count": 8, "seed": 53 }, { "kind": "reeds", "count": 10, "seed": 54 }, { "kind": "grassTuft", "count": 3, "seed": 56 } ] }
   },
     "budgets": { "maxDrawCalls": 120, "maxTriangles": 150000, "maxModelsMB": 36 },
  "clearance": { "fromNodeCenter": 0.45, "fromEdge": 0.3 }

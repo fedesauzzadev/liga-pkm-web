@@ -8,6 +8,7 @@ import type { BoardStyle, Decor } from '@liga/content'
 import * as THREE from 'three'
 import { BOARD3D } from '../theme/board3d'
 import { buildBiomeTexture, liftDarkGround } from './biome-texture'
+import { buildButterflies } from './butterflies'
 import { buildDistantMountains, buildTreeRing } from './horizon'
 import { fbm, hash2, valueNoise } from './noise'
 import { smoothstep } from './smooth'
@@ -57,6 +58,8 @@ export interface WorldScene {
   /** T-096/AC-2: tinte de zona por textura de bioma (1024², lineal, sRGB). */
   readonly biomeTexture: THREE.DataTexture
   readonly water: THREE.Mesh | null
+  /** N-0016: todos los espejos de agua (lago, pantano) — los mece Ambient. */
+  readonly waters: readonly THREE.Mesh[]
   readonly sky: THREE.Mesh
   /** T-080/AC-3: disco solar sobre el domo (null si sky.sunDisk es false). */
   readonly sunDisk: THREE.Mesh | null
@@ -64,6 +67,8 @@ export interface WorldScene {
   /** Anillo de arbolado entre el borde del tablero y las colinas (AC-5). */
   readonly treeRing: THREE.Group
   readonly clouds: THREE.Group
+  /** N-0016: mariposas decorativas (las anima Ambient). */
+  readonly butterflies: THREE.Group
   readonly fog: THREE.Fog
   /** Media extensión del mundo (size/2): límite de deriva de nubes. */
   readonly halfSpan: number
@@ -276,8 +281,10 @@ export function buildWorld(input: WorldInput): WorldScene {
   root.add(treeRing)
   const clouds = buildClouds(input.style)
   root.add(clouds)
+  const butterflies = buildButterflies(input.biomes)
+  root.add(butterflies)
 
   const fog = new THREE.Fog(input.style.fog.color, input.style.fog.near, input.style.fog.far)
   const halfSpan = input.style.world.size[0] / 2 + 4
-  return { root, terrain, biomeTexture, water, sky, sunDisk, mountains, treeRing, clouds, fog, halfSpan }
+  return { root, terrain, biomeTexture, water, waters, sky, sunDisk, mountains, treeRing, clouds, butterflies, fog, halfSpan }
 }

@@ -5,7 +5,8 @@ import { useThree } from '@react-three/fiber'
 import { useEffect, useState } from 'react'
 import type * as THREE from 'three'
 import { BOARD3D } from '../theme/board3d'
-import { applyIdle, applyRingPulse, ambientEnabled, restTokens, stepClouds, waterBob } from './ambient'
+import { applyIdle, applyRingPulse, ambientEnabled, restTokens, stepClouds, applyWaters } from './ambient'
+import { stepButterflies } from './butterflies'
 import type { WorldScene } from './world'
 import { boardStyle } from './style'
 
@@ -35,20 +36,14 @@ export function Ambient(props: AmbientProps): null {
   useEffect(() => {
     // Perfil bajo (AC-6): sin nubes; reposo para fichas, agua y aros.
     world.clouds.visible = !lowProfile
+    world.butterflies.visible = !lowProfile
     if (!ambientEnabled(reducedMotion, lowProfile, visible)) {
       restTokens(tokensGroup)
       applyRingPulse(nodes, 0)
-      if (world.water !== null) {
-        world.water.position.y =
-          typeof world.water.userData.baseY === 'number' ? world.water.userData.baseY : world.water.position.y
-      }
+      applyWaters(world.waters, 0)
       invalidate()
       return
     }
-    if (world.water !== null && typeof world.water.userData.baseY !== 'number') {
-      world.water.userData.baseY = world.water.position.y
-    }
-
     let running = true
     let timeout: ReturnType<typeof setTimeout> | null = null
     let last = performance.now()
@@ -58,9 +53,8 @@ export function Ambient(props: AmbientProps): null {
       const dtSec = Math.min(1, (now - last) / 1000)
       last = now
       stepClouds(world.clouds, dtSec, cloudSpeed, world.halfSpan)
-      if (world.water !== null && typeof world.water.userData.baseY === 'number') {
-        world.water.position.y = world.water.userData.baseY + waterBob(now)
-      }
+      applyWaters(world.waters, now)
+      stepButterflies(world.butterflies, now / 1000)
       applyIdle(tokensGroup, now)
       applyRingPulse(nodes, now)
       invalidate()

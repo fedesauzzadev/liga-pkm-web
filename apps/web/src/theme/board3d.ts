@@ -157,9 +157,14 @@ export const BOARD3D = {
     },
     water: {
       /** Vaivén del agua (AC-5). */
-      bob: 0.012,
+      bob: 0.03,
       periodMs: 2400,
+      /** N-0016: brillo lento del agua (mezcla hacia blanco) y su período. */
+      shimmer: 0.22,
+      shimmerPeriodMs: 3200,
     },
+    /** N-0016: mariposas (espejo de style.ambientFx.butterflies, que el esquema aún no parsea). */
+    butterfly: { count: 6, zones: ['bosque', 'llanura'], size: 0.16, radius: [0.4, 0.9], height: [0.45, 0.9], flapHz: 3, colors: ['#FFE066', '#FFFFFF', '#FF9EC4', '#FFB347'] },
     /** Bucle ambiental (AC-5): 33 ms ⇒ 30 fps máx con frameloop demand. */
     tickMs: 33,
     /** T-088/AC-3: ruido de luminosidad suave (interpolado, sin bloques). */
