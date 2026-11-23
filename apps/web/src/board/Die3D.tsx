@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import styles from './Die3D.module.css'
 
 export type DieValue = 1 | 2 | 3 | 4 | 5 | 6
@@ -69,6 +69,15 @@ export const Die3D = forwardRef<Die3DHandle, Die3DProps>(function Die3D(
     setTransform(orientationMap[next])
   }, [value])
 
+  // El timer del giro puede dispararse después de desmontar: ahí solo se resuelve la promesa.
+  const mounted = useRef(true)
+  useEffect(() => {
+    mounted.current = true // StrictMode re-monta: hay que volver a marcarlo
+    return () => {
+      mounted.current = false
+    }
+  }, [])
+
   const rollTo = useCallback(
     async (nextValue: DieValue): Promise<void> => {
       const safeValue = clampDieValue(nextValue)
@@ -90,9 +99,11 @@ export const Die3D = forwardRef<Die3DHandle, Die3DProps>(function Die3D(
 
       await new Promise<void>((resolve) => {
         setTimeout(() => {
-          setCurrentValue(safeValue)
-          setTransform(orientationMap[safeValue])
-          setRolling(false)
+          if (mounted.current) {
+            setCurrentValue(safeValue)
+            setTransform(orientationMap[safeValue])
+            setRolling(false)
+          }
           resolve()
         }, durationMs)
       })

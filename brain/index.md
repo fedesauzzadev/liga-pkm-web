@@ -20,12 +20,12 @@ Orquestador: sesión principal. Una sesión limpia por nodo, en su worktree/rama
 | N-0020 | Título y elección de inicial | 3 | — | verified |
 | N-0021 | HUD de partida prolijo | 3 | — | verified (tip F11 flota junto a la ficha; popup de encuentro: columna 340→300 px para no tapar el dado a 1024×600) |
 | N-0022 | Partir PlayScreen.tsx y rig.ts | 3 | — | verified |
-| N-0030 | Nubes altas y árboles translúcidos | 4 | N-0002, N-0015 | planned |
-| N-0031 | Animaciones de Showdown en el combate real | 4 | N-0007 | planned |
-| N-0033 | Auditoría visual de las tareas en REVIEW | 4 | — | planned |
+| N-0030 | Nubes altas y árboles translúcidos | 4 | N-0002, N-0015 | verified (árboles se ocultan, no translúcidos; nubes casi no se ven a distancia por defecto) |
+| N-0031 | Animaciones de Showdown en el combate real | 4 | N-0007 | implemented (2 ataques de Charmander; AC-5 parcial; falta el resto y el lado rival) |
+| N-0033 | Auditoría visual de las tareas en REVIEW | 4 | — | verified (tasks/reports/REVIEW-AUDIT.md) |
 
 N-0010 a N-0019: reservados para la sesión de arte del tablero (rama claude/tablero-arte-54a1d7).
-Después (sin nodo todavía): subir las nubes por encima de la cámara (hoy 7 vs 9: pueden cruzarse mirando desde el norte); oclusión del scatter instanciado (árboles/rocas); conectar las animaciones de Showdown a BattleScene (grande, dividir); cierre de tareas REVIEW del backlog mirándolas; T-113 split de archivos > 400 líneas.
+Después (sin nodo todavía): conectar las animaciones de Showdown a BattleScene (grande, dividir); cierre de tareas REVIEW del backlog mirándolas; T-113 split de archivos > 400 líneas.
 Paralelo = mismo número de tanda (archivos `owns` disjuntos). Secuencial = `depends_on`.
 | N-0015 | Cielo, horizonte y niebla: montañas nevadas con velo | arte | N-0014 | verified |
 | N-0016 | Vida: agua que se mece (lago+pantano), mariposas, relleno | arte | N-0015 | verified |
