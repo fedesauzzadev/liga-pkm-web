@@ -9,6 +9,7 @@ import * as THREE from 'three'
 import { BOARD3D } from '../theme/board3d'
 import { buildBiomeTexture, liftDarkGround } from './biome-texture'
 import { buildButterflies } from './butterflies'
+import { buildWanderers } from './wanderers'
 import { cameraPresets } from './camera'
 import { buildDistantMountains, buildTreeRing } from './horizon'
 import { fbm, hash2, valueNoise } from './noise'
@@ -71,6 +72,8 @@ export interface WorldScene {
   /** N-0016: mariposas decorativas (las anima Ambient). */
   readonly butterflies: THREE.Group
   readonly fog: THREE.Fog
+  /** N-0034: pokémon salvajes caminando (los mueve Ambient). */
+  readonly wanderers: THREE.Group
   /** Media extensión del mundo (size/2): límite de deriva de nubes. */
   readonly halfSpan: number
 }
@@ -296,5 +299,7 @@ export function buildWorld(input: WorldInput): WorldScene {
 
   const fog = new THREE.Fog(input.style.fog.color, input.style.fog.near, input.style.fog.far)
   const halfSpan = input.style.world.size[0] / 2 + 4
-  return { root, terrain, biomeTexture, water, waters, sky, sunDisk, mountains, treeRing, clouds, butterflies, fog, halfSpan }
+  return { root, terrain, biomeTexture, water, waters, sky, sunDisk, mountains, treeRing, clouds, butterflies, wanderers, fog, halfSpan }
 }
+  const wanderers = buildWanderers(input, (x, z) => terrainHeightAt(x, z, input))
+  root.add(wanderers)

@@ -9,5 +9,5 @@
   "buttons": { "centerOnMe": "explore", "overview": "overview" },
   "keys": { "rotateLeft": "Q", "rotateRight": "E", "pan": ["W", "A", "S", "D"], "zoomIn": "+", "zoomOut": "-", "overview": "V", "centerOnMe": "C" },
   "transitions": { "overviewToFollowMs": 700, "followToOverviewMs": 1000, "easing": "easeInOutCubic", "holdAfterTurnMs": 600 },
-  "perf": { "dpr": [1, 1.5], "lowFpsThreshold": 40, "lowFpsSeconds": 3 }
+  "perf": { "dpr": [1, 2], "lowFpsThreshold": 40, "lowFpsSeconds": 3 }
 }

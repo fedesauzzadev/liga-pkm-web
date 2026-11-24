@@ -167,6 +167,23 @@ export const BOARD3D = {
     },
     /** N-0016: mariposas (espejo de style.ambientFx.butterflies, que el esquema aún no parsea). */
     butterfly: { count: 6, zones: ['bosque', 'llanura'], size: 0.16, radius: [0.4, 0.9], height: [0.45, 0.9], flapHz: 3, colors: ['#FFE066', '#FFFFFF', '#FF9EC4', '#FFB347'] },
+    /** N-0034: pokémon salvajes (dex por zona, sprites de Showdown) que caminan
+     *  circuitos de `corners` esquinas a `radius` de un punto de su zona. */
+    wanderer: {
+      species: { bosque: [10, 16, 43], llanura: [19, 56, 77], montana: [25, 27, 37], isla: [54, 98], pantano: [23, 60] } as Readonly<Record<string, readonly number[]>>,
+      unitsPerPx: 0.013,
+      speed: [0.18, 0.32],
+      radius: [0.3, 0.9],
+      corners: 4,
+      spread: 0.85,
+      /** Distancia libre a nodos, caminos y edificios; margen sobre el nivel de agua de la zona. */
+      clearance: 0.22,
+      shore: 0.04,
+      sampleStep: 0.12,
+      attempts: 400,
+      hop: 0.04,
+      hopHz: 3,
+    },
     /** Bucle ambiental (AC-5): 33 ms ⇒ 30 fps máx con frameloop demand. */
     tickMs: 33,
     /** T-088/AC-3: ruido de luminosidad suave (interpolado, sin bloques). */

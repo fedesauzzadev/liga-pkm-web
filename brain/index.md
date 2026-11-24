@@ -29,3 +29,4 @@ Después (sin nodo todavía): conectar las animaciones de Showdown a BattleScene
 Paralelo = mismo número de tanda (archivos `owns` disjuntos). Secuencial = `depends_on`.
 | N-0015 | Cielo, horizonte y niebla: montañas nevadas con velo | arte | N-0014 | verified |
 | N-0016 | Vida: agua que se mece (lago+pantano), mariposas, relleno | arte | N-0015 | verified |
+| N-0034 | Mapa más nítido + pokémon salvajes caminando (billboard) | arte | N-0016 | implemented |

@@ -47,6 +47,7 @@ import { createTokensGroup } from './tokens'
 import { Tokens3D } from './Tokens3D'
 import { SunFollow } from './SunFollow'
 import { useCameraKeys } from './useCameraKeys'
+import { Wanderers3D } from './Wanderers3D'
 import styles from './board3d.module.css'
 
 const HALF = { w: BOARD3D.base.width / 2, d: BOARD3D.base.depth / 2 }
@@ -166,6 +167,7 @@ function BoardSceneView({
         onFocus={handleFocus}
         onDone={onMoveDone}
       />
+      <Wanderers3D group={boardScene.world.wanderers} />
       <SunFollow scene={boardScene} tokensGroup={tokensGroup} activeTokenId={activeTokenId} />
       <ModelDecor
         boardScene={boardScene}

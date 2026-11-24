@@ -7,6 +7,7 @@ import type * as THREE from 'three'
 import { BOARD3D } from '../theme/board3d'
 import { applyIdle, applyRingPulse, ambientEnabled, restTokens, stepClouds, applyWaters } from './ambient'
 import { stepButterflies } from './butterflies'
+import { stepWanderers } from './wanderers'
 import type { WorldScene } from './world'
 import { boardStyle } from './style'
 
@@ -37,6 +38,7 @@ export function Ambient(props: AmbientProps): null {
     // Perfil bajo (AC-6): sin nubes; reposo para fichas, agua y aros.
     world.clouds.visible = !lowProfile
     world.butterflies.visible = !lowProfile
+    world.wanderers.visible = !lowProfile
     if (!ambientEnabled(reducedMotion, lowProfile, visible)) {
       restTokens(tokensGroup)
       applyRingPulse(nodes, 0)
@@ -55,6 +57,7 @@ export function Ambient(props: AmbientProps): null {
       stepClouds(world.clouds, dtSec, cloudSpeed, world.halfSpan)
       applyWaters(world.waters, now)
       stepButterflies(world.butterflies, now / 1000)
+      stepWanderers(world.wanderers, now / 1000)
       applyIdle(tokensGroup, now)
       applyRingPulse(nodes, now)
       invalidate()

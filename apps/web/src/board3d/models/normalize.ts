@@ -128,6 +128,8 @@ export function toonizeModel(root: THREE.Object3D, options: ModelTuneOptions = {
       if (keptMap !== null) {
         keptMap.colorSpace = THREE.SRGBColorSpace
         if (options.pixelArt === true) tuneHgssTexture(keptMap)
+        // Texturas pintadas (no pixel-art): nítidas en ángulo rasante.
+        else keptMap.anisotropy = 16
       }
       // AC-3: alphaTest solo si el material es realmente transparente
       // (declarado, opacidad < 1 o cutout del material original).

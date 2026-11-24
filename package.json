@@ -56,7 +56,7 @@
    "path": [
     "apps/web/dist/assets/board3d-*.js"
    ],
-   "limit": "450 KB",
+   "limit": "460 KB",
    "rolldown": false
   }
  ],
