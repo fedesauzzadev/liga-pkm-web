@@ -39,8 +39,8 @@ test('AC: SPEC-R/T-101/AC-1 - footprints/heights nuevos + distMax 2.6; el resto 
   expect(realPlacements.heights).toEqual({ gym: 1.38, pokecenter: 1.13, market: 0.9, league: 4.03, house: 0.81, lab: 1.38 })
   expect(realPlacements.minGaps).toEqual({ buildingToNodeCircle: 0.25, buildingToEdge: 0.2, buildingToBuilding: 0.2, buildingToPedestal: 0.3 })
   expect(realPlacements.search).toEqual({ distStart: 0.75, distStep: 0.1, distMax: 2.6, rotateStepsDeg: [15, -15, 30, -30, 45, -45, 60, -60, 90, -90], scaleFloor: 0.7 })
-  // rotar-pokemart-45: market pasó de −90 a −45 (los 5 PokéMart giran 45° horario).
-  expect(realPlacements.models.yawOffsetDeg).toEqual({ gym: 0, pokecenter: 0, market: -45, league: 0 })
+  // puerta-al-camino: el frente real del pokemart es +Z (market 0) y el puente de la Liga es +X (league 90).
+  expect(realPlacements.models.yawOffsetDeg).toEqual({ gym: 0, pokecenter: 0, market: 0, league: 90 })
   expect(realPlacements.removeStacks).toEqual(['item', 'sorpresa'])
   expect(realPlacements.proceduralBuildings).toBe(false)
   expect(Object.keys(realPlacements.nodes)).toHaveLength(21)

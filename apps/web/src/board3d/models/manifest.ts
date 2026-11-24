@@ -33,14 +33,42 @@ export function modelKindForDecor(
   return null
 }
 
-/** Candidatos utilizables (approved/proposed) para una pieza de decoración. */
+const usableFor = (kind: DecorKind, variant?: 'pine' | 'round'): readonly ModelCandidate[] => {
+  const modelKind = modelKindForDecor(kind, variant)
+  if (modelKind === null) return []
+  return usableCandidates(modelsManifest.kinds[modelKind]?.candidates ?? [])
+}
+
+/** Candidatos utilizables (approved/proposed) GENÉRICOS (sin `zones`) para
+ *  una pieza de decoración. */
 export function kenneyCandidatesFor(
   kind: DecorKind,
   variant?: 'pine' | 'round',
 ): readonly ModelCandidate[] {
-  const modelKind = modelKindForDecor(kind, variant)
-  if (modelKind === null) return []
-  return usableCandidates(modelsManifest.kinds[modelKind]?.candidates ?? [])
+  return usableFor(kind, variant).filter((candidate) => (candidate.zones ?? []).length === 0)
+}
+
+/** Tope de variantes por spec de scatter: cada variante cuesta draw calls
+ *  (63 rocas distintas se comían el presupuesto y los árboles quedaban
+ *  procedurales). */
+export const MAX_SCATTER_VARIANTS = 4
+
+/**
+ * Candidatos de un spec de relleno: los propios de la zona si existen, si no
+ * los genéricos (sin `zones`); como mucho MAX_SCATTER_VARIANTS, elegidos de
+ * forma determinista por `pick` (hash del spec) para que cada spec varíe.
+ */
+export function scatterCandidatesFor(
+  kind: DecorKind,
+  variant: 'pine' | 'round' | undefined,
+  zone: string,
+  pick: number,
+): readonly ModelCandidate[] {
+  const zoned = usableFor(kind, variant).filter((candidate) => candidate.zones?.includes(zone) === true)
+  const pool = zoned.length > 0 ? zoned : kenneyCandidatesFor(kind, variant)
+  if (pool.length <= MAX_SCATTER_VARIANTS) return pool
+  const stride = Math.floor(pool.length / MAX_SCATTER_VARIANTS)
+  return Array.from({ length: MAX_SCATTER_VARIANTS }, (_, index) => pool[(pick + index * stride) % pool.length]!)
 }
 
 /** Archivos HGSS utilizables para un kind; primero los del nodo, luego default. */

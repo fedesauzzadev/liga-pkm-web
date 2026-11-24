@@ -16,13 +16,13 @@
   "market": {
    "file": "pokemart.glb",
    "format": "glb",
-   "yawOffsetDeg": -45,
+   "yawOffsetDeg": 0,
    "status": "proposed"
   },
   "league": {
    "file": "league.glb",
    "format": "glb",
-   "yawOffsetDeg": 0,
+   "yawOffsetDeg": 90,
    "status": "proposed"
   },
   "lab": {

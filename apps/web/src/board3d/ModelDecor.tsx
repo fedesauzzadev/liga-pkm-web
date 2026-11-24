@@ -233,6 +233,9 @@ export function ModelDecor(props: {
         maxDrawCalls: props.decor.budgets.maxDrawCalls,
         maxTriangles: props.decor.budgets.maxTriangles,
       },
+      // El tablero entero entra: con 14 la cámara por defecto (a 15 del
+      // blanco) dejaba las zonas del norte con piezas procedurales.
+      loadDistance: 40,
     })
   }, [boardScene, props.board, props.decor, props.stacks])
 

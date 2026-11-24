@@ -15,8 +15,9 @@ import * as THREE from 'three'
 import { neutralModelColor } from '../../theme/models'
 import { boardCollision } from '../decor/plan'
 import { fnv1a } from '../rand'
+import { naturalizeFoliage } from './foliage'
 import {
-  hgssModelUrl, kenneyCandidatesFor, kenneyModelUrl,
+  hgssModelUrl, kenneyModelUrl, scatterCandidatesFor,
 } from './manifest'
 import {
   mergeModelByMaterial, normalizeParts, toonizeModel,
@@ -216,7 +217,7 @@ export class ModelDecorLayer {
 
   /** AC-4 + AC-5: spots repartidos entre los candidatos que cargaron. */
   private async loadScatterSpec(spec: ScatterModelSpec, key: string): Promise<void> {
-    const candidates = kenneyCandidatesFor(spec.kind, spec.variant)
+    const candidates = scatterCandidatesFor(spec.kind, spec.variant, spec.zone, fnv1a(key))
     if (candidates.length === 0 || spec.spots.length === 0) return
     const loaded = await Promise.all(
       candidates.map(async (candidate) => ({
@@ -234,6 +235,7 @@ export class ModelDecorLayer {
       // reemplazan el procedural (p. ej. "cristales" celestes como árboles).
       .filter((entry) => templatePassesSanity(spec.kind, entry.template.parts))
     if (usable.length === 0) return
+    for (const entry of usable) naturalizeFoliage(entry.template.parts.map((part) => part.material), spec.kind)
 
     // Reparto determinista por seed (AC-2).
     const buckets = new Map<ModelCandidate, readonly ScatterSpot[]>()

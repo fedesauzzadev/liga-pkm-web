@@ -4,7 +4,7 @@
   "sourceDir": "assets-src/new",
   "files": { "gym": "gim", "pokecenter": "pokecenter", "market": "pokemart", "league": "league", "lab": "oak" },
   "_nota": "Los archivos se llaman gim, pokecenter, pokemart, league y oak (la extensión puede ser .glb/.gltf/.obj/.fbx; detectarla). gym se reutiliza en las 8 ciudades-gimnasio; pokecenter en los 4 Centros; market en los 5 Mercados; league en la Liga; oak en los 2 laboratorios (kind lab, SPEC-P/T-099).",
-  "yawOffsetDeg": { "gym": 0, "pokecenter": 0, "market": -45, "league": 0 },
+  "yawOffsetDeg": { "gym": 0, "pokecenter": 0, "market": 0, "league": 90 },
   "_yawNota": "Giro para que la puerta mire al camino. Se ajusta en /dev/models viendo el modelo; si el frente real no es +Z, corregir acá."
  },
  "footprints": { "gym": 1.38, "pokecenter": 1.25, "market": 1.06, "league": 4.03, "house": 0.88, "lab": 1.5 },

@@ -1,0 +1,2976 @@
+{
+ "cards": [
+  {
+   "id": "abra_s",
+   "dex": 63,
+   "name": "Abra",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 60,
+   "element": "psychic",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "hipno_rayo",
+     "name": "Hipno-rayo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "recuperacion",
+     "name": "Recuperación",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "healSelf",
+       "amount": 20
+      }
+     ],
+     "rawText": "Abra se cura (20) daños.",
+     "fx": "heal"
+    },
+    {
+     "id": "rayo_psiquico",
+     "name": "Rayo psíquico",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "psychic",
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "beam"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "dodge",
+     "faces": [
+      4,
+      5,
+      6
+     ]
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Abra S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "alakazam_s",
+   "dex": 65,
+   "name": "Alakazam",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 90,
+   "element": "psychic",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "hipno_rayo",
+     "name": "Hipno-rayo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "recuperacion",
+     "name": "Recuperación",
+     "kind": "ability",
+     "rollFaces": [
+      2
+     ],
+     "cost": [
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "healSelf",
+       "amount": 20
+      }
+     ],
+     "rawText": "Alakazam se cura (20) daños.",
+     "fx": "heal"
+    },
+    {
+     "id": "rayo_psiquico",
+     "name": "Rayo psíquico",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "psychic",
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "beam"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Alakazam S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "articuno_s",
+   "dex": 144,
+   "name": "Articuno",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 130,
+   "element": "ice",
+   "chances": 1,
+   "attacks": [
+    {
+     "id": "rayo_hielo",
+     "name": "Rayo hielo",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 3-4 no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "tormenta_de_arena",
+     "name": "Tormenta de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "flying"
+     ],
+     "element": "flying",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "rayo_aurora",
+     "name": "Rayo aurora",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "ice",
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 40
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 2 no ataca.",
+     "fx": "ice"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Articuno S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "charmeleon_s",
+   "dex": 5,
+   "name": "Charmeleon",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 90,
+   "element": "fire",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "fire",
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    },
+    {
+     "id": "rasgunos",
+     "name": "Rasguños",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30,
+      "ifRoll": {
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "damage": 50
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "giro_fuego",
+     "name": "Giro-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      2
+     ],
+     "cost": [
+      "fire",
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 30,
+      "ifRoll": {
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "damage": 60
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    },
+    {
+     "id": "ira",
+     "name": "Ira",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "fire",
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "bonusPerSelfDamage",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 10,
+       "per": 10
+      }
+     ],
+     "rawText": "4-5-6 hace (+10) por cada (10) daños en Charmeleon.",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Charmeleon S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "cloyster_s",
+   "dex": 91,
+   "name": "Cloyster",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 80,
+   "element": "ice",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "rayo_hielo",
+     "name": "Rayo hielo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "ice",
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 2-3 no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "congelar",
+     "name": "Congelar",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 3-4 no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "rayo_aurora",
+     "name": "Rayo aurora",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "ice",
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "ice"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Cloyster S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "dragonite_s",
+   "dex": 149,
+   "name": "Dragonite",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 100,
+   "element": "dragon",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "lianas",
+     "name": "Lianas",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "leaves"
+    },
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      2
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    },
+    {
+     "id": "agilidad",
+     "name": "Agilidad",
+     "kind": "ability",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "startsFirst"
+      },
+      {
+       "op": "attackAgain",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "Dragonite empieza atacando cada combate. 5-6 atacá de nuevo.",
+     "fx": "buff"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Dragonite S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "electabuzz_s",
+   "dex": 125,
+   "name": "Electabuzz",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 70,
+   "element": "electric",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "puno_trueno",
+     "name": "Puño-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2 no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "puno_hielo",
+     "name": "Puño-hielo",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 c/ turno si tu rival saca 3-4 no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "puno_fuego",
+     "name": "Puño-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 30,
+      "ifRoll": {
+       "faces": [
+        5,
+        6
+       ],
+       "damage": 50
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Electabuzz S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "graveler_s",
+   "dex": 75,
+   "name": "Graveler",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 90,
+   "element": "rock",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "mega_puno",
+     "name": "Mega-puño",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "puno_fuego",
+     "name": "Puño-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 20,
+      "ifRoll": {
+       "faces": [
+        5,
+        6
+       ],
+       "damage": 50
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    },
+    {
+     "id": "explosion",
+     "name": "Explosión",
+     "kind": "ability",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 50
+     },
+     "effects": [
+      {
+       "op": "selfDamage",
+       "amount": 30
+      }
+     ],
+     "rawText": "tu rival se hace (50). Graveler se hace (30).",
+     "fx": "explosion"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Graveler S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "haunter_s",
+   "dex": 93,
+   "name": "Haunter",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 60,
+   "element": "ghost",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "ghost",
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "selfHit",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2 se auto-ataca.",
+     "fx": "ghost"
+    },
+    {
+     "id": "mega_puno",
+     "name": "Mega-puño",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "rayo_tinieblas",
+     "name": "Rayo tinieblas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "ghost",
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 2-3 se auto-ataca.",
+     "fx": "ghost"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Haunter S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "ivysaur_s",
+   "dex": 2,
+   "name": "Ivysaur",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 90,
+   "element": "grass",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "lianas",
+     "name": "Lianas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "leaves"
+    },
+    {
+     "id": "amarrar",
+     "name": "Amarrar",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "drenadoras",
+     "name": "Drenadoras",
+     "kind": "attack",
+     "rollFaces": [
+      2
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainEachTurn",
+       "amount": 10
+      }
+     ],
+     "rawText": "cada turno tu rival se hace (10) y Ivysaur se cura (10).",
+     "fx": "leaves"
+    },
+    {
+     "id": "rayo_solar",
+     "name": "Rayo solar",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "grass",
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "beam"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Ivysaur S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "jigglypuff_s",
+   "dex": 39,
+   "name": "Jigglypuff",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 60,
+   "element": "normal",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "inhabilitar",
+     "name": "Inhabilitar",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "disableRandomAttack",
+       "max": 1
+      }
+     ],
+     "rawText": "tu rival no podrá usar más un at. elegido al azar. MAX 1",
+     "fx": "psychic"
+    },
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "dodge",
+     "faces": [
+      4,
+      5,
+      6
+     ]
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Jigglypuff S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "machop_s",
+   "dex": 66,
+   "name": "Machop",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 70,
+   "element": "fighting",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "golpe_karate",
+     "name": "Golpe karate",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "golpes_furia",
+     "name": "Golpes furia",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        5,
+        6
+       ],
+       "amount": 30
+      }
+     ],
+     "rawText": "hace (+30) por cada 5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "mega_puno",
+     "name": "Mega-puño",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fighting",
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Machop S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "marowak_s",
+   "dex": 105,
+   "name": "Marowak",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 90,
+   "element": "ground",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "puno_hielo",
+     "name": "Puño-hielo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 3-4 no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "cabezazo",
+     "name": "Cabezazo",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "puno_fuego",
+     "name": "Puño-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 30,
+      "ifRoll": {
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "damage": 50
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Marowak S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "mew_s",
+   "dex": 151,
+   "name": "Mew",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 150,
+   "element": "psychic",
+   "chances": 1,
+   "attacks": [
+    {
+     "id": "hipno_rayo",
+     "name": "Hipno-rayo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "psychic",
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "burbuja_psiquica",
+     "name": "Burbuja psíquica",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "psychic",
+      "psychic",
+      "psychic"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "flatReduction",
+       "amount": 20,
+       "versus": "special",
+       "target": "self",
+       "max": 1,
+       "duration": "combat"
+      }
+     ],
+     "rawText": "los ataques especiales le hacen (-20) a Mew. MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "rayo_psiquico",
+     "name": "Rayo psíquico",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "psychic",
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "beam"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Mew S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "mewtwo_s",
+   "dex": 150,
+   "name": "Mewtwo",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 150,
+   "element": "psychic",
+   "chances": 1,
+   "attacks": [
+    {
+     "id": "hipno_rayo",
+     "name": "Hipno-rayo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "psychic",
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "burbuja_psiquica",
+     "name": "Burbuja psíquica",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "psychic",
+      "psychic",
+      "psychic"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "flatReduction",
+       "amount": 20,
+       "versus": "special",
+       "target": "self",
+       "max": 1,
+       "duration": "combat"
+      }
+     ],
+     "rawText": "los ataques especiales le hacen (-20) a Mewtwo. MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "rayo_psiquico",
+     "name": "Rayo psíquico",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "psychic",
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "beam"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Mewtwo S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "moltres_s",
+   "dex": 146,
+   "name": "Moltres",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 130,
+   "element": "fire",
+   "chances": 1,
+   "attacks": [
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40,
+      "ifRoll": {
+       "faces": [
+        5,
+        6
+       ],
+       "damage": 50
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    },
+    {
+     "id": "tormenta_de_arena",
+     "name": "Tormenta de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "flying"
+     ],
+     "element": "flying",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 3-4 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "giro_fuego",
+     "name": "Giro-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 30,
+      "ifRoll": {
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "damage": 60
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Moltres S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "mr_mime_s",
+   "dex": 122,
+   "name": "Mr. Mime",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 70,
+   "element": "psychic",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "puno_hielo",
+     "name": "Puño-hielo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 3-4 no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "selfHit",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2 se auto-ataca.",
+     "fx": "psychic"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Mr.Mime S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "ninetales_s",
+   "dex": 38,
+   "name": "Ninetales",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 70,
+   "element": "fire",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    },
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Ninetales está dañado podés hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Ninetales S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "parasect_s",
+   "dex": 47,
+   "name": "Parasect",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 90,
+   "element": "grass",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "polvo_de_esporas",
+     "name": "Polvo de esporas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "bug"
+     ],
+     "element": "bug",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 2-3-4 no ataca.",
+     "fx": "poison"
+    },
+    {
+     "id": "drenadoras",
+     "name": "Drenadoras",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainEachTurn",
+       "amount": 10
+      }
+     ],
+     "rawText": "cada turno tu rival se hace (10) y Parasect se cura (10).",
+     "fx": "leaves"
+    },
+    {
+     "id": "rasguno",
+     "name": "Rasguño",
+     "kind": "attack",
+     "rollFaces": [
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "bug"
+     ],
+     "element": "bug",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) y Parasect se cura (10).",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Parasect S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "pinsir_s",
+   "dex": 127,
+   "name": "Pinsir",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 80,
+   "element": "bug",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "guillotina",
+     "name": "Guillotina",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "lluvia_de_golpes",
+     "name": "Lluvia de golpes",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 10
+      }
+     ],
+     "rawText": "hace (+10) por cada 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "danza_de_espadas",
+     "name": "Danza de espadas",
+     "kind": "ability",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "nextAttackBonus",
+       "amount": 30
+      },
+      {
+       "op": "attackAgain",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "el próximo ataque de Pinsir hará (+30). 4-5-6 atacá de nuevo.",
+     "fx": "buff"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Pinsir S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "primeape_s",
+   "dex": 57,
+   "name": "Primeape",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 80,
+   "element": "fighting",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "puno_trueno",
+     "name": "Puño-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 c/ turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "enfoque_de_energia",
+     "name": "Enfoque de energía",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "selfBoost",
+       "amount": 20,
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de Primeape hacen (+20). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "puno_fuego",
+     "name": "Puño-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 30,
+      "ifRoll": {
+       "faces": [
+        5,
+        6
+       ],
+       "damage": 50
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Primeape S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "scyther_s",
+   "dex": 123,
+   "name": "Scyther",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 70,
+   "element": "bug",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "rasgunos",
+     "name": "Rasguños",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "doble_equipo",
+     "name": "Doble equipo",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "dodge",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "cuando un rival ataque a Scyther si sacás 4-5-6 su ataque no hace daño ni efecto.",
+     "fx": "buff"
+    },
+    {
+     "id": "danza_de_espadas",
+     "name": "Danza de espadas",
+     "kind": "ability",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "nextAttackBonus",
+       "amount": 30
+      }
+     ],
+     "rawText": "el próx. ataque de Scyther hará (+30).",
+     "fx": "buff"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Scyther S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "slowbro_s",
+   "dex": 80,
+   "name": "Slowbro",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 90,
+   "element": "water",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "puno_trueno",
+     "name": "Puño-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 3-4 no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Slowbro S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "snorlax_s",
+   "dex": 143,
+   "name": "Snorlax",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 100,
+   "element": "normal",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "golpes_furia",
+     "name": "Golpes furia",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 10
+      }
+     ],
+     "rawText": "hace (+10) por cada 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "descansar",
+     "name": "Descansar",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rest",
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "Snorlax se cura todos los daños. Snorlax no ataca hasta sacar 5-6.",
+     "fx": "sleep"
+    },
+    {
+     "id": "cabezazo",
+     "name": "Cabezazo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Snorlax S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "tauros_s",
+   "dex": 128,
+   "name": "Tauros",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 90,
+   "element": "normal",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "attack_trueno",
+     "name": "Attack-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "electric",
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "estampida",
+     "name": "Estampida",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "trueno",
+     "name": "Trueno",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "electric",
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "electric"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Tauros S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "warturtle_s",
+   "dex": 8,
+   "name": "Wartortle",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 90,
+   "element": "water",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "refugio",
+     "name": "Refugio",
+     "kind": "ability",
+     "rollFaces": [
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "flatReduction",
+       "amount": 10,
+       "max": 1,
+       "target": "self",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "los ataques le hacen (-10) a Warturtle. MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "hidro_bomba",
+     "name": "Hidro-bomba",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "water",
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Warturtle S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "weezing_s",
+   "dex": 110,
+   "name": "Weezing",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 90,
+   "element": "poison",
+   "chances": 2,
+   "attacks": [
+    {
+     "id": "smog",
+     "name": "Smog",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "congelar",
+     "name": "Congelar",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 3-4 no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "giro_fuego",
+     "name": "Giro-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 30,
+      "ifRoll": {
+       "faces": [
+        5,
+        6
+       ],
+       "damage": 50
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Weezing S.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "zapdos_s",
+   "dex": 145,
+   "name": "Zapdos",
+   "stage": "surprise",
+   "deck": "sorpresa",
+   "hp": 130,
+   "element": "electric",
+   "chances": 1,
+   "attacks": [
+    {
+     "id": "attack_trueno",
+     "name": "Attack-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2 no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "tormenta_de_arena",
+     "name": "Tormenta de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "flying"
+     ],
+     "element": "flying",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 3-4 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "trueno",
+     "name": "Trueno",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "electric",
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "electric"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "sorpresa/Zapdos S.jpg",
+    "verified": false
+   }
+  }
+ ]
+}

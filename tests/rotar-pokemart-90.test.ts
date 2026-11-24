@@ -37,7 +37,7 @@ test('AC: rotar-pokemart-90/AC-2 - solver real: los 5 market rotan −90° en el
   // tests/rotar-pokemart-45.test.ts (Q-094): acá se pinea el mecanismo.
   expect(placements.models.yawOffsetDeg.gym).toBe(0)
   expect(placements.models.yawOffsetDeg.pokecenter).toBe(0)
-  expect(placements.models.yawOffsetDeg.league).toBe(0)
+  expect(placements.models.yawOffsetDeg.league).toBe(90)
 
   const antes = structuredClone(placements)
   antes.models.yawOffsetDeg.market = 0

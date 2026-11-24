@@ -22,12 +22,12 @@
   }
  },
   "zones": {
-   "bosque":  { "panel": "bosque",  "margin": 0.5, "scatter": [ { "kind": "tree", "variant": "pine", "count": 38, "seed": 11 }, { "kind": "tree", "variant": "round", "count": 18, "seed": 12 }, { "kind": "bush", "count": 22, "seed": 13 } ] },
-   "montana": { "panel": "montana", "margin": 0.5, "scatter": [ { "kind": "mountain", "count": 5, "seed": 21 }, { "kind": "rock", "count": 18, "seed": 22 }, { "kind": "deadTree", "count": 3, "seed": 24 }, { "kind": "lavaPool", "count": 2, "seed": 23 } ] },
-   "isla":    { "panel": "isla",    "margin": 0.5, "scatter": [ { "kind": "rock", "count": 8, "seed": 32 }, { "kind": "reeds", "count": 12, "seed": 33 }, { "kind": "flowerPatch", "count": 5, "seed": 34 }, { "kind": "grassTuft", "count": 4, "seed": 35 } ] },
-   "llanura": { "panel": "llanura", "margin": 0.5, "scatter": [ { "kind": "grassTuft", "count": 40, "seed": 41 }, { "kind": "flowerPatch", "count": 24, "seed": 42 }, { "kind": "tree", "variant": "round", "count": 9, "seed": 43 } ] },
-    "pantano": { "panel": "pantano", "margin": 0.5, "scatter": [ { "kind": "deadTree", "count": 12, "seed": 51 }, { "kind": "mist", "count": 10, "seed": 52 }, { "kind": "rock", "count": 8, "seed": 53 }, { "kind": "reeds", "count": 10, "seed": 54 }, { "kind": "grassTuft", "count": 3, "seed": 56 } ] }
+   "bosque":  { "panel": "bosque",  "margin": 0.5, "scatter": [ { "kind": "tree", "variant": "pine", "count": 38, "seed": 11 }, { "kind": "tree", "variant": "round", "count": 18, "seed": 12 }, { "kind": "tree", "variant": "pine", "count": 14, "seed": 14 }, { "kind": "bush", "count": 22, "seed": 13 }, { "kind": "rock", "count": 9, "seed": 15 }, { "kind": "flowerPatch", "count": 16, "seed": 16 }, { "kind": "grassTuft", "count": 18, "seed": 17 } ] },
+   "montana": { "panel": "montana", "margin": 0.5, "scatter": [ { "kind": "mountain", "count": 7, "seed": 21 }, { "kind": "rock", "count": 18, "seed": 22 }, { "kind": "rock", "count": 12, "seed": 25 }, { "kind": "bush", "count": 7, "seed": 26 }, { "kind": "deadTree", "count": 4, "seed": 24 }, { "kind": "lavaPool", "count": 2, "seed": 23 }, { "kind": "grassTuft", "count": 8, "seed": 27 } ] },
+   "isla":    { "panel": "isla",    "margin": 0.5, "scatter": [ { "kind": "tree", "variant": "round", "count": 9, "seed": 31 }, { "kind": "rock", "count": 10, "seed": 32 }, { "kind": "reeds", "count": 14, "seed": 33 }, { "kind": "flowerPatch", "count": 8, "seed": 34 }, { "kind": "grassTuft", "count": 8, "seed": 35 }, { "kind": "bush", "count": 5, "seed": 36 } ] },
+   "llanura": { "panel": "llanura", "margin": 0.5, "scatter": [ { "kind": "tree", "variant": "round", "count": 9, "seed": 43 }, { "kind": "grassTuft", "count": 40, "seed": 41 }, { "kind": "grassTuft", "count": 34, "seed": 44 }, { "kind": "flowerPatch", "count": 24, "seed": 42 }, { "kind": "flowerPatch", "count": 14, "seed": 45 }, { "kind": "bush", "count": 8, "seed": 46 }, { "kind": "rock", "count": 5, "seed": 47 } ] },
+    "pantano": { "panel": "pantano", "margin": 0.5, "scatter": [ { "kind": "deadTree", "count": 12, "seed": 51 }, { "kind": "tree", "variant": "round", "count": 5, "seed": 57 }, { "kind": "mist", "count": 10, "seed": 52 }, { "kind": "rock", "count": 8, "seed": 53 }, { "kind": "bush", "count": 9, "seed": 58 }, { "kind": "reeds", "count": 18, "seed": 54 }, { "kind": "flowerPatch", "count": 16, "seed": 55 }, { "kind": "grassTuft", "count": 8, "seed": 56 } ] }
   },
-    "budgets": { "maxDrawCalls": 120, "maxTriangles": 150000, "maxModelsMB": 36 },
+    "budgets": { "maxDrawCalls": 220, "maxTriangles": 260000, "maxModelsMB": 36 },
  "clearance": { "fromNodeCenter": 0.45, "fromEdge": 0.3 }
 }

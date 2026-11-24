@@ -1,0 +1,1991 @@
+{
+ "_comment": "Cartas de Liga (escaneos content/photos/scans/league). Transcripcion manual, verified=false.",
+ "cards": [
+  {
+   "id": "arcanine_gary_league",
+   "dex": 59,
+   "name": "Arcanine",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 80,
+   "element": "fire",
+   "attacks": [
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "giro_fuego",
+     "name": "Giro-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 30,
+      "ifRoll": {
+       "faces": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "damage": 60
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Arcanine Gary League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "bulbasaur_ash_league",
+   "dex": 1,
+   "name": "Bulbasaur",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 90,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "polvo_de_esporas",
+     "name": "Polvo de esporas",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 2-3-4 tu PKM no ataca.",
+     "fx": "sleep"
+    },
+    {
+     "id": "rayo_solar",
+     "name": "Rayo solar",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "beam"
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu PKM se hace (20) y Bulbasaur se cura (20).",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Bulbasaur Ash League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "butterfree_ash_league",
+   "dex": 12,
+   "name": "Butterfree",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 80,
+   "element": "bug",
+   "attacks": [
+    {
+     "id": "hipno_rayo",
+     "name": "Hipno-rayo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si sacás 1-2-3 tu PKM se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "polvo_de_esporas",
+     "name": "Polvo de esporas",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "bug"
+     ],
+     "element": "bug",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2-3 tu PKM no ataca.",
+     "fx": "sleep"
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu PKM se hace (20) y Butterfree se cura (20).",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Butterfree Ash League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "charizard_ash_league",
+   "dex": 6,
+   "name": "Charizard",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 100,
+   "element": "fire",
+   "attacks": [
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    },
+    {
+     "id": "rasgunos",
+     "name": "Rasguños",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40,
+      "ifRoll": {
+       "faces": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "damage": 60
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "giro_fuego",
+     "name": "Giro-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40,
+      "ifRoll": {
+       "faces": [
+        1,
+        2,
+        3
+       ],
+       "damage": 60
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Charizard Ash League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "dragonair_lance_league",
+   "dex": 148,
+   "name": "Dragonair",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 70,
+   "element": "dragon",
+   "attacks": [
+    {
+     "id": "attack_trueno",
+     "name": "Attack-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si sacás 2-3-4 tu PKM no atacará.",
+     "fx": "electric"
+    },
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu PKM hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "giro_fuego",
+     "name": "Giro fuego",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40,
+      "ifRoll": {
+       "faces": [
+        1,
+        2,
+        3
+       ],
+       "damage": 60
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Dragonair Lance League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "dragonite_lance_league",
+   "dex": 149,
+   "name": "Dragonite",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 100,
+   "element": "dragon",
+   "attacks": [
+    {
+     "id": "rayo_hielo",
+     "name": "Rayo hielo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 3-4 tu PKM no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu PKM hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "hiper_rayo",
+     "name": "Hiper rayo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "beam"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Dragonite Lance League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "eevee_gary_league",
+   "dex": 133,
+   "name": "Eevee",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 60,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "ataque_de_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2-3 tu PKM no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "doble_patada",
+     "name": "Doble patada",
+     "kind": "attack",
+     "rollFaces": [
+      4
+     ],
+     "cost": [
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "fixedRolls",
+       "rolls": 2,
+       "faces": [
+        1,
+        2,
+        3
+       ],
+       "amount": 30
+      }
+     ],
+     "rawText": "tirá el dado 2 veces. Hace (+30) por cada 1-2-3 que saques.",
+     "fx": "contact"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Eevee Gary L League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "exeggutor_gary_league",
+   "dex": 103,
+   "name": "Exeggutor",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 90,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "polvo_de_esporas",
+     "name": "Polvo de esporas",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 2-3-4 tu PKM no ataca.",
+     "fx": "sleep"
+    },
+    {
+     "id": "hipno_rayo",
+     "name": "Hipno-rayo",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si sacás 1-2-3 tu PKM se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "rayo_solar",
+     "name": "Rayo solar",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "beam"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Exeggutor Gary L League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "geodude_brock_league",
+   "dex": 74,
+   "name": "Geodude",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 80,
+   "element": "rock",
+   "attacks": [
+    {
+     "id": "puno_trueno",
+     "name": "Puño-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2 tu PKM no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "smog",
+     "name": "Smog",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu PKM se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "explosion",
+     "name": "Explosión",
+     "kind": "ability",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 50
+     },
+     "effects": [
+      {
+       "op": "selfDamage",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu PKM se hace (50). Geodude se hace (20).",
+     "fx": "explosion"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Geodude Brock L League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "gyarados_lance_league",
+   "dex": 130,
+   "name": "Gyarados",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 100,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "attack_trueno",
+     "name": "Attack-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2 tu PKM no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "hidro_bomba",
+     "name": "Hidro-bomba",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Gyarados Lance League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "haunter_ash_league",
+   "dex": 93,
+   "name": "Haunter",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 60,
+   "element": "ghost",
+   "attacks": [
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        4,
+        5,
+        6
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si sacás 4-5-6 tu PKM se auto-ataca.",
+     "fx": "ghost"
+    },
+    {
+     "id": "puno_hielo",
+     "name": "Puño-hielo",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 3-4 tu PKM no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "puno_trueno",
+     "name": "Puño-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si sacás 1-2-3 tu PKM no atacará.",
+     "fx": "electric"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Haunter Ash League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "horsea_misty_league",
+   "dex": 116,
+   "name": "Horsea",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 80,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu PKM hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "rayo_hielo",
+     "name": "Rayo hielo",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3,
+      4
+     ],
+     "cost": [
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 2-3-4 tu PKM no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "hidro_bomba",
+     "name": "Hidro-bomba",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Horsea Misty L League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "muk_ash_league",
+   "dex": 89,
+   "name": "Muk",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 80,
+   "element": "poison",
+   "attacks": [
+    {
+     "id": "smog",
+     "name": "Smog",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu PKM se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu PKM se hace (20) y Muk se cura (20).",
+     "fx": "leaves"
+    },
+    {
+     "id": "aplastar",
+     "name": "Aplastar",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "dodge",
+     "faces": [
+      1,
+      2,
+      3
+     ]
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Muk Ash League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "onix_brock_league",
+   "dex": 95,
+   "name": "Onix",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 90,
+   "element": "rock",
+   "attacks": [
+    {
+     "id": "terremoto",
+     "name": "Terremoto",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "ground"
+     ],
+     "element": "ground",
+     "damage": {
+      "base": 10
+     },
+     "effects": [],
+     "rawText": "tu PKM se hace (10) daños.",
+     "fx": "quake"
+    },
+    {
+     "id": "envolver",
+     "name": "Envolver",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Onix Brock L League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "pidgeot_ash_league",
+   "dex": 18,
+   "name": "Pidgeot",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 80,
+   "element": "flying",
+   "attacks": [
+    {
+     "id": "ataque_de_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2-3 tu PKM no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "perforador",
+     "name": "Perforador",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "flying"
+     ],
+     "element": "flying",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "ataque_aereo",
+     "name": "Ataque aéreo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "flying"
+     ],
+     "element": "flying",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "wind"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Pidgeot Ash League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "pikachu_ash_league",
+   "dex": 25,
+   "name": "Pikachu",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 60,
+   "element": "electric",
+   "attacks": [
+    {
+     "id": "attack_trueno",
+     "name": "Attack-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 40
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si sacás 4 tu PKM no atacará.",
+     "fx": "electric"
+    },
+    {
+     "id": "trueno",
+     "name": "Trueno",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "electric"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "dodge",
+     "faces": [
+      1,
+      2,
+      3
+     ]
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Pikachu Ash League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "primeape_ash_league",
+   "dex": 57,
+   "name": "Primeape",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 80,
+   "element": "fighting",
+   "attacks": [
+    {
+     "id": "puno_trueno",
+     "name": "Puño-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 3-4 tu PKM no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "lluvia_de_golpes",
+     "name": "Lluvia de golpes",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        1,
+        2,
+        3
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 1-2-3.",
+     "fx": "contact"
+    },
+    {
+     "id": "puno_fuego",
+     "name": "Puño-fuego",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40,
+      "ifRoll": {
+       "faces": [
+        1,
+        2,
+        3
+       ],
+       "damage": 60
+      }
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Primeape Ash League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "psyduck_misty_league",
+   "dex": 54,
+   "name": "Psyduck",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 60,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu PKM hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "chorro_de_agua",
+     "name": "Chorro de agua",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "defendGate",
+     "failFaces": [
+      1,
+      2,
+      3
+     ],
+     "outcome": "selfHit"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Psyduck Misty L League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "squirtle_ash_league",
+   "dex": 7,
+   "name": "Squirtle",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 80,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu PKM hará (-10).",
+     "fx": "water"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "hidro_bomba",
+     "name": "Hidro-bomba",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Squirtle Ash League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "starmie_misty_league",
+   "dex": 121,
+   "name": "Starmie",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 90,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "attack_trueno",
+     "name": "Attack-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 3-4 tu PKM no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "recuperacion",
+     "name": "Recuperación",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "healSelf",
+       "amount": 20
+      }
+     ],
+     "rawText": "Starmie se cura (20) daños.",
+     "fx": "heal"
+    },
+    {
+     "id": "hidro_bomba",
+     "name": "Hidro-bomba",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Starmie Misty L League.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "zubat_brock_league",
+   "dex": 41,
+   "name": "Zubat",
+   "stage": "league",
+   "deck": "liga",
+   "hp": 60,
+   "element": "poison",
+   "attacks": [
+    {
+     "id": "supersonico",
+     "name": "Supersónico",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5,
+      6
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "selfHit",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 2-3-4 tu PKM se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "chupasangre",
+     "name": "Chupasangre",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu PKM se hace (20) y Zubat se cura (20).",
+     "fx": "poison"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "league/Zubat Brock L League.jpg",
+    "verified": false
+   }
+  }
+ ]
+}

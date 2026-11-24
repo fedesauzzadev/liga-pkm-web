@@ -1,0 +1,1353 @@
+{
+ "cards": [
+  {
+   "id": "electrode_surge_gym",
+   "dex": 101,
+   "name": "Electrode",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 70,
+   "element": "electric",
+   "attacks": [
+    {
+     "id": "impact_trueno",
+     "name": "Impact-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "electric"
+    },
+    {
+     "id": "explosion",
+     "name": "Explosión",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [],
+     "element": "normal",
+     "damage": {
+      "base": 50
+     },
+     "effects": [
+      {
+       "op": "selfDamage",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu PKM se hace (50). Electrode se hace (20).",
+     "fx": "explosion"
+    },
+    {
+     "id": "attack_trueno",
+     "name": "Attack-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [],
+     "element": "electric",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2 tu PKM no at.",
+     "fx": "electric"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Electrode Surge Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "surge",
+    "slot": 1
+   }
+  },
+  {
+   "id": "flareon_blaine_gym",
+   "dex": 136,
+   "name": "Flareon",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 60,
+   "element": "fire",
+   "attacks": [
+    {
+     "id": "ataque_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2-3 tu PKM no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "giro_fuego",
+     "name": "Giro fuego",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [],
+     "element": "fire",
+     "damage": {
+      "base": 30,
+      "ifRoll": {
+       "faces": [
+        1,
+        2,
+        3,
+        4
+       ],
+       "damage": 60
+      }
+     },
+     "effects": [],
+     "rawText": "(30) 1-2-3-4 (60)",
+     "fx": "flame"
+    },
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [],
+     "element": "fire",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Flareon Blaine Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "blaine",
+    "slot": 1
+   }
+  },
+  {
+   "id": "geodude_brock_gym",
+   "dex": 74,
+   "name": "Geodude",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 80,
+   "element": "rock",
+   "attacks": [
+    {
+     "id": "lluvia_golpes",
+     "name": "Lluvia de golpes",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "fighting",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        1,
+        2,
+        3
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 1-2-3.",
+     "fx": "contact"
+    },
+    {
+     "id": "explosion",
+     "name": "Explosión",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [],
+     "element": "normal",
+     "damage": {
+      "base": 50
+     },
+     "effects": [
+      {
+       "op": "selfDamage",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu PKM se hace (50). Geodude se hace (20).",
+     "fx": "explosion"
+    },
+    {
+     "id": "mega_puno",
+     "name": "Mega-puño",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Geodude Brock Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "brock",
+    "slot": 1
+   }
+  },
+  {
+   "id": "gloom_erika_gym",
+   "dex": 44,
+   "name": "Gloom",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 70,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "polvo_sueno",
+     "name": "Polvo de sueño",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "tu PKM no ataca hasta sacar 5-6.",
+     "fx": "sleep"
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu PKM se hace (20) y Gloom se cura (20).",
+     "fx": "leaves"
+    },
+    {
+     "id": "hojas_navaja",
+     "name": "Hojas navaja",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [],
+     "element": "grass",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Gloom Erika Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "erika",
+    "slot": 2
+   }
+  },
+  {
+   "id": "kadabra_sabrina_gym",
+   "dex": 64,
+   "name": "Kadabra",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 60,
+   "element": "psychic",
+   "attacks": [
+    {
+     "id": "recuperacion",
+     "name": "Recuperación",
+     "kind": "ability",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "healSelf",
+       "amount": 20
+      }
+     ],
+     "rawText": "Kadabra se cura (20) daños.",
+     "fx": "heal"
+    },
+    {
+     "id": "rayo_psiquico",
+     "name": "Rayo psíquico",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [],
+     "element": "psychic",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "psychic"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "defendGate",
+     "failFaces": [
+      1,
+      2,
+      3
+     ],
+     "outcome": "selfHit"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Kadabra Sabrina Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "sabrina",
+    "slot": 2
+   }
+  },
+  {
+   "id": "koffing_koga_gym",
+   "dex": 109,
+   "name": "Koffing",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 80,
+   "element": "poison",
+   "attacks": [
+    {
+     "id": "pantalla_humo",
+     "name": "Pantalla de humo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "poison",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2-3 tu PKM no ataca.",
+     "fx": "poison"
+    },
+    {
+     "id": "explosion",
+     "name": "Explosión",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [],
+     "element": "normal",
+     "damage": {
+      "base": 50
+     },
+     "effects": [
+      {
+       "op": "selfDamage",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu PKM se hace (50). Koffing se hace (20).",
+     "fx": "explosion"
+    },
+    {
+     "id": "smog",
+     "name": "Smog",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [],
+     "element": "poison",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu PKM se hace (10) por turno.",
+     "fx": "poison"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Koffing Koga Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "koga",
+    "slot": 1
+   }
+  },
+  {
+   "id": "magmar_blaine_gym",
+   "dex": 126,
+   "name": "Magmar",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 80,
+   "element": "fire",
+   "attacks": [
+    {
+     "id": "pantalla_humo",
+     "name": "Pantalla de humo",
+     "kind": "attack",
+     "rollFaces": [
+      5
+     ],
+     "cost": [],
+     "element": "fire",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 2-3-4 tu PKM no ataca.",
+     "fx": "poison"
+    },
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      4
+     ],
+     "cost": [],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si sacás 2-3-4 tu PKM se auto-atacará.",
+     "fx": "psychic"
+    },
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [],
+     "element": "fire",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Magmar Blaine Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "blaine",
+    "slot": 2
+   }
+  },
+  {
+   "id": "mrmime_sabrina_gym",
+   "dex": 122,
+   "name": "Mr. Mime",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 70,
+   "element": "psychic",
+   "attacks": [
+    {
+     "id": "puno_trueno",
+     "name": "Puño-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2-3 tu PKM no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si sacás 1-2-3 tu PKM se auto-atacará.",
+     "fx": "psychic"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Mr.Mime Sabrina Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "sabrina",
+    "slot": 1
+   }
+  },
+  {
+   "id": "nidoking_giovanni_gym",
+   "dex": 34,
+   "name": "Nidoking",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 90,
+   "element": "poison",
+   "attacks": [
+    {
+     "id": "aguijon",
+     "name": "Aguijón",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "poison",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu PKM se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "golpe_karate",
+     "name": "Golpe karate",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [],
+     "element": "fighting",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "puno_hielo",
+     "name": "Puño-hielo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [],
+     "element": "ice",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 2-3-4 tu PKM no ataca.",
+     "fx": "ice"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Nidoking Giovanni Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "giovanni",
+    "slot": 2
+   }
+  },
+  {
+   "id": "onix_brock_gym",
+   "dex": 95,
+   "name": "Onix",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 90,
+   "element": "rock",
+   "attacks": [
+    {
+     "id": "terremoto",
+     "name": "Terremoto",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "ground",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "tu PKM se hace (30) daños.",
+     "fx": "quake"
+    },
+    {
+     "id": "envolver",
+     "name": "Envolver",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Onix Brock Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "brock",
+    "slot": 2
+   }
+  },
+  {
+   "id": "persian_giovanni_gym",
+   "dex": 53,
+   "name": "Persian",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 70,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "golpes_furia",
+     "name": "Golpes furia",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        1,
+        2,
+        3
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 1-2-3.",
+     "fx": "contact"
+    },
+    {
+     "id": "rasguno",
+     "name": "Rasguño",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Persian Giovanni Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "giovanni",
+    "slot": 1
+   }
+  },
+  {
+   "id": "raichu_surge_gym",
+   "dex": 26,
+   "name": "Raichu",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 70,
+   "element": "electric",
+   "attacks": [
+    {
+     "id": "attack_trueno",
+     "name": "Attack trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 2 tu PKM no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "trueno",
+     "name": "Trueno",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [],
+     "element": "electric",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "electric"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "defendGate",
+     "failFaces": [
+      3,
+      4
+     ],
+     "outcome": "noAttack"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Raichu Surge  Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "surge",
+    "slot": 2
+   }
+  },
+  {
+   "id": "rhydon_giovanni_gym",
+   "dex": 112,
+   "name": "Rhydon",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 100,
+   "element": "rock",
+   "attacks": [
+    {
+     "id": "estampida",
+     "name": "Estampida",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "1-2-3 tu PKM no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "terremoto",
+     "name": "Terremoto",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [],
+     "element": "ground",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "tu PKM se hace (40) daños.",
+     "fx": "quake"
+    },
+    {
+     "id": "puno_trueno",
+     "name": "Puño-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [],
+     "element": "electric",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2-3 tu PKM no ataca.",
+     "fx": "electric"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Rhydon Giovanni Gym.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "seel_misty_gym",
+   "dex": 86,
+   "name": "Seel",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 80,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu PKM hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "rayo_hielo",
+     "name": "Rayo hielo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [],
+     "element": "ice",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 1-2-3 tu PKM no ataca.",
+     "fx": "ice"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Seel Misty Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "misty",
+    "slot": 1
+   }
+  },
+  {
+   "id": "staryu_misty_gym",
+   "dex": 120,
+   "name": "Staryu",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 80,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu PKM hará (-10).",
+     "fx": "water"
+    },
+    {
+     "id": "chorro_agua",
+     "name": "Chorro de agua",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Staryu Misty Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "misty",
+    "slot": 2
+   }
+  },
+  {
+   "id": "venomoth_koga_gym",
+   "dex": 49,
+   "name": "Venomoth",
+   "stage": "gym",
+   "deck": "gimnasio",
+   "hp": 70,
+   "element": "bug",
+   "attacks": [
+    {
+     "id": "polvo_esporas",
+     "name": "Polvo de esporas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [],
+     "element": "bug",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si sacás 2-3-4 tu PKM no ataca",
+     "fx": "poison"
+    },
+    {
+     "id": "polvo_venenoso",
+     "name": "Polvo venenoso",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [],
+     "element": "bug",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu PKM se hace (10) por turno.",
+     "fx": "poison"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "gym/Venomoth Koga Gym.jpg",
+    "verified": false
+   },
+   "gym": {
+    "leader": "koga",
+    "slot": 2
+   }
+  }
+ ]
+}

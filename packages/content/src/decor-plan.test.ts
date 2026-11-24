@@ -139,7 +139,7 @@ test('AC: SPEC-O/T-095/AC-3 - si el estanque no entra (panel chico), se omite', 
 
 // AC: SPEC-O/T-095/AC-4 - una zona por objeto (centro de panel más cercano + inset)
 test('AC: SPEC-O/T-095/AC-4 - cada objeto dentro de SU zona con inset', () => {
-  const inset = collision.zones.inset
+  const inset = collision.zones.inset - collision.zones.grow
   for (const spec of plan.scatterSpecs) {
     const panel = panels.find((candidate) => candidate.key === decor.zones[spec.zone]?.panel)
     expect(panel, `panel de la zona ${spec.zone}`).toBeDefined()

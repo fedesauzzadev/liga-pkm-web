@@ -62,7 +62,7 @@ test('AC: SPEC-O/T-095/AC-3 - el agua del plan manda en el terreno (omisión inc
 })
 
 test('AC: SPEC-O/T-095/AC-4 - cada spot dentro del panel de su zona con inset', () => {
-  const inset = boardCollision.zones.inset
+  const inset = boardCollision.zones.inset - boardCollision.zones.grow
   const imageSize = board.meta.imageSize ?? [1176, 1600]
   const panels = deckStacks.panels.map((panel) => ({
     key: panel.key,

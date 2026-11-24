@@ -1,0 +1,2795 @@
+{
+ "cards": [
+  {
+   "id": "golduck_evo_a",
+   "dex": 55,
+   "name": "Golduck",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "rasgunos",
+     "name": "Rasguños",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 10
+      }
+     ],
+     "rawText": "hace (+10) por cada 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "jaqueca",
+     "name": "Jaqueca",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      },
+      {
+       "op": "custom",
+       "handler": "TODO_golduck_jaqueca_si_danado",
+       "rawText": "si Golduck está dañado este ataque hace (+30)."
+      }
+     ],
+     "rawText": "si Golduck está dañado este ataque hace (+30). 5-6 tu rival no atacará.",
+     "fx": "psychic"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Golduck Evo a.jpg",
+    "verified": false
+   },
+   "variant": "_a"
+  },
+  {
+   "id": "golem",
+   "dex": 76,
+   "name": "Golem",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 100,
+   "element": "rock",
+   "attacks": [
+    {
+     "id": "mega_puno",
+     "name": "Mega-puño",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "terremoto",
+     "name": "Terremoto",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "ground",
+      "ground"
+     ],
+     "element": "ground",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "tu rival se hace (30) daños.",
+     "fx": "quake"
+    },
+    {
+     "id": "explosion",
+     "name": "Explosión",
+     "kind": "ability",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 50
+     },
+     "effects": [
+      {
+       "op": "selfDamage",
+       "amount": 30
+      }
+     ],
+     "rawText": "tu rival se hace (50) daños. Golem se hace (30) daños.",
+     "fx": "explosion"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Golem Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "graveler",
+   "dex": 75,
+   "name": "Graveler",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "rock",
+   "attacks": [
+    {
+     "id": "mega_puno",
+     "name": "Mega-puño",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "dureza",
+     "name": "Dureza",
+     "kind": "ability",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "flatReduction",
+       "amount": 10,
+       "max": 1,
+       "target": "self",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "los ataques le hacen (-10) a Graveler. MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "explosion",
+     "name": "Explosión",
+     "kind": "ability",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 50
+     },
+     "effects": [
+      {
+       "op": "selfDamage",
+       "amount": 30
+      }
+     ],
+     "rawText": "tu rival se hace (50) daños. Graveler se hace (30) daños.",
+     "fx": "explosion"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "golem",
+     "xp": 3
+    }
+   ],
+   "source": {
+    "photo": "evolution/Graveler Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "gyarados_evo",
+   "dex": 130,
+   "name": "Gyarados",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 100,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "chorro_de_agua",
+     "name": "Chorro de agua",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water",
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "hidro_bomba",
+     "name": "Hidro-bomba",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "water",
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Gyarados Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "haunter",
+   "dex": 93,
+   "name": "Haunter",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 60,
+   "element": "ghost",
+   "attacks": [
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "selfHit",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2 se auto-ataca.",
+     "fx": "ghost"
+    },
+    {
+     "id": "hipnosis",
+     "name": "Hipnosis",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep"
+    },
+    {
+     "id": "rayo_tinieblas",
+     "name": "Rayo tinieblas",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 2-3 se auto-ataca. Podés empezar con este ataque.",
+     "fx": "ghost",
+     "canOpen": true
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "gengar",
+     "xp": 3
+    }
+   ],
+   "source": {
+    "photo": "evolution/Hunter Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "hypno_evo_a",
+   "dex": 97,
+   "variant": "_a",
+   "name": "Hypno",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "psychic",
+   "attacks": [
+    {
+     "id": "hipnosis",
+     "name": "Hipnosis",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep"
+    },
+    {
+     "id": "cabezazo",
+     "name": "Cabezazo",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "selfHit",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2 se auto-ataca.",
+     "fx": "psychic"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Hypno Evo A.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "hypno_evo_b",
+   "dex": 97,
+   "variant": "_b",
+   "name": "Hypno",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "psychic",
+   "attacks": [
+    {
+     "id": "hipnosis",
+     "name": "Hipnosis",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep"
+    },
+    {
+     "id": "smog",
+     "name": "Smog",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "hipno_rayo",
+     "name": "Hipno-rayo",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Hypno Evo B.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "ivysaur",
+   "dex": 2,
+   "name": "Ivysaur",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "lianas",
+     "name": "Lianas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "leaves"
+    },
+    {
+     "id": "drenadoras",
+     "name": "Drenadoras",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainEachTurn",
+       "amount": 10
+      }
+     ],
+     "rawText": "cada turno tu rival se hace (10) y Ivysaur se cura (10).",
+     "fx": "leaves"
+    },
+    {
+     "id": "hojas_navaja",
+     "name": "Hojas navaja",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "venusaur",
+     "xp": 3
+    }
+   ],
+   "source": {
+    "photo": "evolution/Ivysaur Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "jolteon",
+   "dex": 135,
+   "name": "Jolteon",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "electric",
+   "attacks": [
+    {
+     "id": "attack_trueno",
+     "name": "Attack-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "electric",
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 3-4 no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "ataque_de_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "custom",
+       "handler": "TODO_jolteon_ataque_rapido",
+       "rawText": "Ataque rápido: si Jolteon está dañado puede hacer este at. después de atacar con 4-5-6."
+      }
+     ],
+     "rawText": "Ataque rápido: si Jolteon está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Jolteon Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "kabutops",
+   "dex": 141,
+   "name": "Kabutops",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "rock",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-10).",
+     "fx": "water"
+    },
+    {
+     "id": "rayo_hielo",
+     "name": "Rayo hielo",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "rasgunos",
+     "name": "Rasguños",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Kabutops Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "kadabra",
+   "dex": 64,
+   "name": "Kadabra",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "psychic",
+   "attacks": [
+    {
+     "id": "hipno_rayo",
+     "name": "Hipno-rayo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "rayo_psiquico",
+     "name": "Rayo psíquico",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "psychic",
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "psychic"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "alakazam",
+     "xp": 3
+    }
+   ],
+   "source": {
+    "photo": "evolution/Kadabra Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "kakuna",
+   "dex": 14,
+   "name": "Kakuna",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 60,
+   "element": "bug",
+   "attacks": [
+    {
+     "id": "disparo_de_seda",
+     "name": "Disparo de seda",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "bug"
+     ],
+     "element": "bug",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "dureza",
+     "name": "Dureza",
+     "kind": "ability",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "bug"
+     ],
+     "element": "bug",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "flatReduction",
+       "amount": 10,
+       "max": 1,
+       "target": "self",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "los ataques le hacen (-10) a Kakuna. MAX 1",
+     "fx": "buff"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "beedrill",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "evolution/Kakuna Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "kingler",
+   "dex": 99,
+   "name": "Kingler",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 90,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water",
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-10).",
+     "fx": "water"
+    },
+    {
+     "id": "guillotina",
+     "name": "Guillotina",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "golpe_martillo",
+     "name": "Golpe martillo",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Kingler Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "machamp",
+   "dex": 68,
+   "name": "Machamp",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 100,
+   "element": "fighting",
+   "attacks": [
+    {
+     "id": "golpe_karate",
+     "name": "Golpe karate",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "grunido",
+     "name": "Gruñido",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "combat",
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de tu rival hacen (-10). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "lluvia_de_golpes",
+     "name": "Lluvia de golpes",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        5,
+        6
+       ],
+       "amount": 30
+      }
+     ],
+     "rawText": "hace (+30) por cada 5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "mega_puno",
+     "name": "Mega-puño",
+     "kind": "attack",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "fighting",
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Machamp Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "machoke",
+   "dex": 67,
+   "name": "Machoke",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "fighting",
+   "attacks": [
+    {
+     "id": "golpe_karate",
+     "name": "Golpe karate",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "grunido",
+     "name": "Gruñido",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "combat",
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de tu rival hacen (-10). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "lluvia_de_golpes",
+     "name": "Lluvia de golpes",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "machamp",
+     "xp": 3
+    }
+   ],
+   "source": {
+    "photo": "evolution/Machoke Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "magneton_evo",
+   "dex": 82,
+   "name": "Magneton",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "electric",
+   "attacks": [
+    {
+     "id": "attack_trueno",
+     "name": "Attack-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "electric",
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 2-3-4 no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "impact_trueno",
+     "name": "Impact-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "electric",
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2 no ataca.",
+     "fx": "electric"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Magneton Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "marowak",
+   "dex": 105,
+   "name": "Marowak",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 90,
+   "element": "ground",
+   "attacks": [
+    {
+     "id": "cabezazo",
+     "name": "Cabezazo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "grunido",
+     "name": "Gruñido",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "combat",
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de tu rival hacen (-10). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "hueso_boomerang",
+     "name": "Hueso-boomerang",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "ground",
+      "ground"
+     ],
+     "element": "ground",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "fixedRolls",
+       "rolls": 2,
+       "faces": [
+        3,
+        4,
+        5,
+        6
+       ],
+       "amount": 30
+      }
+     ],
+     "rawText": "tirá el dado 2 veces. Hace (+30) por cada 3-4-5-6 que saques.",
+     "fx": "projectile"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Marowak Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "metapod_evo_a",
+   "dex": 11,
+   "variant": "_a",
+   "name": "Metapod",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 60,
+   "element": "bug",
+   "attacks": [
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "dureza",
+     "name": "Dureza",
+     "kind": "ability",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "flatReduction",
+       "amount": 10,
+       "max": 1,
+       "target": "self",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "los ataques le hacen (-10) a Metapod. MAX: 1",
+     "fx": "buff"
+    },
+    {
+     "id": "disparo_de_seda",
+     "name": "Disparo de seda",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "bug"
+     ],
+     "element": "bug",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "butterfree",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "evolution/Metapod Evo A.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "metapod_evo_b",
+   "dex": 11,
+   "variant": "_b",
+   "name": "Metapod",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 60,
+   "element": "bug",
+   "attacks": [
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "dureza",
+     "name": "Dureza",
+     "kind": "ability",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "flatReduction",
+       "amount": 10,
+       "max": 1,
+       "target": "self",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "los ataques le hacen (-10) a Metapod. MAX: 1",
+     "fx": "buff"
+    },
+    {
+     "id": "disparo_de_seda",
+     "name": "Disparo de seda",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "bug"
+     ],
+     "element": "bug",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "butterfree",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "evolution/Metapod Evo B.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "muk",
+   "dex": 89,
+   "name": "Muk",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "poison",
+   "attacks": [
+    {
+     "id": "smog",
+     "name": "Smog",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "poison",
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "aplastar",
+     "name": "Aplastar",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "minimizar",
+     "name": "Minimizar",
+     "kind": "ability",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "dodge",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "cuando un rival ataque a Muk si sacás 4-5-6 su at. no hace daño ni efecto.",
+     "fx": "buff"
+    },
+    {
+     "id": "dureza",
+     "name": "Dureza",
+     "kind": "ability",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "flatReduction",
+       "amount": 10,
+       "max": 1,
+       "target": "self",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "los ataques le hacen (-10) a Muk. MAX 1",
+     "fx": "buff"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Muk Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "nidoking",
+   "dex": 34,
+   "name": "Nidoking",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 100,
+   "element": "poison",
+   "attacks": [
+    {
+     "id": "aguijon",
+     "name": "Aguijón",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "poison",
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "enfoque_de_energia",
+     "name": "Enfoque de energía",
+     "kind": "ability",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "selfBoost",
+       "amount": 20,
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de Nidoking hacen (+20). MAX 1",
+     "fx": "buff"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Nidoking Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "nidoqueen",
+   "dex": 31,
+   "name": "Nidoqueen",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 100,
+   "element": "poison",
+   "attacks": [
+    {
+     "id": "aguijon",
+     "name": "Aguijón",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Nidoqueen Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "nidorina",
+   "dex": 30,
+   "name": "Nidorina",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 60,
+   "element": "poison",
+   "attacks": [
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "aguijon",
+     "name": "Aguijón",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "nidoqueen",
+     "xp": 3
+    }
+   ],
+   "source": {
+    "photo": "evolution/Nidorina Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "nidorino",
+   "dex": 33,
+   "name": "Nidorino",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 60,
+   "element": "poison",
+   "attacks": [
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "aguijon",
+     "name": "Aguijón",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "enfoque_de_energia",
+     "name": "Enfoque de energía",
+     "kind": "ability",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "selfBoost",
+       "amount": 10,
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de Nidorino hacen (+10). MAX 1",
+     "fx": "buff"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "nidoking",
+     "xp": 3
+    }
+   ],
+   "source": {
+    "photo": "evolution/Nidorino Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "ninetales_evo_a",
+   "dex": 38,
+   "variant": "_a",
+   "name": "Ninetales",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "fire",
+   "attacks": [
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire",
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "custom",
+       "handler": "TODO_ninetales_ataque_rapido_a",
+       "rawText": "Ataque rápido: si Ninetales está dañado puede hacer este at. después de atacar con 4-5-6."
+      }
+     ],
+     "rawText": "Ataque rápido: si Ninetales está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "giro_fuego",
+     "name": "Giro fuego",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "fire",
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40,
+      "ifRoll": {
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "damage": 60
+      }
+     },
+     "effects": [],
+     "rawText": "4-5-6 (60)",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Ninetales Evo A.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "ninetales_evo_b",
+   "dex": 38,
+   "variant": "_b",
+   "name": "Ninetales",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "fire",
+   "attacks": [
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fire",
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "custom",
+       "handler": "TODO_ninetales_ataque_rapido_b",
+       "rawText": "Ataque rápido: si Ninetales está dañado puede hacer este at. después de atacar con 4-5-6."
+      }
+     ],
+     "rawText": "Ataque rápido: si Ninetales está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "giro_fuego",
+     "name": "Giro fuego",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "fire",
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 30,
+      "ifRoll": {
+       "faces": [
+        5,
+        6
+       ],
+       "damage": 60
+      }
+     },
+     "effects": [],
+     "rawText": "5-6 (60)",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Ninetales Evo B.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "omastar",
+   "dex": 139,
+   "name": "Omastar",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "rock",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-10).",
+     "fx": "water"
+    },
+    {
+     "id": "amarrar",
+     "name": "Amarrar",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "chorro_de_agua",
+     "name": "Chorro de agua",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "water",
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Omastar Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "parasect",
+   "dex": 47,
+   "name": "Parasect",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "polvo_de_esporas",
+     "name": "Polvo de esporas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 2-3-4 no ataca.",
+     "fx": "poison"
+    },
+    {
+     "id": "rasguno",
+     "name": "Rasguño",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu rival se hace (20) y Parasect se cura (20).",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Parasect Evo.jpg",
+    "verified": false
+   }
+  }
+ ]
+}

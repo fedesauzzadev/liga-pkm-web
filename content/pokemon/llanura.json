@@ -1,0 +1,2258 @@
+{
+ "cards": [
+  {
+   "id": "chansey",
+   "dex": 113,
+   "name": "Chansey",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 80,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-10).",
+     "fx": "water"
+    },
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "minimizar",
+     "name": "Minimizar",
+     "kind": "ability",
+     "rollFaces": [
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "dodge",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "cuando un rival ataque a Chansey si sacás 4-5-6 su at. no hace daño ni efecto.",
+     "fx": "buff"
+    },
+    {
+     "id": "canto",
+     "name": "Canto",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Chansey Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "clefairy",
+   "dex": 35,
+   "name": "Clefairy",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 60,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        5,
+        6
+       ],
+       "amount": 10
+      }
+     ],
+     "rawText": "hace (+10) por cada 5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "minimizar",
+     "name": "Minimizar",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "dodge",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "cuando un rival ataque a Clefairy si sacás 5-6 su at. no hace daño ni efecto.",
+     "fx": "buff"
+    },
+    {
+     "id": "canto",
+     "name": "Canto",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "clefable",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "terrain/llanura/Clefairy Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "ditto",
+   "dex": 132,
+   "name": "Ditto",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 60,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "transformacion_rival",
+     "name": "Transformación",
+     "kind": "ability",
+     "rollFaces": [
+      1,
+      2,
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "transform"
+      }
+     ],
+     "rawText": "Ditto se transforma en un pkm. de tu oponente elegido al azar. Podés hacer todos sus ataques.",
+     "fx": "psychic"
+    },
+    {
+     "id": "transformacion_propio",
+     "name": "Transformación",
+     "kind": "ability",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "transform"
+      },
+      {
+       "op": "attackAgain",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "Ditto se transforma en un pkm. tuyo elegido al azar. Podés hacer todos sus at. 4-5-6 atacá de nuevo.",
+     "fx": "psychic"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Ditto Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "doduo",
+   "dex": 84,
+   "name": "Doduo",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 50,
+   "element": "flying",
+   "attacks": [
+    {
+     "id": "perforador",
+     "name": "Perforador",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "flying"
+     ],
+     "element": "flying",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "ataque_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "agilidad",
+     "name": "Agilidad",
+     "kind": "ability",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "startsFirst"
+      }
+     ],
+     "rawText": "Doduo empieza atacando cada combate.",
+     "fx": "buff"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "dodrio",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "terrain/llanura/Doduo Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "eevee_a",
+   "dex": 133,
+   "variant": "_a",
+   "name": "Eevee",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 50,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "ataque_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 2-3 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Eevee está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "vaporeon",
+     "xp": 2
+    },
+    {
+     "id": "jolteon",
+     "xp": 2
+    },
+    {
+     "id": "flareon",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "terrain/llanura/Eevee A Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "eevee_b",
+   "dex": 133,
+   "variant": "_b",
+   "name": "Eevee",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 50,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "ataque_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 2-3 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Eevee está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "vaporeon",
+     "xp": 2
+    },
+    {
+     "id": "jolteon",
+     "xp": 2
+    },
+    {
+     "id": "flareon",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "terrain/llanura/Eevee B Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "farfetchd",
+   "dex": 83,
+   "name": "Farfetch'd",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 60,
+   "element": "flying",
+   "attacks": [
+    {
+     "id": "rafaga",
+     "name": "Ráfaga",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "flying",
+      "flying"
+     ],
+     "element": "flying",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "wind"
+    },
+    {
+     "id": "ataque_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "golpes_furia",
+     "name": "Golpes furia",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Farfetchd Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "gastly",
+   "dex": 92,
+   "name": "Gastly",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 50,
+   "element": "ghost",
+   "attacks": [
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "selfHit",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2 se auto-ataca.",
+     "fx": "ghost"
+    },
+    {
+     "id": "hipnosis",
+     "name": "Hipnosis",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep"
+    },
+    {
+     "id": "rayo_tinieblas",
+     "name": "Rayo tinieblas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 2-3 se auto-ataca. Podés empezar con este ataque.",
+     "fx": "ghost",
+     "canOpen": true
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "haunter",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "terrain/llanura/Gastly Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "gengar",
+   "dex": 94,
+   "name": "Gengar",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 70,
+   "element": "ghost",
+   "attacks": [
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "ghost",
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2
+       ],
+       "outcome": "selfHit",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2 se auto-ataca.",
+     "fx": "ghost"
+    },
+    {
+     "id": "hipnosis",
+     "name": "Hipnosis",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "ghost",
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep"
+    },
+    {
+     "id": "rayo_tinieblas",
+     "name": "Rayo tinieblas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "ghost",
+      "ghost"
+     ],
+     "element": "ghost",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 2-3 se auto-ataca. Podés empezar con este ataque.",
+     "fx": "ghost",
+     "canOpen": true
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Gengar Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "hitmonchan",
+   "dex": 107,
+   "name": "Hitmonchan",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 90,
+   "element": "fighting",
+   "attacks": [
+    {
+     "id": "puno_trueno",
+     "name": "Puño-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 3-4 no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "agilidad",
+     "name": "Agilidad",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "startsFirst"
+      },
+      {
+       "op": "attackAgain",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "Hitmonchan empieza atacando cada combate. 5-6 atacá de nuevo.",
+     "fx": "buff"
+    },
+    {
+     "id": "puno_hielo",
+     "name": "Puño-hielo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "ice"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Hitmonchan Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "hitmonlee",
+   "dex": 106,
+   "name": "Hitmonlee",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 80,
+   "element": "fighting",
+   "attacks": [
+    {
+     "id": "lluvia_patadas",
+     "name": "Lluvia de patadas",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 10
+      }
+     ],
+     "rawText": "hace (+10) por cada 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "telepatia",
+     "name": "Telepatía",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "dodge",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "cuando un rival ataque a Hitmonlee si sacás 4-5-6 su at. no hace daño ni efecto.",
+     "fx": "psychic"
+    },
+    {
+     "id": "doble_patada",
+     "name": "Doble patada",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "fixedRolls",
+       "rolls": 2,
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 40
+      }
+     ],
+     "rawText": "tirá el dado 2 veces. Hace (+40) por cada 4-5-6 que saques.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Hitmonlee Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "jigglypuff",
+   "dex": 39,
+   "name": "Jigglypuff",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 60,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        5,
+        6
+       ],
+       "amount": 10
+      }
+     ],
+     "rawText": "hace (+10) por cada 5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "minimizar",
+     "name": "Minimizar",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "dodge",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "cuando un rival ataque a Jigglypuff si sacás 5-6 su at. no hace daño ni efecto.",
+     "fx": "buff"
+    },
+    {
+     "id": "canto",
+     "name": "Canto",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "wigglytuff",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "terrain/llanura/Jigglypuff Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "kangaskhan",
+   "dex": 115,
+   "name": "Kangaskhan",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 90,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "puno_hielo",
+     "name": "Puño-hielo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "ice",
+      "ice"
+     ],
+     "element": "ice",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 3-4 no ataca.",
+     "fx": "ice"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "puno_cometa",
+     "name": "Puño-cometa",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Kangaskhan Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "lickitung",
+   "dex": 108,
+   "name": "Lickitung",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 80,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "lamida",
+     "name": "Lamida",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por tuno.",
+     "fx": "poison"
+    },
+    {
+     "id": "amarrar",
+     "name": "Amarrar",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "minimizar",
+     "name": "Minimizar",
+     "kind": "ability",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "dodge",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "cuando un rival ataque a Lickitung si sacás 4-5-6 su at. no hace daño ni efecto.",
+     "fx": "buff"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Lickitung Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "machop",
+   "dex": 66,
+   "name": "Machop",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 60,
+   "element": "fighting",
+   "attacks": [
+    {
+     "id": "golpe_karate",
+     "name": "Golpe karate",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "grunido",
+     "name": "Gruñido",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "combat",
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de tu rival hacen (-10). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "lluvia_golpes",
+     "name": "Lluvia de golpes",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "machoke",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "terrain/llanura/Machop Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "meowth",
+   "dex": 52,
+   "name": "Meowth",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 60,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "enfoque_energia",
+     "name": "Enfoque de energía",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "selfBoost",
+       "amount": 10,
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de Meowth hacen (+10). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Meowth está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "persian",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "terrain/llanura/Meowth Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "mankey",
+   "dex": 56,
+   "name": "Mankey",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 60,
+   "element": "fighting",
+   "attacks": [
+    {
+     "id": "golpe_karate",
+     "name": "Golpe karate",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "chillido",
+     "name": "Chillido",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "selfBoost",
+       "amount": 10,
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de Mankey hacen (+10). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "lluvia_golpes",
+     "name": "Lluvia de golpes",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "primeape",
+     "xp": 3
+    }
+   ],
+   "source": {
+    "photo": "terrain/llanura/Monkey Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "porygon",
+   "dex": 137,
+   "name": "Porygon",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 60,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "hipno_rayo",
+     "name": "Hipno-rayo",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "psychic",
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "agilidad",
+     "name": "Agilidad",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "startsFirst"
+      },
+      {
+       "op": "attackAgain",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "Porygon empieza atacando cada combate. 4-5-6 atacá de nuevo.",
+     "fx": "buff"
+    },
+    {
+     "id": "recuperacion",
+     "name": "Recuperación",
+     "kind": "ability",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "psychic",
+      "psychic"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "healSelf",
+       "amount": 20
+      }
+     ],
+     "rawText": "Porygon se cura (20) daños.",
+     "fx": "heal"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Porygon Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "rattata",
+   "dex": 19,
+   "name": "Rattata",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 60,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "enfoque_energia",
+     "name": "Enfoque de energía",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "selfBoost",
+       "amount": 10,
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de Rattata hacen (+10). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Rattata está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "raticate",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "terrain/llanura/Ratata Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "raticate",
+   "dex": 20,
+   "name": "Raticate",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 70,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Raticate está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "agilidad",
+     "name": "Agilidad",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "startsFirst"
+      },
+      {
+       "op": "attackAgain",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "Raticate empieza atacando cada combate. 4-5-6 atacá de nuevo.",
+     "fx": "buff"
+    },
+    {
+     "id": "hiper_colmillo",
+     "name": "Hiper-colmillo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Raticate Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "snorlax",
+   "dex": 143,
+   "name": "Snorlax",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 100,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "golpes_furia",
+     "name": "Golpes furia",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 10
+      }
+     ],
+     "rawText": "hace (+10) por cada 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "descansar",
+     "name": "Descansar",
+     "kind": "ability",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rest",
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "Snorlax se cura todos los daños. Snorlax no ataca hasta sacar 5-6.",
+     "fx": "heal"
+    },
+    {
+     "id": "cabezazo",
+     "name": "Cabezazo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Snorlax Llanura.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "tauros",
+   "dex": 128,
+   "name": "Tauros",
+   "stage": "basic",
+   "deck": "llanura",
+   "hp": 90,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "estampida",
+     "name": "Estampida",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "terremoto",
+     "name": "Terremoto",
+     "kind": "attack",
+     "rollFaces": [
+      3
+     ],
+     "cost": [
+      "ground",
+      "ground"
+     ],
+     "element": "ground",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "tu rival se hace (30) daños.",
+     "fx": "quake"
+    },
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "terrain/llanura/Tauros Llanura.jpg",
+    "verified": false
+   }
+  }
+ ]
+}

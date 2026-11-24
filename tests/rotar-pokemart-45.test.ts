@@ -33,11 +33,11 @@ const pedestals: readonly PlacementsPedestal[] = [
 ]
 
 test('AC: rotar-pokemart-45/AC-2 - solver real: los 5 market rotan +45° sin descartarse', () => {
-  // AC-1 (dato): market en −45; gym/pokecenter/league/lab siguen en 0.
-  expect(placements.models.yawOffsetDeg.market).toBe(-45)
+  // puerta-al-camino: el frente real del pokemart es +Z (market 0) y el puente de la Liga es +X (league 90).
+  expect(placements.models.yawOffsetDeg.market).toBe(0)
   expect(placements.models.yawOffsetDeg.gym).toBe(0)
   expect(placements.models.yawOffsetDeg.pokecenter).toBe(0)
-  expect(placements.models.yawOffsetDeg.league).toBe(0)
+  expect(placements.models.yawOffsetDeg.league).toBe(90)
   expect(placements.models.yawOffsetDeg.lab ?? 0).toBe(0)
 
   const antes = structuredClone(placements)
@@ -49,7 +49,8 @@ test('AC: rotar-pokemart-45/AC-2 - solver real: los 5 market rotan +45° sin des
   expect(markets.map((b) => b.nodeId).sort()).toEqual(MARKET_NODES)
   // A 45° la OBB cambia: el solver puede re-colocar en otro paso de
   // rotateStepsDeg (±15°), por eso se acepta 45 + paso (ver Q-094).
-  const accepted = [45, ...placements.search.rotateStepsDeg.map((s) => 45 + s)]
+  const turn = (placements.models.yawOffsetDeg.market ?? 0) + 90 // desde el −90 de `antes`
+  const accepted = [turn, ...placements.search.rotateStepsDeg.map((s) => turn + s)]
   for (const building of markets) {
     const prev = previa.buildings.find((b) => b.nodeId === building.nodeId)!
     expect(prev.discarded).toBe(false)
@@ -66,7 +67,6 @@ test('AC: rotar-pokemart-45/AC-3 - models.new.json sincronizado: market −45 co
   )
   const market = parsed.models.market
   expect(market).toBeDefined()
-  expect(market!.yawOffsetDeg).toBe(-45)
-  expect(market!.yawOffsetDeg).toBe(placements.models.yawOffsetDeg.market)
+    expect(market!.yawOffsetDeg).toBe(placements.models.yawOffsetDeg.market)
   expect(parsed.models.lab!.yawOffsetDeg).toBe(0)
 })

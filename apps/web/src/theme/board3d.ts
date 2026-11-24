@@ -148,8 +148,8 @@ export const BOARD3D = {
       groundBand: 0.3,
       rules: {
         isla: { depth: 0.3, shore: '#EAD9A0', water: { color: '#3FB5D9', level: -0.1 } },
-        pantano: { depth: 0.2, pools: 0.38, shore: '#5A5240', water: { color: '#7A63B0', level: -0.07 } },
-        montana: { rise: 0.75 },
+        pantano: { depth: 0.2, pools: 0.38, shore: '#4F4A36', water: { color: '#5E8F6A', level: -0.07 } },
+        montana: { rise: 0.45 },
       },
     },
     idle: {
@@ -243,7 +243,11 @@ export const BOARD3D = {
     deadTree: { trunk: { radius: 0.05, height: 0.5 }, branches: 3, branch: { radius: 0.015, length: 0.22 } },
     bush: { radius: 0.18, squash: 0.7 },
     rock: { radius: 0.14, detail: 0, scaleMin: 0.6, scaleMax: 1.6 },
-    mountain: { radius: 0.6, height: 0.9, segments: 5, snowRatio: 0.32 },
+    /** Macizo facetado: `peaks` = [dx, dz, tamaño] en radios (pico mayor + hombros). */
+    mountain: {
+      radius: 0.5, height: 1.45, segments: 8, rings: 4, snowRatio: 0.3, ridge: 0.22, jitter: 0.3, seed: 21,
+      peaks: [[0, 0, 1], [0.62, 0.3, 0.62], [-0.5, 0.42, 0.5]] as const,
+    },
     pond: { segments: 20, radius: 0.9 },
     reeds: { blades: 3, radius: 0.012, height: 0.16 },
     grassTuft: { blades: 3, radius: 0.014, height: 0.1 },

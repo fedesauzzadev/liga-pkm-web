@@ -81,6 +81,9 @@ export const DecorCollisionSchema = z
     zones: z.object({
       assign: z.literal('nearestPanelCenter'),
       inset: z.number().min(0),
+      /** Cuánto se extiende el relleno fuera del panel (la celda orgánica de
+       *  la zona es más grande que el rect del mazo). */
+      grow: z.number().min(0).default(0),
       note: z.string().optional(),
     }),
     sampling: z.object({

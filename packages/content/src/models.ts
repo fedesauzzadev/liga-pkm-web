@@ -121,6 +121,9 @@ export const ModelCandidateSchema = z.object({
   failedFrom: FailedFromSchema.optional(),
   /** T-086/AC-3: mantener material original / ignorar texturas por modelo. */
   options: ModelOptionsSchema.default(HGSS_OPTIONS_DEFAULT),
+  /** Zonas donde se usa (palmeras ⇒ isla). Una zona con candidatos propios
+   *  usa SOLO esos; sin definir ⇒ candidato genérico de las demás zonas. */
+  zones: z.array(z.string().min(1)).optional(),
 })
 export type ModelCandidate = z.infer<typeof ModelCandidateSchema>
 

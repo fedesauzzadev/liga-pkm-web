@@ -1,0 +1,3003 @@
+{
+ "cards": [
+  {
+   "id": "persian",
+   "dex": 53,
+   "name": "Persian",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "enfoque_de_energia",
+     "name": "Enfoque de energía",
+     "kind": "ability",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "selfBoost",
+       "amount": 10,
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de Persian hacen (+10). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Persian está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Persian Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "pidgeot_evo_a",
+   "dex": 18,
+   "name": "Pidgeot",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "flying",
+   "attacks": [
+    {
+     "id": "rafaga",
+     "name": "Ráfaga",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "flying",
+      "flying"
+     ],
+     "element": "flying",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "wind"
+    },
+    {
+     "id": "ataque_de_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Pidgeot está dañado puede hacer este at. después de atacar con 5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Pidgeot Evo A.jpg",
+    "verified": false
+   },
+   "variant": "_a"
+  },
+  {
+   "id": "pidgeot_evo_b",
+   "dex": 18,
+   "name": "Pidgeot",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "flying",
+   "attacks": [
+    {
+     "id": "rafaga",
+     "name": "Ráfaga",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "flying",
+      "flying"
+     ],
+     "element": "flying",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "wind"
+    },
+    {
+     "id": "ataque_de_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Pidgeot está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Pidgeot Evo B.jpg",
+    "verified": false
+   },
+   "variant": "_b"
+  },
+  {
+   "id": "pidgeotto_evo",
+   "dex": 17,
+   "name": "Pidgeotto",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 60,
+   "element": "flying",
+   "attacks": [
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Pidgeotto está dañado puede hacer este at. después de atacar con 5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "ataque_de_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "rafaga",
+     "name": "Ráfaga",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "flying",
+      "flying"
+     ],
+     "element": "flying",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "wind"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "pidgeot",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "evolution/Pidgeotto Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "poliwhirl_evo",
+   "dex": 61,
+   "name": "Poliwhirl",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 60,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-10).",
+     "fx": "water"
+    },
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 10
+      }
+     ],
+     "rawText": "hace (+10) por cada 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "poliwrath",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "evolution/Poliwhirl Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "poliwrath_evo_a",
+   "dex": 62,
+   "name": "Poliwrath",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 90,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "hipnosis",
+     "name": "Hipnosis",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "psychic"
+    },
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 10
+      }
+     ],
+     "rawText": "hace (+10) por cada 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Poliwrath Evo.jpg",
+    "verified": false
+   },
+   "variant": "_a"
+  },
+  {
+   "id": "poliwrath_evo_b",
+   "dex": 62,
+   "name": "Poliwrath",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 90,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "hipnosis",
+     "name": "Hipnosis",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "psychic"
+    },
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Poliwrath Evo B.jpg",
+    "verified": false
+   },
+   "variant": "_b"
+  },
+  {
+   "id": "primeape",
+   "dex": 57,
+   "name": "Primeape",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "fighting",
+   "attacks": [
+    {
+     "id": "golpe_karate",
+     "name": "Golpe karate",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "fighting",
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "enfoque_de_energia",
+     "name": "Enfoque de energía",
+     "kind": "ability",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "selfBoost",
+       "amount": 20,
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de Primeape hacen (+20). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "lluvia_de_golpes",
+     "name": "Lluvia de golpes",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "fighting",
+      "fighting",
+      "fighting"
+     ],
+     "element": "fighting",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        5,
+        6
+       ],
+       "amount": 30
+      }
+     ],
+     "rawText": "hace (+30) por cada 5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Primeape Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "raichu",
+   "dex": 26,
+   "name": "Raichu",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "electric",
+   "attacks": [
+    {
+     "id": "attack_trueno",
+     "name": "Attack-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "electric",
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat",
+       "onRoll": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "electric"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Raichu está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "impact_trueno",
+     "name": "Impact-trueno",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "electric",
+      "electric"
+     ],
+     "element": "electric",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "electric"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Raichu Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "rapidash_evo",
+   "dex": 78,
+   "name": "Rapidash",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "fire",
+   "attacks": [
+    {
+     "id": "estampida",
+     "name": "Estampida",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "agilidad",
+     "name": "Agilidad",
+     "kind": "ability",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "startsFirst"
+      },
+      {
+       "op": "attackAgain",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "Rapidash empieza atacando cada combate. 4-5-6 atacá de nuevo.",
+     "fx": "buff"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Rapidash está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "lanzallamas",
+     "name": "Lanzallamas",
+     "kind": "attack",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "fire",
+      "fire"
+     ],
+     "element": "fire",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "flame"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Rapidash Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "raticate_evo",
+   "dex": 20,
+   "name": "Raticate",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "enfoque_de_energia",
+     "name": "Enfoque de energía",
+     "kind": "ability",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "selfBoost",
+       "amount": 10,
+       "max": 1
+      }
+     ],
+     "rawText": "los ataques de Raticate hacen (+10). MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Raticate está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "startsFirst"
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Raticate Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "rhydon",
+   "dex": 112,
+   "name": "Rhydon",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 100,
+   "element": "rock",
+   "attacks": [
+    {
+     "id": "estampida",
+     "name": "Estampida",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "terremoto",
+     "name": "Terremoto",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "ground",
+      "ground"
+     ],
+     "element": "ground",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "custom",
+       "handler": "TODO_terremoto_rival_se_hace_30",
+       "rawText": "tu rival se hace (30) daños."
+      }
+     ],
+     "rawText": "tu rival se hace (30) daños.",
+     "fx": "quake"
+    },
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Rhydon Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "seadra_evo",
+   "dex": 117,
+   "name": "Seadra",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "chorro_de_tinta",
+     "name": "Chorro de tinta",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "water"
+    },
+    {
+     "id": "chorro_de_agua",
+     "name": "Chorro de agua",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Seadra Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "seaking_evo",
+   "dex": 119,
+   "name": "Seaking",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "agilidad",
+     "name": "Agilidad",
+     "kind": "ability",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "startsFirst"
+      },
+      {
+       "op": "attackAgain",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "Seaking empieza atacando cada combate. 4-5-6 atacá de nuevo.",
+     "fx": "buff"
+    },
+    {
+     "id": "perforador",
+     "name": "Perforador",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "chorro_de_agua",
+     "name": "Chorro de agua",
+     "kind": "attack",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "water",
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Seaking Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "slowbro",
+   "dex": 80,
+   "name": "Slowbro",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 90,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "confusion",
+     "name": "Confusión",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "jaqueca",
+     "name": "Jaqueca",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "psychic"
+     ],
+     "element": "psychic",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "custom",
+       "handler": "TODO_jaqueca_bonus_si_danado",
+       "rawText": "si Slowbro está dañado este ataque hace (+30)."
+      },
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "si Slowbro está dañado este ataque hace (+30). 5-6 tu rival no atacará.",
+     "fx": "psychic"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Slowbro Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "starmie",
+   "dex": 121,
+   "name": "Starmie",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water",
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-10).",
+     "fx": "water"
+    },
+    {
+     "id": "recuperacion",
+     "name": "Recuperación",
+     "kind": "ability",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "healSelf",
+       "amount": 20
+      }
+     ],
+     "rawText": "Starmie se cura (20) daños.",
+     "fx": "heal"
+    },
+    {
+     "id": "chorro_de_agua",
+     "name": "Chorro de agua",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "water",
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 40
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "water"
+    }
+   ],
+   "specialties": [
+    {
+     "op": "flatReduction",
+     "amount": 10
+    }
+   ],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Starmie Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "tentacruel_evo",
+   "dex": 73,
+   "name": "Tentacruel",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "amarrar",
+     "name": "Amarrar",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "supersonico",
+     "name": "Supersónico",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 1-2-3 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "aguijon",
+     "name": "Aguijón",
+     "kind": "attack",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Tentracuel Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "vaporeon",
+   "dex": 134,
+   "name": "Vaporeon",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -20,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-20).",
+     "fx": "water"
+    },
+    {
+     "id": "ataque_de_arena",
+     "name": "Ataque de arena",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "wind"
+    },
+    {
+     "id": "ataque_rapido",
+     "name": "Ataque rápido",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "quickAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "attackId": "ataque_rapido",
+       "requires": "damaged"
+      }
+     ],
+     "rawText": "si Vaporeon está dañado puede hacer este at. después de atacar con 4-5-6.",
+     "fx": "contact"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Vaporeon Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "venomoth",
+   "dex": 49,
+   "name": "Venomoth",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "bug",
+   "attacks": [
+    {
+     "id": "polvo_de_esporas",
+     "name": "Polvo de esporas",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "bug"
+     ],
+     "element": "bug",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 2-3-4 no ataca.",
+     "fx": "poison"
+    },
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "supersonico",
+     "name": "Supersónico",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "selfHit",
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "si tu rival saca 2-3-4 se auto-ataca.",
+     "fx": "psychic"
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "bug"
+     ],
+     "element": "bug",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu rival se hace (20) y Venomoth se cura (20).",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Venomoth Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "venusaur",
+   "dex": 3,
+   "name": "Venusaur",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 100,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "lianas",
+     "name": "Lianas",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "leaves"
+    },
+    {
+     "id": "amarrar",
+     "name": "Amarrar",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 10
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "drenadoras",
+     "name": "Drenadoras",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "grass",
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainEachTurn",
+       "amount": 10
+      }
+     ],
+     "rawText": "cada turno tu rival se hace (10) y Venusaur se cura (10).",
+     "fx": "leaves"
+    },
+    {
+     "id": "rayo_solar",
+     "name": "Rayo solar",
+     "kind": "attack",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "grass",
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 50
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "beam"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Venusaur.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "victreebel_evo_a",
+   "dex": 71,
+   "name": "Victreebel",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "polvo_de_sueno",
+     "name": "Polvo de sueño",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no ataca hasta sacar 5-6.",
+     "fx": "sleep"
+    },
+    {
+     "id": "amarrar",
+     "name": "Amarrar",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "polvo_venenoso",
+     "name": "Polvo venenoso",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) y Victreebel se cura (10).",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Victreebel Evo A.jpg",
+    "verified": false
+   },
+   "variant": "_a"
+  },
+  {
+   "id": "victreebel_evo_b",
+   "dex": 71,
+   "name": "Victreebel",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "polvo_de_esporas",
+     "name": "Polvo de esporas",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 3-4 no ataca.",
+     "fx": "poison"
+    },
+    {
+     "id": "amarrar",
+     "name": "Amarrar",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "polvo_venenoso",
+     "name": "Polvo venenoso",
+     "kind": "attack",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    },
+    {
+     "id": "hojas_navaja",
+     "name": "Hojas navaja",
+     "kind": "attack",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Victreebel Evo B.jpg",
+    "verified": false
+   },
+   "variant": "_b"
+  },
+  {
+   "id": "vileplume_evo_a",
+   "dex": 45,
+   "name": "Vileplume",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "polvo_venenoso",
+     "name": "Polvo venenoso",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison",
+     "canOpen": true
+    },
+    {
+     "id": "polvo_de_sueno",
+     "name": "Polvo de sueño",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep",
+     "canOpen": true
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 20
+      }
+     ],
+     "rawText": "tu rival se hace (20) y Vileplume se cura (20).",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Vileplum Evo A.jpg",
+    "verified": false
+   },
+   "variant": "_a"
+  },
+  {
+   "id": "vileplume_evo_b",
+   "dex": 45,
+   "name": "Vileplume",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 80,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "polvo_venenoso",
+     "name": "Polvo venenoso",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison",
+     "canOpen": true
+    },
+    {
+     "id": "polvo_de_esporas",
+     "name": "Polvo de esporas",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        2,
+        3,
+        4
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 2-3-4 no ataca.",
+     "fx": "poison",
+     "canOpen": true
+    },
+    {
+     "id": "absorber",
+     "name": "Absorber",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "grass",
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "drainNow",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) y Vileplume se cura (10).",
+     "fx": "leaves"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Vileplum Evo B.jpg",
+    "verified": false
+   },
+   "variant": "_b"
+  },
+  {
+   "id": "wartortle",
+   "dex": 8,
+   "name": "Wartortle",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 70,
+   "element": "water",
+   "attacks": [
+    {
+     "id": "cabezazo",
+     "name": "Cabezazo",
+     "kind": "attack",
+     "rollFaces": [
+      1
+     ],
+     "cost": [
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "mordisco",
+     "name": "Mordisco",
+     "kind": "attack",
+     "rollFaces": [
+      2,
+      3
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "5-6 tu rival no atacará.",
+     "fx": "contact"
+    },
+    {
+     "id": "refugio",
+     "name": "Refugio",
+     "kind": "ability",
+     "rollFaces": [
+      4,
+      5
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "flatReduction",
+       "amount": 10,
+       "max": 1,
+       "target": "self",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "los ataques le hacen (-10) a Warturtle. MAX 1",
+     "fx": "buff"
+    },
+    {
+     "id": "burbujas",
+     "name": "Burbujas",
+     "kind": "attack",
+     "rollFaces": [
+      6
+     ],
+     "cost": [
+      "water",
+      "water"
+     ],
+     "element": "water",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "modifyRivalDamage",
+       "amount": -10,
+       "duration": "nextTurn"
+      }
+     ],
+     "rawText": "el ataque de tu rival hará (-10).",
+     "fx": "water"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "blastoise",
+     "xp": 3
+    }
+   ],
+   "source": {
+    "photo": "evolution/Warturtle Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "weepinbell_evo",
+   "dex": 70,
+   "name": "Weepinbell",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 60,
+   "element": "grass",
+   "attacks": [
+    {
+     "id": "lianas",
+     "name": "Lianas",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "rivalSkipsAttack",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará.",
+     "fx": "leaves"
+    },
+    {
+     "id": "polvo_de_sueno",
+     "name": "Polvo de sueño",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep"
+    },
+    {
+     "id": "polvo_venenoso",
+     "name": "Polvo venenoso",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "grass"
+     ],
+     "element": "grass",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [
+    {
+     "id": "victreebel",
+     "xp": 2
+    }
+   ],
+   "source": {
+    "photo": "evolution/Weepinbell Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "weezing",
+   "dex": 110,
+   "name": "Weezing",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 90,
+   "element": "poison",
+   "attacks": [
+    {
+     "id": "pantalla_de_humo",
+     "name": "Pantalla de humo",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "poison",
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rollGate",
+       "failFaces": [
+        1,
+        2,
+        3
+       ],
+       "outcome": "noAttack",
+       "duration": "combat"
+      }
+     ],
+     "rawText": "cada turno si tu rival saca 1-2-3 no ataca.",
+     "fx": "poison"
+    },
+    {
+     "id": "embestida",
+     "name": "Embestida",
+     "kind": "attack",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 30
+     },
+     "effects": [],
+     "rawText": "",
+     "fx": "contact"
+    },
+    {
+     "id": "smog",
+     "name": "Smog",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "poison",
+      "poison"
+     ],
+     "element": "poison",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "poison",
+       "amount": 10
+      }
+     ],
+     "rawText": "tu rival se hace (10) por turno.",
+     "fx": "poison"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Weezing Evo.jpg",
+    "verified": false
+   }
+  },
+  {
+   "id": "wigglytuff",
+   "dex": 40,
+   "name": "Wigglytuff",
+   "stage": "evolution",
+   "deck": "evolucion",
+   "hp": 90,
+   "element": "normal",
+   "attacks": [
+    {
+     "id": "doble_bofeton",
+     "name": "Doble bofetón",
+     "kind": "attack",
+     "rollFaces": [
+      1,
+      2
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 20
+     },
+     "effects": [
+      {
+       "op": "bonusPerRoll",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "amount": 20
+      }
+     ],
+     "rawText": "hace (+20) por cada 4-5-6.",
+     "fx": "contact"
+    },
+    {
+     "id": "minimizar",
+     "name": "Minimizar",
+     "kind": "ability",
+     "rollFaces": [
+      3,
+      4
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "dodge",
+       "faces": [
+        4,
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "cuando un rival ataque a Wigglytuff si sacás 4-5-6 su at. no hace daño ni efecto.",
+     "fx": "buff"
+    },
+    {
+     "id": "canto",
+     "name": "Canto",
+     "kind": "attack",
+     "rollFaces": [
+      5,
+      6
+     ],
+     "cost": [
+      "any",
+      "any"
+     ],
+     "element": "normal",
+     "damage": {
+      "base": 0
+     },
+     "effects": [
+      {
+       "op": "rivalSleep",
+       "faces": [
+        4,
+        5,
+        6
+       ],
+       "wakeFaces": [
+        5,
+        6
+       ]
+      }
+     ],
+     "rawText": "4-5-6 tu rival no atacará hasta sacar 5-6.",
+     "fx": "sleep"
+    }
+   ],
+   "specialties": [],
+   "evolvesTo": [],
+   "source": {
+    "photo": "evolution/Wigglytuff Evo.jpg",
+    "verified": false
+   }
+  }
+ ]
+}

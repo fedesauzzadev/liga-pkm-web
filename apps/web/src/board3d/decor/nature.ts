@@ -3,6 +3,7 @@
 // colores en decor.json. Origen apoyado en y=0.
 import * as THREE from 'three'
 import { BOARD3D } from '../../theme/board3d'
+import { hash2 } from '../noise'
 import { mergeParts, part, specialMaterial, type PiecePart } from './geometry'
 import type { PiecePalette, PieceSpec } from './types'
 import { pal } from './types'
@@ -86,20 +87,56 @@ export function rockParts(_spec: PieceSpec, palette: PiecePalette): PiecePart[] 
   ])]
 }
 
-/** mountain: cono 5 segmentos con cima nevada (relleno de Montaña). */
+/** Un pico facetado: cono con aristas alternadas, perfil cóncavo y color
+ * por cara según la altura (roca oscura → clara → nieve con línea irregular). */
+function peakGeometry(radius: number, height: number, seed: number, palette: PiecePalette): THREE.BufferGeometry {
+  const t = BOARD3D.decor.mountain
+  const cone = new THREE.ConeGeometry(radius, height, t.segments, t.rings, true)
+  cone.translate(0, height / 2, 0)
+  const position = cone.attributes.position as THREE.BufferAttribute
+  for (let index = 0; index < position.count; index += 1) {
+    const x = position.getX(index)
+    const z = position.getZ(index)
+    const level = position.getY(index) / height
+    if (level > 0.999) continue
+    // Sector y anillo cuantizados: los vértices duplicados de la costura se mueven igual.
+    const sector = ((Math.round((Math.atan2(z, x) / (Math.PI * 2)) * t.segments) % t.segments) + t.segments) % t.segments
+    const ring = Math.round(level * t.rings)
+    const ridge = (sector % 2 === 0 ? t.ridge : -t.ridge * 0.6) * (1 - level)
+    const spread = (0.55 + 0.45 * (1 - level)) * (1 + ridge + (hash2(sector, ring, seed) - 0.5) * t.jitter)
+    position.setX(index, x * spread)
+    position.setZ(index, z * spread)
+    if (ring > 0) position.setY(index, position.getY(index) + (hash2(sector + 31, ring, seed) - 0.5) * height * 0.1)
+  }
+  const geometry = cone.toNonIndexed()
+  cone.dispose()
+  geometry.computeVertexNormals()
+  const flat = geometry.attributes.position as THREE.BufferAttribute
+  const colors = new Float32Array(flat.count * 3)
+  const rock = new THREE.Color(pal(palette, 'rock', '#8C8577'))
+  const shades = [rock.clone().multiplyScalar(0.72), rock, rock.clone().lerp(new THREE.Color('#FFFFFF'), 0.22)]
+  const snow = new THREE.Color(pal(palette, 'snow', '#F4F7FA'))
+  for (let face = 0; face < flat.count; face += 3) {
+    const level = (flat.getY(face) + flat.getY(face + 1) + flat.getY(face + 2)) / (3 * height)
+    const wobble = (hash2(face, 7, seed) - 0.5) * 0.14
+    const color = level + wobble > 1 - t.snowRatio
+      ? snow
+      : shades[Math.min(2, Math.floor(((level + wobble * 0.6) / (1 - t.snowRatio)) * 3 + 0.25))] ?? rock
+    for (let corner = 0; corner < 3; corner += 1) color.toArray(colors, (face + corner) * 3)
+  }
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+  return geometry
+}
+
+/** mountain: macizo de 3 picos facetados con estratos y cima nevada (relleno
+ * de Montaña; antes un cono liso de 5 lados que parecía una pirámide). */
 export function mountainParts(_spec: PieceSpec, palette: PiecePalette): PiecePart[] {
   const t = BOARD3D.decor.mountain
-  const capHeight = t.height * t.snowRatio
-  return [mergeParts([
-    part(new THREE.ConeGeometry(t.radius, t.height, t.segments), pal(palette, 'rock', '#8C8577'), {
-      pos: [0, t.height / 2, 0],
-    }),
-    part(
-      new THREE.ConeGeometry(t.radius * t.snowRatio, capHeight, t.segments),
-      pal(palette, 'snow', '#F4F7FA'),
-      { pos: [0, t.height - capHeight / 2 - 0.02, 0] },
-    ),
-  ])]
+  return [mergeParts(t.peaks.map(([dx, dz, size], index) => {
+    const geometry = peakGeometry(t.radius * size, t.height * size, t.seed + index * 17, palette)
+    geometry.translate(dx * t.radius, 0, dz * t.radius)
+    return { geometry }
+  }))]
 }
 
 /** pond: disco de agua translúcido con brillo (material propio, ≤ 0,12 por

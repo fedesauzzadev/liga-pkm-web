@@ -24,3 +24,7 @@ tools/cards-scan/fixtures/
 tools/cards-scan/.cache/
 
 graphify-out/
+
+# Respaldos locales y fuentes de arte sin uso
+*.bak
+content/loading/pokeboard sinfondo.jpg

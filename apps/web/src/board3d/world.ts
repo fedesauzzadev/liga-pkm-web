@@ -14,6 +14,7 @@ import { cameraPresets } from './camera'
 import { buildDistantMountains, buildTreeRing } from './horizon'
 import { fbm, hash2, valueNoise } from './noise'
 import { smoothstep } from './smooth'
+import { applyTerrainDetail, biomeDetailAttribute } from './terrain-detail'
 import { buildZoneWater, zoneGroundAt, zoneHeightAt } from './zones'
 import type { WorldPos } from './scene'
 
@@ -71,9 +72,9 @@ export interface WorldScene {
   readonly clouds: THREE.Group
   /** N-0016: mariposas decorativas (las anima Ambient). */
   readonly butterflies: THREE.Group
-  readonly fog: THREE.Fog
   /** N-0034: pokémon salvajes caminando (los mueve Ambient). */
   readonly wanderers: THREE.Group
+  readonly fog: THREE.Fog
   /** Media extensión del mundo (size/2): límite de deriva de nubes. */
   readonly halfSpan: number
 }
@@ -170,7 +171,11 @@ function buildTerrainMesh(input: WorldInput, biomeTexture: THREE.Texture): THREE
   }
   geometry.computeVertexNormals()
   // T-096/AC-1: el tinte de zona es el suelo mismo (textura opaca, sin color por vértice).
-  const mesh = new THREE.Mesh(geometry, standard('#ffffff', { map: biomeTexture }))
+  const material = standard('#ffffff', { map: biomeTexture })
+  // Grano del suelo por zona (pasto/roca/surcos/barro) sobre el tinte de bioma.
+  geometry.setAttribute('aBiome', biomeDetailAttribute(position, input))
+  applyTerrainDetail(material, size[0])
+  const mesh = new THREE.Mesh(geometry, material)
   mesh.name = 'terrain'
   return mesh
 }
@@ -296,10 +301,10 @@ export function buildWorld(input: WorldInput): WorldScene {
   root.add(clouds)
   const butterflies = buildButterflies(input.biomes)
   root.add(butterflies)
+  const wanderers = buildWanderers(input, (x, z) => terrainHeightAt(x, z, input))
+  root.add(wanderers)
 
   const fog = new THREE.Fog(input.style.fog.color, input.style.fog.near, input.style.fog.far)
   const halfSpan = input.style.world.size[0] / 2 + 4
   return { root, terrain, biomeTexture, water, waters, sky, sunDisk, mountains, treeRing, clouds, butterflies, wanderers, fog, halfSpan }
 }
-  const wanderers = buildWanderers(input, (x, z) => terrainHeightAt(x, z, input))
-  root.add(wanderers)

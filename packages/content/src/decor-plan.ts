@@ -365,7 +365,7 @@ function sampleScatter(args: {
   scaleMax: number
 }): readonly DecorPlanSpot[] {
   const { map, panel, panels, zone, kind, count, seed, variant, category, worldHalf, triesPerPoint } = args
-  const inset = args.collision.zones.inset
+  const inset = args.collision.zones.inset - args.collision.zones.grow
   const radius = map.radiusOf(category)
   const rect = {
     minX: panel.rect.minX + inset,

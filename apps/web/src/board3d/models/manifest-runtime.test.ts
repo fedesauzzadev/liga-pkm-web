@@ -15,7 +15,7 @@ import manifestJson from '../../../../../content/board/models.manifest.json'
 import catalogJson from '../../../../../content/board/models.catalog.json'
 import wishlistJson from '../../../../../content/board/models.hgss.wishlist.json'
 import decorJson from '../../../../../content/board/decor.json'
-import { hgssStarterModel } from './manifest'
+import { hgssStarterModel, kenneyCandidatesFor, MAX_SCATTER_VARIANTS, scatterCandidatesFor } from './manifest'
 
 const ROOT = fileURLToPath(new URL('../../../../..', import.meta.url))
 const HAS_ASSETS = existsSync(join(ROOT, 'assets-src'))
@@ -125,4 +125,19 @@ test('AC: SPEC-K/T-070e/AC-6 git no trackea assets-src/ ni public/models/hgss/ n
       file.startsWith('apps/web/public/models/new/'),
   )
   expect(forbidden).toEqual([])
+})
+
+// Reparto por zona: la isla usa SOLO sus palmeras, el resto los genéricos, y
+// ningún spec pasa del tope de variantes (cada una cuesta draw calls).
+test('scatterCandidatesFor: zona propia excluyente, genéricos sin zonas y tope de variantes', () => {
+  const isla = scatterCandidatesFor('tree', 'round', 'isla', 7)
+  expect(isla.length).toBeGreaterThan(0)
+  expect(isla.every((candidate) => candidate.zones?.includes('isla') === true)).toBe(true)
+  for (const pick of [0, 1, 12345]) {
+    const rocks = scatterCandidatesFor('rock', undefined, 'llanura', pick)
+    expect(rocks.length).toBe(MAX_SCATTER_VARIANTS)
+    expect(new Set(rocks).size).toBe(MAX_SCATTER_VARIANTS)
+    expect(rocks.every((candidate) => (candidate.zones ?? []).length === 0)).toBe(true)
+  }
+  expect(kenneyCandidatesFor('tree', 'round').some((candidate) => candidate.file.includes('palm'))).toBe(false)
 })

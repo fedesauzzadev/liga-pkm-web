@@ -23,6 +23,7 @@ vi.mock('./manifest', () => {
   }
   return {
     kenneyCandidatesFor: vi.fn((kind: string) => (kind === 'rock' || kind === 'house' ? [candidate] : [])),
+    scatterCandidatesFor: vi.fn((kind: string) => (kind === 'rock' ? [candidate] : [])),
     hgssFilesFor: vi.fn((kind: string, nodeId?: string) =>
       kind === 'gym' && nodeId === 'verde' ? [hgssFile] : [],
     ),
